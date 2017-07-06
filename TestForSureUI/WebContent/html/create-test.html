@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<title>create Test</title>
+		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
+	</head>
+	<body>
+		<header>
+		</header>
+		<div>
+			<div>
+				<h1>Create Test</h1>
+			</div>
+			<div>
+				<h2>Test Details</h2>
+				<h2>Add Questions</h2>
+				<h2>Publish Test</h2>
+			</div>
+			<form role="form" id="testDetailsForm">
+				<div id="testDetails">
+					<div class="form-group">
+						<label>Category <span class="red">*</span></label>
+						<select id="ddCategory" required="required">
+							<option value="0">Select</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label>Subcategory <span class="red">*</span></label>
+						<select id="ddSubcategory" disabled="disabled" required="required">
+							<option value="0">Select</option>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label>Test Title <span class="red">*</span></label>
+						<input type="text" name="titleName" id="txtTitle" required="required"/>
+					</div>
+					
+					<div class="form-group">
+						<label>Number of Questions <span class="red">*</span></label>
+						<input type="text" name="quesName" id="txtQues" required="required"/>
+					</div>
+					
+					<div class="form-group">
+						<label>Time(in minutes) <span class="red">*</span></label>
+						<input type="text" name="timeName" id="txtTime" required="required"/>
+					</div>
+					
+					<div class="form-group">
+						<label>Correct answer marks <span class="red">*</span></label>
+						<input type="text" name="marksName" id="txtMarks" required="required"/>
+					</div>
+					
+					<div class="form-group">
+						<label>Negative Marks <span class="red">*</span></label>
+						<input type="text" name="negativeMarksName" id="txtNegativeMarks" required="required"/>
+					</div>
+				</div>
+				<div>
+					<button type="submit" class="form-control">Save & Next</button>
+				</div>
+			</form>
+		</div>
+		
+		<!--Add Questions-->
+		<div id="addQuestions">
+			<span>Number of Questions: </span><span id="numberOfQuestions"></span>
+			
+			<div class="show" id="quesEditor">
+				<form id="addQuesForm">
+					<h1>Add your question here</h1>
+					<textarea id="editor" class="editor" rows="10" cols="100"></textarea>
+					<button type="submit">Submit</button>
+				</form>
+			</div>
+			<button type="button" id="addNewQuestion">+ Add Question</button>
+		</div>
+		<script src="../js/jquery-2.2.2.min.js"></script>
+		<script src="../js/ckeditor.js"></script>
+		<script src="../adapters/jquery.js"></script>
+		<script src="../js/jquery.validate.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/add-test-details.js"></script>
+		
+	</body>
+</html>
