@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>create Test</title>
+		<title>Create Test</title>
 		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
 	</head>
 	<body>
@@ -66,11 +66,49 @@
 		<div id="addQuestions">
 			<span>Number of Questions: </span><span id="numberOfQuestions"></span>
 			
-			<div class="show" id="quesEditor">
+			<div class="hide" id="quesEditor">
 				<form id="addQuesForm">
-					<h1>Add your question here</h1>
-					<textarea id="editor" class="editor" rows="10" cols="100"></textarea>
-					<button type="submit">Submit</button>
+					<div>
+						<h1>Add your question here</h1>
+						<div class="form-group">
+							<input type="checkbox" id="ddquesType" value="Paragraph based">Paragraph Based</input>
+						</div>
+						<div class="form-group" id="paraTextDiv" class="hide">
+							<label>Paragraph Text<span class="red">*</span></label>
+							<textarea id="txtPara" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Question Text<span class="red">*</span></label>
+							<textarea id="txtQuesText" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option A<span class="red">*</span></label>
+							<textarea id="txtoptionA" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option B<span class="red">*</span></label>
+							<textarea id="txtoptionB" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option C<span class="red">*</span></label>
+							<textarea id="txtoptionC" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option D<span class="red">*</span></label>
+							<textarea id="txtoptionD" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Correct option<span class="red">*</span></label>
+							<textarea id="txtCorrectOption" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Explanation<span class="red">*</span></label>
+							<textarea id="txtExplanation" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div>
+							<button type="submit" class="form-control">Submit Question</button>
+						</div>
+					</div>
 				</form>
 			</div>
 			<button type="button" id="addNewQuestion">+ Add Question</button>

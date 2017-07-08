@@ -23,8 +23,9 @@ $('#testDetailsForm').validate({
     },
     submitHandler: function () {
 		console.log("Inside submit");
-		var testId = uniqTestId();
-        var category = $('#ddCategory  option:selected').val();
+		//var testId = uniqTestId();
+        var testId = localStorage.getItem('test_id');
+		var category = $('#ddCategory  option:selected').val();
         var subcategory = $('#ddSubcategory  option:selected').val();
         
         var title = $("#txtTitle").val();
@@ -55,7 +56,7 @@ $('#testDetailsForm').validate({
             success: function (response) {
                 if (response.status) {
 					console.log("Test details added/updated successfully with test id: "+response.test_id);
-                    localStorage.setItem("testId",response.test_id);
+                    //localStorage.setItem("testId",response.test_id);
 					localStorage.setItem("questionCount",0)
                 }
                 else if (!response.status) {
@@ -79,8 +80,22 @@ function uniqTestId() {
 //Adding Questions code
 $("#addNewQuestion").on("click", function(){
 	$("#quesEditor").removeClass('hide');
-	//Add Question
+	$('.editor').val('');
+	$('#ddquesType').val('');
+	$('#paraTextDiv').addClass('hide');
+})
+
+$('#ddquesType').on('change', function() {
+	var quesType = $(this).prop('checked');
 	
+	if(quesType == true){
+		$('#paraTextDiv').removeClass('hide');
+		$('#paraTextDiv').addClass('show');
+	}
+	else if(quesType == false){
+		$('#paraTextDiv').removeClass('show');
+		$('#paraTextDiv').addClass('hide');
+	}
 })
 /*var quesRules = {
     'quesName': {
@@ -114,16 +129,22 @@ $('#addQuesForm').validate({
         var requestData = {};
 		requestData.id=parseInt(localStorage.getItem('questionCount'))+1;
 		localStorage.setItem('questionCount',parseInt(localStorage.getItem('questionCount'))+1);
-		requestData.test_id=localStorage.getItem('testId');
-		requestData.ques_type="Simple";
-		requestData.paragraph_text="Sample Paragraph Text";
-		requestData.ques_text="Simple Question Text";
-		requestData.optionA="A";
-		requestData.optionB="B";
-		requestData.optionC="C";
-		requestData.optionD="D";
-		requestData.correct_option="A";
-		requestData.explanation="Sample explanation";
+		requestData.test_id=localStorage.getItem('test_id');
+		var quesType = $('#ddquesType').prop('checked');
+		if(quesType == true){
+			requestData.ques_type="Paragraph";
+		}
+		else if(quesType == false){
+			requestData.ques_type="Simple";
+		}
+		requestData.paragraph_text=$('#txtPara').val();
+		requestData.ques_text=$('#txtQuesText').val();
+		requestData.optionA=$('#txtoptionA').val();
+		requestData.optionB=$('#txtoptionB').val();
+		requestData.optionC=$('#txtoptionC').val();
+		requestData.optionD=$('#txtoptionD').val();
+		requestData.correct_option=$('#txtCorrectOption').val();
+		requestData.explanation=$('#txtExplanation').val();
 		console.log(JSON.stringify(requestData));
 		
         $.ajax({
@@ -154,6 +175,10 @@ $('#addQuesForm').validate({
 
 $(document).ready(function () {
 	console.log("Document is ready");
+	
+	localStorage.clear();
+	var id = (Math.floor((Math.random() * 100000) + 1));
+	localStorage.setItem('test_id', id);
 	//to get the test categories on load and populate in category dropdown
 	         $.ajax({
                 url: "http://localhost:8083/test-for-sure/test/get-category",
@@ -223,6 +248,6 @@ $(document).ready(function () {
 	
 	
 	
-	$('#editor').ckeditor();
+	$('.editor').ckeditor();
 })
 
