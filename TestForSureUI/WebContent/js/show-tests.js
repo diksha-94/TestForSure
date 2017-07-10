@@ -14,6 +14,7 @@ function showTests(categoryId, subCatId){
 							console.log(JSON.stringify(result.testDetails));
 							$.each(result.testDetails, function(i, test) {
 								var btnId = 'btnTest-'+test.id;
+								var query_string = 'test_id='+btnId;
 								var newTest = "<div style='border:solid 1px red;float:left;width:33%;text-align:center'>"+
 												"</br>Test Id: "+test.id+
 												"</br>Test title: "+test.testTitle+
@@ -21,7 +22,7 @@ function showTests(categoryId, subCatId){
 												"</br>Time Limit(in mins): "+test.time_limit+
 												"</br>Correct Question Marks: "+test.correct_ques_marks+
 												"</br>Negative marks: "+test.negative_marks+
-												"</br><input type='submit' id="+btnId+" value='Start Test'/>"
+												"</br><a href='start-test.html?"+query_string+"' id="+btnId+"class='btn btn-default'>Start Test</a>"
 												"</div>";
 								$('#tests').append(newTest);
 							});
@@ -39,9 +40,9 @@ function showTests(categoryId, subCatId){
 }
 
 //On click of a Start Test button
-$('input').on('click', function(){
-
-})
+/*$('input').on('click', function(){
+	document.href('start-test.html');
+})*/
 $(document).ready(function () {
 	console.log("Document show-tests is ready");
 	

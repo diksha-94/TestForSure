@@ -157,6 +157,9 @@ $('#addQuesForm').validate({
                 if (response.status) {
 					console.log("Question added/updated successfully with question id: "+response.question_id);
 					$("#quesEditor").addClass('hide');
+					$('#addedQuestions').empty();
+								
+					getQuestionsOnTestId(localStorage.getItem('test_id'));
                     //localStorage.setItem("testId",response.test_id);
                 }
                 else if (!response.status) {
@@ -172,6 +175,51 @@ $('#addQuesForm').validate({
     }
 
 });
+
+function getQuestionsOnTestId(test_id){
+	console.log('Test_id: '+test_id);
+	var url = "http://localhost:8083/test-for-sure/test/get-questions?test_id="+test_id;
+	$.ajax({
+                url: url,
+                type: "GET",
+                dataType: 'json',
+                success: function (result) {
+					if(result.status){
+						if(result.question != null) {
+							console.log(JSON.stringify(result.question));
+							console.log("Number of questions: "+(result.question).length)
+							$('#numberOfQuestions').text((result.question).length);
+							$.each(result.question, function(i, question) {
+								var newQuestion = "<div style='border:solid 1px red;'>"+
+												"</br>Question Id: "+question.id+
+												"</br>Question Type: "+question.ques_type;
+								if((question.ques_type).toLowerCase() == "paragraph"){
+									newQuestion += "</br>Paragraph text: "+question.paragraph_text;
+								}
+												newQuestion += "</br>Question Text: "+question.ques_text+
+												"</br>a. "+question.optionA+
+												"</br>b. "+question.optionB+
+												"</br>c. "+question.optionC+
+												"</br>d. "+question.optionD+
+												"</br>Correct option: "+question.correct_option+
+												"</br>Explanation: "+question.explanation+
+												"</div>";
+								$('#addedQuestions').removeClass('hide');
+								$('#addedQuestions').addClass('show');
+								$('#addedQuestions').append(newQuestion);
+							});
+							
+						}
+					}
+					else if(!result.status){
+						console.log("Error: "+result.message);
+					}
+                },
+                error: function () {
+					console.log("Error in getting questions");
+                }
+            });
+}
 
 $(document).ready(function () {
 	console.log("Document is ready");
