@@ -2,7 +2,7 @@ function showTests(categoryId, subCatId){
 	$('#tests').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
-	var url = "http://localhost:8083/test-for-sure/test/get-tests?categoryId="+categoryId+"&subCatId="+subCatId;
+	var url = "http://localhost:8083/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
 	$.ajax({
                 url: url,
                 type: "GET",

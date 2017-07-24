@@ -1,11 +1,37 @@
 $('#btnProceed').on('click', function(){
 	$('#divInstructions').removeClass('show');
 	$('#divInstructions').addClass('hide');
-	$('#divQuestions').removeClass('hide');
-	$('#divQuestions').addClass('show');
+	//$('#divQuestions').removeClass('hide');
+	//$('#divQuestions').addClass('show');
 	var testId = ((localStorage.getItem('test_id')).split('-'))[1];
 	console.log("Test id: "+testId);
-	var url = "http://localhost:8083/test-for-sure/test/get-questions?test_id="+testId;
+	
+	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+testId;
+	
+	$.ajax({
+                url: getTest_url,
+                type: "GET",
+                dataType: 'json',
+                success: function (result) {
+					if(result.status){
+						$('#categoryDisplay').text(result.category+" - "+result.subcategory);
+						var questionNumber = "";
+						console.log(result.testDetails.no_of_ques);
+						for(var i=1;i<=parseInt(result.testDetails.no_of_ques);i++){
+							questionNumber += "<a href='#'><div style='float:left;border:solid 1px black;width:20%'>" + i + "</div></a>";
+						}
+						console.log(questionNumber);
+						$('#questionsPanel').append(questionNumber);
+					}
+					else if(!result.status){
+						console.log("Error: "+result.message);
+					}
+                },
+                error: function () {
+					console.log("Error in getting questions");
+                }
+            });
+	/*var getQuestions_url = "http://localhost:8083/test-for-sure/test/get-questions?test_id="+testId;
 	$.ajax({
                 url: url,
                 type: "GET",
@@ -29,7 +55,7 @@ $('#btnProceed').on('click', function(){
 												"</br>c. "+question.optionC+
 												"</br>d. "+question.optionD+
 												"</div>";
-								$('#divQuestions').append(newQuestion);
+								//$('#divQuestions').append(newQuestion);
 							});
 							
 						}
@@ -41,7 +67,7 @@ $('#btnProceed').on('click', function(){
                 error: function () {
 					console.log("Error in getting questions");
                 }
-            });
+            });*/
 })
 
 function getQueryParameterByName(name, url) {

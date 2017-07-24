@@ -22,15 +22,16 @@
 		</header>
 		<div>
 			<div>
-				<h1>Create Test</h1>
+				<h1 style='text-align:center;'>Create Test</h1>
 			</div>
-			<div>
-				<h2>Test Details</h2>
-				<h2>Add Questions</h2>
-				<h2>Publish Test</h2>
+			<div style='align:center;'>
+				<h3 style="float:left;">Test Details-------></h3>
+				<h3 style="float:left;">Add Questions-------></h3>
+				<h3 style="float:left;">Publish Test</h3>
 			</div>
-			<form role="form" id="testDetailsForm">
-				<div id="testDetails">
+		</div>
+			<div id="testDetails" style='clear:both;border:solid 1px grey;width:50%;'>
+				<form role="form" id="testDetailsForm">
 					<div class="form-group">
 						<label>Category <span class="red">*</span></label>
 						<select id="ddCategory" required="required">
@@ -69,19 +70,19 @@
 						<label>Negative Marks <span class="red">*</span></label>
 						<input type="text" name="negativeMarksName" id="txtNegativeMarks" required="required"/>
 					</div>
-				</div>
-				<div>
-					<button type="submit" class="form-control">Save & Next</button>
+					<div>
+						<button type="submit" id="btnSaveNext">Save & Next</button>
+					</div>
 				</div>
 			</form>
-		</div>
+		
 		
 		<!--Add Questions-->
-		<div id="addQuestions">
+		<div id="addQuestions" class="hide" style='clear:both;border:solid 1px grey;width:50%;'>
 			<span>Number of Questions added: </span><span id="numberOfQuestions"></span>
 			<div class="hide" id="addedQuestions">
 			</div>
-			<div class="hide" id="quesEditor">
+			<div class="hide" id="quesEditor" style="width:50%;">
 				<form id="addQuesForm">
 					<div>
 						<h1>Add your question here</h1>
@@ -127,6 +128,125 @@
 				</form>
 			</div>
 			<button type="button" id="addNewQuestion">+ Add Question</button>
+			<div>
+				<button type="button" id="btnBackTestDetails">Back to Test Details</button>
+			</div>
+			<div>
+				<button type="button" id="btnDoneQues">Next</button>
+			</div>
+		</div>
+		
+		
+		<!--Publish Test-->
+		<div id="publishTest" class="hide" style='clear:both;border:solid 1px grey;width:50%;'>
+			<h3>Test Summary</h3>
+			<div id="testSummary" style="width:50%;">
+				<div>
+					<label>Test title:</label><span id="publishTitle"></span>
+				</div>
+				<div>
+					<label>Test category:</label><span id="publishCategory"></span>
+				</div>
+				<div>
+					<label>Test subcategory:</label><span id="publishSubcategory"></span>
+				</div>
+				<div>
+					<label>Number of Questions:</label><span id="publishQues"></span>
+				</div>
+				<div>
+					<label>Time(in minutes):</label><span id="publishTime"></span>
+				</div>
+				<div>
+					<label>Correct answer marks:</label><span id="publishCorrect"></span>
+				</div>
+				<div>
+					<label>Negaive Marks:</label><span id="publishNegative"></span>
+				</div>
+			</div>
+			<div>
+				<button type="button" id="btnBackAddQues">Back to Add Questions</button>
+			</div>
+			<div>
+				<button type="submit" id="btnPublishTest" disabled="disabled" title="Test can't be published until you add all the questions.">Publish Test</button>
+			</div>
+			<div>
+				<button type="button" id="btnSaveForLater">Save for later</button>
+			</div>
+		</div>
+		
+		<!--Delete Question modal-->
+		<div class="modal fade" id="deletQuestionModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Delete Question</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete question?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnYes" class="btn btn-default" data-dismiss="modal">Yes</button>
+						<button type="button" id="btnNo" class="btn btn-default" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--Update Question modal-->
+		<div class="modal fade" id="UpdateQuestionModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Update Question</h4>
+					</div>
+					<div class="modal-body" id="updateContent">
+						<div class="form-group">
+							<input type="checkbox" id="ddquesTypeUpdate" value="Paragraph based">Paragraph Based</input>
+						</div>
+						<div class="form-group" id="paraTextDiv" class="hide">
+							<label>Paragraph Text<span class="red">*</span></label>
+							<textarea id="txtParaUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Question Text<span class="red">*</span></label>
+							<textarea id="txtQuesTextUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option A<span class="red">*</span></label>
+							<textarea id="txtoptionAUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option B<span class="red">*</span></label>
+							<textarea id="txtoptionBUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option C<span class="red">*</span></label>
+							<textarea id="txtoptionCUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Option D<span class="red">*</span></label>
+							<textarea id="txtoptionDUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Correct option<span class="red">*</span></label>
+							<textarea id="txtCorrectOptionUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Explanation<span class="red">*</span></label>
+							<textarea id="txtExplanationUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnUpdateSubmit" class="btn btn-default" data-dismiss="modal">Update</button>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="../js/jquery-2.2.2.min.js"></script>
 		<script src="../js/ckeditor.js"></script>

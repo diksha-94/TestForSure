@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;edu.tests.TestForSure.response.GetSingleTestDetails.java&apos; to &apos;GetSingleTestDetailsResponse.java&apos;&#x0D;&#x0A;- Original project: &apos;TestForSure&apos;&#x0D;&#x0A;- Original element: &apos;edu.tests.TestForSure.response.GetSingleTestDetails.java&apos;&#x0D;&#x0A;- Renamed element: &apos;edu.tests.TestForSure.response.GetSingleTestDetailsResponse.java&apos;" description="Rename compilation unit &apos;GetSingleTestDetails.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java&lt;edu.tests.TestForSure.response{GetSingleTestDetails.java" name="GetSingleTestDetailsResponse.java" references="false" stamp="1500799382769" version="1.0"/>
+</session>

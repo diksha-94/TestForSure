@@ -5,10 +5,13 @@
 	</head>
 	<body>
 		<header>
-			
+			<div style="float:left;"><h3>TEST-FOR-SURE</h3></div>
+			<div style="float:left;">
+				<h4 id="categoryDisplay"></h4>
+			</div>
 		</header>
 		
-		<div id="divInstructions" class='show'>
+		<div id="divInstructions" style="clear:both;" class='show'>
 			<h3>Instructions</h3>
 			<span>1.</span>
 			<span>2.</span>
@@ -18,8 +21,19 @@
 			<button type="submit" id="btnProceed">Proceed</button>
 		</div>
 		
-		<div id="divQuestions" class='hide'>
+		<!--<div id="divQuestions" class='hide'>
+		</div>-->
+		
+		
+		<div style="clear:both;">
+			<div id="questionsPanel" style="float:left;border:solid 1px red;width:20%;height:100%;">
+			</div>
+			<div id="questions" style="float:left;border:solid 1px red;width:60%;height:100%;">
+			</div>
+			<div id="timer" style="float:left;border:solid 1px red;width:20%;height:100%;">
+			</div>
 		</div>
+		
 		
 		<script src="../js/jquery-2.2.2.min.js"></script>
 		<script src="../js/ckeditor.js"></script>

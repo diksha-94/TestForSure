@@ -57,7 +57,11 @@ $('#testDetailsForm').validate({
                 if (response.status) {
 					console.log("Test details added/updated successfully with test id: "+response.test_id);
                     //localStorage.setItem("testId",response.test_id);
-					localStorage.setItem("questionCount",0)
+					
+					$('#addQuestions').removeClass('hide');
+					$('#addQuestions').addClass('show');
+					$('#testDetails').removeClass('show');
+					$('#testDetails').addClass('hide');
                 }
                 else if (!response.status) {
                     console.log("Error in adding/updating test detailstest id: "+response.test_id+"    Message: "+response.message);
@@ -190,19 +194,27 @@ function getQuestionsOnTestId(test_id){
 							console.log("Number of questions: "+(result.question).length)
 							$('#numberOfQuestions').text((result.question).length);
 							$.each(result.question, function(i, question) {
+								console.log('Option D: '+question.optionD);
+								console.log('correct option: '+question.correct_option);
+								console.log('Explanation: '+question.explanation);
+								var updateBtnId = "Update-"+test_id+"-"+question.id;
+								var deleteBtnId = "Delete-"+test_id+"-"+question.id;
+								var forAllId = test_id+"-"+question.id;
 								var newQuestion = "<div style='border:solid 1px red;'>"+
-												"</br>Question Id: "+question.id+
+												"</br>Question Id: <span id = 'questionId-" + (forAllId) + "'>"+question.id+"</span>"+
 												"</br>Question Type: "+question.ques_type;
 								if((question.ques_type).toLowerCase() == "paragraph"){
-									newQuestion += "</br>Paragraph text: "+question.paragraph_text;
+									newQuestion += "</br>Paragraph text: <span id = 'paraText-" + (forAllId) + "'>"+question.paragraph_text+"</span>";
 								}
-												newQuestion += "</br>Question Text: "+question.ques_text+
-												"</br>a. "+question.optionA+
-												"</br>b. "+question.optionB+
-												"</br>c. "+question.optionC+
-												"</br>d. "+question.optionD+
-												"</br>Correct option: "+question.correct_option+
-												"</br>Explanation: "+question.explanation+
+												newQuestion += "</br>Question Text: <span id = 'quesText-" + (forAllId) + "'>"+question.ques_text+"</span>"+
+												"</br>a. <span id = 'optionA-" + (forAllId) + "'>"+question.optionA+"</span>"+
+												"</br>b. <span id = 'optionB-" + (forAllId) + "'>"+question.optionB+"</span>"+
+												"</br>c. <span id = 'optionC-" + (forAllId) + "'>"+question.optionC+"</span>"+
+												"</br>d. <span id = 'optionD-" + (forAllId) + "'>"+question.optionD+"</span>"+
+												"</br>Correct Option: <span id = 'correctOption-" + (forAllId) + "'>"+question.correct_option+"</span>"+
+												"</br>Explanation: <span id = 'explanation-" + (forAllId) + "'>"+question.explanation+"</span>"+
+												"</br><button type='button' id="+updateBtnId+" data-toggle='modal' data-target='#UpdateQuestionModal' onclick='saveDetails(this.id);'>Update</button>"+
+												"</br><button type='button' id="+deleteBtnId+" data-toggle='modal' data-target='#deletQuestionModal' onclick='saveDetails(this.id);'>Delete</button>"+
 												"</div>";
 								$('#addedQuestions').removeClass('hide');
 								$('#addedQuestions').addClass('show');
@@ -221,12 +233,217 @@ function getQuestionsOnTestId(test_id){
             });
 }
 
+
+//On click of Update or delete button, save the test and qestion id to local storage
+function saveDetails(btnId){
+	
+	console.log(btnId);
+	
+	var values = btnId.split("-");
+	localStorage.setItem('btnid',parseInt(values[2]));
+	localStorage.setItem('btntest_id',parseInt(values[1]));
+	console.log(parseInt(values[2])+"--"+parseInt(values[1]));
+	if(values[0] == "Update"){
+		//$('#updateContent').append($('#quesEditor').html());
+		//$('#txtPara').val($('#paraText-'+values[1]+'-'+values[2]).text());
+		console.log($('#quesText-'+values[1]+'-'+values[2]).text()+"----");
+		$('#txtQuesTextUpdate').val($('#quesText-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionAUpdate').val($('#optionA-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionBUpdate').val($('#optionB-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionCUpdate').val($('#optionC-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionDUpdate').val($('#optionD-'+values[1]+'-'+values[2]).text());
+		$('#txtCorrectOptionUpdate').val($('#correctOption-'+values[1]+'-'+values[2]).text());
+		$('#txtExplanationUpdate').val($('#explanation-'+values[1]+'-'+values[2]).text());
+	}
+}
+//On click of Yes in the delete question modal box
+$("#btnYes").on("click", function () {
+
+    var deleteRequest={};
+	//var id = $(this).attr('id');
+	//console.log(id);
+	//var values = id.split("-");
+	deleteRequest.id=localStorage.getItem('btnid');
+	deleteRequest.test_id=localStorage.getItem('btntest_id');
+	console.log("deleteRequest: "+JSON.stringify(deleteRequest));
+    var deleteUrl = "http://localhost:8083/test-for-sure/test/delete-question";
+    var type = 'PUT';
+
+    $.ajax({
+        url: deleteUrl,
+        type: type,
+		data: JSON.stringify(deleteRequest),
+		contentType: 'application/json',
+        success: function (delData) {
+
+            if (delData.status == true) {
+				console.log('Message: '+delData.message);
+				$('#addedQuestions').empty();
+				//localStorage.setItem('questionCount',parseInt(localStorage.getItem('questionCount'))-1);
+				$('#numberOfQuestions').text($('#numberOfQuestions').text()-1);
+							
+				getQuestionsOnTestId(localStorage.getItem('btntest_id'));
+            }
+            else if (delData.status == false) {
+                console.log('Message: '+delData.message);
+            }
+        },
+        error: function () {
+            console.log('Backend service is unavailable.');
+        }
+    });
+});
+
+//On adding all the questions, proceed to Publish Test section
+$('#btnDoneQues').on('click', function(){
+	$('#addQuestions').removeClass('show');
+	$('#addQuestions').addClass('hide');
+	$('#publishTest').removeClass('hide');
+	$('#publishTest').addClass('show');
+	
+	var quesAdded = $('#numberOfQuestions').text();
+	var quesToAdd = $('#txtQues').val();
+	console.log("Ques added: "+quesAdded);
+	console.log("Ques to add: "+quesToAdd);
+	if(quesAdded == quesToAdd){
+		$('#btnPublishTest').attr('disabled', false);
+		$('#btnPublishTest').attr('title', 'Publish test');
+	}
+	else{
+		$('#btnPublishTest').attr('disabled', true);
+		$('#btnPublishTest').attr('title', 'Test can\'t be published until you add all the questions.');
+	}
+	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
+	var type= "GET";
+	$.ajax({
+            url: getTest_url,
+            type: type,
+			contentType: 'application/json',
+			//dataType: 'json',
+            success: function (response) {
+                if (response.status) {
+					console.log("Test details fetched");
+					$('#publishTitle').text(response.testDetails.testTitle);
+					$('#publishCategory').text(response.category);
+					$('#publishSubcategory').text(response.subcategory);
+					$('#publishQues').text(response.testDetails.no_of_ques);
+					$('#publishTime').text(response.testDetails.time_limit);
+					$('#publishCorrect').text(response.testDetails.correct_ques_marks);
+					$('#publishNegative').text(response.testDetails.negative_marks);
+                }
+                else if (!response.status) {
+                    console.log("Error in getting test details with test id: "+localStorage.getItem('test_id')+"    Message: "+response.message);
+                }
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+        });
+    })
+
+$('#btnUpdateSubmit').on('click', function(){
+	var addQuestion_url = "http://localhost:8083/test-for-sure/test/add-question";
+        var type = 'POST';
+        var requestData = {};
+		requestData.id=localStorage.getItem('btnid');
+		//localStorage.setItem('questionCount',parseInt(localStorage.getItem('questionCount'))+1);
+		requestData.test_id=localStorage.getItem('btntest_id');
+		var quesType = $('#ddquesTypeUpdate').prop('checked');
+		if(quesType == true){
+			requestData.ques_type="Paragraph";
+		}
+		else if(quesType == false){
+			requestData.ques_type="Simple";
+		}
+		requestData.paragraph_text=$('#txtParaUpdate').val();
+		requestData.ques_text=$('#txtQuesTextUpdate').val();
+		requestData.optionA=$('#txtoptionAUpdate').val();
+		requestData.optionB=$('#txtoptionBUpdate').val();
+		requestData.optionC=$('#txtoptionCUpdate').val();
+		requestData.optionD=$('#txtoptionDUpdate').val();
+		requestData.correct_option=$('#txtCorrectOptionUpdate').val();
+		requestData.explanation=$('#txtExplanationUpdate').val();
+		console.log(JSON.stringify(requestData));
+		
+        $.ajax({
+            url: addQuestion_url,
+            type: type,
+			data: JSON.stringify(requestData),
+			contentType: 'application/json',
+			//dataType: 'json',
+            success: function (response) {
+                if (response.status) {
+					console.log("Question updated successfully with question id: "+response.question_id);
+					$("#quesEditor").addClass('hide');
+					$('#addedQuestions').empty();
+								
+					getQuestionsOnTestId(localStorage.getItem('test_id'));
+                    //localStorage.setItem("testId",response.test_id);
+                }
+                else if (!response.status) {
+                    console.log("Error in /updating question id: "+response.question_id+"    Message: "+response.message);
+                }
+                
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+        });
+    
+})
+
+//On click of Back to Test Details
+$('#btnBackTestDetails').on('click', function(){
+	$('#addQuestions').removeClass('show');
+	$('#addQuestions').addClass('hide');
+	$('#testDetails').removeClass('hide');
+	$('#testDetails').addClass('show');
+	$('#btnSaveNext').text('Update & Next');
+})
+
+//On click of Back to Add Questions
+$('#btnBackAddQues').on('click', function(){
+	$('#publishTest').removeClass('show');
+	$('#publishTest').addClass('hide');
+	$('#addQuestions').removeClass('hide');
+	$('#addQuestions').addClass('show');
+})
+
+//On click of Save for later
+$('#btnSaveForLater').on('click', function(){
+	console.log("Test has been saved");
+})
+
+//On click of publish button (when it is enabled)
+$('#btnPublishTest').on('click', function(){
+		$.ajax({
+                url: "http://localhost:8083/test-for-sure/test/publish-test?test_id="+localStorage.getItem('test_id'),
+                type: "PUT",
+                
+                dataType: 'json',
+                success: function (result) {
+					if(result.status){
+						console.log(result.message);
+					}
+					else if(!result.status){
+						console.log("Error: "+result.message);
+					}
+                },
+                error: function () {
+					console.log("Error in publishing test");
+                }
+            });
+})
+
 $(document).ready(function () {
 	console.log("Document is ready");
 	
 	localStorage.clear();
 	var id = (Math.floor((Math.random() * 100000) + 1));
 	localStorage.setItem('test_id', id);
+	localStorage.setItem("questionCount",0);
 	//to get the test categories on load and populate in category dropdown
 	         $.ajax({
                 url: "http://localhost:8083/test-for-sure/test/get-category",
@@ -273,6 +490,7 @@ $(document).ready(function () {
 						var subcategories=[];
 						subcategories.push("<option value='0'>Select</option>");
 						$.each(result.subcategoryList, function(i,subcat){
+							console.log("subcat.id: "+subcat.id);
 							var newOption = "<option value='"+subcat.id+"'> "+subcat.subcategory+"</option>";
 							subcategories.push(newOption);
 							
