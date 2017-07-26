@@ -25,14 +25,47 @@
 		</div>-->
 		
 		
-		<div style="clear:both;">
-			<div id="questionsPanel" style="float:left;border:solid 1px red;width:20%;height:100%;">
+		<div id="divQuestions" style="clear:both;" class="hide">
+			<div id="questionsPanel" style="float:left;border:solid 1px red;width:20%;height:80%;">
+				<div id="questionNumber">
+				</div>
+				<div id="qestionInstruction">
+					<div style="clear:both">
+						<div style='float:left;border:solid 1px black;width:5%;height:10px'></div><span style="float:left;">Current Question</span>
+					</div>
+					<div style="clear:both">
+						<div style='float:left;border:solid 1px grey;width:5%;height:10px;background-color:grey;'></div><span style="float:left;">Unattempted</span>
+					</div>
+					<div style="clear:both">
+						<div style='float:left;border:solid 1px green;width:5%;height:10px;background-color:green;'></div><span style="float:left;">Attempted</span>
+					</div>
+				</div>
+				<div style="clear:both;">
+					<button id="btnViewAll">View All Questions</button>
+				</div>
 			</div>
-			<div id="questions" style="float:left;border:solid 1px red;width:60%;height:100%;">
+			<div id="questions" style="float:left;border:solid 1px red;width:60%;height:80%;">
+				<div><h2>Questions</h2></div>
+				<div id="displayQuestion"></div>
+				<div><button id="btnClearSelection">Clear Selection</button></div>
 			</div>
-			<div id="timer" style="float:left;border:solid 1px red;width:20%;height:100%;">
+			<div id="timer" style="float:left;border:solid 1px red;width:20%;height:80%;">
+				<div>
+					<span>Time:</span>
+				</div>
+				<div>
+					<span>Questions Attempted:</span>
+					<h2 id="quesAttemptedCount"></h2>
+				</div>
+			</div>
+			<div id="footer" style="clear:both;">
+				<button type="button" id="btnPreviousQuestion" disabled='disabled'>Previous</button>
+				<button type="button" id="btnSaveNext">Save & Next</button>
+				<button type="button" id="btnSubmitTest">Submit Test</button>
 			</div>
 		</div>
+		
+		
 		
 		
 		<script src="../js/jquery-2.2.2.min.js"></script>
