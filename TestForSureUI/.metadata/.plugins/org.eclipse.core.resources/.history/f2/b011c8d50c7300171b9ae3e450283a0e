@@ -1,0 +1,25 @@
+package edu.tests.TestForSure.service;
+
+import java.util.*;
+import edu.tests.TestForSure.entity.Question;
+import edu.tests.TestForSure.entity.Result;
+import edu.tests.TestForSure.response.GetQuestionsResponse;
+
+public class GeneralFunctionality {
+	
+	public static void generateTestReport(ArrayList<Result> candidateResponse, GetQuestionsResponse actualResponse){
+		System.out.println("Candidate Response: "+candidateResponse);
+		System.out.println("Actual Response: "+actualResponse);
+		int correctCount = 0;
+		for(Result result : candidateResponse){
+			for(Question actual : actualResponse.getQuestion()){
+				if(result.getQuestion_id() == actual.getId()){
+					if((result.getMarked_option()).equalsIgnoreCase(actual.getCorrect_option())){
+						correctCount++;
+						break;
+					}
+				}
+			}
+		}
+	}
+}

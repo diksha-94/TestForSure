@@ -1,8 +1,10 @@
 var allQuestions=[];
 var no_of_ques;
 var candidateResponse={};
+candidateResponse.userDetails={};
 candidateResponse.testDetails={};
 candidateResponse.result=[];
+
 $('#btnProceed').on('click', function(){
 	$('#divInstructions').removeClass('show');
 	$('#divInstructions').addClass('hide');
@@ -57,10 +59,10 @@ $('#btnProceed').on('click', function(){
 							$('#displayQuestion').append(questionStructure(result.question[0].paragraph_text, result.question[0].ques_text, result.question[0].optionA, result.question[0].optionB, result.question[0].optionC, result.question[0].optionD));
 							console.log("no_of_ques: "+no_of_ques);
 							if(no_of_ques == 1){
-								$('#btnSaveNext').html('Save');
+								$('#btnSaveNext').attr('disabled', true);
 							}
 							else{
-								$('#btnSaveNext').html('Save & Next');
+								$('#btnSaveNext').attr('disabled', false);
 							}
 						}
 					}
@@ -73,6 +75,19 @@ $('#btnProceed').on('click', function(){
                 }
             });
 			
+})
+
+
+$('#btnNextToInstructions').on('click', function(){
+	console.log('Get User details and go next');
+	localStorage.setItem('username', txtName.value);
+	localStorage.setItem('email', txtEmail.value);
+	localStorage.setItem('mobile', txtMobile.value);
+	
+	$('#divUserDetails').removeClass('show');
+	$('#divUserDetails').addClass('hide');
+	$('#divInstructions').removeClass('hide');
+	$('#divInstructions').addClass('show');
 })
 
 $('#btnViewAll').on('click', function(){
@@ -98,16 +113,12 @@ function questionStructure(paraText, quesText, optionA, optionB, optionC, option
 
 $('#btnClearSelection').on('click', function(){
 	$('#displayQuestion input').removeAttr('checked');
-})
-
-$('#btnSaveNext').on('click', function(){
 	
-	
-	//getting the candidate's response
 	var response = {};
+	var option_selected = null;
+	console.log("option_selected: "+option_selected);
 	var exist = false;
 	var ques_id = allQuestions[parseInt(localStorage.getItem('questionCount'))-1].id;
-	var option_selected = $('input[name=options]:checked').val();
 	response.question_id = ques_id;
 	response.marked_option = option_selected;
 	for(var i = 0;i<(candidateResponse.result).length;i++){
@@ -120,20 +131,28 @@ $('#btnSaveNext').on('click', function(){
 	if(!exist){
 		(candidateResponse.result).push(response);
 	}
+	
+	
 	//Count number of questions attempted
 	var count = 0;
 	for(var i = 0;i<(candidateResponse.result).length;i++){
-		if(candidateResponse.result[i].marked_option){
+		var marked = candidateResponse.result[i].marked_option;
+		if(marked != null){
 			count++;
 		}
 	}
 	console.log("Candidate Response: "+JSON.stringify(candidateResponse));
-	console.log($('#btnSaveNext').html());
 	console.log("Questions attempted: "+count);
 	$('#quesAttemptedCount').text(count+'/'+no_of_ques);
+})
+
+$('#btnSaveNext').on('click', function(){
+	
+	
+	//getting the candidate's response
+	
 	var num;
 	
-	if($('#btnSaveNext').html() == 'Save &amp; Next'){
 		localStorage.setItem('questionCount', parseInt(localStorage.getItem('questionCount'))+1);
 		num = parseInt(localStorage.getItem('questionCount'))-1;
 		$('#displayQuestion').empty();
@@ -153,12 +172,11 @@ $('#btnSaveNext').on('click', function(){
 			$('#btnPreviousQuestion').attr('disabled', true);
 		}
 		if((num+1) == no_of_ques){
-			$('#btnSaveNext').html('Save');
+			$('#btnSaveNext').attr('disabled', true);
 		}
 		else{
-			$('#btnSaveNext').html('Save & Next');
+			$('#btnSaveNext').attr('disabled', false);
 		}
-	}
 })
 $('#btnPreviousQuestion').on('click', function(){
 	localStorage.setItem('questionCount', parseInt(localStorage.getItem('questionCount'))-1);
@@ -182,12 +200,67 @@ $('#btnPreviousQuestion').on('click', function(){
 		$('#btnPreviousQuestion').attr('disabled', true);
 	}
 	if((num+1) == no_of_ques){
-		$('#btnSaveNext').html('Save');
+		$('#btnSaveNext').attr('disabled', true);
 	}
 	else{
-		$('#btnSaveNext').html('Save & Next');
+		$('#btnSaveNext').attr('disabled', false);
 	}
 })
+
+//On ticking any radio button
+$('#displayQuestion').on('click', 'input[name=options]:radio', function(){
+	var response = {};
+	var option_selected = $(this).val();
+	var exist = false;
+	var ques_id = allQuestions[parseInt(localStorage.getItem('questionCount'))-1].id;
+	response.question_id = ques_id;
+	response.marked_option = option_selected;
+	for(var i = 0;i<(candidateResponse.result).length;i++){
+		if(candidateResponse.result[i].question_id == ques_id){
+			candidateResponse.result[i].marked_option = option_selected;
+			exist=true;
+			break;
+		}
+	}
+	if(!exist){
+		(candidateResponse.result).push(response);
+	}
+	
+	
+	//Count number of questions attempted
+	var count = 0;
+	for(var i = 0;i<(candidateResponse.result).length;i++){
+		var marked = candidateResponse.result[i].marked_option;
+		if(marked != null){
+			count++;
+		}
+	}
+	console.log("Candidate Response: "+JSON.stringify(candidateResponse));
+	console.log("Questions attempted: "+count);
+	$('#quesAttemptedCount').text(count+'/'+no_of_ques);
+	
+})
+$('#btnSubmitYes').on('click', function(){
+	var reportdata={"test":"123"};
+	var count = 0;
+	for(var i = 0;i<(candidateResponse.result).length;i++){
+		var marked = candidateResponse.result[i].marked_option;
+		if(marked != null){
+			count++;
+		}
+	}
+	var user={};
+	user.username = localStorage.getItem('username');
+	user.email = localStorage.getItem('email');
+	user.mobile = localStorage.getItem('mobile');
+	candidateResponse.userDetails = user;
+	localStorage.setItem('candidate-response', JSON.stringify(candidateResponse));
+	
+	window.location.href="test-report.html?total="+no_of_ques+"&attempted="+count;
+					
+})
+
+
 function getQueryParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");

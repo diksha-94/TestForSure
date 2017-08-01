@@ -11,13 +11,30 @@
 			</div>
 		</header>
 		
-		<div id="divInstructions" style="clear:both;" class='show'>
+		<div id="divUserDetails" style="clear:both;" class='show'>
+			<h3>Enter your details</h3>
+			<div class="form-group">
+				<label>Name<span class="red">*</span></label>
+				<input type="text" id="txtName"/>
+			</div>
+			<div class="form-group">
+				<label>E-mail Id<span class="red">*</span></label>
+				<input type="text" id="txtEmail"/>
+			</div>
+			<div class="form-group">
+				<label>Mobile Number</label>
+				<input type="text" id="txtMobile"/>
+			</div>				
+			<button type="button" id="btnNextToInstructions">Next</button>
+		</div>
+		
+		<div id="divInstructions" style="clear:both;" class='hide'>
 			<h3>Instructions</h3>
 			<span>1.</span>
 			<span>2.</span>
 			<span>3.</span>
 			<span>4.</span>
-			<span>5.</span>
+			<span>5.</span>					
 			<button type="submit" id="btnProceed">Proceed</button>
 		</div>
 		
@@ -60,12 +77,34 @@
 			</div>
 			<div id="footer" style="clear:both;">
 				<button type="button" id="btnPreviousQuestion" disabled='disabled'>Previous</button>
-				<button type="button" id="btnSaveNext">Save & Next</button>
-				<button type="button" id="btnSubmitTest">Submit Test</button>
+				<button type="button" id="btnSaveNext">Next</button>
+				
+				<button type="button" id="btnSubmitTest"  data-toggle='modal' data-target='#submitTestModal' >Submit Test</button>
+				
 			</div>
 		</div>
 		
-		
+		<!--Modal to submit the test-->
+		<div class="modal fade" id="submitTestModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Submit Test</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to submit test?</p>
+					</div>
+					<div class="modal-footer">
+					<form action="test-report.html">
+						<button type="submit" id="btnSubmitYes" class="btn btn-default" data-dismiss="modal">Yes</button>
+						<button type="button" id="btnSubmitNo" class="btn btn-default" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		
 		<script src="../js/jquery-2.2.2.min.js"></script>

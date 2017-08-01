@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Test Report</title>
+		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
+	</head>
+	<body>
+		<header>
+			<div style="float:left;"><h3>TEST-FOR-SURE</h3></div>
+			<div style="float:left;">
+				<h4 id="categoryDisplay"></h4>
+			</div>
+		</header>
+		
+		<div id="testSummary" style="clear:both;">
+			<h2>TEST SUMMARY</h2>
+				<div style="border:solid red 1px">
+					<label>Total Questions: </label><label id="idTotal"></label></br>
+					<label>Attempted: </label><label id="idAttempted"></label></br>
+					<label>Un-attempted: </label><label id="idUnattempted"></label></br>
+					<button type="button" id="btnGenerateReport">Generate Report</button>
+				</div>
+		</div>
+		
+		<div id="testReport" class="hide" style="clear:both;">
+			<label>Test Id: </label><label id="idTestId"></label></br>
+			<label>Total Questions: </label><label id="idTotalQues"></label></br>
+			<label>Questions Attempted: </label><label id="idAttemptedQues"></label></br>
+			<label>Correct Questions: </label><label id="idCorrect"></label></br>
+			<label>Incorrect Questions: </label><label id="idIncorrect"></label></br>
+			<label>Marks Scored Attempted: </label><label id="idMarksScored"></label></br>
+		</div>
+		
+		
+		<script src="../js/jquery-2.2.2.min.js"></script>
+		<script src="../js/ckeditor.js"></script>
+		<script src="../adapters/jquery.js"></script>
+		<script src="../js/jquery.validate.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/test-report.js"></script>
+		
+	</body>
+</html>

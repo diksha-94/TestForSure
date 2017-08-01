@@ -1,0 +1,8 @@
+package edu.tests.TestForSure.service;
+
+public class GeneralFunctionality {
+	
+	public static void generateTestReport(ArrayList<Result> candidateResponse, ){
+		
+	}
+}

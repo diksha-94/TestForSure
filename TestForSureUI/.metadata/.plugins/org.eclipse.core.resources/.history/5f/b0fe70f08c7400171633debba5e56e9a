@@ -1,0 +1,10 @@
+package B;
+
+import A.First;
+import B.Second;
+public class Third extends Second{
+	public static void main(String[] args){
+	//Third obj = new Third();
+		//System.out.println(obj.a);
+	}
+}

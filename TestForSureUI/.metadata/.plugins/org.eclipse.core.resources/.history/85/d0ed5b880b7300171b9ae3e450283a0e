@@ -1,0 +1,12 @@
+package edu.tests.TestForSure.service;
+
+import java.util.*;
+import edu.tests.TestForSure.entity.Question;
+import edu.tests.TestForSure.entity.Result;
+
+public class GeneralFunctionality {
+	
+	public static void generateTestReport(ArrayList<Result> candidateResponse, GetQuestionsResponse actualResponse){
+		
+	}
+}
