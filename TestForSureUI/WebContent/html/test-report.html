@@ -21,13 +21,53 @@
 				</div>
 		</div>
 		
-		<div id="testReport" class="hide" style="clear:both;">
-			<label>Test Id: </label><label id="idTestId"></label></br>
-			<label>Total Questions: </label><label id="idTotalQues"></label></br>
-			<label>Questions Attempted: </label><label id="idAttemptedQues"></label></br>
-			<label>Correct Questions: </label><label id="idCorrect"></label></br>
-			<label>Incorrect Questions: </label><label id="idIncorrect"></label></br>
-			<label>Marks Scored Attempted: </label><label id="idMarksScored"></label></br>
+		<div id="testReportGeneral" class="hide" style="clear:both;">
+			<h1>
+				Congrats <strong><span id="idUsername"></span></strong> !</br>
+				Your rank is  <strong><span id="idYourRank"></span></strong> out of <strong><span id="idTotalCandidate"></span></strong> Test Takers</br>
+			</h1>
+			<div>
+				<div style='border:solid 1px red; width:15%;float:left;'>
+					<div><span id="idScore"></span></div></br>
+					<div><span>Score</span></div>
+				</div>
+				<div style='border:solid 1px red; width:15%;float:left;'>
+					<div><span id="idQuesAttempted"></span></div></br>
+					<div><span>Questions Attempted</span></div>
+				</div>
+				<div style='border:solid 1px red; width:15%;float:left;'>
+					<div><span id="idTime"></span></div></br>
+					<div><span>Time taken</span></div>
+				</div>
+				<div style='border:solid 1px red; width:15%;float:left;'>
+					<div><span id="idAccuracy"></span></div></br>
+					<div><span>Accuracy</span></div>
+				</div>
+				<div style='border:solid 1px red; width:15%;float:left;'>
+					<div><span id="idPercentile"></span></div></br>
+					<div><span>Percentile</span></div>
+				</div>
+			</div>
+			<div style="clear:both;">
+				<h3>Questions chart</h3>
+				<div style="float:left;">
+					<canvas id="questionsPieChart"></canvas>
+				</div>
+				<div id="questionsSummary" style="float:left;">
+					<div>
+						<span style="height:10px; width:10px; background-color:green;"></span>
+						Correct: <span id="idCorrect"></span> Qs
+					</div></br>
+					<div>
+						<span style="height:10px; width:10px; background-color:red;"></span>
+						Incorrect: <span id="idIncorrect"></span> Qs
+					</div></br>
+					<div>
+						<span style="height:10px; width:10px; background-color:yellow;"></span>
+						Unattempted: <span id="idNotattempted"></span> Qs
+					</div>
+				</div>
+			</div>
 		</div>
 		
 		

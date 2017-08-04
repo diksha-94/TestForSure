@@ -8,9 +8,9 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.ExamSubcategory"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TestDetails"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetSingleTestDetailsResponse"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserDetails"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestDAO"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.service.GeneralFunctionality"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestDAO"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 </qualifiedTypeNameHistroy>
