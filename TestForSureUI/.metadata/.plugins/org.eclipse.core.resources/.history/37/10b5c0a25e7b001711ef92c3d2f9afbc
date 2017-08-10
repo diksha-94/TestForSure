@@ -1,0 +1,29 @@
+package edu.tests.TestForSure.service;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.tests.TestForSure.datalayer.QuestionBankDAO;
+import edu.tests.TestForSure.response.GetQuestionsBankResponse;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/test-for-sure/question-bank")
+public class QuestionBankServices {
+	@RequestMapping(method = {RequestMethod.GET}, value = "/get-questions")
+	public GetQuestionsBankResponse getQuestionsBank( @RequestParam(value = "categoryId", required = true) int categoryId,
+												@RequestParam(value = "subcategoryId", required = false) int subcategoryId){
+		System.out.println("Calling get questions from question bank service");;
+		GetQuestionsBankResponse response = null;
+		try{
+			response = QuestionBankDAO.getQuestions(categoryId, subcategoryId);
+		}
+		catch(Exception e){
+			System.out.println("Exception in service: "+e.getMessage());
+		}
+		return response;
+	}
+}

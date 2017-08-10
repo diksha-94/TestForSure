@@ -437,6 +437,11 @@ $('#btnPublishTest').on('click', function(){
             });
 })
 
+
+//Adding questions from question bank
+$('#addFromQuestionBank').on('click', function(){
+	window.location.href = "add-questions-from-bank.html";
+})
 $(document).ready(function () {
 	console.log("Document is ready");
 	

@@ -1,8 +1,0 @@
-
-public class First {
-	protected int a;
-	public static void main(String[] args){
-	//Third obj = new Third();
-		//System.out.println(obj.a);
-	}
-}

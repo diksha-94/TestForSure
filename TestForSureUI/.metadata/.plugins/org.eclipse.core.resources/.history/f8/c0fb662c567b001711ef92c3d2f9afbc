@@ -1,0 +1,76 @@
+package edu.tests.TestForSure.datalayer;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import edu.tests.TestForSure.common.DBConnection;
+import edu.tests.TestForSure.entity.QuestionBank;
+import edu.tests.TestForSure.entity.TestDetails;
+import edu.tests.TestForSure.response.GetQuestionsBankResponse;
+import edu.tests.TestForSure.response.GetTestDetailsResponse;
+import edu.tests.TestForSure.sql.CreateQuestionBankQueries;
+import edu.tests.TestForSure.sql.CreateTestQueries;
+
+public class QuestionBankDAO {
+	public static GetQuestionsBankResponse getQuestions(int categoryId, int subCatId){
+		System.out.println("Calling Get questions from Question Bank DAO");
+		GetQuestionsBankResponse response = new GetQuestionsBankResponse();
+		Connection conn = DBConnection.getDBConnection();
+		String query = "";
+		if(categoryId == 0) {
+			if(subCatId!=0) {
+				response.setStatus(false);
+				response.setMessage("Please select the test category as well when subcategory is specified");
+				return response;
+			}
+			else if(subCatId==0){
+				query = CreateQuestionBankQueries.getQuestionsQueryBuilder();
+			}
+		}
+		else if(categoryId != 0){
+			if(subCatId == 0){
+				query = CreateQuestionBankQueries.getQuestionsQueryBuilder(categoryId);
+			}
+			else if(subCatId != 0){
+				query = CreateQuestionBankQueries.getQuestionsQueryBuilder(categoryId, subCatId);
+			}
+		}
+		
+		System.out.println("Query: "+query);
+		ResultSet rs = null;
+		ArrayList<QuestionBank> list = new ArrayList<QuestionBank>();
+		try{
+			Statement statement = conn.createStatement();
+			rs = statement.executeQuery(query);
+			if(rs.isBeforeFirst()){
+				while(rs.next()){
+					QuestionBank question = new QuestionBank();
+					question.setId(rs.getInt(1));
+					question.setTest_id(rs.getString(2));
+					question.setQues_type;(rs.getInt(3));
+					question.setTestTitle(rs.getString(4));
+					question.setNo_of_ques(rs.getInt(5));
+					question.setTime_limit(rs.getInt(6));
+					question.setCorrect_ques_marks(rs.getInt(7));
+					question.setNegative_marks(rs.getInt(8));
+					question.setActive(rs.getBoolean(9));
+					list.add(question);
+				}
+				response.setTestDetails(list);
+				response.setStatus(true);
+				response.setMessage("");
+			}
+			else{
+				response.setStatus(false);
+				response.setMessage("No tests found");
+			}
+		}
+		catch(Exception e){
+			System.out.println("Exception from DAO : "+e.getMessage());
+		}
+		return response;
+	}
+	
+}

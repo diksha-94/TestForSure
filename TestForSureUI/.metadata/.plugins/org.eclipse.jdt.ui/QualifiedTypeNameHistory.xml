@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetTestDetailsResponse"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.Question"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetQuestionsResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.ExamCategory"/>
@@ -13,4 +12,8 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.service.GeneralFunctionality"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestDAO"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.QuestionBankDAO"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AddQuestionsFromBankRequest"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateQuestionBankQueries"/>
 </qualifiedTypeNameHistroy>
