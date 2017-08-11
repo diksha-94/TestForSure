@@ -64,10 +64,12 @@ $('#btnAddToTest').on('click', function(){
                 url: "http://localhost:8083/test-for-sure/question-bank/add-questions-to-test",
                 type: "POST",
                 data: JSON.stringify(requestData),
+				contentType: 'application/json',
                 dataType: 'json',
                 success: function (result) {
 					if(result.status){
 						console.log(result.message);
+						window.location.href = "create-test.html?from=bank"
 					}
 					else if(!result.status){
 						console.log("Error: "+result.message);

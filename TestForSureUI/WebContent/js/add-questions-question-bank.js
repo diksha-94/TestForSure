@@ -107,7 +107,7 @@ $('#addQuesForm').validate({
 		requestData.optionB=$('#txtoptionB').val();
 		requestData.optionC=$('#txtoptionC').val();
 		requestData.optionD=$('#txtoptionD').val();
-		requestData.correct_option=$('#txtCorrectOption').val();
+		requestData.correct_option=$("input[name='radioCorrectOption']:checked").val();
 		requestData.explanation=$('#txtExplanation').val();
 		console.log(JSON.stringify(requestData));
 		
@@ -159,6 +159,10 @@ $('#btnAddCategoryModal').on('click', function(){
 					value: ((result.message).split("-"))[1],
 					text: category
 				}));
+				$('#ddCategory').val(((result.message).split("-"))[1]);
+				$('#ddSubcategory').attr('disabled', false);
+				$('#btnAddSubcategory').attr('disabled', false);
+				$('#txtCategory').val('');
 			}
 			else if(!result.status){
 				console.log("Subject category can't be added: "+result.message);
@@ -191,6 +195,8 @@ $('#btnAddSubcategoryModal').on('click', function(){
 					value: ((result.message).split("-"))[1],
 					text: subcategory
 				}));
+				$('#ddSubcategory').val(((result.message).split("-"))[1]);
+				$('#txtSubcategory').val('');
 			}
 			else if(!result.status){
 				console.log("Subject category can't be added: "+result.message);
@@ -266,6 +272,7 @@ $(document).ready(function () {
 		getCategories();
 		
 		$('#ddSubcategory').attr('disabled', false);
+		$('#btnAddSubcategory').attr('disabled', false);
 		$('#ddSubcategory').val("0");
 		var allQuestions = {};
 		allQuestions = JSON.parse(localStorage.getItem('Question_Bank_Questions'));
@@ -276,8 +283,9 @@ $(document).ready(function () {
 		var deleteButton = "<button type='button' class='form-control' id='deleteQuestion' data-toggle='modal' data-target='#deleteQuestionModal'>Delete Question</button>"
 		$('#buttonDiv').append(deleteButton);
 		$.each(allQuestions.questions, function(i, question){
-			//console.log(question.id);
 			if(question.id == question_id){
+				console.log("Question to update: "+JSON.stringify(question));
+			
 				if(question.question_type == "Simple"){
 					$('#ddquesType').prop('checked', false);
 					$('#paraTextDiv').removeClass('show');
@@ -295,11 +303,12 @@ $(document).ready(function () {
 				$('#txtoptionB').val(question.optionB);
 				$('#txtoptionC').val(question.optionC);
 				$('#txtoptionD').val(question.optionD);
-				$('#txtCorrectOption').val(question.correct_option);
+				$("input[name='radioCorrectOption'][value='"+question.correct_option+"']").prop('checked', true);
 				$('#txtExplanation').val(question.explanation);
 				console.log(question.category_id);
 				//TODO: handle category id and subcategory in case of update question
-				//$("#ddCategory option[value='1']").prop('selected', true);
+				$("#ddCategory").val(""+question.category_id);
+				//$("#ddSubcategory").val(""+question.subcategory_id);
 				//$('#ddSubCategory').val("1");
 				//$('#ddSubcategory').val(question.subcategory_id);
 				
@@ -320,10 +329,13 @@ $(document).ready(function () {
 					$("#ddSubcategory").html(subcategories);
 					
 					$("#ddSubcategory").attr("disabled", true);
+					$("#btnAddSubcategory").attr("disabled", true);
+					
 					
 				}
 				else{
 					$("#ddSubcategory").attr("disabled", false);
+					$("#btnAddSubcategory").attr("disabled", false);
 				
 				$.ajax({
                 url: "http://localhost:8083/test-for-sure/question-bank/get-subject-subcategory?categoryId="+categorySelected,

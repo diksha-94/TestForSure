@@ -1,3 +1,30 @@
+function getCategoriesOnLoad(){
+	$.ajax({
+                url: "http://localhost:8083/test-for-sure/test/get-category",
+                type: "GET",
+                
+                dataType: 'json',
+                success: function (result) {
+					if(result.status){
+						var categories=[];
+						categories.push("<option value='0'>Select</option>");
+						$.each(result.categoryList, function(i,cat){
+							var newOption = "<option value='"+cat.id+"'> "+cat.category+"</option>";
+							categories.push(newOption);
+							
+						})
+						$("#ddCategory").html(categories);
+					}
+					else if(!result.status){
+						console.log("Error: "+result.status);
+					}
+                },
+                error: function () {
+					console.log("Error in getting test categories");
+                }
+            });
+}
+
 // Setting Rules for testDetailsForm Validations
 var rules = {
     'quesName': {
@@ -85,8 +112,9 @@ function uniqTestId() {
 $("#addNewQuestion").on("click", function(){
 	$("#quesEditor").removeClass('hide');
 	$('.editor').val('');
-	$('#ddquesType').val('');
-	$('#paraTextDiv').addClass('hide');
+	$('#ddquesType').prop('checked', true);
+	$('#paraTextDiv').removeClass('hide');
+	$('#paraTextDiv').addClass('show');
 })
 
 $('#ddquesType').on('change', function() {
@@ -99,6 +127,18 @@ $('#ddquesType').on('change', function() {
 	else if(quesType == false){
 		$('#paraTextDiv').removeClass('show');
 		$('#paraTextDiv').addClass('hide');
+	}
+})
+$('#ddquesTypeUpdate').on('change', function() {
+	var quesType = $(this).prop('checked');
+	
+	if(quesType == true){
+		$('#paraTextDivUpdate').removeClass('hide');
+		$('#paraTextDivUpdate').addClass('show');
+	}
+	else if(quesType == false){
+		$('#paraTextDivUpdate').removeClass('show');
+		$('#paraTextDivUpdate').addClass('hide');
 	}
 })
 /*var quesRules = {
@@ -147,7 +187,7 @@ $('#addQuesForm').validate({
 		requestData.optionB=$('#txtoptionB').val();
 		requestData.optionC=$('#txtoptionC').val();
 		requestData.optionD=$('#txtoptionD').val();
-		requestData.correct_option=$('#txtCorrectOption').val();
+		requestData.correct_option=$("input[name='radioCorrectOption']:checked").val();
 		requestData.explanation=$('#txtExplanation').val();
 		console.log(JSON.stringify(requestData));
 		
@@ -202,7 +242,7 @@ function getQuestionsOnTestId(test_id){
 								var forAllId = test_id+"-"+question.id;
 								var newQuestion = "<div style='border:solid 1px red;'>"+
 												"</br>Question Id: <span id = 'questionId-" + (forAllId) + "'>"+question.id+"</span>"+
-												"</br>Question Type: "+question.ques_type;
+												"</br>Question Type: <span id = 'questionType-" + (forAllId) + "'>"+question.ques_type+"</span>";
 								if((question.ques_type).toLowerCase() == "paragraph"){
 									newQuestion += "</br>Paragraph text: <span id = 'paraText-" + (forAllId) + "'>"+question.paragraph_text+"</span>";
 								}
@@ -246,13 +286,25 @@ function saveDetails(btnId){
 	if(values[0] == "Update"){
 		//$('#updateContent').append($('#quesEditor').html());
 		//$('#txtPara').val($('#paraText-'+values[1]+'-'+values[2]).text());
+		console.log('Question type: '+($('#questionType-'+values[1]+'-'+values[2]).text()));
+		if(($('#questionType-'+values[1]+'-'+values[2]).text()) == "Simple"){
+			$('#ddquesTypeUpdate').prop('checked', false);
+			$('#paraTextDivUpdate').removeClass('show');
+			$('#paraTextDivUpdate').addClass('hide');
+		}
+		else if(($('#questionType-'+values[1]+'-'+values[2]).text()) == "Paragraph"){
+			$('#ddquesTypeUpdate').prop('checked', true);
+			$('#paraTextDivUpdate').removeClass('hide');
+			$('#paraTextDivUpdate').addClass('show');
+			$('#txtParaUpdate').val($('#paraText-'+values[1]+'-'+values[2]).text());
+		}
 		console.log($('#quesText-'+values[1]+'-'+values[2]).text()+"----");
 		$('#txtQuesTextUpdate').val($('#quesText-'+values[1]+'-'+values[2]).text());
 		$('#txtoptionAUpdate').val($('#optionA-'+values[1]+'-'+values[2]).text());
 		$('#txtoptionBUpdate').val($('#optionB-'+values[1]+'-'+values[2]).text());
 		$('#txtoptionCUpdate').val($('#optionC-'+values[1]+'-'+values[2]).text());
 		$('#txtoptionDUpdate').val($('#optionD-'+values[1]+'-'+values[2]).text());
-		$('#txtCorrectOptionUpdate').val($('#correctOption-'+values[1]+'-'+values[2]).text());
+		$("input[name=radioCorrectOptionUpdate][value="+$('#correctOption-'+values[1]+'-'+values[2]).text()+"]").prop('checked', true);
 		$('#txtExplanationUpdate').val($('#explanation-'+values[1]+'-'+values[2]).text());
 	}
 }
@@ -362,7 +414,7 @@ $('#btnUpdateSubmit').on('click', function(){
 		requestData.optionB=$('#txtoptionBUpdate').val();
 		requestData.optionC=$('#txtoptionCUpdate').val();
 		requestData.optionD=$('#txtoptionDUpdate').val();
-		requestData.correct_option=$('#txtCorrectOptionUpdate').val();
+		requestData.correct_option=$("input[name='radioCorrectOptionUpdate']:checked").val();
 		requestData.explanation=$('#txtExplanationUpdate').val();
 		console.log(JSON.stringify(requestData));
 		
@@ -400,6 +452,36 @@ $('#btnBackTestDetails').on('click', function(){
 	$('#addQuestions').addClass('hide');
 	$('#testDetails').removeClass('hide');
 	$('#testDetails').addClass('show');
+	getCategoriesOnLoad();
+	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
+	var type= "GET";
+	$.ajax({
+            url: getTest_url,
+            type: type,
+			contentType: 'application/json',
+			//dataType: 'json',
+            success: function (response) {
+				console.log("Get test response: "+JSON.stringify(response));
+                if (response.status) {
+					var categoryId = ""+response.category;
+					console.log("Test details fetched: "+categoryId);
+					$('#txtTitle').val(response.testDetails.testTitle);
+					$('#ddCategory').val(""+response.testDetails.cat_id);
+					$('#ddSubcategory').val(""+response.testDetails.subcat_id);
+					$('#txtQues').val(response.testDetails.no_of_ques);
+					$('#txtTime').val(response.testDetails.time_limit);
+					$('#txtMarks').val(response.testDetails.correct_ques_marks);
+					$('#txtNegativeMarks').val(response.testDetails.negative_marks);
+                }
+                else if (!response.status) {
+                    console.log("Error in getting test details with test id: "+localStorage.getItem('test_id')+"    Message: "+response.message);
+                }
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+        });
 	$('#btnSaveNext').text('Update & Next');
 })
 
@@ -442,48 +524,123 @@ $('#btnPublishTest').on('click', function(){
 $('#addFromQuestionBank').on('click', function(){
 	window.location.href = "add-questions-from-bank.html";
 })
+
+//Adding new category
+$('#btnAddCategoryModal').on('click', function(){
+	var category = $('#txtCategory').val();
+	var type="POST";
+	var requestData = {};
+	requestData.category = category;
+		console.log("Requestdata for add category: "+JSON.stringify(requestData));
+	$.ajax({
+            url: "http://localhost:8083/test-for-sure/test/add-category",
+            type: type,
+            data: JSON.stringify(requestData),
+            dataType: 'json',
+			contentType: 'application/json',
+            success: function (result) {
+			if(result.status){
+				console.log("Subject category added successfully: "+result.message);
+				$('#ddCategory').append($('<option>', {
+					value: ((result.message).split("-"))[1],
+					text: category
+				}));
+				$('#ddCategory').val(((result.message).split("-"))[1]);
+				$('#ddSubcategory').attr('disabled', false);
+				$('#btnAddSubcategory').attr('disabled', false);
+				$('#txtCategory').val('');
+			}
+			else if(!result.status){
+				console.log("Subject category can't be added: "+result.message);
+			}
+           },
+           error: function () {
+				console.log("Error in adding subject category");
+           }
+      });
+})
+
+//Adding new subcategory
+$('#btnAddSubcategoryModal').on('click', function(){
+	var subcategory = $('#txtSubcategory').val();
+	var type="POST";
+	var requestData = {};
+	requestData.cat_id = $('#ddCategory  option:selected').val();
+	requestData.subcategory = subcategory;
+	console.log("Requestdata for add subcategory: "+JSON.stringify(requestData));
+	$.ajax({
+            url: "http://localhost:8083/test-for-sure/test/add-subcategory",
+            type: type,
+            data: JSON.stringify(requestData),
+            dataType: 'json',
+			contentType: 'application/json',
+            success: function (result) {
+			if(result.status){
+				console.log("Subject subcategory added successfully: "+result.message);
+				$('#ddSubcategory').append($('<option>', {
+					value: ((result.message).split("-"))[1],
+					text: subcategory
+				}));
+				$('#ddSubcategory').val(((result.message).split("-"))[1]);
+				$('#txtSubcategory').val('');
+			}
+			else if(!result.status){
+				console.log("Subject category can't be added: "+result.message);
+			}
+           },
+           error: function () {
+				console.log("Error in adding subject category");
+           }
+      });
+})
+
+function getQueryParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 $(document).ready(function () {
 	console.log("Document is ready");
-	
-	localStorage.clear();
+	var action = getQueryParameterByName('from');
+	if(action == 'bank'){
+		//means returning from question bank
+		$('#addQuestions').removeClass('hide');
+		$('#addQuestions').addClass('show');
+		$('#testDetails').removeClass('show');
+		$('#testDetails').addClass('hide');
+		getQuestionsOnTestId(localStorage.getItem('test_id'));
+	}
+	else{
+		//means when loaded for the first time
+		localStorage.clear();
 	var id = (Math.floor((Math.random() * 100000) + 1));
 	localStorage.setItem('test_id', id);
 	localStorage.setItem("questionCount",0);
 	//to get the test categories on load and populate in category dropdown
-	         $.ajax({
-                url: "http://localhost:8083/test-for-sure/test/get-category",
-                type: "GET",
-                
-                dataType: 'json',
-                success: function (result) {
-					if(result.status){
-						var categories=[];
-						categories.push("<option value='0'>Select</option>");
-						$.each(result.categoryList, function(i,cat){
-							var newOption = "<option value='"+cat.id+"'> "+cat.category+"</option>";
-							categories.push(newOption);
-							
-						})
-						$("#ddCategory").html(categories);
-					}
-					else if(!result.status){
-						console.log("Error: "+result.status);
-					}
-                },
-                error: function () {
-					console.log("Error in getting test categories");
-                }
-            });
+	         getCategoriesOnLoad();
+	}
+	
 			
 			//to get the subcategories on change of category
 			$("#ddCategory").on('change',function() {
 				var categorySelected = $(this).val();
 				console.log("Selected Category: "+categorySelected);
 				if(categorySelected == '0'){
+					$('#ddSubcategory').empty();
+					$('#ddSubcategory').append($('<option>', {
+						value: '0',
+						text: 'Select'
+					}));
 					$("#ddSubcategory").attr("disabled", true);
+					$("#btnAddSubcategory").attr("disabled", true);
 				}
 				else{
 					$("#ddSubcategory").attr("disabled", false);
+					$("#btnAddSubcategory").attr("disabled", false);
 				
 				$.ajax({
                 url: "http://localhost:8083/test-for-sure/test/get-subcategory?categoryId="+categorySelected,

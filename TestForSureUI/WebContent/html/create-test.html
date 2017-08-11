@@ -11,11 +11,10 @@
 						<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li><a href="#">Home</a></li>
-						<li><a href="add-category.html">Add category</a></li>
-						<li><a href="add-subcategory.html">Add subcategory</a></li>
+						<li><a href="admin-dashboard.html">Home</a></li>
 						<li class="active"><a href="create-test.html">Create Test</a></li>
 						<li><a href="show-tests-admin.html">Show Tests</a></li>
+						<li><a href="question-bank.html">Question Bank</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -30,23 +29,31 @@
 				<h3 style="float:left;">Publish Test</h3>
 			</div>
 		</div>
-			<div id="testDetails" style='clear:both;border:solid 1px grey;width:50%;'>
+			<div id="testDetails" style='clear:both;border:solid 1px grey;width:80%;'>
 				<form role="form" id="testDetailsForm">
-					<div class="form-group">
+				<div>
+					<div class="form-group" style='float:left;width:35%;'>
 						<label>Category <span class="red">*</span></label>
 						<select id="ddCategory" required="required">
 							<option value="0">Select</option>
 						</select>
 					</div>
-					
-					<div class="form-group">
+					<div style='float:left;'>
+						<button type="button" id="btnAddCategory" data-toggle="modal" data-target="#addCategoryModal">Add new category</button>
+					</div>
+				</div>
+				<div style="clear:both;">
+					<div class="form-group" style='float:left;width:35%;'>
 						<label>Subcategory <span class="red">*</span></label>
 						<select id="ddSubcategory" disabled="disabled" required="required">
 							<option value="0">Select</option>
 						</select>
 					</div>
-					
-					<div class="form-group">
+					<div style='float:left;'>
+						<button type="button" id="btnAddSubcategory" disabled="disabled" data-toggle="modal" data-target="#addSubcategoryModal">Add new subcategory</button>
+					</div>
+				</div>
+					<div class="form-group" style="clear:both;">
 						<label>Test Title <span class="red">*</span></label>
 						<input type="text" name="titleName" id="txtTitle" required="required"/>
 					</div>
@@ -78,18 +85,18 @@
 		
 		
 		<!--Add Questions-->
-		<div id="addQuestions" class="hide" style='clear:both;border:solid 1px grey;width:50%;'>
+		<div id="addQuestions" class="hide" style='clear:both;border:solid 1px grey;width:80%;'>
 			<span>Number of Questions added: </span><span id="numberOfQuestions"></span>
 			<div class="hide" id="addedQuestions">
 			</div>
-			<div class="hide" id="quesEditor" style="width:50%;">
+			<div class="hide" id="quesEditor" style="width:80%;">
 				<form id="addQuesForm">
 					<div>
 						<h1>Add your question here</h1>
 						<div class="form-group">
-							<input type="checkbox" id="ddquesType" value="Paragraph based">Paragraph Based</input>
+							<input type="checkbox" id="ddquesType" value="Paragraph based" checked="checked">Paragraph Based</input>
 						</div>
-						<div class="form-group" id="paraTextDiv" class="hide">
+						<div class="form-group" id="paraTextDiv">
 							<label>Paragraph Text<span class="red">*</span></label>
 							<textarea id="txtPara" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
@@ -99,24 +106,28 @@
 						</div>
 						<div class="form-group">
 							<label>Option A<span class="red">*</span></label>
+							<input type="radio" value="a" id="correctOptionA" name="radioCorrectOption">Correct option</input>
 							<textarea id="txtoptionA" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
 						<div class="form-group">
 							<label>Option B<span class="red">*</span></label>
+							<input type="radio" value="b" id="correctOptionB" name="radioCorrectOption">Correct option</input>
 							<textarea id="txtoptionB" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
 						<div class="form-group">
 							<label>Option C<span class="red">*</span></label>
+							<input type="radio" value="c" id="correctOptionC" name="radioCorrectOption">Correct option</input>
 							<textarea id="txtoptionC" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
 						<div class="form-group">
 							<label>Option D<span class="red">*</span></label>
+							<input type="radio" value="d" id="correctOptionD" name="radioCorrectOption">Correct option</input>
 							<textarea id="txtoptionD" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
-						<div class="form-group">
+						<!--<div class="form-group">
 							<label>Correct option<span class="red">*</span></label>
 							<textarea id="txtCorrectOption" class="editor" rows="10" cols="50" required="required"></textarea>
-						</div>
+						</div>-->
 						<div class="form-group">
 							<label>Explanation<span class="red">*</span></label>
 							<textarea id="txtExplanation" class="editor" rows="10" cols="50" required="required"></textarea>
@@ -212,7 +223,7 @@
 						<div class="form-group">
 							<input type="checkbox" id="ddquesTypeUpdate" value="Paragraph based">Paragraph Based</input>
 						</div>
-						<div class="form-group" id="paraTextDiv" class="hide">
+						<div class="form-group" id="paraTextDivUpdate">
 							<label>Paragraph Text<span class="red">*</span></label>
 							<textarea id="txtParaUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
@@ -222,24 +233,28 @@
 						</div>
 						<div class="form-group">
 							<label>Option A<span class="red">*</span></label>
+							<input type="radio" value="a" id="correctOptionUpdateA" name="radioCorrectOptionUpdate">Correct option</input>
 							<textarea id="txtoptionAUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
 						<div class="form-group">
 							<label>Option B<span class="red">*</span></label>
+							<input type="radio" value="b" id="correctOptionUpdateB" name="radioCorrectOptionUpdate">Correct option</input>
 							<textarea id="txtoptionBUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
 						<div class="form-group">
 							<label>Option C<span class="red">*</span></label>
+							<input type="radio" value="c" id="correctOptionUpdateC" name="radioCorrectOptionUpdate">Correct option</input>
 							<textarea id="txtoptionCUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
 						<div class="form-group">
 							<label>Option D<span class="red">*</span></label>
+							<input type="radio" value="d" id="correctOptionUpdateD" name="radioCorrectOptionUpdate">Correct option</input>
 							<textarea id="txtoptionDUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
-						<div class="form-group">
+						<!--<div class="form-group">
 							<label>Correct option<span class="red">*</span></label>
 							<textarea id="txtCorrectOptionUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
-						</div>
+						</div>-->
 						<div class="form-group">
 							<label>Explanation<span class="red">*</span></label>
 							<textarea id="txtExplanationUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
@@ -251,6 +266,52 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Add new category modal -->
+		<div class="modal fade" id="addCategoryModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add new category</h4>
+					</div>
+					<div class="modal-body">
+						<label>Enter category<span class="red">*</span></label>
+						<input type="text" id="txtCategory"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnAddCategoryModal" class="btn btn-default" data-dismiss="modal">Add</button>
+						<button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add new subcategory modal -->
+		<div class="modal fade" id="addSubcategoryModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add new subcategory</h4>
+					</div>
+					<div class="modal-body">
+						<label>Enter subcategory<span class="red">*</span></label>
+						<input type="text" id="txtSubcategory"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnAddSubcategoryModal" class="btn btn-default" data-dismiss="modal">Add</button>
+						<button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
 		<script src="../js/jquery-2.2.2.min.js"></script>
 		<script src="../js/ckeditor.js"></script>
 		<script src="../adapters/jquery.js"></script>
