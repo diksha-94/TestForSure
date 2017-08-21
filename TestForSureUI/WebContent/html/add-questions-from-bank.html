@@ -11,7 +11,10 @@
 						<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li><a href="#">Home</a></li>
+						<li><a href="admin-dashboard.html">Home</a></li>
+						<li class="active"><a href="create-test.html">Create Test</a></li>
+						<li><a href="show-tests-admin.html">Show Tests</a></li>
+						<li><a href="question-bank.html">Question Bank</a></li>
 						
 					</ul>
 				</div>
@@ -37,10 +40,46 @@
 		<!--Div containing all the Questions-->
 		<div id="questions" style='clear:both;'>
 		</div>
-		<div>
-			<button type="submit" id="btnAddToTest">Add selected Questions to test</button>
+		<div style="clear:both;">
+			<div>
+				<button type="submit" id="btnAddToTest">Add selected Questions to test</button>
+			</div>
+			<div>
+				<button type="button" id="btnBackToAddQues">Back to add Questions</button>
+			</div>
+			
 		</div>
 	
+	
+		<!-- Show Question modal -->
+		<div class="modal fade" id="showQuestionModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Question details</h4>
+					</div>
+					<div class="modal-body">
+						<label>Category: </label><span id='txtShowCategory'></span></br>
+						<label>Subcategory: </label><span id='txtShowSubcategory'></span></br>
+						<label>Question Type: </label><span id='txtShowType'></span></br>
+						<label>Paragraph Text: </label><span id='txtShowPara'></span></br>
+						<label>Question Text: </label><span id='txtShowQues'></span></br>
+						<label>Option A: </label><span id='txtShowOptionA'></span></br>
+						<label>Option B: </label><span id='txtShowOptionB'></span></br>
+						<label>Option C: </label><span id='txtShowOptionC'></span></br>
+						<label>Option D: </label><span id='txtShowOptionD'></span></br>
+						<label>Correct Option: </label><span id='txtShowCorrect'></span></br>
+						<label>Explanation: </label><span id='txtShowExplanation'></span></br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script src="../js/jquery-2.2.2.min.js"></script>
 		<script src="../js/ckeditor.js"></script>
 		<script src="../adapters/jquery.js"></script>

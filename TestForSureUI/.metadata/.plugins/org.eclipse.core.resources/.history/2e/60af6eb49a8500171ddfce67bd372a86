@@ -1,0 +1,5 @@
+server.port = 8083
+spring.mail.host=smtp.gmail.com
+spring.mail.port= 25
+spring.mail.username= bajaj.diksha45@gmail.com
+spring.mail.password= DIK@bajaj123

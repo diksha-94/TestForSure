@@ -1,0 +1,12 @@
+package edu.tests.TestForSure.sql;
+
+import edu.tests.TestForSure.entity.User;
+
+public class CreateUserQueries {
+	
+	public static String insertUserDetailsQueryBuilder(User user) {
+		String insertUserDetails = "INSERT into userdetails (name, email, mobileno) values ('"+
+					user.getName() +"' , '" +user.getEmail() + "' , '"+user.getMobileno() + "')";
+		return insertUserDetails;
+	}
+}

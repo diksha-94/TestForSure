@@ -8,7 +8,6 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TestDetails"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetSingleTestDetailsResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserDetails"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.service.GeneralFunctionality"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestDAO"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.QuestionBankDAO"/>
@@ -16,4 +15,22 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AddQuestionsFromBankRequest"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateQuestionBankQueries"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateUserQueries"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.UserDAO"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.RegisterUserRequest"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.User"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserCreds"/>
+<fullyQualifiedTypeName name="java.security.MessageDigest"/>
+<fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AuthenticateUserRequest"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.service.PasswordEncryption"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TopPerformers"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSender"/>
+<fullyQualifiedTypeName name="org.springframework.mail.SimpleMailMessage"/>
 </qualifiedTypeNameHistroy>

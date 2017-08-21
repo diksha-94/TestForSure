@@ -1,0 +1,5 @@
+package edu.tests.TestForSure.entity;
+
+public class RegisterUserRequest {
+
+}

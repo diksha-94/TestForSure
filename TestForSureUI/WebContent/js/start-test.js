@@ -55,6 +55,7 @@ $('#btnProceed').on('click', function(){
 							$.each(result.question, function(i, question) {
 								allQuestions.push(question);
 							});
+							localStorage.setItem('allQuestions', JSON.stringify(allQuestions));
 							console.log(JSON.stringify(allQuestions));
 							$('#displayQuestion').append(questionStructure(result.question[0].paragraph_text, result.question[0].ques_text, result.question[0].optionA, result.question[0].optionB, result.question[0].optionC, result.question[0].optionD));
 							console.log("no_of_ques: "+no_of_ques);

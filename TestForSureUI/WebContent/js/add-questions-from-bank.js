@@ -1,3 +1,5 @@
+var allQuestions = {};
+
 function showQuestions(categoryId, subcategoryId){
 	$('#questions').empty();
 	console.log("Category id: "+categoryId);
@@ -18,10 +20,28 @@ function showQuestions(categoryId, subcategoryId){
 								var newQuestion = questionStructure(i+1, question.question_text, btnId);
 								$('#questions').append(newQuestion);
 							});
+							if(localStorage.getItem("added_questions") != null){
+							var ids = (localStorage.getItem('added_questions')).split(",");
+								
+							$(':checkbox').each(function(i){
+								
+								console.log("ids: "+ids);
+								for(var i = 0;i<ids.length;i++){
+									if(this.id == ids[i]){
+										console.log("Inside");
+										$(this).attr('disabled', true);
+										break;
+									}
+									else{
+										$(this).attr('disabled', false);
+									}
+								}
+							});
+							}
 							var questionsToStore = {};
 							questionsToStore.questions = result.questions;
 							localStorage.setItem('Question_Bank_Questions', JSON.stringify(questionsToStore));
-							
+							allQuestions = questionsToStore;
 						}
 					}
 					else if(!result.status){
@@ -36,11 +56,13 @@ function showQuestions(categoryId, subcategoryId){
 
 function questionStructure(id, question_text, btnId){
 	var onclick = 'add-questions-question-bank.html?action=Update-'+btnId;
+	var onclickDiv = "openViewQuestion('"+btnId+"')";
+	
 	var newQuestion = "<div style='border:solid 1px red ; width:80% ; text-align:center ; clear:both;'>"+
 							"<div style='float:left;width:10%;'><input type='checkbox' class='questionCheck' id='check-"+btnId+"'></div>"+
 							"<div style='float:left;width:10%;'>"+id+"</div>"+
-							"<div style='float:left;width:60%;'>"+(question_text).substring(0,200)+" ...</div>"+
-					"</div>";
+							"<div id='"+btnId+"' style='float:left;width:70%;cursor:pointer;' onclick="+onclickDiv+">"+(question_text).substring(0,200)+" ...</div>"+
+			   		  "</div>";
 					  
 	return newQuestion;
 }
@@ -55,7 +77,8 @@ $('#btnAddToTest').on('click', function(){
 	var index = 0;
 	$(':checkbox:checked').each(function(i){
           console.log(this.id);
-		  requestData.question_id[index] = parseInt(((this.id).split("-"))[2]);
+		  localStorage.setItem('added_questions', localStorage.getItem('added_questions')+','+this.id);
+		  requestData.question_id[index] = (((this.id).split("-"))[2]);
 		  index++;
        });
 	   console.log("Request data: "+JSON.stringify(requestData));
@@ -81,6 +104,46 @@ $('#btnAddToTest').on('click', function(){
             });
 })
 
+//On click of Back to Add Questions
+$('#btnBackToAddQues').on('click', function(){
+	window.location.href = "create-test.html?from=bank";
+})
+
+function openViewQuestion(id){
+	console.log(id);
+	$('#showQuestionModal').modal('show');
+	var question_id = (id.split("-"))[1];
+	console.log("All questions: "+(allQuestions.questions));
+	$.each(allQuestions.questions, function(i, question){
+			if(question.id == question_id){
+				console.log("Question to show: "+JSON.stringify(question));
+				
+				$('#txtShowCategory').text(question.category_name);
+				$('#txtShowSubcategory').text(question.subcategory_name);
+				$('#txtShowType').text(question.question_type);
+				$('#txtShowPara').text(question.paragraph_text);
+				$('#txtShowQues').text(question.question_text);
+				$('#txtShowOptionA').text(question.optionA);
+				$('#txtShowOptionB').text(question.optionB);
+				$('#txtShowOptionC').text(question.optionC);
+				$('#txtShowOptionD').text(question.optionD);
+				$('#txtShowCorrect').text(question.correct_option);
+				$('#txtShowExplanation').text(question.explanation);
+				
+				return false;
+			}
+		})
+}
+
+function getQueryParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 $(document).ready(function () {
 	console.log("Document add questions from question bank is ready");
 	

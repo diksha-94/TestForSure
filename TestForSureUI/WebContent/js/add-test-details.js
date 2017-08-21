@@ -280,7 +280,7 @@ function saveDetails(btnId){
 	console.log(btnId);
 	
 	var values = btnId.split("-");
-	localStorage.setItem('btnid',parseInt(values[2]));
+	localStorage.setItem('btnid',(values[2]));
 	localStorage.setItem('btntest_id',parseInt(values[1]));
 	console.log(parseInt(values[2])+"--"+parseInt(values[1]));
 	if(values[0] == "Update"){
@@ -315,6 +315,8 @@ $("#btnYes").on("click", function () {
 	//var id = $(this).attr('id');
 	//console.log(id);
 	//var values = id.split("-");
+	console.log("id: "+localStorage.getItem('btnid'));
+	var delete_question_id = localStorage.getItem('btnid');
 	deleteRequest.id=localStorage.getItem('btnid');
 	deleteRequest.test_id=localStorage.getItem('btntest_id');
 	console.log("deleteRequest: "+JSON.stringify(deleteRequest));
@@ -335,6 +337,16 @@ $("#btnYes").on("click", function () {
 				$('#numberOfQuestions').text($('#numberOfQuestions').text()-1);
 							
 				getQuestionsOnTestId(localStorage.getItem('btntest_id'));
+				var ids = (localStorage.getItem('added_questions')).split(",");
+				localStorage.setItem('added_questions','');
+				for(var i = 0;i<ids.length;i++){
+					if(((ids[i]).split("-"))[2] == delete_question_id){
+						console.log("Inside match");
+						ids[i] = null;
+					}
+					localStorage.setItem('added_questions', localStorage.getItem('added_questions')+','+ids[i]);
+				}
+				
             }
             else if (delData.status == false) {
                 console.log('Message: '+delData.message);
@@ -404,11 +416,12 @@ $('#btnUpdateSubmit').on('click', function(){
 		var quesType = $('#ddquesTypeUpdate').prop('checked');
 		if(quesType == true){
 			requestData.ques_type="Paragraph";
+			requestData.paragraph_text=$('#txtParaUpdate').val();
 		}
 		else if(quesType == false){
 			requestData.ques_type="Simple";
+			requestData.paragraph_text = "";
 		}
-		requestData.paragraph_text=$('#txtParaUpdate').val();
 		requestData.ques_text=$('#txtQuesTextUpdate').val();
 		requestData.optionA=$('#txtoptionAUpdate').val();
 		requestData.optionB=$('#txtoptionBUpdate').val();
@@ -443,7 +456,6 @@ $('#btnUpdateSubmit').on('click', function(){
             }
            
         });
-    
 })
 
 //On click of Back to Test Details
@@ -466,6 +478,7 @@ $('#btnBackTestDetails').on('click', function(){
 					var categoryId = ""+response.category;
 					console.log("Test details fetched: "+categoryId);
 					$('#txtTitle').val(response.testDetails.testTitle);
+					console.log("Category: "+(""+response.testDetails.cat_id));
 					$('#ddCategory').val(""+response.testDetails.cat_id);
 					$('#ddSubcategory').val(""+response.testDetails.subcat_id);
 					$('#txtQues').val(response.testDetails.no_of_ques);
@@ -522,7 +535,7 @@ $('#btnPublishTest').on('click', function(){
 
 //Adding questions from question bank
 $('#addFromQuestionBank').on('click', function(){
-	window.location.href = "add-questions-from-bank.html";
+	window.location.href = "add-questions-from-bank.html?test_id="+localStorage.getItem('test_id');
 })
 
 //Adding new category
@@ -594,6 +607,15 @@ $('#btnAddSubcategoryModal').on('click', function(){
       });
 })
 
+//On click of Cancel, empty addCategory and addSubcategory text box
+$('#btnCancelAddSubcategory').on('click', function(){
+	$('#txtSubcategory').val('');
+})
+
+//On click of Cancel, empty addCategory and addSubcategory text box
+$('#btnCancelAddCategory').on('click', function(){
+	$('#txtCategory').val('');
+})
 function getQueryParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");

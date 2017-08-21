@@ -83,6 +83,7 @@ $('#addQuesForm').validate({
 		
         var type = 'POST';
         var requestData = {};
+		requestData.id = generateRandomId();
 		var category = $('#ddCategory  option:selected').val();
         var subcategory = $('#ddSubcategory  option:selected').val();
 		if(ques_id != -1){
@@ -208,6 +209,16 @@ $('#btnAddSubcategoryModal').on('click', function(){
       });
 })
 
+//On click of Cancel, empty addCategory and addSubcategory text box
+$('#btnCancelAddSubcategory').on('click', function(){
+	$('#txtSubcategory').val('');
+})
+
+//On click of Cancel, empty addCategory and addSubcategory text box
+$('#btnCancelAddCategory').on('click', function(){
+	$('#txtCategory').val('');
+})
+
 //On click of Yes in the delete question modal box
 $("#btnYes").on("click", function () {
 
@@ -217,7 +228,7 @@ $("#btnYes").on("click", function () {
 	//var values = id.split("-");
 	var action = getQueryParameterByName('action');
 
-	deleteRequest.id=parseInt((action.split("-"))[2]);
+	deleteRequest.id=((action.split("-"))[2]);
 	console.log("deleteRequest: "+JSON.stringify(deleteRequest));
     var deleteUrl = "http://localhost:8083/test-for-sure/question-bank/delete-question";
     var type = 'PUT';
@@ -257,6 +268,17 @@ function getQueryParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+//Generate random string for question_id
+function generateRandomId() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
 $(document).ready(function () {
 	console.log("Document question bank - add questions is ready");
 	
@@ -276,7 +298,6 @@ $(document).ready(function () {
 		$('#ddSubcategory').val("0");
 		var allQuestions = {};
 		allQuestions = JSON.parse(localStorage.getItem('Question_Bank_Questions'));
-		var key = "questions";
 		console.log("All questions: "+(allQuestions.questions));
 		var question_id = (action.split("-"))[2];
 		$('#submitQuestion').text('Update Question');
