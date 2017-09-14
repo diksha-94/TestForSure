@@ -22,7 +22,7 @@ function showTests(categoryId, subCatId){
 												"</br>Time Limit(in mins): "+test.time_limit+
 												"</br>Correct Question Marks: "+test.correct_ques_marks+
 												"</br>Negative marks: "+test.negative_marks+
-												"</br><a href='start-test.html?"+query_string+"' id="+btnId+"class='btn btn-default'>Start Test</a>"
+												"</br><a href='start-test-option.html?"+query_string+"' id="+btnId+" class='btn btn-default'>Start Test</a>"
 												"</div>";
 								$('#tests').append(newTest);
 							});
@@ -39,6 +39,10 @@ function showTests(categoryId, subCatId){
             });
 }
 
+$('#linkLogout').on('click', function(){
+	localStorage.clear();
+	window.location.href = 'home.html';
+})
 //On click of a Start Test button
 /*$('input').on('click', function(){
 	document.href('start-test.html');
@@ -134,7 +138,21 @@ $(document).ready(function () {
 	//Initially, on page load show all the tests(Select in category and subcategory has value 0)
 	showTests(0, 0);
 	
-	
+	console.log("Logged in: "+localStorage.getItem('loggedIn'));
+	if(localStorage.getItem('loggedIn') == "true"){
+		//means the user is logged in
+		$('#loggedInUSer').text(" "+localStorage.getItem('username'));
+		$('#menuLogin').addClass('hide');
+		$('#menuLogin').removeClass('show');
+		$('#menuLogout').removeClass('hide');
+		$('#menuLogout').addClass('show');
+	}
+	else{
+		$('#menuLogin').removeClass('hide');
+		$('#menuLogin').addClass('show');
+		$('#menuLogout').addClass('hide');
+		$('#menuLogout').removeClass('show');
+	}
 	
 })
 

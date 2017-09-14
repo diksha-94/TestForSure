@@ -1,0 +1,29 @@
+<html>
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="home.html">Home</a></li>
+					<li class="active"><a href="show-tests.html">Take Test</a></li>
+					<li><a href="#">News & Notifications</a></li>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#" id="linkLogin">Login/Register</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	
+	<script src="../js/jquery-2.2.2.min.js"></script>
+		<script src="../js/ckeditor.js"></script>
+		<script src="../adapters/jquery.js"></script>
+		<script src="../js/jquery.validate.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+	<script>
+		$('#linkLogin').on('click', function(){
+			$('#loginModal').modal();
+		})
+	</script>
+</html>

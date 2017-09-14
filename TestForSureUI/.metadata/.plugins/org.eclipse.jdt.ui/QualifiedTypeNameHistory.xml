@@ -15,7 +15,6 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AddQuestionsFromBankRequest"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateQuestionBankQueries"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateUserQueries"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.UserDAO"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.RegisterUserRequest"/>
@@ -26,11 +25,13 @@
 <fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AuthenticateUserRequest"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.service.PasswordEncryption"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TopPerformers"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSender"/>
 <fullyQualifiedTypeName name="org.springframework.mail.SimpleMailMessage"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateUserQueries"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.LoginUserResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 </qualifiedTypeNameHistroy>

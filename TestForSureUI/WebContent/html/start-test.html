@@ -2,8 +2,9 @@
 	<head>
 		<title>Start Test</title>
 		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
+		<link href= "../css/custom.css" rel ="stylesheet"/>
 	</head>
-	<body>
+	<body onload="noBack();" onpageshow="if (event.persisted) noBack();">
 		<header>
 			<div style="float:left;"><h3>TEST-FOR-SURE</h3></div>
 			<div style="float:left;">
@@ -43,32 +44,36 @@
 		
 		
 		<div id="divQuestions" style="clear:both;" class="hide">
-			<div id="questionsPanel" style="float:left;border:solid 1px red;width:20%;height:80%;">
+			<div id="questionsPanel" style="float:left;border:solid 1px red;width:25%;height:80%;">
 				<div id="questionNumber">
 				</div>
-				<div id="qestionInstruction">
-					<div style="clear:both">
-						<div style='float:left;border:solid 1px black;width:5%;height:10px'></div><span style="float:left;">Current Question</span>
+				<div id="qestionInstruction" style='clear:both;'>
+					<div class="col-xs-6">
+						<span class="test_icons answered"></span> Answered
 					</div>
-					<div style="clear:both">
-						<div style='float:left;border:solid 1px grey;width:5%;height:10px;background-color:grey;'></div><span style="float:left;">Unattempted</span>
+					<div class="col-xs-6 ">
+						<span class="test_icons skipped"></span> Not Answered
 					</div>
-					<div style="clear:both">
-						<div style='float:left;border:solid 1px green;width:5%;height:10px;background-color:green;'></div><span style="float:left;">Attempted</span>
+					<div class="col-xs-6 ">
+						<span class="test_icons marked"></span> Marked
 					</div>
-				</div>
-				<div style="clear:both;">
-					<button id="btnViewAll">View All Questions</button>
+					<div class="col-xs-6 ">
+						<span class="test_icons unseen"></span> Not Visited
+					</div>
 				</div>
 			</div>
-			<div id="questions" style="float:left;border:solid 1px red;width:60%;height:80%;">
+			<div id="questions" style="float:left;border:solid 1px red;width:55%;height:80%;">
 				<div><h2>Questions</h2></div>
 				<div id="displayQuestion"></div>
 				<div><button id="btnClearSelection">Clear Selection</button></div>
+				<div><button id="btnMarkForReview">Mark this question for review</button></div>
 			</div>
 			<div id="timer" style="float:left;border:solid 1px red;width:20%;height:80%;">
 				<div>
-					<span>Time:</span>
+					<span>Time remaining:</span></br>
+					<span id="idHours"></span>
+					<span id="idMinutes"></span>
+					<span id="idSeconds"></span>
 				</div>
 				<div>
 					<span>Questions Attempted:</span>
@@ -106,6 +111,25 @@
 			</div>
 		</div>
 		
+		<!--Time is over Modal-->
+		<div class="modal fade" id="timeOverModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Time Over</h4>
+					</div>
+					<div class="modal-body">
+						<p>Test time is over!</p>
+					</div>
+					<div class="modal-footer">
+					<form action="test-report.html">
+						<button type="submit" id="btnTimeOverOk" class="btn btn-default" data-dismiss="modal">Ok</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		<script src="../js/jquery-2.2.2.min.js"></script>
 		<script src="../js/ckeditor.js"></script>

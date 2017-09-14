@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getAnswers" key="selection"/>
+		<item value="setUsername" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="setusername"/>
 			<item value="getanswers"/>
 			<item value="manageAllCandidateRank"/>
 			<item value="findCandidateRank"/>
@@ -15,7 +16,6 @@
 			<item value="updateQuestionQueryBuilder"/>
 			<item value="questionAlreadyExistsQueryBuilder"/>
 			<item value="questionBankAlreadyExistsQueryBuilder"/>
-			<item value="addQuestionsFromQuestionBank"/>
 		</list>
 		<list key="replacehistory">
 		</list>

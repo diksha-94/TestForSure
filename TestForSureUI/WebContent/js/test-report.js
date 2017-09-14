@@ -1,5 +1,49 @@
 var report = {};
 var allQuestions = [];
+
+//To download the test report
+$('#downloadReport').on('click', function(){
+        var pdf = new jsPDF('p', 'pt', 'letter');
+        // source can be HTML-formatted string, or a reference
+        // to an actual DOM element from which the text will be scraped.
+        source = $('#candidateReport').html();
+
+        // we support special element handlers. Register them with jQuery-style 
+        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+        // There is no support for any other type of selectors 
+        // (class, of compound) at this time.
+        /*specialElementHandlers = {
+            // element with id of "bypass" - jQuery style selector
+            '#bypassme': function (element, renderer) {
+                // true = "handled elsewhere, bypass text extraction"
+                return true
+            }
+        };*/
+        margins = {
+            top: 80,
+            bottom: 60,
+            left: 10,
+            width: 10
+        };
+        // all coords and widths are in jsPDF instance's declared units
+        // 'inches' in this case
+        pdf.fromHTML(
+            source, // HTML string or DOM elem ref.
+            margins.left, // x coord
+            margins.top, { // y coord
+                //'width': margins.width // max width of content on PDF
+                //'elementHandlers': specialElementHandlers
+            },
+
+            function (dispose) {
+                // dispose: object with X, Y of the last line add to the PDF 
+                //          this allow the insertion of new lines after html
+                pdf.save('Test.pdf');
+            }, margins
+        );
+    })
+
+
 //On click of generate report button
 $('#btnGenerateReport').on('click', function(){
 	console.log("Generating Test Report");
@@ -9,7 +53,7 @@ $('#btnGenerateReport').on('click', function(){
 	$('#testReportGeneral').addClass('show');
 	$('#buttons').removeClass('hide');
 	$('#buttons').addClass('show');
-	
+	console.log("Candidate-response: "+localStorage.getItem('candidate-response'));
 	var generateReport_url = "http://localhost:8083/test-for-sure/test/get-test-result";
 	$.ajax({
                 url: generateReport_url,
@@ -28,6 +72,9 @@ $('#btnGenerateReport').on('click', function(){
 					$('#idTime').text(result.time_taken);
 					$('#idAccuracy').text(findAccuracy(result.correct_ques, result.ques_attempted)+"%");
 					$('#idPercentile').text(findPercentile(result.rank, result.total_candidate));
+					
+					//Time taken
+					//$('#')
 					
 					$('#idCorrect').text(result.correct_ques);
 					$('#idIncorrect').text(result.incorrect_ques);
@@ -148,6 +195,9 @@ function openExplanation(id){
 	}
 }
 function findAccuracy(correct, attempted){
+	if(attempted == 0){
+		return 0;
+	}
 	var accuracy = ((correct*100)/attempted);
 	accuracy = accuracy.toFixed(2);
 	return accuracy;
@@ -229,6 +279,7 @@ $(document).ready(function () {
 	console.log("Total: "+total);
 	var attempted = getQueryParameterByName('attempted');
 	console.log("Attempted: "+attempted);
+	
 	$('#idTotal').text(total);
 	$('#idAttempted').text(attempted);
 	$('#idUnattempted').text(parseInt(total)-parseInt(attempted));
