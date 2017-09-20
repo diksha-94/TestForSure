@@ -17,15 +17,19 @@ function showTests(categoryId, subCatId){
 							$.each(result.testDetails, function(i, test) {
 								var btnId = 'btnTest-'+test.id;
 								var query_string = 'test_id='+btnId;
-								var newTest = "<div style='border:solid 1px red;float:left;width:33%;text-align:center'>"+
-												"</br>Test Id: "+test.id+
-												"</br>Test title: "+test.testTitle+
-												"</br>Number of Questions: "+test.no_of_ques+
-												"</br>Time Limit(in mins): "+test.time_limit+
-												"</br>Correct Question Marks: "+test.correct_ques_marks+
-												"</br>Negative marks: "+test.negative_marks+
-												"</br><a href='start-test-option.html?"+query_string+"' id="+btnId+" class='btn btn-default'>Start Test</a>"
+								var newTest = "<div class='test-style margin-top-30'>"+
+												"</br><h3>"+test.testTitle+"</h3>"+
+												"<label class='test-size'>Number of Questions: </label><span class='test-size'>"+test.no_of_ques+"</span>"+
+												"</br><label class='test-size'>Time Limit(in mins): </label><span class='test-size'>"+test.time_limit+"</span>"+
+												"</br><label class='test-size'>Correct Question Marks: </label><span class='test-size'>"+test.correct_ques_marks+"</span>"+
+												"</br><label class='test-size'>Negative marks: </label><span class='test-size'>"+test.negative_marks+"</span>"+
+												"</br></br><div class='div-inside-div'><a href='start-test-option.html?"+query_string+"' id="+btnId+" class='btn btn-default btn-block btn-success'>Start Test</a></div>"
 												"</div>";
+
+								if((i+1)%4 != 0){
+									newTest += "</div><div class='empty-div margin-top-30'>"+
+											  "</div>";
+								}
 								$('#tests_home').append(newTest);
 							});
 							

@@ -1,0 +1,35 @@
+.instructions-div{
+	clear:both;
+	width:50%;
+	margin-left:25%;
+	margin-top:100px;
+	background-color:#EBEBEB;
+	border-radius:5px;
+}
+.text-center{
+	text-align:center;
+}
+.margin-top-30{
+	margin-top:30px;
+}
+.margin-bottom-30{
+	margin-bottom:30px;
+}
+.margin-left{
+	margin-left:20px;
+}
+.margin-right{
+	margin-right:60px;
+}
+.margin-left-60{
+	margin-left:60px;
+}
+.padding-bottom-30{
+	padding-bottom:30px;
+}
+.padding-top-20{
+	padding-top:30px;
+}
+.decoration{
+	font-size:16px;
+}

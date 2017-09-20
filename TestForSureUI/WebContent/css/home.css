@@ -1,0 +1,47 @@
+.margin-top-10{
+	margin-top:10px;
+}
+.margin-top-20{
+	margin-top:20px;
+}
+.margin-top-30{
+	margin-top:30px;
+}
+.text-center{
+	text-align:center;
+}
+.margin-bottom-20{
+	margin-bottom:20px;
+}
+.margin-bottom-30{
+	margin-bottom:30px;
+}
+.modal-custom{
+	width:600px;
+	overflow:auto;
+}
+.test-style{
+	border:solid 1px grey;
+	border-radius:5%;
+	float:left;
+	width:21.25%;
+	text-align:center;
+	height:300px;
+	overflow:auto;
+}
+.empty-div{
+	float:left;
+	width:5%;
+	height:300px;
+}
+.test-size{
+	font-size:14px;
+}
+.div-inside-div{
+	width:70%;
+	margin-left:15%;
+}
+.width-class{
+	width:80%;
+	margin-left:10%;
+}

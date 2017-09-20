@@ -5,6 +5,7 @@ candidateResponse.userDetails={};
 candidateResponse.testDetails={};
 candidateResponse.result=[];
 var total_time;
+var total_secs;
 var request_from;
 $('#btnProceed').on('click', function(){
 	$('#divInstructions').removeClass('show');
@@ -36,9 +37,14 @@ $('#btnProceed').on('click', function(){
 						var rem_secs = '0';
 						var time_limit = result.testDetails.time_limit;
 						total_time = result.testDetails.time_limit;
-						
+						total_secs = total_time*60;
+						var percentage_per_second = 100/total_secs;
+						console.log("Percentage_per_second: "+percentage_per_second);
+						var percentage_remaining = 100;
+						//var percentage_spent = 0 - 0.85;
 						var interval = setInterval(function() {
 							
+							//$('#spentTime').css('width',percentage_spent+"%");
 							//console.log("Time_limit_start: "+time_limit);
 							//console.log("Rem_secs_start: "+rem_secs);
 							var hours = 0; 
@@ -78,6 +84,13 @@ $('#btnProceed').on('click', function(){
 							//console.log('Rem_secs: '+parseInt(rem_secs));
 							//console.log('Time_limit: '+parseInt(time_limit));
 							}
+							if((time_limit*60)<=(time_limit*60)/3){
+								$('#remainingTime').css('background-color','red');
+							
+							}
+							percentage_remaining = percentage_remaining - percentage_per_second;
+							//percentage_spent = percentage_spent + percentage_per_second;
+							$('#remainingTime').css('width',percentage_remaining+"%");
 						}, 1000);
 						
 					}

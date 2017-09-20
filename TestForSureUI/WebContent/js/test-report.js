@@ -124,7 +124,7 @@ $('#btnAnalysis').on('click', function(){
 function questionSolutionStructure(){
 	var count = 1;
 	$.each(allQuestions, function(key, value){
-		var question = "<div style='border:solid 1px grey;'> Question "+count+":<span id='questionStatus-"+value.id+"'></span></br>";
+		var question = "<div style='border:solid 1px grey;'> Question "+count+":<span id='questionStatus-"+value.id+"'></span><span id='timeSpent-"+value.id+"'></span></br>";
 		if(value.ques_type == "Paragraph"){
 			question += "Paragraph Text: "+value.paragraph_text+"</br>";
 		}
@@ -171,7 +171,8 @@ function questionSolutionStructure(){
 					$('#'+correctOptionId).css('background-color', 'green');
 					$('#'+markedOptionId).css('background-color', 'red');
 				}
-				
+				var idTimeSpent = 'timeSpent-'+value.id;
+				$('#'+idTimeSpent).text(value1.time_spent+" secs");
 				return false;
 			}
 		})

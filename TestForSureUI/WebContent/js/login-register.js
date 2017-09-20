@@ -156,3 +156,68 @@ $('#linkToLogin').on('click', function(){
 	$('#registerModal').modal('toggle');
 	$('#loginModal').modal('show');
 })
+
+//Forgot Password
+$('#linkForgot').on('click', function(){
+	$('#loginModal').modal('toggle');
+	$('#forgotPassModal').modal('show');
+})
+
+
+var forgotPassRules = {
+    'txtForgotEmailName': {
+		required: true,
+		email: true
+    }
+};
+	
+$('#forgotPassForm').validate({
+    rules: forgotPassRules,
+
+    ignore: true,
+    highlight: function () {
+        // to remove the red alert on text 
+    },
+    submitHandler: function () {
+		
+		var emailId = $('#txtForgotEmail').val();
+		console.log("Inside submit: "+emailId);
+		var sendPasswordResetURL = "http://localhost:8083/test-for-sure/user/forgot-password?emailId="+emailId;
+		var type = "POST";
+        
+        $.ajax({
+            url: sendPasswordResetURL,
+            type: type,
+			//dataType: 'json',
+            success: function (result) {
+				console.log("Result: "+JSON.stringify(result));
+                if (result.status) {
+					//Status true means user exists
+					$('#errorOuterForgot').removeClass("show");
+					$('#errorOuterForgot').addClass("hide");
+					
+					$('#successOuter').removeClass("hide");
+					$('#successOuter').addClass("show");
+					$('#successMessage').html("A password reset link has been sent to your registered e-mail id. Use that link to reset your password.");
+					
+					$('#forgotPassForm').addClass('hide');
+					$('#forgotPassForm').removeClass('show');
+					
+					$('.footer-forgot').removeClass('hide');
+					$('.footer-forgot').removeClass('show');
+				}
+                else if (!result.status) {
+					
+					$('#errorOuterForgot').removeClass("hide");
+					$('#errorOuterForgot').addClass("show");
+					$('#errorMessageForgot').html(result.message);
+                }
+                
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+        });
+    }
+});

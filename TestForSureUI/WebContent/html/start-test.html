@@ -3,13 +3,17 @@
 		<title>Start Test</title>
 		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
 		<link href= "../css/custom.css" rel ="stylesheet"/>
+		<link href= "../css/start-test.css" rel ="stylesheet"/>
 	</head>
 	<body onload="noBack();" onpageshow="if (event.persisted) noBack();">
 		<header>
-			<div style="float:left;"><h3>TEST-FOR-SURE</h3></div>
-			<div style="float:left;">
-				<h4 id="categoryDisplay"></h4>
-			</div>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
+					</div>
+				</div>
+			</nav>
 		</header>
 		
 		<div id="divUserDetails" style="clear:both;" class='show'>
@@ -29,14 +33,23 @@
 			<button type="button" id="btnNextToInstructions">Next</button>
 		</div>
 		
-		<div id="divInstructions" style="clear:both;" class='hide'>
-			<h3>Instructions</h3>
-			<span>1.</span>
-			<span>2.</span>
-			<span>3.</span>
-			<span>4.</span>
-			<span>5.</span>					
-			<button type="submit" id="btnProceed">Proceed</button>
+		<div id="divInstructions" class='hide instructions-div'>
+			<div class="text-center padding-top-20">
+				<h3>Please read the instructions carefully</h3>
+			</div>
+			<ol>
+			<li class="margin-left margin-top-30 decoration">Please ensure that you have a reliable internet for the whole duration of the test.</li>
+			<li class="margin-left margin-top-30 decoration">You can not pause the test.</li>
+			<li class="margin-left margin-top-30 decoration">This test comprises of multiple-choice questions (MCQ).</li>
+			<li class="margin-left margin-top-30 decoration">There are a total of 100 Questions in the Test.</li>
+			<li class="margin-left margin-top-30 decoration">Total Time Duration of the Test is 120 minutes.</li>
+			<li class="margin-left margin-top-30 decoration">You will get 2 marks for every correct answer.</li>
+			<li class="margin-left margin-top-30 decoration">This test has negative marking. 0.5 marks will be deducted for every incorrect answer.</li>
+			<li class="margin-left margin-top-30 decoration">You are advised not to close the browser window before submitting the test.</li>
+			</ol>
+			<div class="margin-top-30 padding-bottom-30 margin-left-60 margin-right">
+				<button type="submit" id="btnProceed" class="btn btn-success btn-block">Proceed</button>
+			</div>
 		</div>
 		
 		<!--<div id="divQuestions" class='hide'>
@@ -74,6 +87,11 @@
 					<span id="idHours"></span>
 					<span id="idMinutes"></span>
 					<span id="idSeconds"></span>
+				</div>
+				<div style="border:solid 1px #AAFF7F;height:4px;width:90%;background-color:#AAFF7F">
+					<div id="remainingTime" style="width:100%;height:4px;background-color:green;">
+					</div>
+					
 				</div>
 				<div>
 					<span>Questions Attempted:</span>
