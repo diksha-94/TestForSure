@@ -31,7 +31,6 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.LoginUserResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.QuestionDetail"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 <fullyQualifiedTypeName name="javax.mail.internet.MimeMessage"/>
 <fullyQualifiedTypeName name="javax.mail.internet.InternetAddress"/>
 <fullyQualifiedTypeName name="javax.mail.Message"/>
@@ -47,4 +46,5 @@
 <fullyQualifiedTypeName name="org.apache.tomcat.util.http.fileupload.FileUtils"/>
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 </qualifiedTypeNameHistroy>

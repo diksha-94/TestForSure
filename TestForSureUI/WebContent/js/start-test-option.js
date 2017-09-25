@@ -180,6 +180,29 @@ function getQueryParameterByName(name, url) {
 $(document).ready(function () {
 	console.log("Document start-test-option is ready");
 	test_id = getQueryParameterByName('test_id');
+	var test_id = getQueryParameterByName('test_id');
+	
+	var testId = (test_id.split('-'))[1];
+	//to get the test details to display in instructions
+	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+testId;
+	
+	$.ajax({
+                url: getTest_url,
+                type: "GET",
+                dataType: 'json',
+                success: function (result) {
+					if(result.status){
+						console.log(JSON.stringify(result));
+						localStorage.setItem('testDetails',JSON.stringify(result));
+					}
+					else if(!result.status){
+						console.log("Error: "+result.message);
+					}
+                },
+                error: function () {
+					console.log("Error in getting questions");
+                }
+            });
 	if(localStorage.getItem('loggedIn') == "true"){
 		window.history.back();
 		//means the user is logged in, then the test should start directly

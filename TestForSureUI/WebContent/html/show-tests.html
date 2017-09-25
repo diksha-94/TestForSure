@@ -2,6 +2,7 @@
 	<head>
 		<title>Tests</title>
 		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
+		<link href= "../css/home.css" rel ="stylesheet"/>
 	</head>
 	<body>
 		<header>
@@ -22,25 +23,36 @@
 			</nav>
 		</header>
 		
-		<div>
-			<h2>Tests</h2>
-			<div>
-				<label>Category</label>
-				<select id="ddCategory" required="required">
-					<option value="0">Select</option>
-				</select>
+		<!--Div that will contain image slide or some information related to website stats-->
+		<div style='width:100%;height:25%;border:solid 1px red;'>
+			TODO:Div that will contain image to display something related to online tests
+		</div>
+		
+		<div class='width-class-test'>
+			<!--<h2>Tests</h2>-->
+			<div class='category-div form-group'>
+				<label for='category' class='col-md-2 control-label label-class'>Category</label>
+				<div class='col-md-3'>
+					<select class='form-control' id="ddCategory" required="required">
+						<option value="0">Select</option>
+					</select>
+				</div>
 			</div>
-					
-			<div>
-				<label>Subcategory</label>
-				<select id="ddSubcategory" disabled="disabled" required="required">
-					<option value="0">Select</option>
-				</select>
+			
+			</br>
+			<div class='category-div form-group'>
+				<label for='subcategory' class='col-md-2 control-label label-class'>Subcategory</label>
+				<div class='col-md-3'>
+					<select class='col-md-3 form-control' id="ddSubcategory" disabled="disabled" required="required">
+						<option value="0">Select</option>
+					</select>
+				</div>
 			</div>
 		</div>
 		
 		<!--Div containing all the tests details-->
-		<div id="tests">
+		<div id="tests" class="width-class">
+
 		</div>
 		
 		<!--Login modal-->

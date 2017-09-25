@@ -34,21 +34,28 @@
 		</div>
 		
 		<div id="divInstructions" class='hide instructions-div'>
-			<div class="text-center padding-top-20">
-				<h3>Please read the instructions carefully</h3>
+			<div class="text-center padding-top-5">
+				<h3 id='test-title'>Instructions for </h3>
 			</div>
+			
+			<hr class='hr-class'>
+			<div>
+				<span class='col-md-6' id='time-limit'>Time limit (in mins): </span>
+				<span class='col-md-5' id='max-marks'>Maximum marks: </span>
+			</div>
+			</br>
 			<ol>
 			<li class="margin-left margin-top-30 decoration">Please ensure that you have a reliable internet for the whole duration of the test.</li>
 			<li class="margin-left margin-top-30 decoration">You can not pause the test.</li>
 			<li class="margin-left margin-top-30 decoration">This test comprises of multiple-choice questions (MCQ).</li>
-			<li class="margin-left margin-top-30 decoration">There are a total of 100 Questions in the Test.</li>
-			<li class="margin-left margin-top-30 decoration">Total Time Duration of the Test is 120 minutes.</li>
-			<li class="margin-left margin-top-30 decoration">You will get 2 marks for every correct answer.</li>
-			<li class="margin-left margin-top-30 decoration">This test has negative marking. 0.5 marks will be deducted for every incorrect answer.</li>
+			<li class="margin-left margin-top-30 decoration">There are a total of <span class='span-class' id='total-ques'></span> in the Test.</li>
+			<li class="margin-left margin-top-30 decoration">Total Time Duration of the Test is <span class='span-class' id='time-limit-test'></span>.</li>
+			<li class="margin-left margin-top-30 decoration">You will get <span class='span-class' id='correct-ques'></span> for every correct answer.</li>
+			<li class="margin-left margin-top-30 decoration">This test has negative marking. <span class='span-class' id='negative-marks'></span> will be deducted for every incorrect answer.</li>
 			<li class="margin-left margin-top-30 decoration">You are advised not to close the browser window before submitting the test.</li>
 			</ol>
 			<div class="margin-top-30 padding-bottom-30 margin-left-60 margin-right">
-				<button type="submit" id="btnProceed" class="btn btn-success btn-block">Proceed</button>
+				<button type="submit" id="btnProceed" class="btn btn-success center">Proceed</button>
 			</div>
 		</div>
 		
@@ -56,8 +63,10 @@
 		</div>-->
 		
 		
-		<div id="divQuestions" style="clear:both;" class="hide">
-			<div id="questionsPanel" style="float:left;border:solid 1px red;width:25%;height:80%;">
+		<div id="divQuestions" class="hide clear-both">
+			<div class='col-md-1'>
+			</div>
+			<div id="questionsPanel" class='col-md-2' class='question-panel-design'>
 				<div id="questionNumber">
 				</div>
 				<div id="qestionInstruction" style='clear:both;'>
@@ -75,13 +84,17 @@
 					</div>
 				</div>
 			</div>
-			<div id="questions" style="float:left;border:solid 1px red;width:55%;height:80%;">
-				<div><h2>Questions</h2></div>
+			<div id="questions"  class='col-md-6' class='question-panel-design'>
+				<!--<div><h2>Questions</h2></div>-->
 				<div id="displayQuestion"></div>
-				<div><button id="btnClearSelection">Clear Selection</button></div>
-				<div><button id="btnMarkForReview">Mark this question for review</button></div>
+				<div><button id="btnClearSelection" class='btn btn-default btn-danger col-md-3'>Clear Selection</button></div>
+				<div><button id="btnMarkForReview"  class='btn btn-default btn-danger  col-md-3'>Mark this question for review</button></div>
+				<div>
+					<button type="button" id="btnPreviousQuestion"  class='btn btn-default btn-primary col-md-2 col-md-offset-7' disabled='disabled'>Previous</button>
+					<button type="button" id="btnSaveNext"  class='btn btn-default btn-primary col-md-2 col-md-offset-1'>Next</button>
+				</div>
 			</div>
-			<div id="timer" style="float:left;border:solid 1px red;width:20%;height:80%;">
+			<div id="timer"  class='col-md-2' class='question-panel-design'>
 				<div>
 					<span>Time remaining:</span></br>
 					<span id="idHours"></span>
@@ -99,8 +112,7 @@
 				</div>
 			</div>
 			<div id="footer" style="clear:both;">
-				<button type="button" id="btnPreviousQuestion" disabled='disabled'>Previous</button>
-				<button type="button" id="btnSaveNext">Next</button>
+				
 				
 				<button type="button" id="btnSubmitTest"  data-toggle='modal' data-target='#submitTestModal' >Submit Test</button>
 				

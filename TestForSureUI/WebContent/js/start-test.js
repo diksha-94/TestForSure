@@ -1,3 +1,4 @@
+var testDetailsObject;
 var allQuestions=[];
 var no_of_ques;
 var candidateResponse={};
@@ -185,6 +186,13 @@ $('#btnNextToInstructions').on('click', function(){
 	$('#divUserDetails').addClass('hide');
 	$('#divInstructions').removeClass('hide');
 	$('#divInstructions').addClass('show');
+	$('#test-title').append(" "+ testDetailsObject.testDetails.testTitle);
+		$('#time-limit').append(" "+ testDetailsObject.testDetails.time_limit);
+		$('#max-marks').append(" "+ testDetailsObject.testDetails.no_of_ques*testDetailsObject.testDetails.correct_ques_marks);
+		$('#total-ques').append(" "+ testDetailsObject.testDetails.no_of_ques+" Questions");
+		$('#correct-ques').append(" "+ testDetailsObject.testDetails.correct_ques_marks+" marks");
+		$('#negative-marks').append(" "+ testDetailsObject.testDetails.negative_marks+" marks");
+		$('#time-limit-test').append(" "+ testDetailsObject.testDetails.time_limit+" minutes");
 })
 
 $('#btnViewAll').on('click', function(){
@@ -194,11 +202,11 @@ $('#btnViewAll').on('click', function(){
 
 function questionStructure(paraText, quesText, optionA, optionB, optionC, optionD){
 	var question = "";
-	question+="<span>Question "+localStorage.getItem('questionCount')+".</span>"
+	question+="<span class='question-num'>Question "+localStorage.getItem('questionCount')+".</span>"
 	if(paraText != ""){
-		question += "<span>"+paraText+"</span>";
+		question += "<span class='paragrapg-text'>Paragraph- "+paraText+"</span>";
 	}
-	question += "<span>"+quesText+"</span>";
+	question += "<span class='question-text'>"+quesText+"</span>";
 	var optionsRadioButton = "<input type='radio' id='optionsA' name='options' value='a' text='"+optionA+"'>"+optionA+"</input>"+
 							 "<input type='radio' id='optionsB' name='options' value='b' text='"+optionB+"'>"+optionB+"</input>"+
 							 "<input type='radio' id='optionsC' name='options' value='c' text='"+optionC+"'>"+optionC+"</input>"+
@@ -711,11 +719,21 @@ $(document).ready(function () {
 	console.log("Test id: "+test_id);
 	candidateResponse.testDetails.test_id = (test_id.split('-'))[1];
 	
+	var testDetails = localStorage.getItem('testDetails');
+	testDetailsObject = JSON.parse(testDetails);
+	console.log("Test Details: "+JSON.stringify(testDetailsObject));
 	if(request_from === "login" || request_from === "register"){
 		$('#divUserDetails').removeClass('show');
 		$('#divUserDetails').addClass('hide');
 		$('#divInstructions').removeClass('hide');
 		$('#divInstructions').addClass('show');
+		$('#test-title').append(" "+ testDetailsObject.testDetails.testTitle);
+		$('#time-limit').append(" "+ testDetailsObject.testDetails.time_limit);
+		$('#max-marks').append(" "+ testDetailsObject.testDetails.no_of_ques*testDetailsObject.testDetails.correct_ques_marks);
+		$('#total-ques').append(" "+ testDetailsObject.testDetails.no_of_ques+" Questions");
+		$('#correct-ques').append(" "+ testDetailsObject.testDetails.correct_ques_marks+" marks");
+		$('#negative-marks').append(" "+ testDetailsObject.testDetails.negative_marks+" marks");
+		$('#time-limit-test').append(" "+ testDetailsObject.testDetails.time_limit+" minutes");
 	}
 })
 
