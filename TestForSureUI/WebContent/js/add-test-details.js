@@ -1,3 +1,4 @@
+//test
 function getCategoriesOnLoad(){
 	$.ajax({
                 url: "http://localhost:8083/test-for-sure/test/get-category",
