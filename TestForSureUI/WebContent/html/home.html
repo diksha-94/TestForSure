@@ -3,32 +3,27 @@
 		<title>TEST-FOR-SURE</title>
 		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
 		<link href= "../css/home.css" rel ="stylesheet"/>
+		<link href= "../css/styles.css" rel ="stylesheet"/>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 	</head>
 	<body>
-		<header>
-			<!--<object type='text/html' data='user-menu.html'></object>-->
-			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
-					</div>
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="home.html">Home</a></li>
-						<li><a href="show-tests.html">Take Test</a></li>
-						<li><a href="#">News & Notifications</a></li>
-						<li><a href="#">About Us</a></li>
-						<li id='menuLogin'><a href="#" id="linkLogin">Login/Register</a></li>
-						<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
-					</ul>
-				</div>
-			</nav>
-		</header>
+		
+			<div id='cssmenu'>
+				<ul>
+					<li><a href='#'><span>TEST-FOR-SURE</span></a></li>
+					<li class='active padding-left'><a href='home.html'><span class='test-color glyphicon glyphicon-home'></span><span>Home</span></a></li>
+					<li><a href='show-tests.html'><span>Take Test</span></a>
+					<li><a href='#'><span>News & Notifications</span></a></li>
+					<li><a href='#'><span>About</span></a></li>
+					<li class='last'><a href='#'><span class='glyphicon glyphicon-earphone'></span><span>Contact</span></a></li>
+					<li id='menuLogin'><a href="#" id="linkLogin" class='padding-left-100'><span class='glyphicon glyphicon-user'></span><span>Login/Register</span></a></li>
+					<li id='menuLogout'><a href="#" id='linkLogout' class='padding-left-100'><span class='glyphicon glyphicon-user'></span><span>Logout</span></a></li>
+				</ul>
+			</div>
 		
 		<!--Div that will contain image slide or some information related to website stats-->
-		<div style='width:100%;height:50%;border:solid 1px red;'>
-			TODO:Div that will contain image slide or some information related to website stats
-		</div>
+		<a class='online-tests-link' href="#tests_home"><div class='home-page-image-div'>
+		</div></a>
 		<!--To display all the tests on home(without login)-->
 		
 		<!--Div containing all the tests details-->

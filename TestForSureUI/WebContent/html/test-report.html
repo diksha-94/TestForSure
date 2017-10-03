@@ -1,59 +1,93 @@
 <html>
 	<head>
 		<title>Test Report</title>
-		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href= "../css/test-report.css" rel ="stylesheet"/>
 	</head>
 	<body>
-	<div id='candidateReport'>
+	
 		<header>
-			<div style="float:left;"><h3>TEST-FOR-SURE</h3></div>
-			<div style="float:left;">
-				<h4 id="categoryDisplay"></h4>
-			</div>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
+					</div>
+				</div>
+			</nav>
 		</header>
-		
-		<div id="testSummary" style="clear:both;">
+	<div id='candidateReport'>
+		<div id="testSummary" class='test-summary'>
 			<h2>TEST SUMMARY</h2>
-				<div style="border:solid red 1px">
-					<label>Total Questions: </label><label id="idTotal"></label></br>
-					<label>Attempted: </label><label id="idAttempted"></label></br>
-					<label>Un-attempted: </label><label id="idUnattempted"></label></br>
-					<button type="button" id="btnGenerateReport">Generate Report</button>
+				<div class='test-summary-inner'>
+					<div class='total-ques common'>
+						<label class='col-md-5'>Total Questions </label>
+						<span class='glyphicon glyphicon-arrow-right col-md-2'></span>
+						<label class='col-md-5' id="idTotal"></label>
+					</div>
+					<div class='attempted-ques common'>
+						<label class='col-md-5'>Attempted </label>
+						<span class='glyphicon glyphicon-arrow-right col-md-2'></span>
+						<label  class='col-md-5' id="idAttempted"></label>
+					</div>
+					<div class='unattempted-ques common'>
+						<label class='col-md-5'>Un-attempted </label>
+						<span class='glyphicon glyphicon-arrow-right col-md-2'></span>
+						<label  class='col-md-5' id="idUnattempted"></label>
+					</div>
+				</div>
+				<div class='generte-report'>
+					<button type="button" id="btnGenerateReport" class='btn btn-success btn-block'>Generate Report</button>
 				</div>
 		</div>
 		
 		<div id="buttons" class="hide">
-			<button type="button" id="btnAnalysis" disabled="disabled">Analysis</button>
-			<button type="button" id="btnSolution">Solution</button>
+			<div class='col-md-1'>
+			</div>
+			<div class='col-md-3'>
+				<button type="button" id="btnAnalysis" disabled="disabled" class='btn btn-success'>Analysis</button>
+			</div>
+			<div class='col-md-4'>
+				<button type="button" id="btnSolution" class='btn btn-success'>Solution</button>
+			</div>
+			<div class='col-md-4'>
+				<button type="button" id="downloadReport" class='btn btn-success'>Download Report</button>
+			</div>
 		</div>
-		<div id="testReportGeneral" class="hide" style="clear:both;">
-			<h1>
-				Congrats <strong><span id="idUsername"></span></strong> !</br>
-				Your rank is  <strong><span id="idYourRank"></span></strong> out of <strong><span id="idTotalCandidate"></span></strong> Test Takers</br>
-			</h1>
-			<div style='width:100%;'>
-				<div style='border:solid 1px red; width:12.5%;float:left;'>
-					
+		<div id="testReportGeneral" class="hide">
+			<div class='reportDetails'>
+				<div class='medal-img'>
+					<img src='../img/medal.jpg' alt='medal-with-rank'/>
 				</div>
-				<div style='border:solid 1px red; width:15%;float:left;'>
-					<div><span id="idScore"></span></div></br>
-					<div><span>Score</span></div>
+				<div class='reportGreeting'>
+					<h1>
+						Congrats <strong><span id="idUsername"></span></strong> !</br>
+						Your rank is  <strong><span id="idYourRank"></span></strong> out of <strong><span id="idTotalCandidate"></span></strong> Test Takers</br>
+					</h1>
 				</div>
-				<div style='border:solid 1px red; width:15%;float:left;'>
-					<div><span id="idQuesAttempted"></span></div></br>
-					<div><span>Questions Attempted</span></div>
-				</div>
-				<div style='border:solid 1px red; width:15%;float:left;'>
-					<div><span id="idTime"></span></div></br>
-					<div><span>Time taken</span></div>
-				</div>
-				<div style='border:solid 1px red; width:15%;float:left;'>
-					<div><span id="idAccuracy"></span></div></br>
-					<div><span>Accuracy</span></div>
-				</div>
-				<div style='border:solid 1px red; width:15%;float:left;'>
-					<div><span id="idPercentile"></span></div></br>
-					<div><span>Percentile</span></div>
+				<div class='details'>
+					<div class='empty-div'>
+						
+					</div>
+					<div class='details-div'>
+						<div><span class='font-design'id="idScore"></span></div></br>
+						<div><span>Score</span></div>
+					</div>
+					<div class='details-div'>
+						<div><span class='font-design' id="idQuesAttempted"></span></div></br>
+						<div><span>Questions Attempted</span></div>
+					</div>
+					<div class='details-div'>
+						<div><span class='font-design' id="idTime"></span></div></br>
+						<div><span>Time taken</span></div>
+					</div>
+					<div class='details-div'>
+						<div><span class='font-design' id="idAccuracy"></span></div></br>
+						<div><span>Accuracy</span></div>
+					</div>
+					<div class='details-div'>
+						<div><span class='font-design' id="idPercentile"></span></div></br>
+						<div><span>Percentile</span></div>
+					</div>
 				</div>
 			</div>
 			
@@ -72,7 +106,7 @@
 				</div>
 			</div>
 			
-			<div style="float:left;">
+			<div id="questionsChart">
 				<h3>Questions chart</h3>
 				<div style="float:left;">
 					<div id="questionsPieChart"></div>
@@ -98,17 +132,17 @@
 		<div id="testSolution" class="hide">
 		</div>
 		
-		<button id='downloadReport'>Download Report</button>
 		
-		<script src="../js/jquery-2.2.2.min.js"></script>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="../js/ckeditor.js"></script>
 		<script src="../adapters/jquery.js"></script>
 		<script src="../js/jquery.validate.min.js"></script>
-		<script src="../js/bootstrap.min.js"></script>
 		<script src = "https://code.highcharts.com/highcharts.js"></script>  
 		<script src = "https://code.highcharts.com/highcharts-3d.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 		<script src="../js/test-report.js"></script>
-		</div>
+		
 	</body>
 </html>

@@ -180,7 +180,6 @@ function getQueryParameterByName(name, url) {
 $(document).ready(function () {
 	console.log("Document start-test-option is ready");
 	test_id = getQueryParameterByName('test_id');
-	var test_id = getQueryParameterByName('test_id');
 	
 	var testId = (test_id.split('-'))[1];
 	//to get the test details to display in instructions

@@ -124,3 +124,39 @@
 .label-class{
 	font-size:16px;
 }
+.show-test-image{
+	width:100%;
+	height:40%;
+}
+.show-test-image-div{
+	width:100%;
+	height:50%;
+	text-align:center;
+	background-image:url('../img/show-tests-3.jpg');
+	background-size:100% 100%;
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+.home-page-image-div{
+	width:100%;
+	height:50%;
+	text-align:center;
+	background-image:url('../img/home_page.jpg');
+	background-size:100% 100%;
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+.online-test-head{
+	font-weight:bold;
+	padding-top:16%;
+	font-size:50px;
+	color:#0F648F;
+}
+.online-test-head-arrow{
+	font-weight:bold;
+	font-size:50px;
+	color:#0F648F;
+}
+.online-tests-link:hover{
+	text-decoration:none;
+}

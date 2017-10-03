@@ -1,0 +1,140 @@
+.test-summary{
+	clear:both;
+	text-align:center;
+	margin-top:5%;
+}
+.test-summary-inner{
+	margin-top:30px;
+	border:solid 2px grey;
+	width:40%;
+	margin-left:30%;
+	border-radius:5px;
+	height:30%;
+}
+.common{
+	height:20%;
+	font-size:17px;
+	
+	margin-top:30px;
+}
+.generte-report{
+	margin-top:30px;
+	width:40%;
+	margin-left:30%;
+}
+.total-ques{
+	border-bottom:solid 2px grey;
+}
+.attempted-ques{
+	border-bottom:solid 2px grey;
+}
+.unattempted-ques{
+	
+}
+#btnGenerateReport{
+	font-weight:bold;
+}
+#buttons{
+	width:30%;
+	margin-left:35%;
+	text-align:center;
+	margin-bottom:50px;
+}
+#testReportGeneral{
+	clear:both;
+	padding-top:50px;
+}
+.reportDetails{
+	border:solid 2px blue;
+	border-radius:5px;
+	width:80%;
+	margin-left:10%;
+	height:50%;
+}
+.reportGreeting{
+	text-align:center;
+	padding-top:10px;
+}
+.details{
+	padding-top:40px;
+}
+.empty-div{
+	width:12.5%;
+	float:left;
+	height:90px;
+}
+.details-div{
+	width:15%;
+	float:left;
+	height:90px;
+	text-align:center;
+}
+.font-design{
+	font-weight:bold;
+	font-size:16px;
+}
+.medal-img{
+	text-align:center;
+	padding-top:20px;
+}
+.medal-img img{
+	height:120px;
+}
+#topperAverage{
+	float:left;
+	width:20%;
+	border:solid 2px grey;
+	margin-left:10%;
+	margin-top:80px;
+}
+#questionsChart{
+	float:left;
+	width:55%;
+	margin-left:80px;
+	margin-top:80px;
+	border:solid 2px grey;
+}
+#testSolution{
+	width:50%;
+	margin-left:25%;
+	padding-top:80px;
+	padding-left:30px;
+}
+.ques-count{
+	font-weight:bold;
+	font-size:16px;
+}
+.ques-status{
+	font-weight:bold;
+	font-size:16px;
+}
+.para{
+	font-weight:bold;
+	font-size:14px;
+}
+
+.para-text{
+	font-size:14px;
+}
+.ques{
+	font-weight:bold;
+	font-size:15px;
+	width:100%;
+	margin-top:15px;
+	padding:5px;
+	background-color:#F4F4F4;
+	border-radius:5px;
+}
+.options{
+	width:98%;
+	margin-left:1%;
+	padding:5px;
+	border-radius:5px;
+	margin-top:10px;
+}
+.exp-btn{
+	margin-top:20px;
+}
+.explanation{
+	margin-top:10px;
+}

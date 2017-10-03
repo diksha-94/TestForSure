@@ -30,6 +30,9 @@
 .padding-top-5{
 	padding-top:5px;
 }
+.padding-top-30{
+	padding-top:30px;
+}
 .decoration{
 	font-size:16px;
 }
@@ -58,15 +61,16 @@
 }
 #questions{
 	float:left;
-	height:80%;
+	height:90%;
 	overflow:auto;
 	padding-left:40px;
 	border:solid 2px grey;
-	padding-top:50px;
+	padding-top:40px;
 }
 #timer{
 	float:left;
-	height:80%;
+	margin-left:20px;
+	margin-top:50px;
 }
 .question-num{
 	font-size:16px;
@@ -74,4 +78,172 @@
 }
 .clear-both{
 	clear:both;
+}
+#divUserDetails{
+	clear:both;
+	background-color:#EBEBEB;
+	border-radius:5px;
+	margin-left:35%;
+	width:30%;
+}
+.red{
+	color:red;
+}
+.next-prev-div{
+	height:8%;
+	
+}
+.questionAndButton{
+	height:92%;
+	
+}
+#btnClearSelection:hover{
+	text-decoration:none;
+}
+#btnMarkForReview:hover{
+	text-decoration:none;
+}
+.designing-head{
+	font-size:16px;
+	font-weight:bold;
+}
+.ques-attempted{
+	margin-top:50px;
+}
+#idHours{
+	font-weight:bold;
+}
+#idMinutes{
+	font-weight:bold;
+}
+#idSeconds{
+	font-weight:bold;
+}
+.test-submit-button{
+	margin-top:200px;
+	
+}
+.options{
+	height:50px;
+	width:70%;
+	border-left:solid 1px #DADADA;
+	border-right:solid 1px #DADADA;
+	cursor:pointer;
+}
+.options:hover{
+	background-color:#F7F7F7;
+}
+.optionsA{
+	border-top:solid 1px #DADADA;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+}
+.optionsB{
+	border-top:solid 1px #DADADA;
+}
+.optionsC{
+	border-top:solid 1px #DADADA;
+	border-bottom:solid 1px #DADADA;
+}
+.optionsD{
+	border-bottom:solid 1px #DADADA;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+}
+.optionHead{
+	font-weight:bold;
+	margin-left:10px;
+}
+
+input[type=radio] {
+   display:none;
+}
+.funkyradio div {
+  clear: both;
+  overflow: hidden;
+}
+
+.funkyradio label {
+  width: 70%;
+  border-radius: 3px;
+  border: 1px solid #D1D3D4;
+  font-weight: normal;
+}
+
+.funkyradio input[type="radio"]:empty,
+.funkyradio input[type="checkbox"]:empty {
+  display: none;
+}
+
+.funkyradio input[type="radio"]:empty ~ label,
+.funkyradio input[type="checkbox"]:empty ~ label {
+  position: relative;
+  line-height: 2.5em;
+  text-indent: 3.25em;
+  margin-top: 2em;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.funkyradio input[type="radio"]:empty ~ label:before,
+.funkyradio input[type="checkbox"]:empty ~ label:before {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  width: 2.5em;
+  background: #D1D3D4;
+  border-radius: 3px 0 0 3px;
+}
+
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label,
+.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
+  color: #888;
+}
+
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
+.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
+  content: '\2714';
+  text-indent: .9em;
+  color: #C2C2C2;
+}
+
+.funkyradio input[type="radio"]:checked ~ label,
+.funkyradio input[type="checkbox"]:checked ~ label {
+  color: #777;
+}
+
+.funkyradio input[type="radio"]:checked ~ label:before,
+.funkyradio input[type="checkbox"]:checked ~ label:before {
+  content: '\2714';
+  text-indent: .9em;
+  color: #333;
+  background-color: #ccc;
+}
+
+.funkyradio input[type="radio"]:focus ~ label:before,
+.funkyradio input[type="checkbox"]:focus ~ label:before {
+  box-shadow: 0 0 0 3px #999;
+}
+
+
+.funkyradio-primary input[type="radio"]:checked ~ label:before,
+.funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #337ab7;
+}
+
+
+#buttonsDiv{
+	margin-top:40px;
+}
+
+.question-text{
+	font-weight:bold;
+	font-size:17px;
 }

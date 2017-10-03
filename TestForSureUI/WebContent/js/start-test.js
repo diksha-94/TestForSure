@@ -202,16 +202,17 @@ $('#btnViewAll').on('click', function(){
 
 function questionStructure(paraText, quesText, optionA, optionB, optionC, optionD){
 	var question = "";
-	question+="<span class='question-num'>Question "+localStorage.getItem('questionCount')+".</span>"
+	question+="<span class='question-num'>Question "+localStorage.getItem('questionCount')+".</span></br>"
 	if(paraText != ""){
-		question += "<span class='paragrapg-text'>Paragraph- "+paraText+"</span>";
+		question += "<span class='paragraph-text'>"+paraText+"</span></br>";
 	}
-	question += "<span class='question-text'>"+quesText+"</span>";
-	var optionsRadioButton = "<input type='radio' id='optionsA' name='options' value='a' text='"+optionA+"'>"+optionA+"</input>"+
-							 "<input type='radio' id='optionsB' name='options' value='b' text='"+optionB+"'>"+optionB+"</input>"+
-							 "<input type='radio' id='optionsC' name='options' value='c' text='"+optionC+"'>"+optionC+"</input>"+
-							 "<input type='radio' id='optionsD' name='options' value='d' text='"+optionD+"'>"+optionD+"</input>";
-	
+	question += "<span class='question-text'>"+quesText+"</span></br>";
+	var optionsRadioButton = "<div class='funkyradio'>"+
+							"<div class='funkyradio-primary'><input type='radio' id='optionsA' name='options' value='a'/><label for='optionsA'>"+optionA+"</label></div>"+
+							 "<div class='funkyradio-primary'><input type='radio' id='optionsB' name='options' value='b'/><label for='optionsB'>"+optionB+"</label></div>"+
+							 "<div class='funkyradio-primary'><input type='radio' id='optionsC' name='options' value='c'/><label for='optionsC'>"+optionC+"</label></div>"+
+							 "<div class='funkyradio-primary'><input type='radio' id='optionsD' name='options' value='d'/><label for='optionsD'>"+optionD+"</label></div>"+
+							 "</div>";
 	question+=optionsRadioButton;
 	return(question);
 }
@@ -546,6 +547,7 @@ function showQuestionByNumber(num){
 
 //On ticking any radio button
 $('#displayQuestion').on('click', 'input[name=options]:radio', function(){
+	console.log("Clicked radio");
 	var response = {};
 	var option_selected = $(this).val();
 	var exist = false;

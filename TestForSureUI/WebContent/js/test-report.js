@@ -51,6 +51,7 @@ $('#btnGenerateReport').on('click', function(){
 	$('#testSummary').addClass('hide');
 	$('#testReportGeneral').removeClass('hide');
 	$('#testReportGeneral').addClass('show');
+
 	$('#buttons').removeClass('hide');
 	$('#buttons').addClass('show');
 	console.log("Candidate-response: "+localStorage.getItem('candidate-response'));
@@ -124,17 +125,18 @@ $('#btnAnalysis').on('click', function(){
 function questionSolutionStructure(){
 	var count = 1;
 	$.each(allQuestions, function(key, value){
-		var question = "<div style='border:solid 1px grey;'> Question "+count+":<span id='questionStatus-"+value.id+"'></span><span id='timeSpent-"+value.id+"'></span></br>";
+		var question = "<div><span class='ques-count'> Question "+count+"</span>&nbsp;&nbsp;<span class='ques-status' id='questionStatus-"+value.id+"'></span></br>";//<span class='time-spent' id='timeSpent-"+value.id+"'></span>
 		if(value.ques_type == "Paragraph"){
-			question += "Paragraph Text: "+value.paragraph_text+"</br>";
+			question += "<span class='para'>Paragraph: </span><span class='para-text'> "+value.paragraph_text+"</span></br>";
 		}
-		question += "Question Text: "+value.ques_text+"</br>"+
-					"<span id='option-a-"+value.id+"'>a. "+value.optionA+"</span></br>"+
-					"<span id='option-b-"+value.id+"'>b. "+value.optionB+"</span></br>"+
-					"<span id='option-c-"+value.id+"'>c. "+value.optionC+"</span></br>"+
-					"<span id='option-d-"+value.id+"'>d. "+value.optionD+"</span></br>"+
-					"<button type='button' id='btnExplanation-"+value.id+"' onclick='openExplanation(this.id);'>Show Explanation</button>"+
-					"<div id='explanation-"+value.id+"' class='hide'>"+value.explanation+"</div></div>";
+		question += "<div class='ques'><span>"+value.ques_text+"</span></div>"+
+					"<div class='options' id='div-a-"+value.id+"'><span id='option-a-"+value.id+"'>a. "+value.optionA+"</span></div>"+
+					"<div class='options' id='div-b-"+value.id+"'><span id='option-b-"+value.id+"'>b. "+value.optionB+"</span></div>"+
+					"<div class='options' id='div-c-"+value.id+"'><span id='option-c-"+value.id+"'>c. "+value.optionC+"</span></div>"+
+					"<div class='options' id='div-d-"+value.id+"'><span id='option-d-"+value.id+"'>d. "+value.optionD+"</span></div>"+
+					"<div class='exp-btn'><button type='button' id='btnExplanation-"+value.id+"' class='btn' onclick='openExplanation(this.id);'>Show Explanation</button></div>"+
+					"<div id='explanation-"+value.id+"' class='hide explanation'>"+value.explanation+"</div></div>"+
+					"<hr>";
 		$('#testSolution').append(question);
 		$.each(report.question_details, function(key1, value1){
 			if(value1.ques_id == value.id){
@@ -144,9 +146,9 @@ function questionSolutionStructure(){
 				//if marked_option is null, mark the correct as green and question as unattempted
 				var markedOptionId;
 				if(value1.marked_option != null){
-					markedOptionId = 'option-'+value1.marked_option+"-"+value.id;
+					markedOptionId = 'div-'+value1.marked_option+"-"+value.id;
 				}
-				var correctOptionId = 'option-'+value1.correct_option+"-"+value.id;
+				var correctOptionId = 'div-'+value1.correct_option+"-"+value.id;
 				
 				console.log("markedOptionId: "+markedOptionId);
 				console.log("correctOptionId: "+correctOptionId);
@@ -158,18 +160,18 @@ function questionSolutionStructure(){
 					$('#'+idFormed).css('color', 'orange');
 					console.log("correctOptionId: "+correctOptionId);
 				
-					$('#'+correctOptionId).css('background-color', 'green');
+					$('#'+correctOptionId).css('background-color', '#DFF0D8');
 				}
 				else if(value1.marked_option == value1.correct_option){
 					$('#'+idFormed).text("Correct answer !!");
 					$('#'+idFormed).css('color', 'green');
-					$('#'+correctOptionId).css('background-color', 'green');
+					$('#'+correctOptionId).css('background-color', '#DFF0D8');
 				}
 				else if(value1.marked_option != value1.correct_option){
 					$('#'+idFormed).text("You got this Question wrong");
 					$('#'+idFormed).css('color', 'red');
-					$('#'+correctOptionId).css('background-color', 'green');
-					$('#'+markedOptionId).css('background-color', 'red');
+					$('#'+correctOptionId).css('background-color', '#DFF0D8');
+					$('#'+markedOptionId).css('background-color', '#F2DEDE');
 				}
 				var idTimeSpent = 'timeSpent-'+value.id;
 				$('#'+idTimeSpent).text(value1.time_spent+" secs");

@@ -155,7 +155,60 @@ $('#ddquesTypeUpdate').on('change', function() {
 		number: true
     }
 };*/
+
+function submitQuestion(){
+	console.log("Inside add question submit");
 	
+		
+        var addQuestion_url = "http://localhost:8083/test-for-sure/test/add-question";
+        var type = 'POST';
+        var requestData = {};
+		requestData.id=parseInt(localStorage.getItem('questionCount'))+1;
+		localStorage.setItem('questionCount',parseInt(localStorage.getItem('questionCount'))+1);
+		requestData.test_id=localStorage.getItem('test_id');
+		var quesType = $('#ddquesType').prop('checked');
+		if(quesType == true){
+			requestData.ques_type="Paragraph";
+		}
+		else if(quesType == false){
+			requestData.ques_type="Simple";
+		}
+		requestData.paragraph_text=$('.Editor-editor').html();
+		requestData.ques_text=$('#txtQuesText').val();
+		requestData.optionA=$('#txtoptionA').val();
+		requestData.optionB=$('#txtoptionB').val();
+		requestData.optionC=$('#txtoptionC').val();
+		requestData.optionD=$('#txtoptionD').val();
+		requestData.correct_option=$("input[name='radioCorrectOption']:checked").val();
+		requestData.explanation=$('#txtExplanation').val();
+		console.log(JSON.stringify(requestData));
+		
+        $.ajax({
+            url: addQuestion_url,
+            type: type,
+			data: JSON.stringify(requestData),
+			contentType: 'application/json',
+			//dataType: 'json',
+            success: function (response) {
+                if (response.status) {
+					console.log("Question added/updated successfully with question id: "+response.question_id);
+					$("#quesEditor").addClass('hide');
+					$('#addedQuestions').empty();
+								
+					getQuestionsOnTestId(localStorage.getItem('test_id'));
+                    //localStorage.setItem("testId",response.test_id);
+                }
+                else if (!response.status) {
+                    console.log("Error in adding/updating question id: "+response.question_id+"    Message: "+response.message);
+                }
+                
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+        });
+}
 $('#addQuesForm').validate({
     //rules: quesRules,
 
@@ -365,18 +418,9 @@ $('#btnDoneQues').on('click', function(){
 	$('#publishTest').removeClass('hide');
 	$('#publishTest').addClass('show');
 	
-	var quesAdded = $('#numberOfQuestions').text();
-	var quesToAdd = $('#txtQues').val();
-	console.log("Ques added: "+quesAdded);
-	console.log("Ques to add: "+quesToAdd);
-	if(quesAdded == quesToAdd){
-		$('#btnPublishTest').attr('disabled', false);
-		$('#btnPublishTest').attr('title', 'Publish test');
-	}
-	else{
-		$('#btnPublishTest').attr('disabled', true);
-		$('#btnPublishTest').attr('title', 'Test can\'t be published until you add all the questions.');
-	}
+	var quesAdded;
+	var quesToAdd;
+					
 	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
 	var type= "GET";
 	$.ajax({
@@ -394,6 +438,19 @@ $('#btnDoneQues').on('click', function(){
 					$('#publishTime').text(response.testDetails.time_limit);
 					$('#publishCorrect').text(response.testDetails.correct_ques_marks);
 					$('#publishNegative').text(response.testDetails.negative_marks);
+					
+					quesAdded = $('#numberOfQuestions').text();
+					quesToAdd = $('#publishQues').text();
+					console.log("Ques added: "+quesAdded);
+					console.log("Ques to add: "+quesToAdd);
+					if(quesAdded == quesToAdd){
+						$('#btnPublishTest').attr('disabled', false);
+						$('#btnPublishTest').attr('title', 'Publish test');
+					}
+					else{
+						$('#btnPublishTest').attr('disabled', true);
+						$('#btnPublishTest').attr('title', 'Test can\'t be published until you add all the questions.');
+					}
                 }
                 else if (!response.status) {
                     console.log("Error in getting test details with test id: "+localStorage.getItem('test_id')+"    Message: "+response.message);
@@ -404,6 +461,8 @@ $('#btnDoneQues').on('click', function(){
             }
            
         });
+		
+		
     })
 
 $('#btnUpdateSubmit').on('click', function(){
@@ -698,6 +757,8 @@ $(document).ready(function () {
 	
 	
 	
-	$('.editor').ckeditor();
+	//$('.editor').Editor();
+	$('#txtPara').Editor();
+	$('#txtExplanation').Editor();
 })
 

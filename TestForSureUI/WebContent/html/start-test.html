@@ -4,6 +4,7 @@
 		<link href= "../css/bootstrap.min.css" rel ="stylesheet"/>
 		<link href= "../css/custom.css" rel ="stylesheet"/>
 		<link href= "../css/start-test.css" rel ="stylesheet"/>
+		<link href= "../css/start-test-option.css" rel ="stylesheet"/>
 	</head>
 	<body onload="noBack();" onpageshow="if (event.persisted) noBack();">
 		<header>
@@ -16,21 +17,36 @@
 			</nav>
 		</header>
 		
-		<div id="divUserDetails" style="clear:both;" class='show'>
-			<h3>Enter your details</h3>
-			<div class="form-group">
-				<label>Name<span class="red">*</span></label>
-				<input type="text" id="txtName"/>
+		<div id="divUserDetails" class='show'>
+			<h4 class="text-center margin-bottom-30 padding-top-30">Enter your details</h4>
+			<form role='form' class='form-horizontal'>
+			<div class="form-group margin-bottom">
+				<label class='control-label col-sm-4'>Name<span class="red">*</span></label>
+				<div class='col-sm-7'>
+					<input type="text" class='form-control' id="txtName" name="txtName" required="required"/>
+				</div>
 			</div>
-			<div class="form-group">
-				<label>E-mail Id<span class="red">*</span></label>
-				<input type="text" id="txtEmail"/>
+			
+			<div class="form-group margin-bottom">
+				<label class='control-label col-sm-4'>Email ID<span class="red">*</span></label>
+				<div class='col-sm-7'>
+					<input type="text" class='form-control' id="txtEmail" name="txtEmailName" required="required"/>
+				</div>
 			</div>
-			<div class="form-group">
-				<label>Mobile Number</label>
-				<input type="text" id="txtMobile"/>
-			</div>				
-			<button type="button" id="btnNextToInstructions">Next</button>
+			
+			<div class="form-group margin-bottom">
+				<label class='control-label col-sm-4'>Mobile Number</label>
+				<div class='col-sm-7'>
+					<input type="text" class='form-control' id="txtMobile" name="txtMobileName" required="required"/>
+				</div>
+			</div>
+			
+			<div class='form-group margin-bottom'>
+				<div class="col-sm-7 col-sm-offset-4 margin-top-10 margin-bottom-30">
+					<button type="button" id="btnNextToInstructions" class='btn btn-primary btn-block'>Next</button>
+				</div>
+			</div>
+			</form>
 		</div>
 		
 		<div id="divInstructions" class='hide instructions-div'>
@@ -64,9 +80,8 @@
 		
 		
 		<div id="divQuestions" class="hide clear-both">
-			<div class='col-md-1'>
-			</div>
-			<div id="questionsPanel" class='col-md-2' class='question-panel-design'>
+			
+			<div id="questionsPanel" class='col-md-3' class='question-panel-design'>
 				<div id="questionNumber">
 				</div>
 				<div id="qestionInstruction" style='clear:both;'>
@@ -86,19 +101,24 @@
 			</div>
 			<div id="questions"  class='col-md-6' class='question-panel-design'>
 				<!--<div><h2>Questions</h2></div>-->
-				<div id="displayQuestion"></div>
-				<div><button id="btnClearSelection" class='btn btn-default btn-danger col-md-3'>Clear Selection</button></div>
-				<div><button id="btnMarkForReview"  class='btn btn-default btn-danger  col-md-3'>Mark this question for review</button></div>
-				<div>
+				<div class='questionAndButton'>
+					<div id="displayQuestion"></div>
+					<div id='buttonsDiv'>
+						<a href='#' id="btnClearSelection" class='col-md-3'>Clear Selection</a>
+						<a href='#' id="btnMarkForReview"  class='col-md-4'>Mark this question for review</a>
+					</div>
+				</div>
+				<div class='next-prev-div'>
 					<button type="button" id="btnPreviousQuestion"  class='btn btn-default btn-primary col-md-2 col-md-offset-7' disabled='disabled'>Previous</button>
 					<button type="button" id="btnSaveNext"  class='btn btn-default btn-primary col-md-2 col-md-offset-1'>Next</button>
 				</div>
 			</div>
+			
 			<div id="timer"  class='col-md-2' class='question-panel-design'>
 				<div>
-					<span>Time remaining:</span></br>
-					<span id="idHours"></span>
-					<span id="idMinutes"></span>
+					<span class='designing-head'>Time remaining:</span></br></br>
+					<span id="idHours"></span>:
+					<span id="idMinutes"></span>:
 					<span id="idSeconds"></span>
 				</div>
 				<div style="border:solid 1px #AAFF7F;height:4px;width:90%;background-color:#AAFF7F">
@@ -106,17 +126,17 @@
 					</div>
 					
 				</div>
-				<div>
-					<span>Questions Attempted:</span>
+				<div class='ques-attempted'>
+					<span class='designing-head'>Questions Attempted:</span>
 					<h2 id="quesAttemptedCount"></h2>
 				</div>
+				
+				<div class='test-submit-button'>
+					<button type="button" id="btnSubmitTest" class="btn btn-default btn-success btn-block submit-button" data-toggle='modal' data-target='#submitTestModal' >Submit Test</button>
+				</div>
 			</div>
-			<div id="footer" style="clear:both;">
 				
-				
-				<button type="button" id="btnSubmitTest"  data-toggle='modal' data-target='#submitTestModal' >Submit Test</button>
-				
-			</div>
+			
 		</div>
 		
 		<!--Modal to submit the test-->
