@@ -1,7 +1,7 @@
 .test_icons{
     padding-top: 2px;
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     text-align: center;
     font-weight: bold;
@@ -40,8 +40,8 @@
     padding-top: 3px;
 }
 .question_number{
-	margin-left: 10px;
-    margin-right: 10px;
+	margin-left: 15px;
+    margin-right: 15px;
     margin-bottom: 10px;
     margin-top: 10px;
 }

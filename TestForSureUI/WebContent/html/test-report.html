@@ -55,9 +55,6 @@
 		</div>
 		<div id="testReportGeneral" class="hide">
 			<div class='reportDetails'>
-				<div class='medal-img'>
-					<img src='../img/medal.jpg' alt='medal-with-rank'/>
-				</div>
 				<div class='reportGreeting'>
 					<h1>
 						Congrats <strong><span id="idUsername"></span></strong> !</br>
@@ -70,42 +67,64 @@
 					</div>
 					<div class='details-div'>
 						<div><span class='font-design'id="idScore"></span></div></br>
-						<div><span>Score</span></div>
+						<div class='head-design'><span>Score</span></div>
 					</div>
 					<div class='details-div'>
 						<div><span class='font-design' id="idQuesAttempted"></span></div></br>
-						<div><span>Questions Attempted</span></div>
+						<div class='head-design'><span>Questions Attempted</span></div>
 					</div>
 					<div class='details-div'>
 						<div><span class='font-design' id="idTime"></span></div></br>
-						<div><span>Time taken</span></div>
+						<div class='head-design'><span>Time taken(in mins)</span></div>
 					</div>
 					<div class='details-div'>
 						<div><span class='font-design' id="idAccuracy"></span></div></br>
-						<div><span>Accuracy</span></div>
+						<div class='head-design'><span>Accuracy</span></div>
 					</div>
 					<div class='details-div'>
 						<div><span class='font-design' id="idPercentile"></span></div></br>
-						<div><span>Percentile</span></div>
+						<div class='head-design'><span>Percentile</span></div>
 					</div>
 				</div>
 			</div>
-			
-			<div id="topperAverage" style="float:left;width:20%;border:solid 1px grey;">
-				<div>
-					Topper's score: <span id="idTopperScore"></span>
+			<div class='outer-details'>
+			<div id="topperAverage">
+				<div class='padding-top-20'>
+					<span class='topperAvg-head'>Topper's score: </span><span class='topperAvg-value' id="idTopperScore"></span>
 				</div></br>
 				<div>
-					Time taken by Topper: <span id="idTopperTime"></span> mins
+					<span class='topperAvg-head'>Time taken by Topper: </span><span class='topperAvg-value' id="idTopperTime"></span> <span class='topperAvg-value'>mins</span>
 				</div></br>
 				<div>
-					Average Score: <span id="idAvgScore"></span>
+					<span class='topperAvg-head'>Average Score: </span><span class='topperAvg-value' id="idAvgScore"></span>
 				</div></br>
-				<div>
-					Average Time taken: <span id="idAvgTime"></span> mins
+				<div class='padding-bottom-20'>
+					<span class='topperAvg-head'>Average Time taken: </span><span class='topperAvg-value' id="idAvgTime"></span> <span class='topperAvg-value'>mins</span>
+				</div>
+			</div>
+			<div id="topPerformers">
+				<div class='padding-top-20 padding-bottom-20'>
+					<span class='top-performer-head'>Top Performers</span>
+				</div>
+				<table id='topPerformersTable'>
+					<thead>
+						<tr>
+							<td class='col-md-2.5'>Rank</td>
+							<td class='col-md-7'>Name</td>
+							<td  class='col-md-2.5' id='totalMarksInTable'>Marks</td>
+						</tr>
+					</thead>
+					<tbody id='topPerformersTableBody'>
+					</tbody>
+				</table>
+			</div>
+			<div id="topPerformersFullList" class='hide'>
+				<div class='padding-top-20 padding-bottom-20'>
+					<span class='top-performer-head'>Top Performers</span>
 				</div>
 			</div>
 			
+			</div>
 			<div id="questionsChart">
 				<h3>Questions chart</h3>
 				<div style="float:left;">
@@ -124,9 +143,7 @@
 				</div>
 			</div>
 			
-			<div id="topPerformers" style="clear:both:left;width:20%;border:solid 1px grey;">
-				
-			</div>
+			
 		</div>
 		
 		<div id="testSolution" class="hide">

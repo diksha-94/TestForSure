@@ -7,15 +7,41 @@
 		<link href= "../css/start-test-option.css" rel ="stylesheet"/>
 	</head>
 	<body onload="noBack();" onpageshow="if (event.persisted) noBack();">
-		<header>
-			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
-					</div>
+		<div class='head-outer' style='width:100%;height:80px;background-color:#2E6DA4;'>
+			<div class='col-md-2'>
+				<a href="#">TEST-FOR-SURE</a>
+			</div>
+			<div class='col-md-2'>
+				<span id='title-head'>tre</span>
+			</div>
+			<div id="timer" class='col-md-2 col-md-offset-2 hide question-panel-design'>
+				<div class='ques-attempted'>
+					<span class='designing-head'>Questions Attempted:</span></br>
+					<span id="quesAttemptedCount" class='questionCount'></span>&nbsp;/&nbsp;
+					<span id="quesTotalCount" class='questionCount'></span>
 				</div>
-			</nav>
-		</header>
+			</div>
+			<div id="timer"  class='col-md-2 question-panel-design hide'>
+				<div>
+					<span class='designing-head'>Time remaining:</span></br>
+					<span id="idHours"></span>:
+					<span id="idMinutes"></span>:
+					<span id="idSeconds"></span>
+				</div>
+				<div style="border:solid 1px #AAFF7F;height:4px;width:90%;background-color:#AAFF7F">
+					<div id="remainingTime" style="width:100%;height:4px;background-color:green;">
+					</div>
+					
+				</div>
+			</div>
+			
+			
+				
+			
+			<div class='col-md-1 hide submit-button-div'>
+				<button type="button" id="btnSubmitTest" class="btn btn-default btn-success btn-block submit-button" data-toggle='modal' data-target='#submitTestModal' >Submit Test</button>
+			</div>
+		</div>
 		
 		<div id="divUserDetails" class='show'>
 			<h4 class="text-center margin-bottom-30 padding-top-30">Enter your details</h4>
@@ -84,57 +110,40 @@
 			<div id="questionsPanel" class='col-md-3' class='question-panel-design'>
 				<div id="questionNumber">
 				</div>
-				<div id="qestionInstruction" style='clear:both;'>
+				<div id="qestionInstruction">
 					<div class="col-xs-6">
-						<span class="test_icons answered"></span> Answered
+						<span class="test_icons answered"></span> &nbsp;&nbsp;&nbsp;Answered
 					</div>
 					<div class="col-xs-6 ">
-						<span class="test_icons skipped"></span> Not Answered
+						<span class="test_icons skipped"></span> &nbsp;&nbsp;&nbsp;Not Answered
 					</div>
 					<div class="col-xs-6 ">
-						<span class="test_icons marked"></span> Marked
+						<span class="test_icons marked"></span>&nbsp;&nbsp;&nbsp;Marked
 					</div>
 					<div class="col-xs-6 ">
-						<span class="test_icons unseen"></span> Not Visited
+						<span class="test_icons unseen"></span> &nbsp;&nbsp;&nbsp;Not Visited
 					</div>
 				</div>
 			</div>
-			<div id="questions"  class='col-md-6' class='question-panel-design'>
+			<div style='float:left;margin-top:20px;'  class='col-md-7 col-md-offset-1'>
+			<div id="questions"  class='question-panel-design'>
 				<!--<div><h2>Questions</h2></div>-->
 				<div class='questionAndButton'>
 					<div id="displayQuestion"></div>
-					<div id='buttonsDiv'>
-						<a href='#' id="btnClearSelection" class='col-md-3'>Clear Selection</a>
-						<a href='#' id="btnMarkForReview"  class='col-md-4'>Mark this question for review</a>
-					</div>
 				</div>
-				<div class='next-prev-div'>
-					<button type="button" id="btnPreviousQuestion"  class='btn btn-default btn-primary col-md-2 col-md-offset-7' disabled='disabled'>Previous</button>
+				
+			</div>
+			<div id="questions1" class='question-panel-design'>
+			
+			<div class='next-prev-div'>
+					<a href='#' id="btnClearSelection" class='col-md-3'>Clear Selection</a>
+					<a href='#' id="btnMarkForReview"  class='col-md-4'>Mark this question for review</a>
+					<button type="button" id="btnPreviousQuestion"  class='btn btn-default btn-primary col-md-2' disabled='disabled'>Previous</button>
 					<button type="button" id="btnSaveNext"  class='btn btn-default btn-primary col-md-2 col-md-offset-1'>Next</button>
+				</div>
 				</div>
 			</div>
 			
-			<div id="timer"  class='col-md-2' class='question-panel-design'>
-				<div>
-					<span class='designing-head'>Time remaining:</span></br></br>
-					<span id="idHours"></span>:
-					<span id="idMinutes"></span>:
-					<span id="idSeconds"></span>
-				</div>
-				<div style="border:solid 1px #AAFF7F;height:4px;width:90%;background-color:#AAFF7F">
-					<div id="remainingTime" style="width:100%;height:4px;background-color:green;">
-					</div>
-					
-				</div>
-				<div class='ques-attempted'>
-					<span class='designing-head'>Questions Attempted:</span>
-					<h2 id="quesAttemptedCount"></h2>
-				</div>
-				
-				<div class='test-submit-button'>
-					<button type="button" id="btnSubmitTest" class="btn btn-default btn-success btn-block submit-button" data-toggle='modal' data-target='#submitTestModal' >Submit Test</button>
-				</div>
-			</div>
 				
 			
 		</div>

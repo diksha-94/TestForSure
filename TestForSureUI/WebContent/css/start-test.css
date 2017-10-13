@@ -2,8 +2,8 @@
 	clear:both;
 	width:50%;
 	margin-left:25%;
-	margin-top:100px;
-	background-color:#EBEBEB;
+	margin-top:50px;
+	background-color:#F0F0F0;
 	border-radius:5px;
 }
 .text-center{
@@ -58,19 +58,26 @@
 #questionsPanel{
 	float:left;
 	height:80%;
+	margin-top:20px;
+	background-color:#F9F9F9;
 }
 #questions{
-	float:left;
-	height:90%;
-	overflow:auto;
+	height:80%;
+	clear:both;
 	padding-left:40px;
-	border:solid 2px grey;
 	padding-top:40px;
+	background-color:#F9F9F9;
+	overflow:auto;
+}
+#questions1{
+	clear:both;
+	height:5%;
+	
 }
 #timer{
 	float:left;
-	margin-left:20px;
-	margin-top:50px;
+	margin-top:15px;
+	
 }
 .question-num{
 	font-size:16px;
@@ -91,10 +98,12 @@
 }
 .next-prev-div{
 	height:8%;
+	margin-top:15px;
 	
 }
 .questionAndButton{
 	height:92%;
+	
 	
 }
 #btnClearSelection:hover{
@@ -107,9 +116,7 @@
 	font-size:16px;
 	font-weight:bold;
 }
-.ques-attempted{
-	margin-top:50px;
-}
+
 #idHours{
 	font-weight:bold;
 }
@@ -120,7 +127,6 @@
 	font-weight:bold;
 }
 .test-submit-button{
-	margin-top:200px;
 	
 }
 .options{
@@ -239,11 +245,47 @@ input[type=radio] {
 }
 
 
-#buttonsDiv{
-	margin-top:40px;
-}
 
 .question-text{
 	font-weight:bold;
 	font-size:17px;
+}
+
+#qestionInstruction{
+	clear:both;
+	padding-top:20%;
+	
+}
+
+header{
+	height:100px;
+}
+header nav{
+	height:80%;
+}
+.questionCount{
+	font-size:18px;
+	padding:2px;
+	
+}
+#quesAttemptedCount{
+	margin-left:60px;
+}
+#quesTotalCount{
+	}
+#btnSubmitTest{
+	margin-top:22px;
+}
+#questionNumber{
+	overflow: auto;
+	height:70%;
+	background-color:#F9F9F9;
+	overflow:auto;
+}
+.head-outer{
+	color:white;
+}
+#title-head{
+	margin-top:22px;
+	color:white;
 }

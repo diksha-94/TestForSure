@@ -157,59 +157,7 @@ $('#ddquesTypeUpdate').on('change', function() {
     }
 };*/
 
-function submitQuestion(){
-	console.log("Inside add question submit");
-	
-		
-        var addQuestion_url = "http://localhost:8083/test-for-sure/test/add-question";
-        var type = 'POST';
-        var requestData = {};
-		requestData.id=parseInt(localStorage.getItem('questionCount'))+1;
-		localStorage.setItem('questionCount',parseInt(localStorage.getItem('questionCount'))+1);
-		requestData.test_id=localStorage.getItem('test_id');
-		var quesType = $('#ddquesType').prop('checked');
-		if(quesType == true){
-			requestData.ques_type="Paragraph";
-		}
-		else if(quesType == false){
-			requestData.ques_type="Simple";
-		}
-		requestData.paragraph_text=$('.Editor-editor').html();
-		requestData.ques_text=$('#txtQuesText').val();
-		requestData.optionA=$('#txtoptionA').val();
-		requestData.optionB=$('#txtoptionB').val();
-		requestData.optionC=$('#txtoptionC').val();
-		requestData.optionD=$('#txtoptionD').val();
-		requestData.correct_option=$("input[name='radioCorrectOption']:checked").val();
-		requestData.explanation=$('#txtExplanation').val();
-		console.log(JSON.stringify(requestData));
-		
-        $.ajax({
-            url: addQuestion_url,
-            type: type,
-			data: JSON.stringify(requestData),
-			contentType: 'application/json',
-			//dataType: 'json',
-            success: function (response) {
-                if (response.status) {
-					console.log("Question added/updated successfully with question id: "+response.question_id);
-					$("#quesEditor").addClass('hide');
-					$('#addedQuestions').empty();
-								
-					getQuestionsOnTestId(localStorage.getItem('test_id'));
-                    //localStorage.setItem("testId",response.test_id);
-                }
-                else if (!response.status) {
-                    console.log("Error in adding/updating question id: "+response.question_id+"    Message: "+response.message);
-                }
-                
-            },
-            error: function () {
-                console.log("Service is unavailable");
-            }
-           
-        });
-}
+
 $('#addQuesForm').validate({
     //rules: quesRules,
 
@@ -244,7 +192,7 @@ $('#addQuesForm').validate({
 		requestData.correct_option=$("input[name='radioCorrectOption']:checked").val();
 		requestData.explanation=$('#txtExplanation').val();
 		console.log(JSON.stringify(requestData));
-		
+		//$('#txtPara').summernote('insertImage', url, filename);
         $.ajax({
             url: addQuestion_url,
             type: type,
@@ -298,15 +246,15 @@ function getQuestionsOnTestId(test_id){
 												"</br>Question Id: <span id = 'questionId-" + (forAllId) + "'>"+question.id+"</span>"+
 												"</br>Question Type: <span id = 'questionType-" + (forAllId) + "'>"+question.ques_type+"</span>";
 								if((question.ques_type).toLowerCase() == "paragraph"){
-									newQuestion += "</br>Paragraph text: <span id = 'paraText-" + (forAllId) + "'>"+question.paragraph_text+"</span>";
+									newQuestion += "</br>Paragraph text: <span id = 'paraText-" + (forAllId) + "'>"+((question.paragraph_text).replace('<p>','')).replace('</p>','')+"</span>";
 								}
-												newQuestion += "</br>Question Text: <span id = 'quesText-" + (forAllId) + "'>"+question.ques_text+"</span>"+
-												"</br>a. <span id = 'optionA-" + (forAllId) + "'>"+question.optionA+"</span>"+
-												"</br>b. <span id = 'optionB-" + (forAllId) + "'>"+question.optionB+"</span>"+
-												"</br>c. <span id = 'optionC-" + (forAllId) + "'>"+question.optionC+"</span>"+
-												"</br>d. <span id = 'optionD-" + (forAllId) + "'>"+question.optionD+"</span>"+
+												newQuestion += "</br>Question Text: <span id = 'quesText-" + (forAllId) + "'>"+((question.ques_text).replace('<p>','')).replace('</p>','')+"</span>"+
+												"</br>a. <span id = 'optionA-" + (forAllId) + "'>"+((question.optionA).replace('<p>','')).replace('</p>','')+"</span>"+
+												"</br>b. <span id = 'optionB-" + (forAllId) + "'>"+((question.optionB).replace('<p>','')).replace('</p>','')+"</span>"+
+												"</br>c. <span id = 'optionC-" + (forAllId) + "'>"+((question.optionC).replace('<p>','')).replace('</p>','')+"</span>"+
+												"</br>d. <span id = 'optionD-" + (forAllId) + "'>"+((question.optionD).replace('<p>','')).replace('</p>','')+"</span>"+
 												"</br>Correct Option: <span id = 'correctOption-" + (forAllId) + "'>"+question.correct_option+"</span>"+
-												"</br>Explanation: <span id = 'explanation-" + (forAllId) + "'>"+question.explanation+"</span>"+
+												"</br>Explanation: <span id = 'explanation-" + (forAllId) + "'>"+((question.explanation).replace('<p>','')).replace('</p>','')+"</span>"+
 												"</br><button type='button' id="+updateBtnId+" data-toggle='modal' data-target='#UpdateQuestionModal' onclick='saveDetails(this.id);'>Update</button>"+
 												"</br><button type='button' id="+deleteBtnId+" data-toggle='modal' data-target='#deletQuestionModal' onclick='saveDetails(this.id);'>Delete</button>"+
 												"</div>";
@@ -759,7 +707,8 @@ $(document).ready(function () {
 	
 	
 	//$('.editor').Editor();
-	$('#txtPara').Editor();
-	$('#txtExplanation').Editor();
+	//$('#txtPara').Editor();
+	//$('#txtExplanation').Editor();
+	$('.editor').summernote();
 })
 

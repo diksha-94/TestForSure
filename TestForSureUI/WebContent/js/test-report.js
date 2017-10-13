@@ -43,6 +43,47 @@ $('#downloadReport').on('click', function(){
         );
     })
 
+//To download the full list of test performers
+function downloadFullList(){
+	    var pdf = new jsPDF('p', 'pt', 'letter');
+        // source can be HTML-formatted string, or a reference
+        // to an actual DOM element from which the text will be scraped.
+        source = $('#topPerformersFullList').html();
+
+        // we support special element handlers. Register them with jQuery-style 
+        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+        // There is no support for any other type of selectors 
+        // (class, of compound) at this time.
+        /*specialElementHandlers = {
+            // element with id of "bypass" - jQuery style selector
+            '#bypassme': function (element, renderer) {
+                // true = "handled elsewhere, bypass text extraction"
+                return true
+            }
+        };*/
+        margins = {
+            top: 80,
+            bottom: 60,
+            left: 10,
+            width: 10
+        };
+        // all coords and widths are in jsPDF instance's declared units
+        // 'inches' in this case
+        pdf.fromHTML(
+            source, // HTML string or DOM elem ref.
+            margins.left, // x coord
+            margins.top, { // y coord
+                //'width': margins.width // max width of content on PDF
+                //'elementHandlers': specialElementHandlers
+            },
+
+            function (dispose) {
+                // dispose: object with X, Y of the last line add to the PDF 
+                //          this allow the insertion of new lines after html
+                pdf.save('top-performers.pdf');
+            }, margins
+        );
+    }
 
 //On click of generate report button
 $('#btnGenerateReport').on('click', function(){
@@ -70,7 +111,7 @@ $('#btnGenerateReport').on('click', function(){
 					$('#idTotalCandidate').text(result.total_candidate);
 					$('#idScore').text(result.marks_scored+" / "+result.total_marks);
 					$('#idQuesAttempted').text(result.ques_attempted+" / "+result.total_ques);
-					$('#idTime').text(result.time_taken);
+					$('#idTime').text((result.time_taken).toFixed(2));
 					$('#idAccuracy').text(findAccuracy(result.correct_ques, result.ques_attempted)+"%");
 					$('#idPercentile').text(findPercentile(result.rank, result.total_candidate));
 					
@@ -81,13 +122,54 @@ $('#btnGenerateReport').on('click', function(){
 					$('#idIncorrect').text(result.incorrect_ques);
 					$('#idNotattempted').text(result.total_ques-result.ques_attempted);
 					
-					$('#idTopperScore').text(result.topperScore);
+					$('#idTopperScore').text(result.topperScore+"/"+report.total_marks);
 					$('#idTopperTime').text(result.topperTime);
-					$('#idAvgScore').text(result.avgScore);
+					$('#idAvgScore').text(result.avgScore+"/"+report.total_marks);
 					$('#idAvgTime').text(result.avgTime);
-					$.each(result.topPerformers, function(key, value){
-						$('#topPerformers').append(topPerformerStructure(value.rank, value.name, value.marks_scored));
-					})
+					
+					$('#totalMarksInTable').append('['+report.total_marks+']');
+					var totalRecordsToDisplay;
+					var lengthTopPerformers = result.topPerformers.length;
+					if(lengthTopPerformers>=10){
+						totalRecordsToDisplay = 10;
+					}
+					else if(lengthTopPerformers<10){
+						totalRecordsToDisplay = lengthTopPerformers
+					}
+					for(var i=0;i<totalRecordsToDisplay;i++){
+						var imageName='';
+						if(i==0){
+							//Rank-1
+							imageName = 'gold_rank1_new.png';
+						}
+						else if(i==1){
+							//Rank-2
+							imageName = 'silver_rank2_new.png'
+						}
+						else if(i==2){
+							//Rank-3
+							imageName = 'bronze_rank3_new.png'
+						}
+						$('#topPerformersTableBody').append(topPerformerStructure(result.topPerformers[i].rank, result.topPerformers[i].name, result.topPerformers[i].marks_scored, imageName));
+						if(i+1 == result.rank){
+							$('#rank-'+result.topPerformers[i].rank).addClass('font-bold');
+						}
+					}
+					if(result.rank>10){
+						imageName='';
+						var j = result.rank-1;
+						$('#topPerformersTableBody').append(topPerformerStructure(result.topPerformers[j].rank, result.topPerformers[j].name, result.topPerformers[j].marks_scored, ''));
+						$('#rank-'+result.topPerformers[j].rank).addClass('font-bold');
+					}
+					$('#topPerformers').append("<button type='button' id='downloadTopPerformers' class='btn btn-primary' onclick='downloadFullList();'>Download full list</button>");
+						
+					//div to be downloaded when clicked on Download topPerformers full list
+					for(var i=0;i<result.topPerformers.length;i++){
+						$('#topPerformersFullList').append(topPerformerFullStructure(result.topPerformers[i].rank, result.topPerformers[i].name, result.topPerformers[i].marks_scored));
+						if(i+1 == result.rank){
+							$('#rankFull-'+result.topPerformers[i].rank).addClass('font-bold');
+						}
+					}
 					questionSolutionStructure();
 					draw3DPieChart();
 					
@@ -97,8 +179,23 @@ $('#btnGenerateReport').on('click', function(){
                 }
             });
 })
-function topPerformerStructure(rank, name, score){
-	var structure = "<span>Rank "+rank+"  "+name+"  Score:"+score+"/"+report.total_marks+"</span></br>";
+function topPerformerStructure(rank, name, score, imageName){
+	var structure = "<tr id='rank-"+rank+"'>"+
+					"<td class='col-md-2.5'>"+rank;
+					
+	if(imageName != ''){
+		structure += "<img src='../img/Medals/"+imageName+"'/>";
+	}
+					
+					structure += "</td>"+
+					"<td class='col-md-7'>"+name+"</td>"+
+					"<td class='col-md-2.5'>"+score+"</td>";
+					
+	//var structure = "<div id='rank-"+rank+"'><span>Rank "+rank+"(  "+name+")  Score:"+score+"/"+report.total_marks+"</span></div></br>";
+	return structure;
+}
+function topPerformerFullStructure(rank, name, score, bold){
+	var structure = "<div id='rankFull-"+rank+"'><span>Rank "+rank+"(  "+name+")  Score:"+score+"/"+report.total_marks+"</span></div></br>";
 	return structure;
 }
  
@@ -127,13 +224,13 @@ function questionSolutionStructure(){
 	$.each(allQuestions, function(key, value){
 		var question = "<div><span class='ques-count'> Question "+count+"</span>&nbsp;&nbsp;<span class='ques-status' id='questionStatus-"+value.id+"'></span></br>";//<span class='time-spent' id='timeSpent-"+value.id+"'></span>
 		if(value.ques_type == "Paragraph"){
-			question += "<span class='para'>Paragraph: </span><span class='para-text'> "+value.paragraph_text+"</span></br>";
+			question += "<span class='para'>Paragraph: </span><span class='para-text'> "+(value.paragraph_text.replace('<p>','')).replace('</p>','')+"</span></br>";
 		}
-		question += "<div class='ques'><span>"+value.ques_text+"</span></div>"+
-					"<div class='options' id='div-a-"+value.id+"'><span id='option-a-"+value.id+"'>a. "+value.optionA+"</span></div>"+
-					"<div class='options' id='div-b-"+value.id+"'><span id='option-b-"+value.id+"'>b. "+value.optionB+"</span></div>"+
-					"<div class='options' id='div-c-"+value.id+"'><span id='option-c-"+value.id+"'>c. "+value.optionC+"</span></div>"+
-					"<div class='options' id='div-d-"+value.id+"'><span id='option-d-"+value.id+"'>d. "+value.optionD+"</span></div>"+
+		question += "<div class='ques'><span>"+(value.ques_text.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-a-"+value.id+"'><span id='option-a-"+value.id+"'>a. "+(value.optionA.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-b-"+value.id+"'><span id='option-b-"+value.id+"'>b. "+(value.optionB.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-c-"+value.id+"'><span id='option-c-"+value.id+"'>c. "+(value.optionC.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-d-"+value.id+"'><span id='option-d-"+value.id+"'>d. "+(value.optionD.replace('<p>','')).replace('</p>','')+"</span></div>"+
 					"<div class='exp-btn'><button type='button' id='btnExplanation-"+value.id+"' class='btn' onclick='openExplanation(this.id);'>Show Explanation</button></div>"+
 					"<div id='explanation-"+value.id+"' class='hide explanation'>"+value.explanation+"</div></div>"+
 					"<hr>";

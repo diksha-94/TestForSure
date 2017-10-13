@@ -56,21 +56,21 @@ function showTests(categoryId, subCatId){
 								var newTest = "<div class='outer-test-div'>"+
 												"<div class='col-md-3 float-left'>"+
 												"<img class='test-image' src="+image_path+"/>"+
-												"</br><h3 class='test-title'>"+test.testTitle+"</h3>"+
+												"</br><h5 class='test-title'>"+test.testTitle+"</h5>"+
 												"</div>"+
 												"<div class='col-md-1.5 float-left max-marks'>"+
 												"<span>Maximum Marks"+
 												"</span></br>"+
-												"<span>"+test.no_of_ques*test.correct_ques_marks+
+												"<span class='max_marks_value'>"+test.no_of_ques*test.correct_ques_marks+
 												"</span>"+
 												"</div>"+
 												"<div class='col-md-2.75 float-left margin-top-30 margin-left-10 div-width'>"+
-												"<label class='clear-both test-size'>Number of Questions: </label><span class='test-size'>"+test.no_of_ques+"</span>"+
-												"</br><label  class='clear-both test-size'>Time Limit(in mins): </label><span class='test-size'>"+test.time_limit+"</span>"+
+												"<span class='glyphicon glyphicon-th-list'></span><label class='clear-both test-size'>&nbsp;Number of Questions: </label><span class='test-size'>"+test.no_of_ques+"</span>"+
+												"</br><span class='glyphicon glyphicon-time'></span><label  class='clear-both test-size'>&nbsp;Time Limit(in mins): </label><span class='test-size'>"+test.time_limit+"</span>"+
 												"</div>"+
 												"<div class='col-md-2.75 float-left margin-top-30 div-width'>"+
-												"<label  class='clear-both test-size'>Correct Question Marks: </label><span class='test-size'>"+test.correct_ques_marks+"</span>"+
-												"</br><label  class='clear-both test-size'>Negative marks: </label><span class='test-size'>"+test.negative_marks+"</span>"+
+												"<span class='glyphicon glyphicon-ok-sign'></span><label  class='clear-both test-size'>&nbsp;Correct Ques Marks: </label><span class='test-size'>"+test.correct_ques_marks+"</span>"+
+												"</br><span class='glyphicon glyphicon-minus-sign'></span><label  class='clear-both test-size'>&nbsp;Negative marks: </label><span class='test-size'>"+test.negative_marks+"</span>"+
 												"</div>"+
 												"<div class='col-md-2 float-left margin-top-40'><a href='start-test-option.html?"+query_string+"' id="+btnId+" class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
 												"</div>";

@@ -45,11 +45,11 @@
 	padding-top:50px;
 }
 .reportDetails{
-	border:solid 2px blue;
-	border-radius:5px;
+	background-color:#F0F0F0;
+	border-radius:15px;
 	width:80%;
 	margin-left:10%;
-	height:50%;
+	height:35%;
 }
 .reportGreeting{
 	text-align:center;
@@ -59,40 +59,54 @@
 	padding-top:40px;
 }
 .empty-div{
-	width:12.5%;
+	width:5.625%;
 	float:left;
 	height:90px;
 }
 .details-div{
-	width:15%;
+	width:12.5%;
+	margin-left:4.375%;
 	float:left;
 	height:90px;
 	text-align:center;
+	background-color:#55AAFF;
+	border-radius:10px;
 }
 .font-design{
 	font-weight:bold;
-	font-size:16px;
+	font-size:36px;
+	padding-top: 20px;
 }
-.medal-img{
-	text-align:center;
-	padding-top:20px;
-}
-.medal-img img{
-	height:120px;
+.head-design{
+	margin-bottom:5px;
+	font-weight:bold;
+	font-size:14px;
 }
 #topperAverage{
+	width:100%;
+	background-color:#F0F0F0;
+	border-radius:10px;
+	text-align:center;
+}
+#topPerformers{
+	width:100%;
+	background-color:#F0F0F0;
+	border-radius:10px;
+	margin-top:50px;
+	text-align:center;
+}
+.outer-details{
 	float:left;
-	width:20%;
-	border:solid 2px grey;
+	width:25%;
 	margin-left:10%;
-	margin-top:80px;
+	margin-top:40px;
 }
 #questionsChart{
 	float:left;
-	width:55%;
+	width:50%;
 	margin-left:80px;
-	margin-top:80px;
-	border:solid 2px grey;
+	margin-top:40px;
+	border-radius:10px;
 }
 #testSolution{
 	width:50%;
@@ -137,4 +151,55 @@
 }
 .explanation{
 	margin-top:10px;
+}
+.topperAvg-head{
+	font-size:18px;
+	font-weight:bold;
+}
+.padding-top-20{
+	padding-top:20px;
+}
+.padding-bottom-20{
+	padding-bottom:20px;
+}
+.topperAvg-value{
+	font-size:18px;
+}
+.top-performer-head{
+	font-weight:bold;
+	font-size:22px;
+}
+.font-bold{
+	font-weight:bold;
+	font-size:18px;
+}
+table { border-collapse: collapse;
+width:96%;
+margin-left:2%;
+text-align:center; }
+td { border: none;
+border-bottom:solid 1px #C3C3C3; }
+tr {
+  border-right: solid 1px #C3C3C3; 
+  border-left: solid 1px #C3C3C3;
+  height:40px;
+}
+table > thead{
+	font-weight:bold;
+}
+table > thead > tr { 
+border-top:solid 1px #C3C3C3; }
+table > tbody{
+	color:#286090;
+}
+table > tbody > tr:nth-child(even) {background: #F0F0F0}
+table > tbody > tr:nth-child(odd) {background: #E1E1E1}
+#downloadTopPerformers{
+	margin-top:20px;
+}
+
+table > tbody > tr > td > img{
+	height:20px;
+	width:20px;
+	margin-left:3px;
 }

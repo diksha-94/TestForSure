@@ -1,0 +1,31 @@
+.outermost-div{
+	width:50%;
+	margin-left:25%;
+}
+.head-create-test{
+	test-align:center;
+}
+#testDetails{
+	clear:both;
+	background-color:#F0F0F0;
+	border-radius:10px;
+	width:100%;
+}
+.red{
+	color:red;
+}
+#addQuestions{
+	width:80%;
+	margin-left:10%;
+}
+.noOfQuesAdded{
+	font-size:18px;
+	font-weight:bold;
+}
+#quesEditor{
+	width:90%;
+	margin-left:5%;
+}
+#addQuestions{
+	clear:both;
+}

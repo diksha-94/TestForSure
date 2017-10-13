@@ -72,17 +72,18 @@
 	margin-bottom:10px;
 	margin-top:5px;
 	text-align:center;
+	font-weight: bold;
 }
 
 
 .outer-test-div{
-	 width:80%;
-	 border:solid 1px grey;
+	 width:88%;
+	 background-color:#F0F0F0;
 	 border-radius:1%;
 	 margin-top:20px;
 	 height:110px;
 	 overflow:auto;
-	 margin-left:10%;
+	 margin-left:6%;
 }
 .heading-width{
 	width:20%;
@@ -102,15 +103,17 @@
 	clear:both;
 }
 .max-marks{
-	margin-top:22px;
-	margin-bottom:22px;
+	margin-top:17px;
+	margin-bottom:17px;
 	margin-right:15px;
 	padding:10px;
-	background-color:#E1E1E1;
 	border-radius:5%;
-	color:#878787;
+	color:#286090;
 	text-align:center;
 	font-weight:bold;
+}
+.max_marks_value{
+	font-size:25px;
 }
 .footer{
 	margin-top:5%;
@@ -159,4 +162,8 @@
 }
 .online-tests-link:hover{
 	text-decoration:none;
+}
+.icon-image{
+	height:14px;
+	width:14px;
 }

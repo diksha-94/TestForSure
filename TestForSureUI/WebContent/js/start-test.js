@@ -13,6 +13,11 @@ $('#btnProceed').on('click', function(){
 	$('#divInstructions').addClass('hide');
 	$('#divQuestions').removeClass('hide');
 	$('#divQuestions').addClass('show');
+	$('.question-panel-design').removeClass('hide');
+	$('.question-panel-design').addClass('show');
+	$('.submit-button-div').removeClass('hide');
+	$('.submit-button-div').addClass('show');
+	
 	var testId = ((localStorage.getItem('test_id')).split('-'))[1];
 	console.log("Test id: "+testId);
 	
@@ -28,12 +33,13 @@ $('#btnProceed').on('click', function(){
 						var questionNumber = "";
 						console.log(result.testDetails.no_of_ques);
 						for(var i=1;i<=parseInt(result.testDetails.no_of_ques);i++){
-							questionNumber += "<a href='javascript:showQuestionByNumber("+i+")'><div  id='question-"+i+"' class='test_icons unseen question_number'>" + i + "</div></a>";
+							questionNumber += "<a href='javascript:showQuestionByNumber("+i+")'><div  id='question-"+i+"' class='test_icons unseen question_number'><span class='quesNumberText'>" + i + "</span></div></a>";
 						}
 						console.log(questionNumber);
 						$('#questionNumber').append(questionNumber);
 						
-						$('#quesAttemptedCount').text('0/'+result.testDetails.no_of_ques);
+						$('#quesAttemptedCount').text(0);
+						$('#quesTotalCount').text(result.testDetails.no_of_ques);
 						no_of_ques = parseInt(result.testDetails.no_of_ques);
 						var rem_secs = '0';
 						var time_limit = result.testDetails.time_limit;
@@ -193,6 +199,8 @@ $('#btnNextToInstructions').on('click', function(){
 		$('#correct-ques').append(" "+ testDetailsObject.testDetails.correct_ques_marks+" marks");
 		$('#negative-marks').append(" "+ testDetailsObject.testDetails.negative_marks+" marks");
 		$('#time-limit-test').append(" "+ testDetailsObject.testDetails.time_limit+" minutes");
+		console.log("test---------");
+		$('#title-head').text(testDetailsObject.testDetails.testTitle);
 })
 
 $('#btnViewAll').on('click', function(){
@@ -204,14 +212,14 @@ function questionStructure(paraText, quesText, optionA, optionB, optionC, option
 	var question = "";
 	question+="<span class='question-num'>Question "+localStorage.getItem('questionCount')+".</span></br>"
 	if(paraText != ""){
-		question += "<span class='paragraph-text'>"+paraText+"</span></br>";
+		question += "<span class='paragraph-text'>"+(paraText.replace('<p>','')).replace('</p>','')+"</span></br>";
 	}
-	question += "<span class='question-text'>"+quesText+"</span></br>";
+	question += "<span class='question-text'>"+(quesText.replace('<p>','')).replace('</p>','')+"</span></br>";
 	var optionsRadioButton = "<div class='funkyradio'>"+
-							"<div class='funkyradio-primary'><input type='radio' id='optionsA' name='options' value='a'/><label for='optionsA'>"+optionA+"</label></div>"+
-							 "<div class='funkyradio-primary'><input type='radio' id='optionsB' name='options' value='b'/><label for='optionsB'>"+optionB+"</label></div>"+
-							 "<div class='funkyradio-primary'><input type='radio' id='optionsC' name='options' value='c'/><label for='optionsC'>"+optionC+"</label></div>"+
-							 "<div class='funkyradio-primary'><input type='radio' id='optionsD' name='options' value='d'/><label for='optionsD'>"+optionD+"</label></div>"+
+							"<div class='funkyradio-primary'><input type='radio' id='optionsA' name='options' value='a'/><label for='optionsA'>"+(optionA.replace('<p>','')).replace('</p>','')+"</label></div>"+
+							 "<div class='funkyradio-primary'><input type='radio' id='optionsB' name='options' value='b'/><label for='optionsB'>"+(optionB.replace('<p>','')).replace('</p>','')+"</label></div>"+
+							 "<div class='funkyradio-primary'><input type='radio' id='optionsC' name='options' value='c'/><label for='optionsC'>"+(optionC.replace('<p>','')).replace('</p>','')+"</label></div>"+
+							 "<div class='funkyradio-primary'><input type='radio' id='optionsD' name='options' value='d'/><label for='optionsD'>"+(optionD.replace('<p>','')).replace('</p>','')+"</label></div>"+
 							 "</div>";
 	question+=optionsRadioButton;
 	return(question);
@@ -253,8 +261,8 @@ $('#btnClearSelection').on('click', function(){
 	}
 	console.log("Candidate Response: "+JSON.stringify(candidateResponse));
 	console.log("Questions attempted: "+count);
-	$('#quesAttemptedCount').text(count+'/'+no_of_ques);
-	
+	$('#quesAttemptedCount').text(count);
+	$('#quesTotalCount').text(no_of_ques);
 	//Change the color of the Question number accordingly
 	
 	var flag = false;
@@ -580,7 +588,8 @@ $('#displayQuestion').on('click', 'input[name=options]:radio', function(){
 	}
 	console.log("Candidate Response: "+JSON.stringify(candidateResponse));
 	console.log("Questions attempted: "+count);
-	$('#quesAttemptedCount').text(count+'/'+no_of_ques);
+	$('#quesAttemptedCount').text(count);
+	$('#quesTotalCount').text(no_of_ques);
 	
 	//Change the color of the Question number accordingly
 	var flag = false;
@@ -712,7 +721,13 @@ function noBack() {
 }
 $(document).ready(function () {
 	//localStorage.clear();
+	//to prevent the right click on test screen
+	//document.addEventListener('contextmenu', event => event.preventDefault());
 	
+	//To ask the user, when he/she attempts to refresh the page
+	window.onbeforeunload = function(){
+		return "Are you sure you want to leave this page?";
+	}
 	console.log("Document start-test is ready");
 	var test_id = getQueryParameterByName('test_id');
 	request_from = getQueryParameterByName('from');
