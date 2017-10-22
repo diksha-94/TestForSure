@@ -48,6 +48,7 @@ $('#loginForm').validate({
 					
 					localStorage.setItem("loggedIn", "true");
 					localStorage.setItem("username", result.username);
+					localStorage.setItem("email", requestData.email);
                     window.location.href = "user-dashboard.html";
 			    }
                 else if (!result.response.status) {
@@ -126,6 +127,7 @@ $('#registerForm').validate({
 					console.log(result.response.message);
 					localStorage.setItem("loggedIn", "true");
 					localStorage.setItem("username", result.username);
+					localStorage.setItem("email", email);
                     window.location.href = "user-dashboard.html";
 			    }
                 else if (!result.response.status) {

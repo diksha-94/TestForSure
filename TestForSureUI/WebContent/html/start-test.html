@@ -11,10 +11,10 @@
 			<div class='col-md-2'>
 				<a href="#">TEST-FOR-SURE</a>
 			</div>
-			<div class='col-md-2'>
-				<span id='title-head'>tre</span>
+			<div class='col-md-4'>
+				<h3 id='titleHead'></h3>
 			</div>
-			<div id="timer" class='col-md-2 col-md-offset-2 hide question-panel-design'>
+			<div id="timer" class='col-md-2 hide question-panel-design'>
 				<div class='ques-attempted'>
 					<span class='designing-head'>Questions Attempted:</span></br>
 					<span id="quesAttemptedCount" class='questionCount'></span>&nbsp;/&nbsp;
@@ -123,6 +123,9 @@
 					<div class="col-xs-6 ">
 						<span class="test_icons unseen"></span> &nbsp;&nbsp;&nbsp;Not Visited
 					</div>
+					<div class="col-xs-8 ">
+						<span class="test_icons marked answered"></span> &nbsp;&nbsp;&nbsp;Marked & Answered
+					</div>
 				</div>
 			</div>
 			<div style='float:left;margin-top:20px;'  class='col-md-7 col-md-offset-1'>
@@ -136,8 +139,9 @@
 			<div id="questions1" class='question-panel-design'>
 			
 			<div class='next-prev-div'>
-					<a href='#' id="btnClearSelection" class='col-md-3'>Clear Selection</a>
-					<a href='#' id="btnMarkForReview"  class='col-md-4'>Mark this question for review</a>
+					<a href='#' id="btnClearSelection" class='col-md-2 link-font'>Clear Selection</a>
+					<a href='#' id="btnMarkForReview"  class='col-md-2 link-font'>Mark for review</a>
+					<a href='#' id="btnUnmarkForReview"  class='col-md-3 link-font'>Unmark for review</a>
 					<button type="button" id="btnPreviousQuestion"  class='btn btn-default btn-primary col-md-2' disabled='disabled'>Previous</button>
 					<button type="button" id="btnSaveNext"  class='btn btn-default btn-primary col-md-2 col-md-offset-1'>Next</button>
 				</div>

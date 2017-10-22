@@ -1,5 +1,5 @@
 .test_icons{
-    padding-top: 2px;
+    padding-top: 8px;
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -35,10 +35,11 @@
 }
 .test_icons.marked.answered {
     background: #5cb85c;
-    border: 4px solid #9B59B6;
+    border: 6px solid #9B59B6;
     color: #fff;
-    padding-top: 3px;
+	padding-top: 3px;
 }
+
 .question_number{
 	margin-left: 15px;
     margin-right: 15px;

@@ -59,8 +59,40 @@ $('#loginForm').validate({
 					
 					localStorage.setItem("loggedIn", "true");
 					localStorage.setItem("username", result.username);
-					window.history.back();
-                    window.open("start-test.html?from=login&test_id="+test_id, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
+					localStorage.setItem("email", requestData.email);
+					
+					var query_string = 'test_id='+test_id;
+					var testId = ((test_id).split('-'))[1];
+	
+					var emailid = localStorage.getItem('email');
+					console.log("Email id: "+emailid);
+					var type='GET';
+					var url ='http://localhost:8083/test-for-sure/test/test-already-attempted?test_id='+testId+'&email_id='+emailid;
+					$.ajax({
+						url: url,
+						type: type,
+						contentType: 'application/json',
+						//dataType: 'json',
+						success: function (result) {
+						if (result.status) {
+							//Status true means user is authenticated successfully.
+							console.log("Result: "+JSON.stringify(result));
+							window.location.href = "start-test-already-attempted.html";
+						}
+						else if (!result.status) {
+							console.log("Result: "+JSON.stringify(result));
+							window.location.href="start-test-option.html?"+query_string;
+						}
+                
+					},
+					error: function () {
+						console.log("Service is unavailable");
+					}	
+           
+				});
+	
+					//window.history.back();
+                    //window.open("start-test.html?from=login&test_id="+test_id, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
 	
 			    }
                 else if (!result.response.status) {
@@ -82,6 +114,9 @@ $('#loginForm').validate({
     }
 });
 
+function checkAlreadyAttempted(id){
+	
+}
 var registerRules = {
     'txtNameReg': {
 		required: true
@@ -139,6 +174,7 @@ $('#registerForm').validate({
 					console.log(result.response.message);
 					localStorage.setItem("loggedIn", "true");
 					localStorage.setItem("username", result.username);
+					localStorage.setItem("email", result.email);
 					window.history.back();
                     window.open("start-test.html?from=register&test_id="+test_id, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
 				}

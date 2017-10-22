@@ -34,21 +34,15 @@
 #btnGenerateReport{
 	font-weight:bold;
 }
-#buttons{
-	width:30%;
-	margin-left:35%;
-	text-align:center;
-	margin-bottom:50px;
-}
+
 #testReportGeneral{
 	clear:both;
 	padding-top:50px;
 }
 .reportDetails{
-	background-color:#F0F0F0;
-	border-radius:15px;
-	width:80%;
-	margin-left:10%;
+	background-color:#696969;
+	width:100%;
+	color:white;
 	height:35%;
 }
 .reportGreeting{
@@ -59,17 +53,17 @@
 	padding-top:40px;
 }
 .empty-div{
-	width:5.625%;
+	width:5%;
 	float:left;
 	height:90px;
 }
 .details-div{
-	width:12.5%;
-	margin-left:4.375%;
+	width:10.33%;
+	margin-left:4%;
 	float:left;
 	height:90px;
 	text-align:center;
-	background-color:#55AAFF;
+	
 	border-radius:10px;
 }
 .font-design{
@@ -80,31 +74,41 @@
 .head-design{
 	margin-bottom:5px;
 	font-weight:bold;
-	font-size:14px;
+	font-size:17px;
 }
 #topperAverage{
-	width:100%;
 	background-color:#F0F0F0;
 	border-radius:10px;
-	text-align:center;
+	height:17%;
+	width:80%;
+	margin-left:20%;
+	color:#2E6DA4;
 }
 #topPerformers{
-	width:100%;
 	background-color:#F0F0F0;
 	border-radius:10px;
 	margin-top:50px;
+	width:80%;
+	margin-left:20%;
 	text-align:center;
 }
 .outer-details{
 	float:left;
-	width:25%;
-	margin-left:10%;
+	width:30%;
 	margin-top:40px;
 }
+
 #questionsChart{
 	float:left;
-	width:50%;
-	margin-left:80px;
+	width:25%;
+	margin-left:5%;
+	margin-top:40px;
+	border-radius:10px;
+}
+#timeChart{
+	float:left;
+	width:25%;
+	margin-left:10%;
 	margin-top:40px;
 	border-radius:10px;
 }
@@ -164,6 +168,7 @@
 }
 .topperAvg-value{
 	font-size:18px;
+	text-align:right;
 }
 .top-performer-head{
 	font-weight:bold;
@@ -202,4 +207,52 @@ table > tbody > tr > td > img{
 	height:20px;
 	width:20px;
 	margin-left:3px;
+}
+.head-outer{
+	color:white;
+}
+#titleHead{
+	margin-top:27px;
+	color:white;
+	font-weight:bold;
+}
+#buttons{
+	margin-top:22px;
+}
+#buttons button{
+	width:160px;
+	font-weight:bold;
+}
+.margin-top-20{
+	margin-top:20px;
+}
+.horizontal-line{
+	margin-top:10px;
+}
+#questionsSummary{
+	float: left;
+	background-color:#F0F0F0;
+	height:140px;
+	width:180px;
+}
+#timeSummary{
+	float: left;
+	background-color:#F0F0F0;
+	height:140px;
+	width:220px;
+}
+.correctClass{
+	margin-top:20px;
+	font-weight:bold;
+	color:#95CEFF;
+}
+.incorrectClass{
+	margin-top:20px;
+	font-weight:bold;
+	color:#5C5C61;
+}
+.unattemptedClass{
+	margin-top:20px;
+	font-weight:bold;
+	color:#90ED7D;
 }

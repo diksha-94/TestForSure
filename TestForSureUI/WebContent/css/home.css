@@ -54,14 +54,15 @@
 	margin-left:15%;
 }
 .width-class{
-	width:80%;
-	margin-left:10%;
+	width:100%;
 	margin-top:100px;
+	margin-left:2%;
 }
 .width-class-test{
 	width:80%;
 	margin-left:10%;
 }
+
 .test-image{
 	margin-top:10px;
 	height:50%;
@@ -77,13 +78,13 @@
 
 
 .outer-test-div{
-	 width:88%;
+	 width:100%;
 	 background-color:#F0F0F0;
 	 border-radius:1%;
 	 margin-top:20px;
 	 height:110px;
 	 overflow:auto;
-	 margin-left:6%;
+	 margin-left:3%;
 }
 .heading-width{
 	width:20%;
@@ -116,7 +117,8 @@
 	font-size:25px;
 }
 .footer{
-	margin-top:5%;
+	margin-top:15%;
+	clear:both;
 }
 .category-div{
 	width:80%;
@@ -166,4 +168,23 @@
 .icon-image{
 	height:14px;
 	width:14px;
+}
+#tests_home{
+	width:65%;
+	float:left;
+}
+.news-width{
+	width: 25%;
+	margin-left:4%;
+	margin-right:3%;
+	background-color:#2E6DA4;
+	height:100%;
+	color:white;
+	float:left;
+	margin-top:20px;
+	overflow:auto;
+}
+.news-width a{
+	color:white;
+	padding:5px;
 }

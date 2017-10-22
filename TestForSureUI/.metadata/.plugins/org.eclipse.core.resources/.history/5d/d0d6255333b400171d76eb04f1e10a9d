@@ -1,0 +1,8 @@
+package edu.tests.TestForSure.sql;
+
+public class CreateTestReportQueries {
+	public static String getTestSolution(int id) {
+		String getSolution = "SELECT subcategory FROM examsubcategory WHERE id = '" + id + "'";
+		return getSolution;
+	}
+}

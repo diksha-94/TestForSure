@@ -1,0 +1,30 @@
+package edu.tests.TestForSure.response;
+
+import java.util.*;
+
+import edu.tests.TestForSure.entity.TestReports;
+
+public class GetTestReportResponse {
+	private ArrayList<TestReports> testReports;
+
+	public ArrayList<TestReports> getTestReports() {
+		return testReports;
+	}
+
+	public void setTestReports(ArrayList<TestReports> testReports) {
+		this.testReports = testReports;
+	}
+
+	@Override
+	public String toString() {
+		return "GetTestReportResponse [testReports=" + testReports + "]";
+	}
+
+	public GetTestReportResponse(ArrayList<TestReports> testReports) {
+		super();
+		this.testReports = testReports;
+	}
+	public GetTestReportResponse(ArrayList<TestReports> testReports) {
+		super();
+	}
+}

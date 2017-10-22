@@ -57,7 +57,7 @@
 
 #questionsPanel{
 	float:left;
-	height:80%;
+	height:85%;
 	margin-top:20px;
 	background-color:#F9F9F9;
 }
@@ -110,6 +110,9 @@
 	text-decoration:none;
 }
 #btnMarkForReview:hover{
+	text-decoration:none;
+}
+#btnUnmarkForReview:hover{
 	text-decoration:none;
 }
 .designing-head{
@@ -285,7 +288,12 @@ header nav{
 .head-outer{
 	color:white;
 }
-#title-head{
-	margin-top:22px;
+#titleHead{
+	margin-top:27px;
 	color:white;
+	font-weight:bold;
+}
+.link-font{
+	font-size:16px;
+	text-decoration:none;
 }

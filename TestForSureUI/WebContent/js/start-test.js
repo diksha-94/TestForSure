@@ -41,6 +41,7 @@ $('#btnProceed').on('click', function(){
 						$('#quesAttemptedCount').text(0);
 						$('#quesTotalCount').text(result.testDetails.no_of_ques);
 						no_of_ques = parseInt(result.testDetails.no_of_ques);
+						
 						var rem_secs = '0';
 						var time_limit = result.testDetails.time_limit;
 						total_time = result.testDetails.time_limit;
@@ -123,6 +124,7 @@ $('#btnProceed').on('click', function(){
 							$.each(result.question, function(i, question) {
 								allQuestions.push(question);
 							});
+							localStorage.setItem('testTitle', testDetailsObject.testDetails.testTitle);
 							localStorage.setItem('allQuestions', JSON.stringify(allQuestions));
 							ques_id = allQuestions[0].id;
 							console.log(JSON.stringify(allQuestions));
@@ -192,7 +194,7 @@ $('#btnNextToInstructions').on('click', function(){
 	$('#divUserDetails').addClass('hide');
 	$('#divInstructions').removeClass('hide');
 	$('#divInstructions').addClass('show');
-	$('#test-title').append(" "+ testDetailsObject.testDetails.testTitle);
+	//$('#test-title').append(" "+ testDetailsObject.testDetails.testTitle);
 		$('#time-limit').append(" "+ testDetailsObject.testDetails.time_limit);
 		$('#max-marks').append(" "+ testDetailsObject.testDetails.no_of_ques*testDetailsObject.testDetails.correct_ques_marks);
 		$('#total-ques').append(" "+ testDetailsObject.testDetails.no_of_ques+" Questions");
@@ -200,7 +202,7 @@ $('#btnNextToInstructions').on('click', function(){
 		$('#negative-marks').append(" "+ testDetailsObject.testDetails.negative_marks+" marks");
 		$('#time-limit-test').append(" "+ testDetailsObject.testDetails.time_limit+" minutes");
 		console.log("test---------");
-		$('#title-head').text(testDetailsObject.testDetails.testTitle);
+		
 })
 
 $('#btnViewAll').on('click', function(){
@@ -612,6 +614,79 @@ $('#displayQuestion').on('click', 'input[name=options]:radio', function(){
 	
 })
 
+//On click of Mark for review
+$('#btnMarkForReview').on('click', function(){
+	console.log("Clicked marke for reviw");
+	var response = {};
+	var exist = false;
+	var ques_num = parseInt(localStorage.getItem('questionCount'));
+	var ques_id = allQuestions[parseInt(localStorage.getItem('questionCount'))-1].id;
+	
+	
+	console.log("Candidate Response: "+JSON.stringify(candidateResponse));
+	
+	//Change the color of the Question number accordingly
+	var flag = false;
+	for(var i = 0;i<(candidateResponse.result).length;i++){
+		if(candidateResponse.result[i].question_id == ques_id && candidateResponse.result[i].marked_option != null){
+			flag = true;
+			break;
+		}
+	}
+	if(flag){
+		//means the question is answered and clicked on marked for review
+		$('#question-'+ques_num).removeClass('unseen');
+		$('#question-'+ques_num).addClass('answered');
+		$('#question-'+ques_num).removeClass('marked');
+		$('#question-'+ques_num).removeClass('skipped');
+		$('#question-'+ques_num).addClass('marked');
+	}
+	else{
+		//means the question is not yet answered but clicked for review
+		$('#question-'+ques_num).removeClass('unseen');
+		$('#question-'+ques_num).removeClass('answered');
+		$('#question-'+ques_num).removeClass('skipped');
+		$('#question-'+ques_num).addClass('marked');
+	}
+})
+
+//On click of Unmark for review
+$('#btnUnmarkForReview').on('click', function(){
+	console.log("Clicked unmark for reviw");
+	var response = {};
+	var exist = false;
+	var ques_num = parseInt(localStorage.getItem('questionCount'));
+	var ques_id = allQuestions[parseInt(localStorage.getItem('questionCount'))-1].id;
+	
+	
+	console.log("Candidate Response: "+JSON.stringify(candidateResponse));
+	
+	//Change the color of the Question number accordingly
+	var flag = false;
+	for(var i = 0;i<(candidateResponse.result).length;i++){
+		if(candidateResponse.result[i].question_id == ques_id && candidateResponse.result[i].marked_option != null){
+			flag = true;
+			break;
+		}
+	}
+	if(flag){
+		//means the question is answered and clicked on marked for review
+		$('#question-'+ques_num).removeClass('unseen');
+		$('#question-'+ques_num).addClass('answered');
+		$('#question-'+ques_num).removeClass('marked');
+		$('#question-'+ques_num).removeClass('skipped');
+		//$('#question-'+ques_num).addClass('marked');
+	}
+	else{
+		//means the question is not yet answered but clicked for review
+		$('#question-'+ques_num).removeClass('unseen');
+		$('#question-'+ques_num).removeClass('answered');
+		$('#question-'+ques_num).removeClass('marked');
+		$('#question-'+ques_num).addClass('skipped');
+		
+	}
+})
+
 //Function to find the time spent on each question
 function getTimeEachQuestion(){
 	
@@ -735,10 +810,11 @@ $(document).ready(function () {
 	localStorage.setItem('questionCount', 1);
 	console.log("Test id: "+test_id);
 	candidateResponse.testDetails.test_id = (test_id.split('-'))[1];
-	
 	var testDetails = localStorage.getItem('testDetails');
 	testDetailsObject = JSON.parse(testDetails);
 	console.log("Test Details: "+JSON.stringify(testDetailsObject));
+	$('#titleHead').append(testDetailsObject.testDetails.testTitle);
+	console.log("Request_from: "+request_from);
 	if(request_from === "login" || request_from === "register"){
 		$('#divUserDetails').removeClass('show');
 		$('#divUserDetails').addClass('hide');

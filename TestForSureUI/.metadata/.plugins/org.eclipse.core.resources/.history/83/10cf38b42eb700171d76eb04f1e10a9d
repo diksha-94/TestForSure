@@ -1,0 +1,30 @@
+package edu.tests.TestForSure.service;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.tests.TestForSure.datalayer.NewsDAO;
+import edu.tests.TestForSure.datalayer.TestDAO;
+import edu.tests.TestForSure.response.GetCategoryResponse;
+import edu.tests.TestForSure.response.GetNewsResponse;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/test-for-sure/news-notifications")
+public class NewsServices {
+	
+	@RequestMapping(method = {RequestMethod.GET}, value = "/get-all-news")
+	public GetNewsResponse getAllNews(){
+		System.out.println("Calling get all news service");;
+		GetNewsResponse response = null;
+		try{
+			response = NewsDAO.getAllNews();
+		}
+		catch(Exception e){
+			System.out.println("Exception in getAllNews service: "+e.getMessage());
+		}
+		return response;
+	}
+}

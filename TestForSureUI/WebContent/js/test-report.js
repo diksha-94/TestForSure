@@ -92,6 +92,12 @@ $('#btnGenerateReport').on('click', function(){
 	$('#testSummary').addClass('hide');
 	$('#testReportGeneral').removeClass('hide');
 	$('#testReportGeneral').addClass('show');
+	$('#testReportDetail').removeClass('hide');
+	$('#testReportDetail').addClass('show');
+	$('#questionsChart').removeClass('hide');
+	$('#questionsChart').addClass('show');
+	$('#timeChart').removeClass('hide');
+	$('#timeChart').addClass('show');
 
 	$('#buttons').removeClass('hide');
 	$('#buttons').addClass('show');
@@ -115,17 +121,14 @@ $('#btnGenerateReport').on('click', function(){
 					$('#idAccuracy').text(findAccuracy(result.correct_ques, result.ques_attempted)+"%");
 					$('#idPercentile').text(findPercentile(result.rank, result.total_candidate));
 					
-					//Time taken
-					//$('#')
-					
-					$('#idCorrect').text(result.correct_ques);
-					$('#idIncorrect').text(result.incorrect_ques);
-					$('#idNotattempted').text(result.total_ques-result.ques_attempted);
+					$('#idCorrect').text(result.correct_ques+"Qs");
+					$('#idIncorrect').text(result.incorrect_ques+"Qs");
+					$('#idNotattempted').text((result.total_ques-result.ques_attempted)+"Qs");
 					
 					$('#idTopperScore').text(result.topperScore+"/"+report.total_marks);
-					$('#idTopperTime').text(result.topperTime);
+					$('#idTopperTime').text(result.topperTime+" mins");
 					$('#idAvgScore').text(result.avgScore+"/"+report.total_marks);
-					$('#idAvgTime').text(result.avgTime);
+					$('#idAvgTime').text(result.avgTime+" mins");
 					
 					$('#totalMarksInTable').append('['+report.total_marks+']');
 					var totalRecordsToDisplay;
@@ -173,6 +176,28 @@ $('#btnGenerateReport').on('click', function(){
 					questionSolutionStructure();
 					draw3DPieChart();
 					
+					//Code to draw the pie chart for time taken(for correct, incorrect and unattempted questions)
+					var correctTime = 0;
+					var incorrectTime = 0;
+					var unattemptedTime = 0;
+					for(var i=0;i<(result.question_details).length;i++){
+						if(result.question_details[i].marked_option == null){
+							unattemptedTime+=result.question_details[i].time_spent;
+						}
+						else if(result.question_details[i].correct_option == result.question_details[i].marked_option){
+							correctTime+=result.question_details[i].time_spent;
+						}
+						else if(result.question_details[i].correct_option != result.question_details[i].marked_option){
+							incorrectTime+=result.question_details[i].time_spent;
+						}
+					}
+					var totalTimeTaken = correctTime+incorrectTime+unattemptedTime;
+					$('#idCorrectTime').text(correctTime+"secs");
+					$('#idIncorrectTime').text(incorrectTime+"secs");
+					$('#idNotattemptedTime').text(unattemptedTime+"secs");
+					draw3DPieChartTime(correctTime, incorrectTime, unattemptedTime, totalTimeTaken);
+					
+					
                 },
                 error: function () {
 					console.log("Error in getting questions");
@@ -202,6 +227,13 @@ function topPerformerFullStructure(rank, name, score, bold){
 $('#btnSolution').on('click', function(){
 	$('#testReportGeneral').removeClass('show');
 	$('#testReportGeneral').addClass('hide');
+	$('#testReportDetail').removeClass('show');
+	$('#testReportDetail').addClass('hide');
+	
+	$('#questionsChart').removeClass('show');
+	$('#questionsChart').addClass('hide');
+	$('#timeChart').removeClass('show');
+	$('#timeChart').addClass('hide');
 	$('#testSolution').removeClass('hide');
 	$('#testSolution').addClass('show');
 	
@@ -212,6 +244,12 @@ $('#btnSolution').on('click', function(){
 $('#btnAnalysis').on('click', function(){
 	$('#testReportGeneral').removeClass('hide');
 	$('#testReportGeneral').addClass('show');
+	$('#testReportDetail').removeClass('hide');
+	$('#testReportDetail').addClass('show');
+	$('#questionsChart').removeClass('hide');
+	$('#questionsChart').addClass('show');
+	$('#timeChart').removeClass('hide');
+	$('#timeChart').addClass('show');
 	$('#testSolution').removeClass('show');
 	$('#testSolution').addClass('hide');
 	
@@ -257,18 +295,18 @@ function questionSolutionStructure(){
 					$('#'+idFormed).css('color', 'orange');
 					console.log("correctOptionId: "+correctOptionId);
 				
-					$('#'+correctOptionId).css('background-color', '#DFF0D8');
+					$('#'+correctOptionId).css('background-color', '#A4CC8C');
 				}
 				else if(value1.marked_option == value1.correct_option){
 					$('#'+idFormed).text("Correct answer !!");
 					$('#'+idFormed).css('color', 'green');
-					$('#'+correctOptionId).css('background-color', '#DFF0D8');
+					$('#'+correctOptionId).css('background-color', '#A4CC8C');
 				}
 				else if(value1.marked_option != value1.correct_option){
 					$('#'+idFormed).text("You got this Question wrong");
 					$('#'+idFormed).css('color', 'red');
-					$('#'+correctOptionId).css('background-color', '#DFF0D8');
-					$('#'+markedOptionId).css('background-color', '#F2DEDE');
+					$('#'+correctOptionId).css('background-color', '#A4CC8C');
+					$('#'+markedOptionId).css('background-color', '#EA8080');
 				}
 				var idTimeSpent = 'timeSpent-'+value.id;
 				$('#'+idTimeSpent).text(value1.time_spent+" secs");
@@ -360,6 +398,53 @@ function draw3DPieChart(){
             json.series = series;   
             $('#questionsPieChart').highcharts(json);
          }
+		 
+function draw3DPieChartTime(correctTime, incorrectTime, unattemptedTime, totalTimeTaken){
+	
+	var correctAngle = ((correctTime)*100)/totalTimeTaken;
+	var incorrectAngle = ((incorrectTime)*100)/totalTimeTaken;
+	var unattemptedAngle = ((unattemptedTime)*100)/totalTimeTaken;
+	var chart = {      
+               type: 'pie',     
+               options3d: {
+                  enabled: true,
+                  alpha: 45,
+                  beta: 0
+               }
+            };
+            var title = {
+               text: 'Time'   
+            };   
+            var tooltip = {
+               pointFormat: '<b>{point.percentage:.1f}%</b>'
+            };
+            var plotOptions = {
+               pie: {
+                  cursor: 'pointer',
+                  depth: 35,
+                  
+                  dataLabels: {
+                     enabled: true,
+                     format: '{point.name}'
+                  }
+               }
+            };   
+            var series = [{
+               type: 'pie',
+               data: [
+                  ['Correct',   correctAngle],
+                  ['Incorrect',  incorrectAngle],
+                  ['Unattempted',   unattemptedAngle]
+               ]
+            }];     
+            var json = {};   
+            json.chart = chart; 
+            json.title = title;       
+            json.tooltip = tooltip; 
+            json.plotOptions = plotOptions; 
+            json.series = series;   
+            $('#timePieChart').highcharts(json);
+         }
 
 function getQueryParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -380,6 +465,7 @@ $(document).ready(function () {
 	var attempted = getQueryParameterByName('attempted');
 	console.log("Attempted: "+attempted);
 	
+	$('#titleHead').append(localStorage.getItem('testTitle'));
 	$('#idTotal').text(total);
 	$('#idAttempted').text(attempted);
 	$('#idUnattempted').text(parseInt(total)-parseInt(attempted));

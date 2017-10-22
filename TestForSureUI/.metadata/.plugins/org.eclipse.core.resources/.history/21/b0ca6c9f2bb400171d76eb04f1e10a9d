@@ -1,0 +1,35 @@
+package edu.tests.TestForSure.datalayer;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import edu.tests.TestForSure.common.DBConnection;
+import edu.tests.TestForSure.sql.CreateTestQueries;
+
+public class TestReportDAO {
+
+	public static Boolean checkAlreadyAttempted(int test_id, String email_id){
+		System.out.println("Calling DAO");
+		String query = CreateTestQueries.checkAlreadyAttempted(test_id, email_id);
+		System.out.println("Query: "+query);
+		Connection conn = DBConnection.getDBConnection();
+		ResultSet rs = null;
+		Boolean response = false;
+		try{
+			Statement statement = conn.createStatement();
+			rs = statement.executeQuery(query);
+			if(rs.isBeforeFirst()){
+				while(rs.next()){
+					response = true;
+				}
+			}
+		}
+		catch(Exception e){
+			System.out.println("Exception from DAO: "+e.getMessage());
+			response = false;
+		}
+		
+		return response;
+	}
+}

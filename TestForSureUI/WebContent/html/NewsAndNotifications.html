@@ -1,0 +1,123 @@
+<html>
+	<head>
+		<title>TEST-FOR-SURE</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+		<link href="../css/editor.css" type="text/css" rel="stylesheet"/>
+		
+	</head>
+	<body>
+		
+			<header>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">TEST-FOR-SURE</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="admin-dashboard.html">Home</a></li>
+						<li><a href="create-test.html">Create Test</a></li>
+						<li><a href="show-tests-admin.html">Show Tests</a></li>
+						<li><a href="question-bank.html">Question Bank</a></li>
+						<li class="active"><a href="NewsAndNotifications.html">News & Notifications</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		
+		<div id='existingNews'>
+		</div>
+		
+		<div id="addNews" style='clear:both;text-align:center;margin-top:100px;'>
+		<h3>Add/Update News</h3>
+				<form role="form" id="addNewsForm" class="form-horizontal">
+				<div id="errorOuter" class="hide">
+							<div class="alert alert-danger" id="errorMessage"></div>
+						</div>
+					<div class="form-group">
+						<label class='control-label col-md-3'>News Headline <span class="red">*</span></label>
+						<div class='col-md-4'>
+							<textarea id="txtHeadline" class='editor' required="required"></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class='control-label col-md-3'>News Details<span class="red">*</span></label>
+						<div class='col-md-4'>
+							<textarea id="txtDetail" class='editor' required="required"></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class='col-md-offset-3 col-md-4'>
+							<button type="button" id="btnAddNews" class='btn btn-block btn-primary'>Add News</button>
+						</div>
+					</div>
+				</form>
+		</div>
+		
+		<!--Delete News/Notification modal-->
+		<div class="modal fade" id="deletNewsModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Delete News/Notification</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete this news/notification?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnYes" class="btn btn-default" data-dismiss="modal">Yes</button>
+						<button type="button" id="btnNo" class="btn btn-default" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--Update News/Notification modal-->
+		<div class="modal fade" id="updateNewsModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Update News/Notification</h4>
+					</div>
+					<div class="modal-body" id="updateContent">
+					<form id="updateQuesForm">
+						<div id="errorOuterUpdate" class="hide">
+							<div class="alert alert-danger" id="errorMessageUpdate"></div>
+						</div>
+						<div class="form-group">
+							<label>News Headline<span class="red">*</span></label>
+							<textarea id="txtNewsHeadUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						
+						<div class="form-group">
+							<label>News Detail<span class="red">*</span></label>
+							<textarea id="txtNewsDetailUpdate" class="editor" rows="10" cols="50" required="required"></textarea>
+						</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnUpdateSubmit" class="btn btn-default" data-dismiss="modal">Update News</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../js/jquery-2.2.2.min.js"></script>
+		<script src="../js/jquery.validate.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+		<script src="../js/NewsAndNotifications.js"></script>
+		<script src="../js/editor.js"></script>
+		
+		
+	</body>
+</html>
