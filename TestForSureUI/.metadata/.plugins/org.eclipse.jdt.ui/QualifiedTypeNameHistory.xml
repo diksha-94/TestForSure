@@ -10,7 +10,6 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserDetails"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestDAO"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.QuestionBankDAO"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AddQuestionsFromBankRequest"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateQuestionBankQueries"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
@@ -20,7 +19,6 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserCreds"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
-<fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.service.PasswordEncryption"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TopPerformers"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
@@ -29,7 +27,6 @@
 <fullyQualifiedTypeName name="org.springframework.mail.SimpleMailMessage"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateUserQueries"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.LoginUserResponse"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.QuestionDetail"/>
 <fullyQualifiedTypeName name="javax.mail.internet.MimeMessage"/>
 <fullyQualifiedTypeName name="javax.mail.internet.InternetAddress"/>
@@ -47,4 +44,17 @@
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TestReports"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetTestReportResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestReportDAO"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TestSolution"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestReportQueries"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetTestSoltionResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateNewsQueries"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetNewsResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.NewsDAO"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.NewsAndNotifications"/>
 </qualifiedTypeNameHistroy>

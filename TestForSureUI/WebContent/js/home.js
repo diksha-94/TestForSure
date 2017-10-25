@@ -136,6 +136,9 @@ function newsStructure(id, headline){
 					+"<a  style='display:inline-block;' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"'>"+headline+"</a></div>";
 	return structure;
 }
+function populateSlider() {
+    imageSlider.reload();
+}
 $(document).ready(function () {
 	console.log("Document is ready");
 	getExistingNews();
@@ -159,6 +162,8 @@ $(document).ready(function () {
 	}
 	//Initially, on page load show all the tests(Select in category and subcategory has value 0)
 	showTests(0, 0);
+	populateSlider();
+
 	
 })
 
