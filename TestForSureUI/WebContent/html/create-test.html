@@ -120,11 +120,11 @@
 				<form id="addQuesForm" role='form'>
 					<div>
 						<div class="form-group">
-							<input type="checkbox" id="ddquesType" value="Paragraph based" checked="checked">Paragraph Based</input>
+							<input type="checkbox" id="ddquesType" value="Paragraph based">Paragraph Based</input>
 						</div>
-						<div class="form-group" id="paraTextDiv">
-							<label>Paragraph Text<span class="red">*</span></label>
-							<textarea id="txtPara" class='editor' required="required"></textarea>
+						<div class="form-group" id="paraTextDiv" class='hide'>
+							<label>Paragraph Text</label>
+							<textarea id="txtPara" class='editor'></textarea>
 						</div>
 						<div class="form-group">
 							<label>Question Text<span class="red">*</span></label>
@@ -151,8 +151,8 @@
 							<textarea id="txtoptionD" class="editor" rows="10" cols="50" required="required"></textarea>
 						</div>
 						<div class="form-group">
-							<label>Explanation<span class="red">*</span></label>
-							<textarea id="txtExplanation" class="editor" rows="10" cols="50" required="required"></textarea>
+							<label>Explanation</label>
+							<textarea id="txtExplanation" class="editor" rows="10" cols="50"></textarea>
 						</div>
 						<div>
 							<button type="submit" class="form-control">Submit Question</button>
@@ -188,6 +188,9 @@
 				</div>
 				<div>
 					<label>Time(in minutes):</label><span id="publishTime"></span>
+				</div>
+				<div>
+					<label>Maximum Marks:</label><span id="publishMaxMarks"></span>
 				</div>
 				<div>
 					<label>Correct answer marks:</label><span id="publishCorrect"></span>

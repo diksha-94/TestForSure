@@ -113,11 +113,16 @@ function getExistingNews(){
 			success: function (result) {
                 if (result.response.status) {
 					console.log("Got News successfully: "+JSON.stringify(result));
-					
-					for(var i=0;i<(result.news).length;i++){
+					var len = (result.news).length;
+					if(len>5){
+						len = 5;
+					}
+					for(var i=0;i<len;i++){
 						var news = newsStructure((result.news)[i].id, (result.news)[i].headline);
 						$('#news').append(news);
 					}
+					var moreLink = "<a href='News.html' class='more-link'>More...</a>";
+					$('#news').append(moreLink);
 				}
                 else if (!result.response.status) {
 					console.log("Error in getting News");
@@ -133,7 +138,7 @@ function getExistingNews(){
 
 function newsStructure(id, headline){
 	var structure = "<div style='margin-top:20px;margin-left:20px;'><span style='display:inline-block;' class='glyphicon glyphicon-menu-right'></span>"
-					+"<a  style='display:inline-block;' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"'>"+headline+"</a></div>";
+					+"<a  style='display:inline-block;' class='news-link' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"'>"+headline+"</a></div>";
 	return structure;
 }
 function populateSlider() {
@@ -141,9 +146,7 @@ function populateSlider() {
 }
 $(document).ready(function () {
 	console.log("Document is ready");
-	getExistingNews();
-
-	//localStorage.clear();
+	
 	
 	console.log("Logged in: "+localStorage.getItem('loggedIn'));
 	if(localStorage.getItem('loggedIn') == "true"){
@@ -160,10 +163,75 @@ $(document).ready(function () {
 		$('#menuLogout').addClass('hide');
 		$('#menuLogout').removeClass('show');
 	}
-	//Initially, on page load show all the tests(Select in category and subcategory has value 0)
-	showTests(0, 0);
-	populateSlider();
-
 	
+					//ajax request to get all env attributes
+					/*$.ajax({
+								type : "GET",
+								url : "getenv",
+								contentType : "application/json",
+								success : function(result) {
+									var env = result.split("|");
+									console.log('GETENV: Successfully got ENV variables');
+									console.log('CRAWL_LEVEL = '+ env[0]);
+									sessionStorage.setItem('PROTOCOL',env[0]);
+									sessionStorage.setItem('SERVICES_IP: ',env[1]);
+									console.log('SERVICE_IP = '+ env[1]);
+									sessionStorage.setItem('SERVICES_HOST',	env[2]);
+									console.log('SERVICES_HOST: '+ env[2]);
+									sessionStorage.setItem(	'SUBDOMAIN', env[3]);
+									sessionStorage.setItem('NEWS_NOTIFICATIONS',env[4]);
+									sessionStorage.setItem('QUESTION_BANK',env[5]);
+									sessionStorage.setItem('TEST',env[6]);
+									sessionStorage.setItem('USER',env[7]);
+									sessionStorage.setItem('GET_ALL_NEWS',env[8]);
+									sessionStorage.setItem('GET_NEWS',env[9]);
+									sessionStorage.setItem('INSERT_NEWS',env[10]);
+									sessionStorage.setItem('DELETE_NEWS',env[11]);
+									sessionStorage.setItem('UPDATE_NEWS',env[12]);
+									sessionStorage.setItem('GET_SUBJECT_CATEGORY',env[13]);
+									sessionStorage.setItem('GET_SUBJECT_SUBCATEGORY',env[14]);
+									sessionStorage.setItem('ADD_SUBJECT_CATEGORY',env[15]);
+									sessionStorage.setItem(	'ADD_SUBJECT_SUBCATEGORY', env[16]);
+									sessionStorage.setItem('GET_QUESTIONS_FROM_BANK',env[17]);
+									sessionStorage.setItem('ADD_QUESTION',env[18]);
+									sessionStorage.setItem('DELETE_QUESTION_FROM_BANK',env[19]);
+									sessionStorage.setItem('UPDATE_QUESTION_FROM_BANK',env[20]);
+									sessionStorage.setItem('ADD_QUESTIONS_TO_TEST',env[21]);
+									sessionStorage.setItem('GET_CATEGORY',env[22]);
+									sessionStorage.setItem('GET_SUBCATEGORY',env[23]);
+									sessionStorage.setItem('ADD_UPDATE_TEST',env[24]);
+									sessionStorage.setItem('ADD_QUESTION',env[25]);
+									sessionStorage.setItem('GET_TESTS',env[26]);
+									sessionStorage.setItem('GET_TESTS_BY_STATUS',env[27]);
+									sessionStorage.setItem('GET_TESTS_BY_ID',env[28]);
+									sessionStorage.setItem(	'GET_QUESTIONS', env[29]);
+									sessionStorage.setItem('ADD_CATEGORY',env[30]);
+									sessionStorage.setItem('ADD_SUBCATEGORY',env[31]);
+									sessionStorage.setItem('DELETE_QUESTION',env[32]);
+									sessionStorage.setItem('PUBLISH_TEST',env[33]);
+									sessionStorage.setItem('UNPUBLISH_TEST',env[34]);
+									sessionStorage.setItem('GET_TEST_RESULT',env[35]);
+									sessionStorage.setItem('TEST_ALREADY_ATTEMPTED',env[36]);
+									sessionStorage.setItem('GET_ALL_REPORTS',env[37]);
+									sessionStorage.setItem('GET_TEST_SOLUTION',env[38]);
+									sessionStorage.setItem('REGISTER_USER',env[39]);
+									sessionStorage.setItem('AUTHENTICATE_USER',env[40]);
+									sessionStorage.setItem('FORGOT_PASSWORD',env[41]);
+									sessionStorage.setItem('UPDATE_PASSWORD',env[42]);
+									sessionStorage.setItem('GET_CURRENT_PASSWORD',env[43]);
+									
+								}
+							}).done(function(){
+								getExistingNews();
+								//Initially, on page load show all the tests(Select in category and subcategory has value 0)
+	
+								showTests(0, 0);
+								populateSlider();
+							});*/
+getExistingNews();
+								//Initially, on page load show all the tests(Select in category and subcategory has value 0)
+	
+								showTests(0, 0);
+								populateSlider();
 })
 

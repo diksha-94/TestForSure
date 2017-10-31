@@ -1,8 +1,0 @@
-package edu.tests.TestForSure.sql;
-
-public class CreateTestReportQueries {
-	public static String getTestReports(int test_id, String email_id){
-		String query = "SELECT * FROM testreports WHERE test_id = '"+ test_id +"' AND emailid = '" + email_id+"'";
-		return query;
-	}
-}

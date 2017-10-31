@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="GetNews" key="selection"/>
+		<item value="getNewsAll" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="getNewsAll"/>
 			<item value="getNews"/>
 			<item value="insertTestReport"/>
 			<item value="saveTestReport"/>
@@ -15,7 +16,6 @@
 			<item value="getTestDetailsByTestId"/>
 			<item value="username"/>
 			<item value="test_report_id"/>
-			<item value="Last insert id of report"/>
 		</list>
 		<list key="replacehistory">
 		</list>

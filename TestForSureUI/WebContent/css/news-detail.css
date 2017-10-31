@@ -1,7 +1,8 @@
 #news-detail{
 	width:65%;
 	float:left;
-	height:150%;
+	max-height:100%;
 	background-color:#F0F0F0;
 	margin-top:20px;
+	overflow:auto;
 }

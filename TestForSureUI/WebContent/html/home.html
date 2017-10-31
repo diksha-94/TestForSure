@@ -21,10 +21,12 @@
 					<ul class="nav navbar-nav">
 						<li style='margin-left:100px;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
 						<li class="active"><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
+						<li><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
 						<li><a href="#"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
 						<li><a href="#"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
-						<li id='menuLogin' style='margin-right:20px;'><a href="#" id="linkLogin"><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>
+						<li id='menuLogin' style='margin-left:300px;'><button type='button' id='linkLogin' style='background-color:white;color:#2E6DA4;border-radius:10px;height:40px;margin-top:5px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
+						
+						<!--<li id='menuLogin' style='margin-left:300px;border:solid 2px white;background-color:white;color:#2E6DA4;border-radius:10px;height:30px;margin-top:10px;'><a href="#" id="linkLogin" style='color:#2E6DA4;padding:5px 15px 5px 10px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>-->
 						<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
 					</ul>
 				</div>
@@ -91,9 +93,9 @@
             <div class="item slide4">
                 <div class="row"><div class="container">
                     <div class="col-md-8 text-left">
-                        </br>
-                        <h3>Intuitive graphical reports with deep analysis and detailed solution</h3>
                         </br></br></br></br>
+                        <h3>Intuitive graphical reports with deep analysis and detailed solution</h3>
+                        
                         <a href='#tests_home'><h5>Take Tests</h5>
 							<span class='glyphicon glyphicon-chevron-down down-arrow'></span>
 						</a>
@@ -127,9 +129,10 @@
 		<!--Div containing News & Notifications-->
 		<div id='news-outer' class='news-width'>
 			<div>
-				<h3 style='text-align:center;'>News & Notifications Hub</h3>
+				<h3 style='text-align:center;font-weight:bold;'>News & Notifications Hub</h3>
 			</div>
 			<div id='news'>
+				
 			</div>
 		</div>
 		</div>
@@ -280,9 +283,39 @@
 				</div>
 			</div>
 		</div>
-		<hr class='footer'>
-		<footer>
-			TODO:Footer content here
+		<footer class='footer'>
+			<div style='width:30%;float:left;min-width:200px;'>
+				<img src='../img/Logopit_1508700310499.jpg' class='logo-image-footer' alt='TEST-2B-SURE'/>
+			</div>
+			<div style='width:70%;float:left;'>
+			<div class='social-media'>
+			
+				<div class='social-media-links' id='facebook'>
+					<a href='https://www.facebook.com' target='_blank'><i class='fa fa-facebook'></i>&nbsp;&nbsp;Like Us</a>
+				</div>
+				<div class='social-media-links' id='twitter'>
+					<a href='https://www.twitter.com' target='_blank'><i class='fa fa-twitter'></i>&nbsp;&nbsp;Follow Us</a>
+				</div>
+				<div class='social-media-links' id='email'>
+					<a href='https://www.facebook.com' target='_blank'><i class='fa fa-envelope-o'></i>&nbsp;&nbsp;Email</a>
+				</div>
+			</div>
+			<div class='website-links'>
+				<ul style='float:left;' class="list-inline">
+					<li><a href="/pages/about_us/">About Us</a></li>
+					<li><a href="/pages/faq/">FAQ</a></li>
+					<li><a href="/pages/contact_us/">Contact Us</a></li>
+					<li><a href="/pages/terms/">Terms</a></li>
+					<li><a href="/pages/privacy/">Privacy Policy</a></li>
+					<li><a href="/pages/privacy/">Privacy Policy</a></li>
+				</ul>
+				
+			</div>
+			<div class='test-link'>
+				<ul class="list-inline">
+					<li><a href='#tests_home'><h2>Click here to start taking tests</h2></a></li>
+				</ul>
+			</div>
 		</footer>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

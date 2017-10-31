@@ -112,10 +112,17 @@ function uniqTestId() {
 //Adding Questions code
 $("#addNewQuestion").on("click", function(){
 	$("#quesEditor").removeClass('hide');
-	$('.editor').val('');
-	$('#ddquesType').prop('checked', true);
-	$('#paraTextDiv').removeClass('hide');
-	$('#paraTextDiv').addClass('show');
+	$('#txtPara').summernote('code', '');
+	$('#txtQuesText').summernote('code', '');
+	$('#txtoptionA').summernote('code', '');
+	$('#txtoptionB').summernote('code', '');
+	$('#txtoptionC').summernote('code', '');
+	$('#txtoptionD').summernote('code', '');
+	$("input[name='radioCorrectOption']").prop('checked', false);
+	$('#txtExplanation').summernote('code', '');
+	$('#ddquesType').prop('checked', false);
+	$('#paraTextDiv').removeClass('show');
+	$('#paraTextDiv').addClass('hide');
 })
 
 $('#ddquesType').on('change', function() {
@@ -385,6 +392,7 @@ $('#btnDoneQues').on('click', function(){
 					$('#publishSubcategory').text(response.subcategory);
 					$('#publishQues').text(response.testDetails.no_of_ques);
 					$('#publishTime').text(response.testDetails.time_limit);
+					$('#publishMaxMarks').text(response.testDetails.no_of_ques*response.testDetails.correct_ques_marks);
 					$('#publishCorrect').text(response.testDetails.correct_ques_marks);
 					$('#publishNegative').text(response.testDetails.negative_marks);
 					
@@ -529,13 +537,17 @@ $('#btnPublishTest').on('click', function(){
                 success: function (result) {
 					if(result.status){
 						console.log(result.message);
+						alert($('#publishTitle').text()+" published successfully");
 					}
 					else if(!result.status){
 						console.log("Error: "+result.message);
+						alert("Error: "+result.message);
+						
 					}
                 },
                 error: function () {
 					console.log("Error in publishing test");
+					alert("Error in publishing test");
                 }
             });
 })
@@ -573,6 +585,8 @@ $('#btnAddCategoryModal').on('click', function(){
 			}
 			else if(!result.status){
 				console.log("Subject category can't be added: "+result.message);
+				alert("Subject category can't be added: "+result.message);
+				$('#txtCategory').val('');
 			}
            },
            error: function () {
@@ -607,6 +621,8 @@ $('#btnAddSubcategoryModal').on('click', function(){
 			}
 			else if(!result.status){
 				console.log("Subject category can't be added: "+result.message);
+				alert("Subject category can't be added: "+result.message);
+				$('#txtSubcategory').val('');
 			}
            },
            error: function () {
