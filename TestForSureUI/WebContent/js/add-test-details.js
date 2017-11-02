@@ -131,10 +131,12 @@ $('#ddquesType').on('change', function() {
 	if(quesType == true){
 		$('#paraTextDiv').removeClass('hide');
 		$('#paraTextDiv').addClass('show');
+		$('#txtPara').summernote('code','');
 	}
 	else if(quesType == false){
 		$('#paraTextDiv').removeClass('show');
 		$('#paraTextDiv').addClass('hide');
+		$('#txtPara').summernote('code','');
 	}
 })
 $('#ddquesTypeUpdate').on('change', function() {
@@ -143,10 +145,12 @@ $('#ddquesTypeUpdate').on('change', function() {
 	if(quesType == true){
 		$('#paraTextDivUpdate').removeClass('hide');
 		$('#paraTextDivUpdate').addClass('show');
+		$('#txtParaUpdate').summernote('code','');
 	}
 	else if(quesType == false){
 		$('#paraTextDivUpdate').removeClass('show');
 		$('#paraTextDivUpdate').addClass('hide');
+		$('#txtParaUpdate').summernote('code','');
 	}
 })
 /*var quesRules = {
@@ -305,16 +309,16 @@ function saveDetails(btnId){
 			$('#ddquesTypeUpdate').prop('checked', true);
 			$('#paraTextDivUpdate').removeClass('hide');
 			$('#paraTextDivUpdate').addClass('show');
-			$('#txtParaUpdate').val($('#paraText-'+values[1]+'-'+values[2]).text());
+			$('#txtParaUpdate').summernote('code', $('#paraText-'+values[1]+'-'+values[2]).text());
 		}
 		console.log($('#quesText-'+values[1]+'-'+values[2]).text()+"----");
-		$('#txtQuesTextUpdate').val($('#quesText-'+values[1]+'-'+values[2]).text());
-		$('#txtoptionAUpdate').val($('#optionA-'+values[1]+'-'+values[2]).text());
-		$('#txtoptionBUpdate').val($('#optionB-'+values[1]+'-'+values[2]).text());
-		$('#txtoptionCUpdate').val($('#optionC-'+values[1]+'-'+values[2]).text());
-		$('#txtoptionDUpdate').val($('#optionD-'+values[1]+'-'+values[2]).text());
+		$('#txtQuesTextUpdate').summernote('code', $('#quesText-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionAUpdate').summernote('code', $('#optionA-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionBUpdate').summernote('code', $('#optionB-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionCUpdate').summernote('code', $('#optionC-'+values[1]+'-'+values[2]).text());
+		$('#txtoptionDUpdate').summernote('code', $('#optionD-'+values[1]+'-'+values[2]).text());
 		$("input[name=radioCorrectOptionUpdate][value="+$('#correctOption-'+values[1]+'-'+values[2]).text()+"]").prop('checked', true);
-		$('#txtExplanationUpdate').val($('#explanation-'+values[1]+'-'+values[2]).text());
+		$('#txtExplanationUpdate').summernote('code', $('#explanation-'+values[1]+'-'+values[2]).text());
 	}
 }
 //On click of Yes in the delete question modal box

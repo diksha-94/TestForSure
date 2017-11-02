@@ -105,7 +105,7 @@ $('#linkLogout').on('click', function(){
 })
 function getExistingNews(){
 	var type='GET';
-		var getAllNews_url = "http://localhost:8083/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = sessionStorage.getItem('PROTOCOL')+"://"+sessionStorage.getItem('SERVICES_IP')+":"+sessionStorage.getItem('SUBDOMAINSERVICES_HOST')+"/test-for-sure/news-notifications/get-all-news";
         $.ajax({
             url: getAllNews_url,
             type: type,
@@ -164,10 +164,11 @@ $(document).ready(function () {
 		$('#menuLogout').removeClass('show');
 	}
 	
+//PROTOCOL://SERVICES_IP:SUBDOMAINSERVICES_HOST
 					//ajax request to get all env attributes
-					/*$.ajax({
+					$.ajax({
 								type : "GET",
-								url : "getenv",
+								url : "http://localhost:8084/getenv",
 								contentType : "application/json",
 								success : function(result) {
 									var env = result.split("|");
@@ -176,9 +177,9 @@ $(document).ready(function () {
 									sessionStorage.setItem('PROTOCOL',env[0]);
 									sessionStorage.setItem('SERVICES_IP: ',env[1]);
 									console.log('SERVICE_IP = '+ env[1]);
-									sessionStorage.setItem('SERVICES_HOST',	env[2]);
+									sessionStorage.setItem('',	env[2]);
 									console.log('SERVICES_HOST: '+ env[2]);
-									sessionStorage.setItem(	'SUBDOMAIN', env[3]);
+									sessionStorage.setItem(	'SUBDOMAINSERVICES_HOST', env[3]);
 									sessionStorage.setItem('NEWS_NOTIFICATIONS',env[4]);
 									sessionStorage.setItem('QUESTION_BANK',env[5]);
 									sessionStorage.setItem('TEST',env[6]);
@@ -227,11 +228,11 @@ $(document).ready(function () {
 	
 								showTests(0, 0);
 								populateSlider();
-							});*/
-getExistingNews();
+							});
+//getExistingNews();
 								//Initially, on page load show all the tests(Select in category and subcategory has value 0)
 	
-								showTests(0, 0);
-								populateSlider();
+	//							showTests(0, 0);
+		//						populateSlider();
 })
 

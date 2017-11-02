@@ -43,7 +43,6 @@
 <fullyQualifiedTypeName name="org.apache.tomcat.util.http.fileupload.FileUtils"/>
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TestReports"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetTestReportResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestReportDAO"/>
@@ -57,4 +56,5 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.NewsDAO"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.NewsAndNotifications"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 </qualifiedTypeNameHistroy>

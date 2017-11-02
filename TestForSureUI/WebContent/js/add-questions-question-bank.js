@@ -89,11 +89,11 @@ $('#addQuesForm').validate({
 		if(ques_id != -1){
 			requestData.id = ques_id;
 		}
-		//requestData.category_id = category;
-		//requestData.subcategory_id = subcategory;
+		requestData.category_id = category;
+		requestData.subcategory_id = subcategory;
 		
-		requestData.category_id = "1";
-		requestData.subcategory_id = "1";
+		//requestData.category_id = "1";
+		//requestData.subcategory_id = "1";
 		var quesType = $('#ddquesType').prop('checked');
 		if(quesType == true){
 			requestData.question_type="Paragraph";
@@ -328,7 +328,8 @@ $(document).ready(function () {
 				$('#txtExplanation').val(question.explanation);
 				console.log(question.category_id);
 				//TODO: handle category id and subcategory in case of update question
-				$("#ddCategory").val(""+question.category_id);
+				//$("#ddCategory").val("2");
+				document.getElementById('ddCategory').value = "2";
 				//$("#ddSubcategory").val(""+question.subcategory_id);
 				//$('#ddSubCategory').val("1");
 				//$('#ddSubcategory').val(question.subcategory_id);
@@ -391,7 +392,7 @@ $(document).ready(function () {
 		}
 	});
 			
-	$('.editor').ckeditor();
+	$('.editor').summernote();
 	
 })
 

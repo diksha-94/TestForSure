@@ -1,10 +1,6 @@
 var express = require('express');
 var app = express();
-var request = require('request'),
-	Promise = require('q'),
-    http = require('request-promise-json'),
-    _ = require("lodash"),
-    CommandsFactory = require("hystrixjs/lib/command/CommandFactory");
+
 
 
 //app.use(express.static('WebContent'));
@@ -62,13 +58,13 @@ app.get('/getenv',function(req,res){
 		var updatePassword = process.env.UPDATE_PASSWORD;
 		var getCurrentPassword = process.env.GET_CURRENT_PASSWORD;
 		
-		var details = protocol+"|"+servicesIp+"|"+servicesHost+"|"+subdomain+"|"+newsNotifications+"|"+questionBank+"|"+test+"|"+user+"|"+getAllNews+"|"+getNews+"|"+insertNews+"|"+deleteNews+"|"+updateNews+"|"+getSubjectCategory+"|"+getSubjectSubcategory+"|"+addSubjectCategory+"|"+addSubjectSubcategory+"|"+getQuestionsFromBank+"|"+addQuestionFromBank+"|"+deleteQuestionFromBank+"|"updateQuestionFromBank+"|"+addQuestionsToTest+"|"+getCategory+"|"+getSubcategory+"|"+addUpdateTest+"|"+addQuestion+"|"+getTests+"|"+getTestsByStatus+"|"+getTestsById+"|"+getQuestions+"|"+addCategory+"|"+addSubcategory+"|"+deleteQuestion+"|"+publishTest+"|"+unpublishTest+"|"+getTestResult+"|"+testAlreadyAttempted+"|"+getAllReports+"|"+getTestSolution+"|"+registerUser+"|"+authenticateUser+"|"+forgotPassword+"|"+updatePassword+"|"+getCurrentPassword;
+		var details = protocol+"|"+servicesIp+"|"+servicesHost+"|"+subdomain+"|"+newsNotifications+"|"+questionBank+"|"+test+"|"+user+"|"+getAllNews+"|"+getNews+"|"+insertNews+"|"+deleteNews+"|"+updateNews+"|"+getSubjectCategory+"|"+getSubjectSubcategory+"|"+addSubjectCategory+"|"+addSubjectSubcategory+"|"+getQuestionsFromBank+"|"+addQuestionFromBank+"|"+deleteQuestionFromBank+"|"+updateQuestionFromBank+"|"+addQuestionsToTest+"|"+getCategory+"|"+getSubcategory+"|"+addUpdateTest+"|"+addQuestion+"|"+getTests+"|"+getTestsByStatus+"|"+getTestsById+"|"+getQuestions+"|"+addCategory+"|"+addSubcategory+"|"+deleteQuestion+"|"+publishTest+"|"+unpublishTest+"|"+getTestResult+"|"+testAlreadyAttempted+"|"+getAllReports+"|"+getTestSolution+"|"+registerUser+"|"+authenticateUser+"|"+forgotPassword+"|"+updatePassword+"|"+getCurrentPassword;
 		res.send(details);
 
 } );
 
 
-var port = 443;
+var port = 8084;
 var server = app.listen(port, function () {
 
   var host = server.address().address
