@@ -1,7 +1,7 @@
 //test
 function getCategoriesOnLoad(){
 	$.ajax({
-                url: "http://localhost:8083/test-for-sure/test/get-category",
+                url: "http://13.126.161.84:8083/test-for-sure/test/get-category",
                 type: "GET",
                 
                 dataType: 'json',
@@ -62,7 +62,7 @@ $('#testDetailsForm').validate({
 		var marks = $("#txtMarks").val();
         var negativeMarks = $("#txtNegativeMarks").val();
 		
-        var testDetailsSave_url = "http://localhost:8083/test-for-sure/test/add-update-test";
+        var testDetailsSave_url = "http://13.126.161.84:8083/test-for-sure/test/add-update-test";
         var type = 'POST';
         var requestData = {};
 		requestData.id=testId;
@@ -181,7 +181,7 @@ $('#addQuesForm').validate({
 		console.log("Inside add question submit");
 	
 		
-        var addQuestion_url = "http://localhost:8083/test-for-sure/test/add-question";
+        var addQuestion_url = "http://13.126.161.84:8083/test-for-sure/test/add-question";
         var type = 'POST';
         var requestData = {};
 		requestData.id=parseInt(localStorage.getItem('questionCount'))+1;
@@ -235,7 +235,7 @@ $('#addQuesForm').validate({
 
 function getQuestionsOnTestId(test_id){
 	console.log('Test_id: '+test_id);
-	var url = "http://localhost:8083/test-for-sure/test/get-questions?test_id="+test_id;
+	var url = "http://13.126.161.84:8083/test-for-sure/test/get-questions?test_id="+test_id;
 	$.ajax({
                 url: url,
                 type: "GET",
@@ -333,7 +333,7 @@ $("#btnYes").on("click", function () {
 	deleteRequest.id=localStorage.getItem('btnid');
 	deleteRequest.test_id=localStorage.getItem('btntest_id');
 	console.log("deleteRequest: "+JSON.stringify(deleteRequest));
-    var deleteUrl = "http://localhost:8083/test-for-sure/test/delete-question";
+    var deleteUrl = "http://13.126.161.84:8083/test-for-sure/test/delete-question";
     var type = 'PUT';
 
     $.ajax({
@@ -381,7 +381,7 @@ $('#btnDoneQues').on('click', function(){
 	var quesAdded;
 	var quesToAdd;
 					
-	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
+	var getTest_url = "http://13.126.161.84:8083/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
 	var type= "GET";
 	$.ajax({
             url: getTest_url,
@@ -427,7 +427,7 @@ $('#btnDoneQues').on('click', function(){
     })
 
 $('#btnUpdateSubmit').on('click', function(){
-	var addQuestion_url = "http://localhost:8083/test-for-sure/test/add-question";
+	var addQuestion_url = "http://13.126.161.84:8083/test-for-sure/test/add-question";
         var type = 'POST';
         var requestData = {};
 		requestData.id=localStorage.getItem('btnid');
@@ -485,7 +485,7 @@ $('#btnBackTestDetails').on('click', function(){
 	$('#testDetails').removeClass('hide');
 	$('#testDetails').addClass('show');
 	getCategoriesOnLoad();
-	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
+	var getTest_url = "http://13.126.161.84:8083/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
 	var type= "GET";
 	$.ajax({
             url: getTest_url,
@@ -534,7 +534,7 @@ $('#btnSaveForLater').on('click', function(){
 //On click of publish button (when it is enabled)
 $('#btnPublishTest').on('click', function(){
 		$.ajax({
-                url: "http://localhost:8083/test-for-sure/test/publish-test?test_id="+localStorage.getItem('test_id'),
+                url: "http://13.126.161.84:8083/test-for-sure/test/publish-test?test_id="+localStorage.getItem('test_id'),
                 type: "PUT",
                 
                 dataType: 'json',
@@ -573,7 +573,7 @@ $('#btnAddCategoryModal').on('click', function(){
 	requestData.imagePath = imagePath;
 		console.log("Requestdata for add category: "+JSON.stringify(requestData));
 	$.ajax({
-            url: "http://localhost:8083/test-for-sure/test/add-category",
+            url: "http://13.126.161.84:8083/test-for-sure/test/add-category",
             type: type,
             data: JSON.stringify(requestData),
             dataType: 'json',
@@ -611,7 +611,7 @@ $('#btnAddSubcategoryModal').on('click', function(){
 	requestData.subcategory = subcategory;
 	console.log("Requestdata for add subcategory: "+JSON.stringify(requestData));
 	$.ajax({
-            url: "http://localhost:8083/test-for-sure/test/add-subcategory",
+            url: "http://13.126.161.84:8083/test-for-sure/test/add-subcategory",
             type: type,
             data: JSON.stringify(requestData),
             dataType: 'json',
@@ -696,7 +696,7 @@ $(document).ready(function () {
 					$("#btnAddSubcategory").attr("disabled", false);
 				
 				$.ajax({
-                url: "http://localhost:8083/test-for-sure/test/get-subcategory?categoryId="+categorySelected,
+                url: "http://13.126.161.84:8083/test-for-sure/test/get-subcategory?categoryId="+categorySelected,
                 type: "GET",
                 
                 dataType: 'json',

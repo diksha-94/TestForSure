@@ -13,7 +13,7 @@ $('#addCtegoryForm').validate({
     },
     submitHandler: function () {
 		console.log("Inside add category submit");
-		var addCategory_url = "http://localhost:8083/test-for-sure/test/add-category";
+		var addCategory_url = "http://13.126.161.84:8083/test-for-sure/test/add-category";
         var type = 'POST';
         var requestData = {};
 		requestData.category = $('#txtCategory').val();
@@ -47,7 +47,7 @@ $('#addCtegoryForm').validate({
 function getAllCategories(){
 	$("#existingCategories").empty();
 	$.ajax({
-                url: "http://localhost:8083/test-for-sure/test/get-category",
+                url: "http://13.126.161.84:8083/test-for-sure/test/get-category",
                 type: "GET",
                 
                 dataType: 'json',

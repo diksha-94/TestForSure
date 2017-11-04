@@ -5,7 +5,7 @@ $('#linkLogout').on('click', function(){
 })
 function getExistingNews(){
 	var type='GET';
-		var getAllNews_url = "http://localhost:8083/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/get-all-news";
         $.ajax({
             url: getAllNews_url,
             type: type,

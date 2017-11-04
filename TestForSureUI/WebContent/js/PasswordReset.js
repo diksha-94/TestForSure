@@ -22,7 +22,7 @@ $('#resetPassword').validate({
     },
     submitHandler: function () {
 		console.log("Inside submit");
-		var update_password_url = "http://localhost:8083/test-for-sure/user/update-password";
+		var update_password_url = "http://13.126.161.84:8083/test-for-sure/user/update-password";
 		var type = "POST"
         
         var passwordVal = $('#txtPasswordReg').val();
@@ -90,7 +90,7 @@ $(document).ready(function () {
 	password = getQueryParameterByName('pass');
 	
 	//to check if the link is valid or not by comparing the password in query string with the current password stored in database
-	var url = "http://localhost:8083/test-for-sure/user/get-current-password?emailId="+userId;
+	var url = "http://13.126.161.84:8083/test-for-sure/user/get-current-password?emailId="+userId;
 	$.ajax({
                 url: url,
                 type: "POST",

@@ -2,7 +2,7 @@ function showTests(categoryId, subCatId){
 	$('#tests').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
-	var url = "http://localhost:8083/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
+	var url = "http://13.126.161.84:8083/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
 	$.ajax({
                 url: url,
                 type: "GET",
@@ -69,7 +69,7 @@ $(document).ready(function () {
 	
 	//to get the test details
 	         $.ajax({
-                url: "http://localhost:8083/test-for-sure/test/get-category",
+                url: "http://13.126.161.84:8083/test-for-sure/test/get-category",
                 type: "GET",
                 
                 dataType: 'json',
@@ -111,7 +111,7 @@ $(document).ready(function () {
 					$("#ddSubcategory").attr("disabled", false);
 				
 				$.ajax({
-                url: "http://localhost:8083/test-for-sure/test/get-subcategory?categoryId="+categorySelected,
+                url: "http://13.126.161.84:8083/test-for-sure/test/get-subcategory?categoryId="+categorySelected,
                 type: "GET",
                 
                 dataType: 'json',

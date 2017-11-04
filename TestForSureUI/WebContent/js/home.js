@@ -4,7 +4,7 @@ function showTests(categoryId, subCatId){
 	$('#tests_home').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
-	var url = "http://localhost:8083/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
+	var url = "http://13.126.161.84:8083/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
 	$.ajax({
                 url: url,
                 type: "GET",
@@ -69,7 +69,7 @@ function checkAlreadyAttempted(id){
 		var emailid = localStorage.getItem('email');
 		console.log("Email id: "+emailid);
 		var type='GET';
-		var url ='http://localhost:8083/test-for-sure/test/test-already-attempted?test_id='+test_id+'&email_id='+emailid;
+		var url ='http://13.126.161.84:8083/test-for-sure/test/test-already-attempted?test_id='+test_id+'&email_id='+emailid;
 		$.ajax({
             url: url,
             type: type,
@@ -106,7 +106,7 @@ $('#linkLogout').on('click', function(){
 function getExistingNews(){
 	var type='GET';
 		//var getAllNews_url = sessionStorage.getItem('PROTOCOL')+"://"+sessionStorage.getItem('SERVICES_IP')+":"+sessionStorage.getItem('SUBDOMAINSERVICES_HOST')+"/test-for-sure/news-notifications/get-all-news";
-		var getAllNews_url = "http://localhost:8083/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/get-all-news";
         $.ajax({
             url: getAllNews_url,
             type: type,

@@ -32,7 +32,7 @@ $('#loginForm').validate({
     },
     submitHandler: function () {
 		console.log("Inside submit");
-		var login_url = "http://localhost:8083/test-for-sure/user/authenticate-user";
+		var login_url = "http://13.126.161.84:8083/test-for-sure/user/authenticate-user";
 		var type = "POST"
         var email = $('#txtEmail').val();
 		var passwordVal = $('#txtPassword').val();
@@ -67,7 +67,7 @@ $('#loginForm').validate({
 					var emailid = localStorage.getItem('email');
 					console.log("Email id: "+emailid);
 					var type='GET';
-					var url ='http://localhost:8083/test-for-sure/test/test-already-attempted?test_id='+testId+'&email_id='+emailid;
+					var url ='http://13.126.161.84:8083/test-for-sure/test/test-already-attempted?test_id='+testId+'&email_id='+emailid;
 					$.ajax({
 						url: url,
 						type: type,
@@ -146,7 +146,7 @@ $('#registerForm').validate({
     },
     submitHandler: function () {
 		console.log("Inside submit");
-		var login_url = "http://localhost:8083/test-for-sure/user/register-user";
+		var login_url = "http://13.126.161.84:8083/test-for-sure/user/register-user";
 		var type = "POST"
         var name = $('#txtNameReg').val();
         var email = $('#txtEmailReg').val();
@@ -219,7 +219,7 @@ $(document).ready(function () {
 	
 	var testId = (test_id.split('-'))[1];
 	//to get the test details to display in instructions
-	var getTest_url = "http://localhost:8083/test-for-sure/test/get-testsbyId?testId="+testId;
+	var getTest_url = "http://13.126.161.84:8083/test-for-sure/test/get-testsbyId?testId="+testId;
 	
 	$.ajax({
                 url: getTest_url,
