@@ -162,12 +162,16 @@ $(document).ready(function () {
 		$('#menuLogin').removeClass('show');
 		$('#menuLogout').removeClass('hide');
 		$('#menuLogout').addClass('show');
+		$('#userProfile').removeClass('hide');
+		$('#userProfile').addClass('show');
 	}
 	else{
 		$('#menuLogin').removeClass('hide');
 		$('#menuLogin').addClass('show');
 		$('#menuLogout').addClass('hide');
 		$('#menuLogout').removeClass('show');
+		$('#userProfile').addClass('hide');
+		$('#userProfile').removeClass('show');
 	}
 	
 })

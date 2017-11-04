@@ -24,7 +24,7 @@ function showTests(categoryId, subCatId){
 								var newTest = "<div class='outer-test-div'>"+
 												"<div class='col-md-3 float-left'>"+
 												"<img class='test-image' src="+image_path+"/>"+
-												"</br><h5 class='test-title'>"+test.testTitle+"</h5>"+
+												"</br><h3 class='test-title'>"+test.testTitle+"</h3>"+
 												"</div>"+
 												"<div class='col-md-1.5 float-left max-marks'>"+
 												"<span>Maximum Marks"+
@@ -105,7 +105,8 @@ $('#linkLogout').on('click', function(){
 })
 function getExistingNews(){
 	var type='GET';
-		var getAllNews_url = sessionStorage.getItem('PROTOCOL')+"://"+sessionStorage.getItem('SERVICES_IP')+":"+sessionStorage.getItem('SUBDOMAINSERVICES_HOST')+"/test-for-sure/news-notifications/get-all-news";
+		//var getAllNews_url = sessionStorage.getItem('PROTOCOL')+"://"+sessionStorage.getItem('SERVICES_IP')+":"+sessionStorage.getItem('SUBDOMAINSERVICES_HOST')+"/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = "http://localhost:8083/test-for-sure/news-notifications/get-all-news";
         $.ajax({
             url: getAllNews_url,
             type: type,
@@ -138,8 +139,11 @@ function getExistingNews(){
 
 function newsStructure(id, headline){
 	var structure = "<div style='margin-top:20px;margin-left:20px;'><span style='display:inline-block;' class='glyphicon glyphicon-menu-right'></span>"
-					+"<a  style='display:inline-block;' class='news-link' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"'>"+headline+"</a></div>";
+					+"<a style='display:inline-block;' class='news-link' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"' onmouseout='linkWhiteColor();'>"+headline+"</a></div>";
 	return structure;
+}
+function linkWhiteColor(){
+	$('.news-link').css('color','white');
 }
 function populateSlider() {
     imageSlider.reload();
@@ -156,17 +160,22 @@ $(document).ready(function () {
 		$('#menuLogin').removeClass('show');
 		$('#menuLogout').removeClass('hide');
 		$('#menuLogout').addClass('show');
+		$('#userProfile').removeClass('hide');
+		$('#userProfile').addClass('show');
 	}
 	else{
 		$('#menuLogin').removeClass('hide');
 		$('#menuLogin').addClass('show');
 		$('#menuLogout').addClass('hide');
 		$('#menuLogout').removeClass('show');
+		$('#userProfile').addClass('hide');
+		$('#userProfile').removeClass('show');
 	}
+	
 	
 //PROTOCOL://SERVICES_IP:SUBDOMAINSERVICES_HOST
 					//ajax request to get all env attributes
-					$.ajax({
+					/*$.ajax({
 								type : "GET",
 								url : "http://localhost:8084/getenv",
 								contentType : "application/json",
@@ -228,11 +237,11 @@ $(document).ready(function () {
 	
 								showTests(0, 0);
 								populateSlider();
-							});
-//getExistingNews();
+							});*/
+getExistingNews();
 								//Initially, on page load show all the tests(Select in category and subcategory has value 0)
 	
-	//							showTests(0, 0);
-		//						populateSlider();
+							showTests(0, 0);
+								populateSlider();
 })
 

@@ -565,9 +565,12 @@ $('#addFromQuestionBank').on('click', function(){
 //Adding new category
 $('#btnAddCategoryModal').on('click', function(){
 	var category = $('#txtCategory').val();
+	var imagePath = $('#txtImagePath').val();
+	
 	var type="POST";
 	var requestData = {};
 	requestData.category = category;
+	requestData.imagePath = imagePath;
 		console.log("Requestdata for add category: "+JSON.stringify(requestData));
 	$.ajax({
             url: "http://localhost:8083/test-for-sure/test/add-category",

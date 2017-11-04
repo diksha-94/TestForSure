@@ -66,11 +66,34 @@ function getExistingNews(){
 
 function newsStructure(id, headline){
 	var structure = "<div style='margin-top:20px;margin-left:20px;'><span style='display:inline-block;' class='glyphicon glyphicon-menu-right'></span>"
-					+"<a  style='display:inline-block;' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"'>"+headline+"</a></div>";
+					+"<a style='display:inline-block;' class='news-link' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"' onmouseout='linkWhiteColor();'>"+headline+"</a></div>";
 	return structure;
+}
+function linkWhiteColor(){
+	$('.news-link').css('color','white');
 }
 $(document).ready(function () {
 	console.log("Document is ready");
+	
+	console.log("Logged in: "+localStorage.getItem('loggedIn'));
+	if(localStorage.getItem('loggedIn') == "true"){
+		//means the user is logged in
+		$('#loggedInUSer').text(" "+localStorage.getItem('username'));
+		$('#menuLogin').addClass('hide');
+		$('#menuLogin').removeClass('show');
+		$('#menuLogout').removeClass('hide');
+		$('#menuLogout').addClass('show');
+		$('#userProfile').removeClass('hide');
+		$('#userProfile').addClass('show');
+	}
+	else{
+		$('#menuLogin').removeClass('hide');
+		$('#menuLogin').addClass('show');
+		$('#menuLogout').addClass('hide');
+		$('#menuLogout').removeClass('show');
+		$('#userProfile').addClass('hide');
+		$('#userProfile').removeClass('show');
+	}
 	newsId = getQueryParameterByName('id');
 	console.log("News Id: "+newsId);
 	getExistingNews();

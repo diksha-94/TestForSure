@@ -1,17 +1,20 @@
 <html>
 	<head>
-		<title>TEST-FOR-SURE</title>
+		<title>TEST2BSURE</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href= "../css/home.css" rel ="stylesheet"/>
 		<link href= "../css/styles.css" rel ="stylesheet"/>
 		<link href= "../css/menu.css" rel ="stylesheet"/>
+		<link href= "../css/footer.css" rel ="stylesheet"/>
 		<link href="../css/js-image-slider.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="http://cdn.bootcss.com/animate.css/3.5.1/animate.min.css">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 	</head>
 	<body>
-		
+			<div class='info-box'>
+				<h4>Resolution best suited for Desktop version. Please allow pop-up of your browser.</h4>
+			</div>
 			<header>
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
@@ -19,15 +22,22 @@
 						<a class="navbar-brand" href="home.html"><img src='../img/Logopit_1508700310499.jpg' style='height:50px; width:200px;'alt='TEST-2B-SURE'/></a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li style='margin-left:100px;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
-						<li class="active"><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
-						<li><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
-						<li id='menuLogin' style='margin-left:300px;'><button type='button' id='linkLogin' style='background-color:white;color:#2E6DA4;border-radius:10px;height:40px;margin-top:5px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
+						<li class="highlight" style='margin-left:100px;border-right:solid 1px #286090;border-left:solid 1px #286090;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="about-us.html"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="contact-us.html"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
+						<li id='menuLogin' style='margin-left:400px;'><button type='button' id='linkLogin' style='background-color:white;color:#2E6DA4;border-radius:10px;height:40px;margin-top:5px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
 						
 						<!--<li id='menuLogin' style='margin-left:300px;border:solid 2px white;background-color:white;color:#2E6DA4;border-radius:10px;height:30px;margin-top:10px;'><a href="#" id="linkLogin" style='color:#2E6DA4;padding:5px 15px 5px 10px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>-->
-						<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+						<li id='userProfile' style='margin-left:400px;' onmouseover='openSubMenu();' onmouseout='closeSubMenu();'><a href="#">Hi<span id='loggedInUSer'></span>&nbsp;&nbsp;<span class='glyphicon glyphicon-chevron-down'></span></a>
+							<ul class="nav navbar-nav" style='display:none;' id='subMenu'>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='profile'><a href="#">Profile</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='changePassword'><a href="#">Change Password</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+							</ul>
+						</li>
+						<!--<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>-->
 					</ul>
 				</div>
 			</nav>
@@ -119,8 +129,8 @@
 
 		
 		
-		<!--To display all the tests on home(without login)-->
-		<div class='width-class'>
+	<!--To display all the tests on home(without login)-->
+	<div class='width-class'>
 		<!--Div containing all the tests details-->
 		<div id="tests_home">
 
@@ -135,7 +145,7 @@
 				
 			</div>
 		</div>
-		</div>
+	</div>
 		<!--Login modal-->
 		<div class="modal fade" id="loginModal" role="dialog" data-backdrop="static" data-keyboard="false">
 			<div class="modal-dialog modal-lg modal-custom" role='document'>
@@ -291,7 +301,7 @@
 			<div class='social-media'>
 			
 				<div class='social-media-links' id='facebook'>
-					<a href='https://www.facebook.com' target='_blank'><i class='fa fa-facebook'></i>&nbsp;&nbsp;Like Us</a>
+					<a href='https://www.facebook.com/test2bsure' target='_blank'><i class='fa fa-facebook'></i>&nbsp;&nbsp;Like Us</a>
 				</div>
 				<div class='social-media-links' id='twitter'>
 					<a href='https://www.twitter.com' target='_blank'><i class='fa fa-twitter'></i>&nbsp;&nbsp;Follow Us</a>

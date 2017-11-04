@@ -1,7 +1,16 @@
+function openSubMenu(){
+	$('#subMenu').css('display','inline-block');
+}
+function closeSubMenu(){
+	$('#subMenu').css('display','none');
+}
 $('#linkLogin').on('click', function(){
 	$('#loginModal').modal();
 })
-
+$('#linkLogout').on('click', function(){
+	localStorage.clear();
+	window.location.href = 'home.html';
+})
 var loginRules = {
     'txtEmailName': {
 		required: true,
@@ -49,7 +58,7 @@ $('#loginForm').validate({
 					localStorage.setItem("loggedIn", "true");
 					localStorage.setItem("username", result.username);
 					localStorage.setItem("email", requestData.email);
-                    window.location.href = "user-dashboard.html";
+                    window.location.href = "home.html";
 			    }
                 else if (!result.response.status) {
 					console.log(result.response.message);

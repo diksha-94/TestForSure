@@ -5,6 +5,9 @@
 		<link href= "../css/styles.css" rel ="stylesheet"/>
 		<link href= "../css/menu.css" rel ="stylesheet"/>
 		<link href= "../css/News.css" rel ="stylesheet"/>
+		<link href= "../css/footer.css" rel ="stylesheet"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/animate.css/3.5.1/animate.min.css">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 	</head>
 	<body>
@@ -16,13 +19,22 @@
 						<a class="navbar-brand" href="home.html"><img src='../img/Logopit_1508700310499.jpg' style='height:50px; width:200px;'alt='TEST-2B-SURE'/></a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li style='margin-left:100px;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
-						<li><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
-						<li class="active"><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
-						<li id='menuLogin' style='margin-right:20px;'><a href="#" id="linkLogin"><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>
-						<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+						<li style='margin-left:100px;border-right:solid 1px #286090;border-left:solid 1px #286090;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
+						<li class="highlight" style='margin-left:0px;border-right:solid 1px #286090;'><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="about-us.html"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="contact-us.html"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
+						<li id='menuLogin' style='margin-left:400px;'><button type='button' id='linkLogin' style='background-color:white;color:#2E6DA4;border-radius:10px;height:40px;margin-top:5px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
+						
+						<!--<li id='menuLogin' style='margin-left:300px;border:solid 2px white;background-color:white;color:#2E6DA4;border-radius:10px;height:30px;margin-top:10px;'><a href="#" id="linkLogin" style='color:#2E6DA4;padding:5px 15px 5px 10px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>-->
+						<li id='userProfile' style='margin-left:400px;' onmouseover='openSubMenu();' onmouseout='closeSubMenu();'><a href="#">Hi<span id='loggedInUSer'></span>&nbsp;&nbsp;<span class='glyphicon glyphicon-chevron-down'></span></a>
+							<ul class="nav navbar-nav" style='display:none;' id='subMenu'>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='profile'><a href="#">Profile</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='changePassword'><a href="#">Change Password</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+							</ul>
+						</li>
+						<!--<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>-->
 					</ul>
 				</div>
 			</nav>
@@ -195,9 +207,39 @@
 				</div>
 			</div>
 		</div>
-		<hr class='footer'>
-		<footer>
-			TODO:Footer content here
+		<footer class='footer'>
+			<div style='width:30%;float:left;min-width:200px;'>
+				<img src='../img/Logopit_1508700310499.jpg' class='logo-image-footer' alt='TEST-2B-SURE'/>
+			</div>
+			<div style='width:70%;float:left;'>
+			<div class='social-media'>
+			
+				<div class='social-media-links' id='facebook'>
+					<a href='https://www.facebook.com/test2bsure' target='_blank'><i class='fa fa-facebook'></i>&nbsp;&nbsp;Like Us</a>
+				</div>
+				<div class='social-media-links' id='twitter'>
+					<a href='https://www.twitter.com' target='_blank'><i class='fa fa-twitter'></i>&nbsp;&nbsp;Follow Us</a>
+				</div>
+				<div class='social-media-links' id='email'>
+					<a href='https://www.facebook.com' target='_blank'><i class='fa fa-envelope-o'></i>&nbsp;&nbsp;Email</a>
+				</div>
+			</div>
+			<div class='website-links'>
+				<ul style='float:left;' class="list-inline">
+					<li><a href="/pages/about_us/">About Us</a></li>
+					<li><a href="/pages/faq/">FAQ</a></li>
+					<li><a href="/pages/contact_us/">Contact Us</a></li>
+					<li><a href="/pages/terms/">Terms</a></li>
+					<li><a href="/pages/privacy/">Privacy Policy</a></li>
+					<li><a href="/pages/privacy/">Privacy Policy</a></li>
+				</ul>
+				
+			</div>
+			<div class='test-link'>
+				<ul class="list-inline">
+					<li><a href='#tests_home'><h2>Click here to start taking tests</h2></a></li>
+				</ul>
+			</div>
 		</footer>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

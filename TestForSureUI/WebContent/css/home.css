@@ -74,6 +74,7 @@
 	margin-top:5px;
 	text-align:center;
 	font-weight: bold;
+	font-size:16px;
 }
 
 
@@ -147,7 +148,7 @@
 }
 .online-test-head{
 	font-weight:bold;
-	padding-top:16%;
+	padding-top:18%;
 	font-size:50px;
 	color:#0F648F;
 }
@@ -185,6 +186,7 @@
 .news-link{
 	color:white;
 	padding:5px;
+	text-decoration:none;
 }
 .news-link:hover{
 	color:white;
@@ -291,69 +293,3 @@
 }
 
 
-.footer{
-	background-color:#2E6DA4;
-	height:280px;
-	/* max-height:600px; */
-	width:100%;
-	margin-top:15%;
-	clear:both;
-	color:white;
-}
-.social-media-links{
-	border:solid 2px white;
-	border-radius:10px;
-	padding:7px;
-	float:left;
-	width:120px;
-	max-height:240px;
-	height:40px;
-	margin-left:5%;
-	text-align:center;
-}
-.social-media{
-	padding-top:3%;
-	margin-left:5%;
-	text-align:center;
-}
-.social-media-links a{
-	text-decoration:none;
-	color:white;
-}
-.list-inline{
-	list-style:none;
-	float:left;
-}
-ul > li > a{
-	color:white;
-	font-weight:bold;
-	text-decoration:none;
-	margin-left:20px;
-}
-ul > li > a:hover{
-	color:white;
-}
-.website-links{
-	clear:both;
-	padding-top:3%;
-	margin-left:4%;
-	text-align:center;
-	
-}
-.test-link{
-	clear:both;
-	padding-top:1%;
-	margin-left:12%;
-	text-align:center;
-	
-}
-ul > li > a> h2{
-	font-weight:bold;
-}
-.logo-image-footer{
-	height:50px;
-	width:200px;
-	float:left;
-	margin-left:150px;
-	margin-top:50px;
-}

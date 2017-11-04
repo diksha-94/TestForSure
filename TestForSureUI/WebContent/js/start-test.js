@@ -820,7 +820,6 @@ $(document).ready(function () {
 		$('#divUserDetails').addClass('hide');
 		$('#divInstructions').removeClass('hide');
 		$('#divInstructions').addClass('show');
-		$('#test-title').append(" "+ testDetailsObject.testDetails.testTitle);
 		$('#time-limit').append(" "+ testDetailsObject.testDetails.time_limit);
 		$('#max-marks').append(" "+ testDetailsObject.testDetails.no_of_ques*testDetailsObject.testDetails.correct_ques_marks);
 		$('#total-ques').append(" "+ testDetailsObject.testDetails.no_of_ques+" Questions");

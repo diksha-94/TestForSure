@@ -53,3 +53,15 @@ img{
 	margin-left:20px;
 	color:black;
 }
+.modal-custom{
+	width:600px;
+	overflow:auto;
+}
+.news-link{
+	color:white;
+	padding:5px;
+	text-decoration:none;
+}
+.news-link:hover{
+	color:white;
+}

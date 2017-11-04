@@ -1,9 +1,13 @@
 <html>
 	<head>
-		<title>Tests</title>
+		<title>Take Test</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link href= "../css/home.css" rel ="stylesheet"/>
+		<link href= "../css/show-tests.css" rel ="stylesheet"/>
 		<link href= "../css/menu.css" rel ="stylesheet"/>
+		<link href= "../css/styles.css" rel ="stylesheet"/>
+		<link href= "../css/footer.css" rel ="stylesheet"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/animate.css/3.5.1/animate.min.css">
 	</head>
 	<body>
 		<header>
@@ -13,13 +17,22 @@
 						<a class="navbar-brand" href="home.html"><img src='../img/Logopit_1508700310499.jpg' style='height:50px; width:200px;'alt='TEST-2B-SURE'/></a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li style='margin-left:100px;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
-						<li class="active"><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
-						<li><a href="#"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
-						<li id='menuLogin' style='margin-right:20px;'><a href="#" id="linkLogin"><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>
-						<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+						<li style='margin-left:100px;border-right:solid 1px #286090;border-left:solid 1px #286090;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
+						<li class="highlight" style='margin-left:0px;border-right:solid 1px #286090;'><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="about-us.html"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="contact-us.html"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
+						<li id='menuLogin' style='margin-left:400px;'><button type='button' id='linkLogin' style='background-color:white;color:#2E6DA4;border-radius:10px;height:40px;margin-top:5px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
+						
+						<!--<li id='menuLogin' style='margin-left:300px;border:solid 2px white;background-color:white;color:#2E6DA4;border-radius:10px;height:30px;margin-top:10px;'><a href="#" id="linkLogin" style='color:#2E6DA4;padding:5px 15px 5px 10px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>-->
+						<li id='userProfile' style='margin-left:400px;' onmouseover='openSubMenu();' onmouseout='closeSubMenu();'><a href="#">Hi<span id='loggedInUSer'></span>&nbsp;&nbsp;<span class='glyphicon glyphicon-chevron-down'></span></a>
+							<ul class="nav navbar-nav" style='display:none;' id='subMenu'>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='profile'><a href="#">Profile</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='changePassword'><a href="#">Change Password</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+							</ul>
+						</li>
+						<!--<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>-->
 					</ul>
 				</div>
 			</nav>
@@ -28,7 +41,6 @@
 		<!--Div that will contain image slide or some information related to website stats-->
 		<a class='online-tests-link' href="#tests"><div class='show-test-image-div'>
 			<h1 class='online-test-head'>Say no to offline, its time to online.</h1>
-			<h1 class='online-test-head-arrow'>V</h1>
 			
 		</div></a>
 		
@@ -62,39 +74,45 @@
 		
 		<!--Login modal-->
 		<div class="modal fade" id="loginModal" role="dialog" data-backdrop="static" data-keyboard="false">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg modal-custom" role='document'>
     
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Login</h4>
+						<h4 class="modal-title text-center">Login</h4>
 					</div>
 					<div class="modal-body">
 						<div id="errorOuter" class="hide">
 							<div class=" alert alert-danger" id="errorMessage"></div>
 						</div>
-						<form id="loginForm">
+						<form id="loginForm" class="form-horizontal" role="form">
 							<div class="form-group">
-								<label>Email</label>
-								<input type="text" id="txtEmail" name="txtEmailName" required="required" placeholder="abc@example.com"/>
+								<label class='control-label col-sm-3'>Email</label>
+								<div class='col-sm-7'>
+									<input type="text" class='form-control' id="txtEmail" name="txtEmailName" required="required" placeholder="abc@example.com"/>
+								</div>
 							</div>
 							<div class="form-group">
-								<label>Password</label>
-								<input type="password" id="txtPassword" name="txtPasswordName" required="required" placeholder="Password"/>
+								<label class='control-label col-sm-3'>Password</label>
+								<div class='col-sm-7'>
+									<input type="password"  class='form-control' id="txtPassword" name="txtPasswordName" required="required" placeholder="Password"/>
+								</div>
 							</div>
-							<div class="form-group">
+							<div class="checkbox col-sm-7 col-sm-offset-3">
 								<input type="checkbox" id="chboxremember">Remember Me</input>
 							</div>
-							<div class="form-group">
-								<button type="submit" id="btnLogin">Log in</button>
+							<div class='form-group'>
+								<div class="col-sm-7 col-sm-offset-3 margin-top-10">
+									<button type="submit" id="btnLogin" class='btn btn-danger btn-block'>Log in</button>
+								</div>
 							</div>
 						</form>
-						<div>
+						<div class="text-center col-sm-10 col-sm-offset-1">
 							<a href="#" id="linkRegister">New User? Register here</a>
 						</div>
 					</div>
-					<div class="modal-footer">
+					<div class="modal-footer margin-top-20">
 						<div>
 							Forgot password? <a href="#" id="linkForgot">Click here</a>
 						</div>
@@ -102,7 +120,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<!--Register modal-->
 		<div class="modal fade" id="registerModal" role="dialog" data-backdrop="static" data-keyboard="false">
 			<div class="modal-dialog">
@@ -149,6 +166,40 @@
 				</div>
 			</div>
 		</div>
+		<footer class='footer'>
+			<div style='width:30%;float:left;min-width:200px;'>
+				<img src='../img/Logopit_1508700310499.jpg' class='logo-image-footer' alt='TEST-2B-SURE'/>
+			</div>
+			<div style='width:70%;float:left;'>
+			<div class='social-media'>
+			
+				<div class='social-media-links' id='facebook'>
+					<a href='https://www.facebook.com/test2bsure' target='_blank'><i class='fa fa-facebook'></i>&nbsp;&nbsp;Like Us</a>
+				</div>
+				<div class='social-media-links' id='twitter'>
+					<a href='https://www.twitter.com' target='_blank'><i class='fa fa-twitter'></i>&nbsp;&nbsp;Follow Us</a>
+				</div>
+				<div class='social-media-links' id='email'>
+					<a href='https://www.facebook.com' target='_blank'><i class='fa fa-envelope-o'></i>&nbsp;&nbsp;Email</a>
+				</div>
+			</div>
+			<div class='website-links'>
+				<ul style='float:left;' class="list-inline">
+					<li><a href="/pages/about_us/">About Us</a></li>
+					<li><a href="/pages/faq/">FAQ</a></li>
+					<li><a href="/pages/contact_us/">Contact Us</a></li>
+					<li><a href="/pages/terms/">Terms</a></li>
+					<li><a href="/pages/privacy/">Privacy Policy</a></li>
+					<li><a href="/pages/privacy/">Privacy Policy</a></li>
+				</ul>
+				
+			</div>
+			<div class='test-link'>
+				<ul class="list-inline">
+					<li><a href='#tests_home'><h2>Click here to start taking tests</h2></a></li>
+				</ul>
+			</div>
+		</footer>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="../js/ckeditor.js"></script>
