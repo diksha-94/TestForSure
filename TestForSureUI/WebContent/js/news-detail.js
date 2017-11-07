@@ -2,7 +2,7 @@ var newsId;
 
 function getNewsById(id){
 	var type='GET';
-		var getNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/get-news?newsId="+id;
+		var getNews_url = serviceIp+"/test-for-sure/news-notifications/get-news?newsId="+id;
         $.ajax({
             url: getNews_url,
             type: type,
@@ -38,7 +38,7 @@ function getQueryParameterByName(name, url) {
 }
 function getExistingNews(){
 	var type='GET';
-		var getAllNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = serviceIp+"/test-for-sure/news-notifications/get-all-news";
         $.ajax({
             url: getAllNews_url,
             type: type,

@@ -4,7 +4,7 @@ function showQuestions(categoryId, subcategoryId){
 	$('#questions').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subcategoryId);
-	var url = "http://13.126.161.84:8083/test-for-sure/question-bank/get-questions?categoryId="+categoryId+"&subcategoryId="+subcategoryId;
+	var url = serviceIp+"/test-for-sure/question-bank/get-questions?categoryId="+categoryId+"&subcategoryId="+subcategoryId;
 	$.ajax({
                 url: url,
                 type: "GET",
@@ -84,7 +84,7 @@ $('#btnAddToTest').on('click', function(){
 	   console.log("Request data: "+JSON.stringify(requestData));
 	   
 	   $.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/question-bank/add-questions-to-test",
+                url: serviceIp+"/test-for-sure/question-bank/add-questions-to-test",
                 type: "POST",
                 data: JSON.stringify(requestData),
 				contentType: 'application/json',
@@ -150,7 +150,7 @@ $(document).ready(function () {
 	
 	//to get the test categories on page load
 	         $.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/question-bank/get-subject-category",
+                url: serviceIp+"/test-for-sure/question-bank/get-subject-category",
                 type: "GET",
                 
                 dataType: 'json',
@@ -192,7 +192,7 @@ $(document).ready(function () {
 					$("#ddSubcategory").attr("disabled", false);
 				
 				$.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/question-bank/get-subject-subcategory?categoryId="+categorySelected,
+                url: serviceIp+"/test-for-sure/question-bank/get-subject-subcategory?categoryId="+categorySelected,
                 type: "GET",
                 
                 dataType: 'json',

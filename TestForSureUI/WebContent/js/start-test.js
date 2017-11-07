@@ -21,7 +21,7 @@ $('#btnProceed').on('click', function(){
 	var testId = ((localStorage.getItem('test_id')).split('-'))[1];
 	console.log("Test id: "+testId);
 	
-	var getTest_url = "http://13.126.161.84:8083/test-for-sure/test/get-testsbyId?testId="+testId;
+	var getTest_url = serviceIp+"/test-for-sure/test/get-testsbyId?testId="+testId;
 	
 	$.ajax({
                 url: getTest_url,
@@ -112,7 +112,7 @@ $('#btnProceed').on('click', function(){
             });
 			
 			var ques_id;
-	var getQuestions_url = "http://13.126.161.84:8083/test-for-sure/test/get-questions?test_id="+testId;
+	var getQuestions_url = serviceIp+"/test-for-sure/test/get-questions?test_id="+testId;
 	$.ajax({
                 url: getQuestions_url,
                 type: "GET",

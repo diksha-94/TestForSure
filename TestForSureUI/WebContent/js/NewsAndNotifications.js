@@ -16,7 +16,7 @@ $('#btnAddNews').on('click', function(){
 			 $('#errorOuter').removeClass("show");
 			 $('#errorOuter').addClass("hide");
 		
-        var addNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/insert-news";
+        var addNews_url = serviceIp+"/test-for-sure/news-notifications/insert-news";
         var type = 'POST';
         var requestData = {};
 		requestData.headline=headline;
@@ -80,7 +80,7 @@ $('#btnUpdateSubmit').on('click', function(){
 			 $('#errorOuterUpdate').removeClass("show");
 			 $('#errorOuterUpdate').addClass("hide");
 		
-        var updateNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/update-news";
+        var updateNews_url = serviceIp+"/test-for-sure/news-notifications/update-news";
         var type = 'PUT';
         var requestData = {};
 		requestData.id = id;
@@ -135,7 +135,7 @@ function editNews(id){
 	localStorage.setItem('updateButtonId',id);
 	var type='GET';
 	var newsId = (id.split('-'))[1];
-	var getNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/get-news?newsId="+newsId;
+	var getNews_url = serviceIp+"/test-for-sure/news-notifications/get-news?newsId="+newsId;
         $.ajax({
             url: getNews_url,
             type: type,
@@ -166,7 +166,7 @@ function deleteNews(id){
 function getExistingNews(){
 	$('#existingNews').empty();
 	var type='GET';
-		var getAllNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = serviceIp+"/test-for-sure/news-notifications/get-all-news";
         $.ajax({
             url: getAllNews_url,
             type: type,
@@ -193,7 +193,7 @@ function getExistingNews(){
 $('#btnYes').on('click', function(){
 	var id = ((localStorage.getItem('deleteButtonId')).split('-'))[1];
 	var type='PUT';
-	var deleteNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/delete-news?newsId="+id;
+	var deleteNews_url = serviceIp+"/test-for-sure/news-notifications/delete-news?newsId="+id;
 	$.ajax({
             url: deleteNews_url,
             type: type,

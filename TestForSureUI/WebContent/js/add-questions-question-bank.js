@@ -1,6 +1,6 @@
 function getCategories(){
 	$.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/question-bank/get-subject-category",
+                url: serviceIp+"/test-for-sure/question-bank/get-subject-category",
                 type: "GET",
                 
                 dataType: 'json',
@@ -71,10 +71,10 @@ $('#addQuesForm').validate({
 		var ques_id = -1;
 		if(action.toLowerCase() == 'add'){
 			//add
-			url = "http://13.126.161.84:8083/test-for-sure/question-bank/add-question";
+			url = serviceIp+"/test-for-sure/question-bank/add-question";
 		}
 		else{
-			url = "http://13.126.161.84:8083/test-for-sure/question-bank/update-question";
+			url = serviceIp+"/test-for-sure/question-bank/update-question";
 			ques_id = (action.split("-"))[2];
 		}
 		//questionCount++;
@@ -148,7 +148,7 @@ $('#btnAddCategoryModal').on('click', function(){
 	requestData.category = category;
 		console.log("Requestdata for add category: "+JSON.stringify(requestData));
 	$.ajax({
-            url: "http://13.126.161.84:8083/test-for-sure/question-bank/add-subject-category",
+            url: serviceIp+"/test-for-sure/question-bank/add-subject-category",
             type: type,
             data: JSON.stringify(requestData),
             dataType: 'json',
@@ -184,7 +184,7 @@ $('#btnAddSubcategoryModal').on('click', function(){
 	requestData.subcategory = subcategory;
 	console.log("Requestdata for add subcategory: "+JSON.stringify(requestData));
 	$.ajax({
-            url: "http://13.126.161.84:8083/test-for-sure/question-bank/add-subject-subcategory",
+            url: serviceIp+"/test-for-sure/question-bank/add-subject-subcategory",
             type: type,
             data: JSON.stringify(requestData),
             dataType: 'json',
@@ -230,7 +230,7 @@ $("#btnYes").on("click", function () {
 
 	deleteRequest.id=((action.split("-"))[2]);
 	console.log("deleteRequest: "+JSON.stringify(deleteRequest));
-    var deleteUrl = "http://13.126.161.84:8083/test-for-sure/question-bank/delete-question";
+    var deleteUrl = serviceIp+"/test-for-sure/question-bank/delete-question";
     var type = 'PUT';
 
     $.ajax({
@@ -360,7 +360,7 @@ $(document).ready(function () {
 					$("#btnAddSubcategory").attr("disabled", false);
 				
 				$.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/question-bank/get-subject-subcategory?categoryId="+categorySelected,
+                url: serviceIp+"/test-for-sure/question-bank/get-subject-subcategory?categoryId="+categorySelected,
                 type: "GET",
                 
                 dataType: 'json',

@@ -8,7 +8,7 @@ $(document).ready(function () {
 	console.log("emailId: "+emailId);
 	
 	var id = (test_id.split('-'))[1];
-	var getReport_url = "http://13.126.161.84:8083/test-for-sure/test/get-all-reports?test_id="+id+"&email_id="+emailId;
+	var getReport_url = serviceIp+"/test-for-sure/test/get-all-reports?test_id="+id+"&email_id="+emailId;
 	
 	$.ajax({
                 url: getReport_url,
@@ -70,7 +70,7 @@ $('#btnTakeTestAgain').on('click', function(){
 	
 	
 	var id = (test_id.split('-'))[1];
-	var getTest_url = "http://13.126.161.84:8083/test-for-sure/test/get-testsbyId?testId="+id;
+	var getTest_url = serviceIp+"/test-for-sure/test/get-testsbyId?testId="+id;
 	
 	$.ajax({
                 url: getTest_url,

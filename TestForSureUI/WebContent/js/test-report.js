@@ -102,7 +102,7 @@ $('#btnGenerateReport').on('click', function(){
 	$('#buttons').removeClass('hide');
 	$('#buttons').addClass('show');
 	console.log("Candidate-response: "+localStorage.getItem('candidate-response'));
-	var generateReport_url = "http://13.126.161.84:8083/test-for-sure/test/get-test-result";
+	var generateReport_url = serviceIp+"/test-for-sure/test/get-test-result";
 	$.ajax({
                 url: generateReport_url,
                 type: "POST",

@@ -30,7 +30,7 @@ $('#loginForm').validate({
     },
     submitHandler: function () {
 		console.log("Inside submit");
-		var login_url = "http://13.126.161.84:8083/test-for-sure/user/authenticate-user";
+		var login_url = serviceIp+"/test-for-sure/user/authenticate-user";
 		var type = "POST"
         var email = $('#txtEmail').val();
 		var passwordVal = $('#txtPassword').val();
@@ -108,7 +108,7 @@ $('#registerForm').validate({
     },
     submitHandler: function () {
 		console.log("Inside submit");
-		var login_url = "http://13.126.161.84:8083/test-for-sure/user/register-user";
+		var login_url = serviceIp+"/test-for-sure/user/register-user";
 		var type = "POST"
         var name = $('#txtNameReg').val();
         var email = $('#txtEmailReg').val();
@@ -193,7 +193,7 @@ $('#forgotPassForm').validate({
 		
 		var emailId = $('#txtForgotEmail').val();
 		console.log("Inside submit: "+emailId);
-		var sendPasswordResetURL = "http://13.126.161.84:8083/test-for-sure/user/forgot-password?emailId="+emailId;
+		var sendPasswordResetURL = serviceIp+"/test-for-sure/user/forgot-password?emailId="+emailId;
 		var type = "POST";
         
         $.ajax({

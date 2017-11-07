@@ -2,7 +2,7 @@ function showTests(categoryId, subCatId){
 	$('#tests').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
-	var url = "http://13.126.161.84:8083/test-for-sure/test/get-tests?categoryId="+categoryId+"&subCatId="+subCatId;
+	var url = serviceIp+"/test-for-sure/test/get-tests?categoryId="+categoryId+"&subCatId="+subCatId;
 	$.ajax({
                 url: url,
                 type: "GET",
@@ -14,6 +14,7 @@ function showTests(categoryId, subCatId){
 							console.log(JSON.stringify(result.testDetails));
 							$.each(result.testDetails, function(i, test) {
 								var btnId = 'btnTest-'+test.id;
+								var btnIdPublish = 'publishTest-'+test.id;
 								var query_string = 'test_id='+btnId;
 								var newTest = "<div style='border:solid 1px red;float:left;width:33%;text-align:center'>"+
 												"</br>Test Id: "+test.id+
@@ -23,9 +24,16 @@ function showTests(categoryId, subCatId){
 												"</br>Correct Question Marks: "+test.correct_ques_marks+
 												"</br>Negative marks: "+test.negative_marks+
 												"</br>Test Status (Active): "+test.active+
-												"</br><a href='#' id="+btnId+"class='btn btn-default'>Show/Update</a>"
+												"</br><a href='#' id='"+btnId+"' class='btn btn-default'>Show/Update</a>"+
+												"</br><a href='#' class='publishTestButton btn btn-default' id='"+btnIdPublish+"' onclick='publishUnpublish(this.id,"+test.active+")'>Publish Test</a>"+
 												"</div>";
 								$('#tests').append(newTest);
+								if(test.active == true){
+									$('#'+btnIdPublish).text('Unpublish test');
+								}
+								else{
+									$('#'+btnIdPublish).text('Publish test');
+								}
 							});
 							
 						}
@@ -40,6 +48,44 @@ function showTests(categoryId, subCatId){
             });
 }
 
+//On click of Publish/Unpublish button
+function publishUnpublish(id, active){
+	console.log("Inside publish/unpublish test: "+id+"------"+active);
+	var test_id = (id.split("-"))[1];
+	var url;
+	if(active == true){
+		url = serviceIp+"/test-for-sure/test/unpublish-test?test_id="+test_id;
+	}
+	else{
+		url = serviceIp+"/test-for-sure/test/publish-test?test_id="+test_id;
+	}
+	$.ajax({
+                url: url,
+                type: "PUT",
+                
+                dataType: 'json',
+                success: function (result) {
+					if(result.status){
+						console.log(result.message);
+						alert(result.message);
+					}
+					else if(!result.status){
+						console.log("Error: "+result.message);
+						alert("Error: "+result.message);
+					}
+					if(active == true){
+						$('#'+id).text('Publish test');
+					}
+					else{
+						$('#'+id).text('Unpublish test');
+					}
+                },
+                error: function () {
+					console.log("Service is unavailable");
+					alert("Service is unavailable");
+                }
+            });
+}
 //On click of a Start Test button
 /*$('input').on('click', function(){
 	document.href('start-test.html');
@@ -50,7 +96,7 @@ $(document).ready(function () {
 	
 	//to get the test details
 	         $.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/test/get-category",
+                url: serviceIp+"/test-for-sure/test/get-category",
                 type: "GET",
                 
                 dataType: 'json',
@@ -92,7 +138,7 @@ $(document).ready(function () {
 					$("#ddSubcategory").attr("disabled", false);
 				
 				$.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/test/get-subcategory?categoryId="+categorySelected,
+                url: serviceIp+"/test-for-sure/test/get-subcategory?categoryId="+categorySelected,
                 type: "GET",
                 
                 dataType: 'json',

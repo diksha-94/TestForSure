@@ -13,7 +13,7 @@ $('#addSubcategoryForm').validate({
     },
     submitHandler: function () {
 		console.log("Inside add sub category submit");
-		var addSubcategory_url = "http://13.126.161.84:8083/test-for-sure/test/add-subcategory";
+		var addSubcategory_url = serviceIp+"/test-for-sure/test/add-subcategory";
         var type = 'POST';
         var requestData = {};
 		requestData.cat_id = $('#ddCategoryAdd').val();
@@ -47,7 +47,7 @@ $('#addSubcategoryForm').validate({
 
 function getAllCategories(){
 	$.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/test/get-category",
+                url: serviceIp+"/test-for-sure/test/get-category",
                 type: "GET",
                 
                 dataType: 'json',
@@ -77,7 +77,7 @@ function getSubcategories(categoryId){
 				console.log("Selected Category: "+categoryId);
 				
 				$.ajax({
-                url: "http://13.126.161.84:8083/test-for-sure/test/get-subcategory?categoryId="+categoryId,
+                url: serviceIp+"/test-for-sure/test/get-subcategory?categoryId="+categoryId,
                 type: "GET",
                 
                 dataType: 'json',

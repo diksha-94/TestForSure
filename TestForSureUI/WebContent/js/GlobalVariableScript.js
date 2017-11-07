@@ -1,0 +1,1 @@
+var serviceIp="http://localhost:8083";

@@ -4,7 +4,7 @@ function showTests(categoryId, subCatId){
 	$('#tests_home').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
-	var url = "http://13.126.161.84:8083/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
+	var url = serviceIp+"/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
 	$.ajax({
                 url: url,
                 type: "GET",
@@ -69,7 +69,7 @@ function checkAlreadyAttempted(id){
 		var emailid = localStorage.getItem('email');
 		console.log("Email id: "+emailid);
 		var type='GET';
-		var url ='http://13.126.161.84:8083/test-for-sure/test/test-already-attempted?test_id='+test_id+'&email_id='+emailid;
+		var url =serviceIp+'/test-for-sure/test/test-already-attempted?test_id='+test_id+'&email_id='+emailid;
 		$.ajax({
             url: url,
             type: type,
@@ -106,7 +106,7 @@ $('#linkLogout').on('click', function(){
 function getExistingNews(){
 	var type='GET';
 		//var getAllNews_url = sessionStorage.getItem('PROTOCOL')+"://"+sessionStorage.getItem('SERVICES_IP')+":"+sessionStorage.getItem('SUBDOMAINSERVICES_HOST')+"/test-for-sure/news-notifications/get-all-news";
-		var getAllNews_url = "http://13.126.161.84:8083/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = serviceIp+"/test-for-sure/news-notifications/get-all-news";
         $.ajax({
             url: getAllNews_url,
             type: type,
@@ -138,8 +138,8 @@ function getExistingNews(){
 }
 
 function newsStructure(id, headline){
-	var structure = "<div style='margin-top:20px;margin-left:20px;'><span style='display:inline-block;' class='glyphicon glyphicon-menu-right'></span>"
-					+"<a style='display:inline-block;' class='news-link' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"' onmouseout='linkWhiteColor();'>"+headline+"</a></div>";
+	var structure = "<div style='margin-top:20px;margin-left:20px;'><span style='display:inline;' class='glyphicon glyphicon-menu-right'></span>"
+					+"<a style='display:inline;' class='news-link' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"' onmouseout='linkWhiteColor();'>"+headline+"</a></div>";
 	return structure;
 }
 function linkWhiteColor(){
