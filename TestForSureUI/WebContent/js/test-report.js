@@ -457,6 +457,13 @@ function getQueryParameterByName(name, url) {
 }
 
 $(document).ready(function () {
+	// To disable f5
+    /* jQuery < 1.7 */
+	$(document).bind("keydown", disableF5);
+	/* OR jQuery >= 1.7 */
+	$(document).on("keydown", disableF5);
+	//to prevent the right click on test screen
+	document.addEventListener('contextmenu', event => event.preventDefault());
 	var questions = localStorage.getItem('allQuestions');
 	allQuestions = JSON.parse(questions);
 	console.log("Document test-report is ready: "+questions);
@@ -473,4 +480,7 @@ $(document).ready(function () {
 	var candidateResponse = localStorage.getItem('candidate-response');
 	console.log("Candidate Response: "+candidateResponse);
 })
+// slight update to account for browsers not supporting e.which
+function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+
 

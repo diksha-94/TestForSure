@@ -186,6 +186,15 @@ function convertTimeToSeconds(hrs, mins, secs){
 }
 $('#btnNextToInstructions').on('click', function(){
 	console.log('Get User details and go next');
+	var name=txtName.value;
+	var email=txtEmail.value;
+	console.log("Name: "+name+"----Email: "+email);
+	if(name == '' || email == ''){
+		$('#errorOuter').removeClass('hide');
+		$('#errorOuter').addClass('show');
+		$('#errorMessage').html('Please enter required details.');
+		return;
+	}
 	localStorage.setItem('username', txtName.value);
 	localStorage.setItem('email', txtEmail.value);
 	localStorage.setItem('mobile', txtMobile.value);
@@ -797,12 +806,17 @@ function noBack() {
 $(document).ready(function () {
 	//localStorage.clear();
 	//to prevent the right click on test screen
-	//document.addEventListener('contextmenu', event => event.preventDefault());
+	document.addEventListener('contextmenu', event => event.preventDefault());
+	// To disable f5
+    /* jQuery < 1.7 */
+	$(document).bind("keydown", disableF5);
+	/* OR jQuery >= 1.7 */
+	$(document).on("keydown", disableF5);
 	
 	//To ask the user, when he/she attempts to refresh the page
-	window.onbeforeunload = function(){
+	/*window.onbeforeunload = function(){
 		return "Are you sure you want to leave this page?";
-	}
+	}*/
 	console.log("Document start-test is ready");
 	var test_id = getQueryParameterByName('test_id');
 	request_from = getQueryParameterByName('from');
@@ -829,3 +843,7 @@ $(document).ready(function () {
 	}
 })
 
+	
+	
+// slight update to account for browsers not supporting e.which
+function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };

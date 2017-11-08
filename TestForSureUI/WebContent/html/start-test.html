@@ -45,6 +45,9 @@
 		
 		<div id="divUserDetails" class='show'>
 			<h4 class="text-center margin-bottom-30 padding-top-30">Enter your details</h4>
+			<div id="errorOuter" class="hide">
+				<div class=" alert alert-danger" id="errorMessage"></div>
+			</div>
 			<form role='form' class='form-horizontal'>
 			<div class="form-group margin-bottom">
 				<label class='control-label col-sm-4'>Name<span class="red">*</span></label>
@@ -63,7 +66,7 @@
 			<div class="form-group margin-bottom">
 				<label class='control-label col-sm-4'>Mobile Number</label>
 				<div class='col-sm-7'>
-					<input type="text" class='form-control' id="txtMobile" name="txtMobileName" required="required"/>
+					<input type="text" class='form-control' id="txtMobile" name="txtMobileName"/>
 				</div>
 			</div>
 			

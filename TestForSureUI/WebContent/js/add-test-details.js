@@ -173,7 +173,6 @@ var quesRules = {
 	'radioCorrectOption': {
 		required: true
 	}
-	
 };
 
 
