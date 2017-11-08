@@ -1,0 +1,6 @@
+/target/
+.setting
+bin
+build
+classes
+node_modules
