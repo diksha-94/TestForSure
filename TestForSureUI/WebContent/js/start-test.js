@@ -184,6 +184,16 @@ function convertTimeToSeconds(hrs, mins, secs){
 	console.log("Received: "+hrs+" : "+mins+" : "+secs);
 	return secs + mins*60 + hrs*60*60;
 }
+function validateEmail(mail)   
+{  
+ if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
+  {  
+    return true; 
+  }  
+   else{
+    return false;
+   }	
+}  
 $('#btnNextToInstructions').on('click', function(){
 	console.log('Get User details and go next');
 	var name=txtName.value;
@@ -193,6 +203,12 @@ $('#btnNextToInstructions').on('click', function(){
 		$('#errorOuter').removeClass('hide');
 		$('#errorOuter').addClass('show');
 		$('#errorMessage').html('Please enter required details.');
+		return;
+	}
+	if(!validateEmail(email)){
+		$('#errorOuter').removeClass('hide');
+		$('#errorOuter').addClass('show');
+		$('#errorMessage').html('Please enter a valid e-mail address.');
 		return;
 	}
 	localStorage.setItem('username', txtName.value);

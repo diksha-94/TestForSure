@@ -57,4 +57,7 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.NewsAndNotifications"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
+<fullyQualifiedTypeName name="java.math.BigInteger"/>
+<fullyQualifiedTypeName name="java.math.MathContext"/>
+<fullyQualifiedTypeName name="java.math.BigDecimal"/>
 </qualifiedTypeNameHistroy>
