@@ -4,21 +4,37 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href= "../css/start-test-already-attempted.css" rel ="stylesheet"/>
 		<link href= "../css/styles.css" rel ="stylesheet"/>
+		<link href= "../css/menu.css" rel ="stylesheet"/>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 	</head>
 	<body>
-		<div id='cssmenu'>
-				<ul>
-					<li><a href='#'><span>TEST-FOR-SURE</span></a></li>
-					<li class='padding-left'><a href='home.html'><span class='test-color glyphicon glyphicon-home'></span><span>&nbsp;Home</span></a></li>
-					<li><a href='show-tests.html'><span>&nbsp;Take Test</span></a>
-					<li><a href='#'><span>&nbsp;News & Notifications</span></a></li>
-					<li><a href='#'><span>&nbsp;About</span></a></li>
-					<li class='last'><a href='#'><span class='glyphicon glyphicon-earphone'></span><span>&nbsp;Contact</span></a></li>
-					<li id='menuLogin'><a href="#" id="linkLogin" class='padding-left-100'><span class='glyphicon glyphicon-user'></span><span>&nbsp;Login/Register</span></a></li>
-					<li id='menuLogout'><a href="#" id='linkLogout' class='padding-left-100'><span class='glyphicon glyphicon-user'></span><span>&nbsp;Logout</span></a></li>
-				</ul>
-			</div>
+		<header>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="home.html"><img src='../img/Logopit_1508700310499.jpg' style='height:50px; width:200px;'alt='TEST-2B-SURE'/></a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li style='margin-left:100px;border-right:solid 1px #286090;border-left:solid 1px #286090;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
+						<li class="highlight" style='margin-left:0px;border-right:solid 1px #286090;'><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="about-us.html"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
+						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="contact-us.html"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
+						<li id='menuLogin' style='margin-left:400px;'><button type='button' id='linkLogin' style='background-color:white;color:#2E6DA4;border-radius:10px;height:40px;margin-top:5px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
+						
+						<!--<li id='menuLogin' style='margin-left:300px;border:solid 2px white;background-color:white;color:#2E6DA4;border-radius:10px;height:30px;margin-top:10px;'><a href="#" id="linkLogin" style='color:#2E6DA4;padding:5px 15px 5px 10px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>-->
+						<li id='userProfile' style='margin-left:400px;' onmouseover='openSubMenu();' onmouseout='closeSubMenu();'><a href="#">Hi<span id='loggedInUSer'></span>&nbsp;&nbsp;<span class='glyphicon glyphicon-chevron-down'></span></a>
+							<ul class="nav navbar-nav" style='display:none;' id='subMenu'>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='profile'><a href="#">Profile</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='changePassword'><a href="#">Change Password</a></li>
+								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+							</ul>
+						</li>
+						<!--<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>-->
+					</ul>
+				</div>
+			</nav>
+		</header>
 		
 		<div class='width-100'>
 			<div class='width-45 float-left margin' id='takeTestAgain'>
@@ -49,5 +65,6 @@
 		<script src="../js/jquery.validate.min.js"></script>
 		<script src="../js/start-test-already-attempted.js"></script>
 		<script src="../js/GlobalVariableScript.js" type="text/javascript"></script>
+		<script src="../js/login-register.js" type="text/javascript"></script>
 	</body>
 </html>

@@ -73,12 +73,7 @@ function publishUnpublish(id, active){
 						console.log("Error: "+result.message);
 						alert("Error: "+result.message);
 					}
-					if(active == true){
-						$('#'+id).text('Publish test');
-					}
-					else{
-						$('#'+id).text('Unpublish test');
-					}
+					showTests(0, 0);
                 },
                 error: function () {
 					console.log("Service is unavailable");

@@ -77,7 +77,7 @@ $('#loginForm').validate({
 						if (result.status) {
 							//Status true means user is authenticated successfully.
 							console.log("Result: "+JSON.stringify(result));
-							window.location.href = "start-test-already-attempted.html";
+							window.location.href = "start-test-already-attempted.html?test_id="+test_id;
 						}
 						else if (!result.status) {
 							console.log("Result: "+JSON.stringify(result));

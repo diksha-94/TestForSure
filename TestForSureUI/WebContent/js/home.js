@@ -106,7 +106,7 @@ $('#linkLogout').on('click', function(){
 function getExistingNews(){
 	var type='GET';
 		//var getAllNews_url = sessionStorage.getItem('PROTOCOL')+"://"+sessionStorage.getItem('SERVICES_IP')+":"+sessionStorage.getItem('SUBDOMAINSERVICES_HOST')+"/test-for-sure/news-notifications/get-all-news";
-		var getAllNews_url = serviceIp+"/test-for-sure/news-notifications/get-all-news";
+		var getAllNews_url = serviceIp+"/test-for-sure/news-notifications/get-news-bySatatus?newsStatus="+true;
         $.ajax({
             url: getAllNews_url,
             type: type,

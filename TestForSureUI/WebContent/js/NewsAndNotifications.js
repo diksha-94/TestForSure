@@ -118,17 +118,52 @@ $('#btnUpdateSubmit').on('click', function(){
 
 });
 
-function newsStructure(id, headline){
+function newsStructure(id, headline, active){
 	console.log("id: "+id);
 	console.log("headline: "+headline);
 	var newNews = "<div style='border:solid 1px red ; width:80% ; text-align:center ; clear:both;'>"+
 							"<div style='float:left;width:10%;'>"+id+"</div>"+
-							"<div id='"+id+"' style='float:left;width:70%;cursor:pointer;'>"+(headline)+"</div>"+
+							"<div id='"+id+"' style='float:left;width:60%;cursor:pointer;'>"+(headline)+"</div>"+
+							"<div style='float:left;width:10%;'>Active - "+(active)+"</div>"+
 							"<div style='float:left;width:10%;'><button type='button' id='edit-"+id+"' onclick='editNews(id)'  data-toggle='modal' data-target='#updateNewsModal' class='btn btn-default' >Edit</button></div>"+
-							"<div style='float:left;width:10%;'><button type='button' id='delete-"+id+"' onclick='deleteNews(id)' data-toggle='modal' data-target='#deletNewsModal' class='btn btn-default' >Delete</button></div>"+
+							"<div style='float:left;width:10%;'><button type='button' id='publishUnpublish-"+id+"' onclick='publishUnpublishNews(id,"+active+")' class='btn btn-default' >Publish</button></div>"+
 			   		  "</div>";
 					  
 	return newNews;
+}
+
+//On click of Publish/Unpublish button
+function publishUnpublishNews(id, active){
+	console.log("Inside publish/unpublish news: "+id+"------"+active);
+	var news_id = (id.split("-"))[1];
+	var url;
+	if(active == true){
+		url = serviceIp+"/test-for-sure/news-notifications/unpublish-news?newsId="+news_id;
+	}
+	else{
+		url = serviceIp+"/test-for-sure/news-notifications/publish-news?newsId="+news_id;
+	}
+	$.ajax({
+                url: url,
+                type: "PUT",
+                
+                dataType: 'json',
+                success: function (result) {
+					if(result.status){
+						console.log(result.message);
+						alert(result.message);
+					}
+					else if(!result.status){
+						console.log("Error: "+result.message);
+						alert("Error: "+result.message);
+					}
+					getExistingNews();
+                },
+                error: function () {
+					console.log("Service is unavailable");
+					alert("Service is unavailable");
+                }
+            });
 }
 function editNews(id){
 	console.log("Id: "+id);
@@ -173,10 +208,16 @@ function getExistingNews(){
 			contentType: 'application/json',
 			success: function (result) {
                 if (result.response.status) {
-					console.log("Got News successfully");
+					console.log("Got News successfully: "+JSON.stringify(result));
 					for(var i=0;i<(result.news).length;i++){
-						var news = newsStructure((result.news)[i].id, (result.news)[i].headline);
+						var news = newsStructure((result.news)[i].id, (result.news)[i].headline, (result.news)[i].active);
 						$('#existingNews').append(news);
+						if((result.news)[i].active == true){
+							$('#publishUnpublish-'+(result.news)[i].id).text("Unpublish");
+						}
+						else if((result.news)[i].active == false){
+							$('#publishUnpublish-'+(result.news)[i].id).text("Publish");
+						}
 					}
 				}
                 else if (!response.status) {

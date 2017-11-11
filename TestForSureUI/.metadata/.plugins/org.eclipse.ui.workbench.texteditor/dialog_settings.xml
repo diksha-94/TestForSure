@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="AvgS" key="selection"/>
+		<item value="insertNews" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="insertNews"/>
 			<item value="avgs"/>
 			<item value="topper"/>
 			<item value="marks_scored"/>
@@ -15,7 +16,6 @@
 			<item value="finduserrank"/>
 			<item value="negative_marks"/>
 			<item value="add-update"/>
-			<item value="addNewExamCategory"/>
 		</list>
 		<list key="replacehistory">
 		</list>

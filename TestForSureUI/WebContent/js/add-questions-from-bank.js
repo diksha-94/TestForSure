@@ -1,5 +1,5 @@
 var allQuestions = {};
-
+var resultIds = [];
 function showQuestions(categoryId, subcategoryId){
 	$('#questions').empty();
 	console.log("Category id: "+categoryId);
@@ -11,15 +11,46 @@ function showQuestions(categoryId, subcategoryId){
                 
                 dataType: 'json',
                 success: function (result) {
+					
 					if(result.status){
 						if(result.questions != null) {
 							console.log(JSON.stringify(result.questions));
-							$.each(result.questions, function(i, question) {
+							for(var i = 0;i<(result.questions).length; i++){
+								var btnId = 'btnQuestionEdit-'+(result.questions)[i].id;
+								//var query_string = 'test_id='+btnId;
+								var newQuestion = questionStructure(i+1, (result.questions)[i].question_text, btnId);
+								$('#questions').append(newQuestion);
+							}
+							/* $.each(result.questions, function(i, question) {
 								var btnId = 'btnQuestionEdit-'+question.id;
 								//var query_string = 'test_id='+btnId;
 								var newQuestion = questionStructure(i+1, question.question_text, btnId);
 								$('#questions').append(newQuestion);
+							}); */
+							console.log("ResultIds.length: "+localStorage.getItem('resultIds'));
+							var resultIdValues = (localStorage.getItem('resultIds')).split(',');
+							console.log("ResultIds.length: "+resultIdValues.length);
+							
+							//To disable those questions which are already added in another test with same category and subcategory
+							 if(resultIdValues.length>0){
+								console.log("Inside resultIds length > 0")
+								$(':checkbox').each(function(i){
+								
+								console.log("Results: "+resultIds);
+								for(var i = 0;i<resultIdValues.length;i++){
+									if(this.id == "check-btnQuestionEdit-"+resultIdValues[i]){
+										console.log("Inside");
+										//$(this).attr('disabled', false);
+										$(this).attr('disabled', true);
+										$(this).addClass('hide')
+										break;
+									}
+									else{
+										$(this).attr('disabled', false);
+									}
+								}
 							});
+							} 
 							if(localStorage.getItem("added_questions") != null){
 							var ids = (localStorage.getItem('added_questions')).split(",");
 								
@@ -28,6 +59,18 @@ function showQuestions(categoryId, subcategoryId){
 								console.log("ids: "+ids);
 								for(var i = 0;i<ids.length;i++){
 									if(this.id == ids[i]){
+										console.log("Inside");
+										$(this).attr('disabled', true);
+										//$(this).addClass('hide')
+										break;
+									}
+									else{
+										$(this).attr('disabled', false);
+									}
+								}
+								console.log("ResultIds: "+resultIds);
+								for(var i = 0;i<resultIds.length;i++){
+									if(this.id == resultIds[i]){
 										console.log("Inside");
 										$(this).attr('disabled', true);
 										break;
@@ -135,6 +178,23 @@ function openViewQuestion(id){
 		})
 }
 
+/* //To disable the questios which are already added to the test with same category and subcategory
+function disableQUestionsAlreadyAdded(cat_id, subcat_id){
+	$.ajax({
+                url: serviceIp+"/test-for-sure/question-bank/get-ques-ids?categoryId="+cat_id+"&subcategoryId="+subcat_id,
+                type: "GET",
+                contentType: 'application/json',
+                success: function (result) {
+					console.log("Result: "+result);
+					resultIds = result;
+					//localStorage.setItem('resultIds', resultIds);
+                },
+                error: function () {
+					console.log("Service is unavailable");
+                }
+            });
+} */
+
 function getQueryParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -144,10 +204,14 @@ function getQueryParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
 $(document).ready(function () {
+	//disableQUestionsAlreadyAdded(localStorage.getItem('categoryId'), localStorage.getItem('subcategoryId'));
+	console.log("ResultIds: "+localStorage.getItem('resultIds'));
+	resultIds = localStorage.getItem('resultIds');
 	console.log("Document add questions from question bank is ready");
-	
-	
+	var resultIds = localStorage.getItem('resultIds');
+	console.log("ResultIds: "+resultIds);
 	//to get the test categories on page load
 	         $.ajax({
                 url: serviceIp+"/test-for-sure/question-bank/get-subject-category",
@@ -231,10 +295,9 @@ $(document).ready(function () {
 			showQuestions($('#ddCategory').val(), $(this).val());
 		});
 	
-			
+	
 	//Initially, on page load show all the questions(Select in category and subcategory has value 0)
 	showQuestions(0, 0);
-	
 	
 	
 })

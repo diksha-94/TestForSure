@@ -1,3 +1,4 @@
+
 //test
 function getCategoriesOnLoad(){
 	$.ajax({
@@ -55,7 +56,8 @@ $('#testDetailsForm').validate({
         var testId = localStorage.getItem('test_id');
 		var category = $('#ddCategory  option:selected').val();
         var subcategory = $('#ddSubcategory  option:selected').val();
-        
+        localStorage.setItem('categoryId', category);
+        localStorage.setItem('subcategoryId', subcategory);
         var title = $("#txtTitle").val();
 		var ques = $("#txtQues").val();
         var time = $("#txtTime").val();
@@ -90,6 +92,10 @@ $('#testDetailsForm').validate({
 					$('#addQuestions').addClass('show');
 					$('#testDetails').removeClass('show');
 					$('#testDetails').addClass('hide');
+					
+					disableQUestionsAlreadyAdded(localStorage.getItem('categoryId'), localStorage.getItem('subcategoryId'));
+	
+	
                 }
                 else if (!response.status) {
                     console.log("Error in adding/updating test detailstest id: "+response.test_id+"    Message: "+response.message);
@@ -104,6 +110,24 @@ $('#testDetailsForm').validate({
     }
 
 });
+
+//To disable the questios which are already added to the test with same category and subcategory
+function disableQUestionsAlreadyAdded(cat_id, subcat_id){
+	$.ajax({
+                url: serviceIp+"/test-for-sure/question-bank/get-ques-ids?categoryId="+cat_id+"&subcategoryId="+subcat_id,
+                type: "GET",
+                contentType: 'application/json',
+                success: function (result) {
+					console.log("Result: "+result);
+					var resultIds = result;
+					localStorage.setItem('resultIds', resultIds);
+                },
+                error: function () {
+					console.log("Service is unavailable");
+                }
+            });
+}
+
 function uniqTestId() {
   return (Math.floor((Math.random() * 100000) + 1))
 }

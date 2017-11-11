@@ -37,7 +37,24 @@ $(document).ready(function () {
 		$('#hand-down').css('margin-top','0px');
 	},380);
 	
-	
+	if(localStorage.getItem('loggedIn') == "true"){
+		//means the user is logged in
+		$('#loggedInUSer').text(" "+localStorage.getItem('username'));
+		$('#menuLogin').addClass('hide');
+		$('#menuLogin').removeClass('show');
+		$('#menuLogout').removeClass('hide');
+		$('#menuLogout').addClass('show');
+		$('#userProfile').removeClass('hide');
+		$('#userProfile').addClass('show');
+	}
+	else{
+		$('#menuLogin').removeClass('hide');
+		$('#menuLogin').addClass('show');
+		$('#menuLogout').addClass('hide');
+		$('#menuLogout').removeClass('show');
+		$('#userProfile').addClass('hide');
+		$('#userProfile').removeClass('show');
+	}
 	
 })
 
