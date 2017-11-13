@@ -92,7 +92,7 @@ $('#testDetailsForm').validate({
 					$('#addQuestions').addClass('show');
 					$('#testDetails').removeClass('show');
 					$('#testDetails').addClass('hide');
-					
+					getQuestionsOnTestId(response.test_id);
 					disableQUestionsAlreadyAdded(localStorage.getItem('categoryId'), localStorage.getItem('subcategoryId'));
 	
 	
@@ -511,12 +511,16 @@ $('#btnUpdateSubmit').on('click', function(){
 
 //On click of Back to Test Details
 $('#btnBackTestDetails').on('click', function(){
+	backToTestDetails(localStorage.getItem('test_id'));
+})
+
+function backToTestDetails(testId){
 	$('#addQuestions').removeClass('show');
 	$('#addQuestions').addClass('hide');
 	$('#testDetails').removeClass('hide');
 	$('#testDetails').addClass('show');
 	getCategoriesOnLoad();
-	var getTest_url = serviceIp+"/test-for-sure/test/get-testsbyId?testId="+localStorage.getItem('test_id');
+	var getTest_url = serviceIp+"/test-for-sure/test/get-testsbyId?testId="+testId;
 	var type= "GET";
 	$.ajax({
             url: getTest_url,
@@ -547,8 +551,7 @@ $('#btnBackTestDetails').on('click', function(){
            
         });
 	$('#btnSaveNext').text('Update & Next');
-})
-
+}
 //On click of Back to Add Questions
 $('#btnBackAddQues').on('click', function(){
 	$('#publishTest').removeClass('show');
@@ -689,8 +692,17 @@ function getQueryParameterByName(name, url) {
 }
 $(document).ready(function () {
 	console.log("Document is ready");
+	//If coming from Show tests
+	var testid = getQueryParameterByName('test_id');
+	console.log("Testid from show tests: "+testid);
 	var action = getQueryParameterByName('from');
-	if(action == 'bank'){
+	
+	if(testid){
+		console.log("Inside show test create test");
+		localStorage.setItem('test_id', testid);
+		backToTestDetails(testid);
+	}
+	else if(action == 'bank'){
 		//means returning from question bank
 		$('#addQuestions').removeClass('hide');
 		$('#addQuestions').addClass('show');

@@ -24,7 +24,7 @@ function showTests(categoryId, subCatId){
 												"</br>Correct Question Marks: "+test.correct_ques_marks+
 												"</br>Negative marks: "+test.negative_marks+
 												"</br>Test Status (Active): "+test.active+
-												"</br><a href='#' id='"+btnId+"' class='btn btn-default'>Show/Update</a>"+
+												"</br><a href='create-test.html?test_id="+test.id+"' id='"+btnId+"' class='btn btn-default'>Show/Update</a>"+
 												"</br><a href='#' class='publishTestButton btn btn-default' id='"+btnIdPublish+"' onclick='publishUnpublish(this.id,"+test.active+")'>Publish Test</a>"+
 												"</div>";
 								$('#tests').append(newTest);
