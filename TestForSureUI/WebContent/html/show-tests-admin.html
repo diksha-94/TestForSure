@@ -39,6 +39,27 @@
 		<!--Div containing all the tests details-->
 		<div id="tests">
 		</div>
+		
+		<!--Delete Test modal-->
+		<div class="modal fade" id="deleteTestModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Delete Test</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete this test?</br>All the data related to this test will be deleted permanently.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnYes" class="btn btn-default" data-dismiss="modal">Yes</button>
+						<button type="button" id="btnNo" class="btn btn-default" data-dismiss="modal">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script src="../js/jquery-2.2.2.min.js"></script>
 		<script src="../js/ckeditor.js"></script>
 		<script src="../adapters/jquery.js"></script>

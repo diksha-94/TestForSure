@@ -117,7 +117,28 @@ $('#btnGenerateReport').on('click', function(){
 					$('#idTotalCandidate').text(result.total_candidate);
 					$('#idScore').text(result.marks_scored+" / "+result.total_marks);
 					$('#idQuesAttempted').text(result.ques_attempted+" / "+result.total_ques);
-					$('#idTime').text((result.time_taken).toFixed(2));
+					var time = (result.time_taken).toFixed(2);
+					var hrs = 0;
+					var mins = 0;
+					var secs = 0;
+					if(time>=60){
+						hrs = time/60;
+						time = time%60;
+					}
+					var mins = ((time.toString()).split("."))[0];
+					var secs = parseFloat("0."+((time.toString()).split("."))[1])*60;
+					secs = Math.round(secs);
+					console.log("Time taken: "+hrs+" hours   "+mins+" mins   "+Math.round(secs)+" secs"); 
+					//$('#idTime').text((result.time_taken).toFixed(2));
+					if(hrs>0){
+						$('#idHrs').text(hrs+"h "+mins+"m "+secs+"s");
+					}
+					else if(mins>0){
+						$('#idHrs').text(mins+"m "+secs+"s");
+					}
+					else if(secs>0){
+						$('#idHrs').text(secs+"s");
+					}
 					$('#idAccuracy').text(findAccuracy(result.correct_ques, result.ques_attempted)+"%");
 					$('#idPercentile').text(findPercentile(result.rank, result.total_candidate));
 					
@@ -126,9 +147,50 @@ $('#btnGenerateReport').on('click', function(){
 					$('#idNotattempted').text((result.total_ques-result.ques_attempted)+"Qs");
 					
 					$('#idTopperScore').text(result.topperScore+"/"+report.total_marks);
-					$('#idTopperTime').text(result.topperTime+" mins");
+					var timeTop = (result.topperTime).toFixed(2);
+					var hrsTop = 0;
+					var minsTop = 0;
+					var secsTop = 0;
+					if(timeTop>=60){
+						hrsTop = timeTop/60;
+						timeTop = timeTop%60;
+					}
+					var minsTop = ((timeTop.toString()).split("."))[0];
+					var secsTop = parseFloat("0."+((timeTop.toString()).split("."))[1])*60;
+					console.log("Time taken: "+hrsTop+" hours   "+minsTop+" mins   "+Math.round(secsTop)+" secs"); 
+					secsTop = Math.round(secsTop);
+					if(hrsTop>0){
+						$('#idTopperTime').text(hrsTop+"h "+minsTop+"m "+secsTop+"s");
+					}
+					else if(minsTop>0){
+						$('#idTopperTime').text(minsTop+"m "+secsTop+"s");
+					}
+					else if(secsTop>0){
+						$('#idTopperTime').text(secsTop+"s");
+					}
 					$('#idAvgScore').text(result.avgScore+"/"+report.total_marks);
-					$('#idAvgTime').text(result.avgTime+" mins");
+					
+					var timeAvg = (result.avgTime).toFixed(2);
+					var hrsAvg = 0;
+					var minsAvg = 0;
+					var secsAvg = 0;
+					if(timeAvg>=60){
+						hrsAvg = timeAvg/60;
+						timeAvg = timeAvg%60;
+					}
+					var minsAvg = ((timeAvg.toString()).split("."))[0];
+					var secsAvg = parseFloat("0."+((timeAvg.toString()).split("."))[1])*60;
+					console.log("Time taken: "+hrsAvg+" hours   "+minsAvg+" mins   "+Math.round(secsAvg)+" secs"); 
+					secsAvg = Math.round(secsAvg);
+					if(hrsAvg>0){
+						$('#idAvgTime').text(hrsAvg+"h "+minsAvg+"m "+secsAvg+"s");
+					}
+					else if(minsAvg>0){
+						$('#idAvgTime').text(minsAvg+"m "+secsAvg+"s");
+					}
+					else if(secsAvg>0){
+						$('#idAvgTime').text(secsAvg+"s");
+					}
 					
 					$('#totalMarksInTable').append('['+report.total_marks+']');
 					var totalRecordsToDisplay;

@@ -15,6 +15,7 @@ function showTests(categoryId, subCatId){
 							$.each(result.testDetails, function(i, test) {
 								var btnId = 'btnTest-'+test.id;
 								var btnIdPublish = 'publishTest-'+test.id;
+								var btnIdDelete = 'delteTest-'+test.id;
 								var query_string = 'test_id='+btnId;
 								var newTest = "<div style='border:solid 1px red;float:left;width:33%;text-align:center'>"+
 												"</br>Test Id: "+test.id+
@@ -25,6 +26,7 @@ function showTests(categoryId, subCatId){
 												"</br>Negative marks: "+test.negative_marks+
 												"</br>Test Status (Active): "+test.active+
 												"</br><a href='create-test.html?test_id="+test.id+"' id='"+btnId+"' class='btn btn-default'>Show/Update</a>"+
+												"</br><button type='button' id='"+btnIdDelete+"' class='btn btn-default' data-toggle='modal' data-target='#deleteTestModal'>Delete Test</button>"+
 												"</br><a href='#' class='publishTestButton btn btn-default' id='"+btnIdPublish+"' onclick='publishUnpublish(this.id,"+test.active+")'>Publish Test</a>"+
 												"</div>";
 								$('#tests').append(newTest);

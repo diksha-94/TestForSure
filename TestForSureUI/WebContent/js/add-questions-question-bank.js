@@ -7,7 +7,7 @@ function getCategories(){
                 success: function (result) {
 					if(result.status){
 						var categories=[];
-						categories.push("<option value='0'>Select</option>");
+						categories.push("<option value=''>Select</option>");
 						$.each(result.categoryList, function(i,cat){
 							var newOption = "<option value='"+cat.id+"'>"+cat.category+"</option>";
 							categories.push(newOption);
@@ -15,7 +15,7 @@ function getCategories(){
 					}
 					else if(!result.status){
 						var categories=[];
-						categories.push("<option value='0'>Select</option>");
+						categories.push("<option value=''>Select</option>");
 						console.log("Error: "+result.status);
 					}
 					$("#ddCategory").html(categories);
@@ -54,10 +54,39 @@ $('#ddquesType').on('change', function() {
 		number: true
     }
 };*/
-	
+var quesRules = {
+    
+	'txtQuesTextName': {
+		required: true
+    },
+	'txtoptionAName': {
+		required: true
+    },
+	'txtoptionBName': {
+		required: true
+    },
+	'txtoptionCName': {
+		required: true
+    },
+	'txtoptionDName': {
+		required: true
+    },
+	'radioCorrectOption': {
+		required: true
+	},
+	'ddCategoryName':{
+		required: true
+	},
+	'ddSubcategoryName':{
+		required: true
+	}
+};
+
+
+
 $('#addQuesForm').validate({
 	
-    //rules: quesRules,
+    rules: quesRules,
 
     ignore: false,
     highlight: function () {
@@ -295,7 +324,7 @@ $(document).ready(function () {
 		
 		$('#ddSubcategory').attr('disabled', false);
 		$('#btnAddSubcategory').attr('disabled', false);
-		$('#ddSubcategory').val("0");
+		$('#ddSubcategory').val("");
 		var allQuestions = {};
 		allQuestions = JSON.parse(localStorage.getItem('Question_Bank_Questions'));
 		console.log("All questions: "+(allQuestions.questions));
@@ -345,9 +374,9 @@ $(document).ready(function () {
 				$('#ddSubcategory').empty();
 				console.log("Selected Category: "+categorySelected);
 				//Category is Select(means not yet selected)
-				if(categorySelected == '0'){
+				if(categorySelected == ''){
 					var subcategories=[];
-					subcategories.push("<option value='0' selected='selected'>Select</option>");
+					subcategories.push("<option value='' selected='selected'>Select</option>");
 					$("#ddSubcategory").html(subcategories);
 					
 					$("#ddSubcategory").attr("disabled", true);
@@ -367,7 +396,7 @@ $(document).ready(function () {
                 success: function (result) {
 					if(result.success){
 						subcategories=[];
-						subcategories.push("<option value='0' selected='selected'>Select</option>");
+						subcategories.push("<option value='' selected='selected'>Select</option>");
 						$.each(result.subcategoryList, function(i,subcat){
 							var newOption = "<option value='"+subcat.id+"'> "+subcat.subcategory+"</option>";
 							subcategories.push(newOption);
@@ -378,7 +407,7 @@ $(document).ready(function () {
 					else if(!result.status){
 						//means 0 records found
 						subcategories=[];
-						subcategories.push("<option value='0' selected='selected'>Select</option>");
+						subcategories.push("<option value='' selected='selected'>Select</option>");
 						console.log("Error: "+result.status);
 						$("#ddSubcategory").html(subcategories);
 					}

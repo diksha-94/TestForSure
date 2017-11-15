@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetTestDetailsResponse"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.Question"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetQuestionsResponse"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.ExamCategory"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.ExamSubcategory"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TestDetails"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetSingleTestDetailsResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserDetails"/>
@@ -51,7 +46,6 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetTestSoltionResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateNewsQueries"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetNewsResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.NewsDAO"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
@@ -60,4 +54,10 @@
 <fullyQualifiedTypeName name="java.math.BigInteger"/>
 <fullyQualifiedTypeName name="java.math.MathContext"/>
 <fullyQualifiedTypeName name="java.math.BigDecimal"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javax.print.attribute.standard.DateTimeAtCompleted"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.sql.Timestamp"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
 </qualifiedTypeNameHistroy>

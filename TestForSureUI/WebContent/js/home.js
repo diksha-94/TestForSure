@@ -1,7 +1,7 @@
 
 //Show tests on home.html load
 function showTests(categoryId, subCatId){
-	$('#tests_home').empty();
+	$('#all_tests').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
 	var url = serviceIp+"/test-for-sure/test/get-tests-bystatus?categoryId="+categoryId+"&subCatId="+subCatId;
@@ -14,37 +14,48 @@ function showTests(categoryId, subCatId){
 					if(result.status){
 						if(result.testDetails != null) {
 							console.log(JSON.stringify(result.testDetails));
-							$.each(result.testDetails, function(i, test) {
-								var btnId = 'btnTest-'+test.id;
+							console.log("Number of tests: "+(result.testDetails).length);
+							var number = (result.testDetails).length;
+							var testToDisplay = 0;
+							
+							if(number<10){
+								testToDisplay = number;
+							}
+							else{
+								number = 10;
+							}
+							for(var i = 0;i<number;i++){
+							//$.each(result.testDetails, function(i, test) {
+								var btnId = 'btnTest-'+(result.testDetails)[i].id;
 								var query_string = 'test_id='+btnId;
-								console.log("Image Path: "+test.imagePath);
-								var image_path = "'"+test.imagePath+"'";
+								console.log("Image Path: "+(result.testDetails)[i].imagePath);
+								var image_path = "'"+(result.testDetails)[i].imagePath+"'";
 								
 												
 								var newTest = "<div class='outer-test-div'>"+
 												"<div class='col-md-3 float-left'>"+
 												"<img class='test-image' src="+image_path+"/>"+
-												"</br><h3 class='test-title'>"+test.testTitle+"</h3>"+
+												"</br><h3 class='test-title'>"+(result.testDetails)[i].testTitle+"</h3>"+
 												"</div>"+
 												"<div class='col-md-1.5 float-left max-marks'>"+
 												"<span>Maximum Marks"+
 												"</span></br>"+
-												"<span class='max_marks_value'>"+test.no_of_ques*test.correct_ques_marks+
+												"<span class='max_marks_value'>"+(result.testDetails)[i].no_of_ques*(result.testDetails)[i].correct_ques_marks+
 												"</span>"+
 												"</div>"+
 												"<div class='col-md-2.75 float-left margin-top-30 margin-left-10 div-width'>"+
-												"<span class='glyphicon glyphicon-th-list'></span><label class='clear-both test-size'>&nbsp;Number of Questions: </label><span class='test-size'>"+test.no_of_ques+"</span>"+
-												"</br><span class='glyphicon glyphicon-time'></span><label  class='clear-both test-size'>&nbsp;Time Limit(in mins): </label><span class='test-size'>"+test.time_limit+"</span>"+
+												"<span class='glyphicon glyphicon-th-list'></span><label class='clear-both test-size'>&nbsp;Number of Questions: </label><span class='test-size'>"+(result.testDetails)[i].no_of_ques+"</span>"+
+												"</br><span class='glyphicon glyphicon-time'></span><label  class='clear-both test-size'>&nbsp;Time Limit(in mins): </label><span class='test-size'>"+(result.testDetails)[i].time_limit+"</span>"+
 												"</div>"+
 												"<div class='col-md-2.75 float-left margin-top-30 div-width'>"+
-												"<span class='glyphicon glyphicon-ok-sign'></span><label  class='clear-both test-size'>&nbsp;Correct Ques Marks: </label><span class='test-size'>"+test.correct_ques_marks+"</span>"+
-												"</br><span class='glyphicon glyphicon-minus-sign'></span><label  class='clear-both test-size'>&nbsp;Negative marks: </label><span class='test-size'>"+test.negative_marks+"</span>"+
+												"<span class='glyphicon glyphicon-ok-sign'></span><label  class='clear-both test-size'>&nbsp;Correct Ques Marks: </label><span class='test-size'>"+(result.testDetails)[i].correct_ques_marks+"</span>"+
+												"</br><span class='glyphicon glyphicon-minus-sign'></span><label  class='clear-both test-size'>&nbsp;Negative marks: </label><span class='test-size'>"+(result.testDetails)[i].negative_marks+"</span>"+
 												"</div>"+
 												"<div class='col-md-2 float-left margin-top-40'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
 												//href='start-test-option.html?"+query_string+"'
 												"</div>";
-								$('#tests_home').append(newTest);
-							});
+								$('#all_tests').append(newTest);
+							}
 							
 						}
 					}
