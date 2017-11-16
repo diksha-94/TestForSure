@@ -7,13 +7,13 @@
 	<body>
 	
 		<div class='head-outer' style='width:100%;height:80px;background-color:#2E6DA4;'>
-			<div class='col-md-2'>
-				<a href="#">TEST-FOR-SURE</a>
-			</div>
+			<div class="navbar-header col-md-2">
+						<a class="navbar-brand"><img src='../img/Logopit_1508700310499.jpg' style='height:50px; width:200px;'alt='TEST-2B-SURE'/></a>
+					</div>
 			<div class='col-md-4'>
 				<h3 id='titleHead'></h3>
 			</div>
-			<div id="buttons" class="hide col-md-4 col-md-offset-2">
+			<div id="buttons" class="col-md-4 col-md-offset-2">
 				<div class='col-md-4'>
 					<button type="button" id="btnAnalysis" disabled="disabled" class='btn btn-success'><span class='glyphicon glyphicon-signal'></span>&nbsp;&nbsp;Analysis</button>
 				</div>
@@ -25,9 +25,12 @@
 				</div>
 			</div>
 		</div>
+		
 	<div id='candidateReport'>
 		
-		<div id="testReportGeneral" class="show">
+		
+		
+		<div id="testReportGeneral">
 			<div class='reportDetails'>
 				<div class='reportGreeting'>
 					<h1>
@@ -40,7 +43,7 @@
 						
 					</div>
 					<div class='details-div'>
-						<div><span class='font-design' id="idYourRank"></span><span class='font-design'>/</span><span class='font-design' id="idTotalCandidate"></span></div></br>
+						<div><span class='font-design' id="idYourRank"></span><span class='font-design'>&nbsp;/&nbsp;</span><span class='font-design' id="idTotalCandidate"></span></div></br>
 						<div class='head-design'><span style='color:yellow;' class='glyphicon glyphicon-chevron-up'></span>&nbsp;<span>Rank</span></div>
 					</div>
 					<div class='details-div'>
@@ -53,8 +56,8 @@
 						<div class='head-design'><span style='color:yellow;' class='glyphicon glyphicon-check'></span>&nbsp;<span>Questions Attempted</span></div>
 					</div>
 					<div class='details-div'>
-						<div><span class='font-design' id="idTime"></span></div></br>
-						<div class='head-design'><span style='color:yellow;' class='glyphicon glyphicon-time'></span>&nbsp;<span>Time taken(in mins)</span></div>
+						<div><span class='font-design' id="idHrs"></span></div></br>
+						<div class='head-design'><span style='color:yellow;' class='glyphicon glyphicon-time'></span>&nbsp;<span>Time taken</span></div>
 					</div>
 					<div class='details-div'>
 						<div><span class='font-design' id="idAccuracy"></span></div></br>
@@ -67,7 +70,7 @@
 				</div>
 			</div>
 		</div>
-		<div id='testReportDetail' class='outer-details hide' style="float:left;">
+		<div id='testReportDetail' class='outer-details' style="float:left;">
 			<div id="topperAverage">
 				<div class='padding-top-20' style='margin-top:20px;'>
 					<span class='topperAvg-head col-md-7'>Topper's score </span><span class='topperAvg-value col-md-5' id="idTopperScore"></span>
@@ -105,7 +108,7 @@
 			</div>
 		</div>
 			
-			<div id="questionsChart" class='hide'>
+			<div id="questionsChart">
 				<div>
 					<div id="questionsPieChart"></div>
 				</div>
@@ -122,7 +125,7 @@
 				</div>
 			</div>
 			
-			<div id="timeChart" class='hide'>
+			<div id="timeChart">
 				<div>
 					<div id="timePieChart"></div>
 				</div>
@@ -138,9 +141,6 @@
 					</div>
 				</div>
 			</div>
-		
-			
-	
 		
 		<div id="testSolution" class="hide">
 		</div>

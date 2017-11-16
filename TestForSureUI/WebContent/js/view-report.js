@@ -1,6 +1,3 @@
-var report = {};
-
-
 //To download the test report
 $('#downloadReport').on('click', function(){
         var pdf = new jsPDF('p', 'pt', 'letter');
@@ -85,125 +82,7 @@ function downloadFullList(){
         );
     }
 
-//On click of generate report button
-/*$('#btnGenerateReport').on('click', function(){
-	console.log("Generating Test Report");
-	$('#testSummary').removeClass('show');
-	$('#testSummary').addClass('hide');
-	$('#testReportGeneral').removeClass('hide');
-	$('#testReportGeneral').addClass('show');
-	$('#testReportDetail').removeClass('hide');
-	$('#testReportDetail').addClass('show');
-	$('#questionsChart').removeClass('hide');
-	$('#questionsChart').addClass('show');
-	$('#timeChart').removeClass('hide');
-	$('#timeChart').addClass('show');
 
-	$('#buttons').removeClass('hide');
-	$('#buttons').addClass('show');
-	console.log("Candidate-response: "+localStorage.getItem('candidate-response'));
-	var generateReport_url = "http://13.126.161.84:8083/test-for-sure/test/get-test-result";
-	$.ajax({
-                url: generateReport_url,
-                type: "POST",
-                dataType: 'json',
-				data: localStorage.getItem('candidate-response'),
-				contentType: "application/json",
-                success: function (result) {
-					report = result;
-					console.log("Test Report: "+JSON.stringify(result));
-					$('#idUsername').text(result.username);
-					$('#idYourRank').text(result.rank);
-					$('#idTotalCandidate').text(result.total_candidate);
-					$('#idScore').text(result.marks_scored+" / "+result.total_marks);
-					$('#idQuesAttempted').text(result.ques_attempted+" / "+result.total_ques);
-					$('#idTime').text((result.time_taken).toFixed(2));
-					$('#idAccuracy').text(findAccuracy(result.correct_ques, result.ques_attempted)+"%");
-					$('#idPercentile').text(findPercentile(result.rank, result.total_candidate));
-					
-					$('#idCorrect').text(result.correct_ques+"Qs");
-					$('#idIncorrect').text(result.incorrect_ques+"Qs");
-					$('#idNotattempted').text((result.total_ques-result.ques_attempted)+"Qs");
-					
-					$('#idTopperScore').text(result.topperScore+"/"+report.total_marks);
-					$('#idTopperTime').text(result.topperTime+" mins");
-					$('#idAvgScore').text(result.avgScore+"/"+report.total_marks);
-					$('#idAvgTime').text(result.avgTime+" mins");
-					
-					$('#totalMarksInTable').append('['+report.total_marks+']');
-					var totalRecordsToDisplay;
-					var lengthTopPerformers = result.topPerformers.length;
-					if(lengthTopPerformers>=10){
-						totalRecordsToDisplay = 10;
-					}
-					else if(lengthTopPerformers<10){
-						totalRecordsToDisplay = lengthTopPerformers
-					}
-					for(var i=0;i<totalRecordsToDisplay;i++){
-						var imageName='';
-						if(i==0){
-							//Rank-1
-							imageName = 'gold_rank1_new.png';
-						}
-						else if(i==1){
-							//Rank-2
-							imageName = 'silver_rank2_new.png'
-						}
-						else if(i==2){
-							//Rank-3
-							imageName = 'bronze_rank3_new.png'
-						}
-						$('#topPerformersTableBody').append(topPerformerStructure(result.topPerformers[i].rank, result.topPerformers[i].name, result.topPerformers[i].marks_scored, imageName));
-						if(i+1 == result.rank){
-							$('#rank-'+result.topPerformers[i].rank).addClass('font-bold');
-						}
-					}
-					if(result.rank>10){
-						imageName='';
-						var j = result.rank-1;
-						$('#topPerformersTableBody').append(topPerformerStructure(result.topPerformers[j].rank, result.topPerformers[j].name, result.topPerformers[j].marks_scored, ''));
-						$('#rank-'+result.topPerformers[j].rank).addClass('font-bold');
-					}
-					$('#topPerformers').append("<button type='button' id='downloadTopPerformers' class='btn btn-primary' onclick='downloadFullList();'>Download full list</button>");
-						
-					//div to be downloaded when clicked on Download topPerformers full list
-					for(var i=0;i<result.topPerformers.length;i++){
-						$('#topPerformersFullList').append(topPerformerFullStructure(result.topPerformers[i].rank, result.topPerformers[i].name, result.topPerformers[i].marks_scored));
-						if(i+1 == result.rank){
-							$('#rankFull-'+result.topPerformers[i].rank).addClass('font-bold');
-						}
-					}
-					questionSolutionStructure();
-					draw3DPieChart();
-					
-					//Code to draw the pie chart for time taken(for correct, incorrect and unattempted questions)
-					var correctTime = 0;
-					var incorrectTime = 0;
-					var unattemptedTime = 0;
-					for(var i=0;i<(result.question_details).length;i++){
-						if(result.question_details[i].marked_option == null){
-							unattemptedTime+=result.question_details[i].time_spent;
-						}
-						else if(result.question_details[i].correct_option == result.question_details[i].marked_option){
-							correctTime+=result.question_details[i].time_spent;
-						}
-						else if(result.question_details[i].correct_option != result.question_details[i].marked_option){
-							incorrectTime+=result.question_details[i].time_spent;
-						}
-					}
-					var totalTimeTaken = correctTime+incorrectTime+unattemptedTime;
-					$('#idCorrectTime').text(correctTime+"secs");
-					$('#idIncorrectTime').text(incorrectTime+"secs");
-					$('#idNotattemptedTime').text(unattemptedTime+"secs");
-					draw3DPieChartTime(correctTime, incorrectTime, unattemptedTime, totalTimeTaken);
-					
-					
-                },
-                error: function () {
-					console.log("Error in getting questions");
-                }
-            });
-})*/
 function topPerformerStructure(rank, name, score, imageName){
 	var structure = "<tr id='rank-"+rank+"'>"+
 					"<td class='col-md-2.5'>"+rank;
@@ -216,11 +95,10 @@ function topPerformerStructure(rank, name, score, imageName){
 					"<td class='col-md-7'>"+name+"</td>"+
 					"<td class='col-md-2.5'>"+score+"</td>";
 					
-	//var structure = "<div id='rank-"+rank+"'><span>Rank "+rank+"(  "+name+")  Score:"+score+"/"+report.total_marks+"</span></div></br>";
 	return structure;
 }
-function topPerformerFullStructure(rank, name, score, bold){
-	var structure = "<div id='rankFull-"+rank+"'><span>Rank "+rank+"(  "+name+")  Score:"+score+"/"+report.total_marks+"</span></div></br>";
+function topPerformerFullStructure(rank, name, score, totalMarks){
+	var structure = "<div id='rankFull-"+rank+"'><span>Rank "+rank+"(  "+name+")  Score:"+score+"/"+totalMarks+"</span></div></br>";
 	return structure;
 }
  
@@ -257,64 +135,61 @@ $('#btnAnalysis').on('click', function(){
 	$('#btnSolution').attr('disabled', false);
 })
 
-function questionSolutionStructure(){
+function questionSolutionStructure(questions){
 	var count = 1;
-	$.each(allQuestions, function(key, value){
-		var question = "<div><span class='ques-count'> Question "+count+"</span>&nbsp;&nbsp;<span class='ques-status' id='questionStatus-"+value.id+"'></span></br>";//<span class='time-spent' id='timeSpent-"+value.id+"'></span>
-		if(value.ques_type == "Paragraph"){
-			question += "<span class='para'>Paragraph: </span><span class='para-text'> "+(value.paragraph_text.replace('<p>','')).replace('</p>','')+"</span></br>";
+	$.each(questions, function(key, value){
+		var question = "<div><span class='ques-count'> Question "+count+"</span>&nbsp;&nbsp;<span class='ques-status' id='questionStatus-"+value.quesId+"'></span></br>";//<span class='time-spent' id='timeSpent-"+value.id+"'></span>
+		if(value.questionType == "Paragraph"){
+			question += "<span class='para'>Paragraph: </span><span class='para-text'> "+(value.paragraphText.replace('<p>','')).replace('</p>','')+"</span></br>";
 		}
-		question += "<div class='ques'><span>"+(value.ques_text.replace('<p>','')).replace('</p>','')+"</span></div>"+
-					"<div class='options' id='div-a-"+value.id+"'><span id='option-a-"+value.id+"'>a. "+(value.optionA.replace('<p>','')).replace('</p>','')+"</span></div>"+
-					"<div class='options' id='div-b-"+value.id+"'><span id='option-b-"+value.id+"'>b. "+(value.optionB.replace('<p>','')).replace('</p>','')+"</span></div>"+
-					"<div class='options' id='div-c-"+value.id+"'><span id='option-c-"+value.id+"'>c. "+(value.optionC.replace('<p>','')).replace('</p>','')+"</span></div>"+
-					"<div class='options' id='div-d-"+value.id+"'><span id='option-d-"+value.id+"'>d. "+(value.optionD.replace('<p>','')).replace('</p>','')+"</span></div>"+
-					"<div class='exp-btn'><button type='button' id='btnExplanation-"+value.id+"' class='btn' onclick='openExplanation(this.id);'>Show Explanation</button></div>"+
-					"<div id='explanation-"+value.id+"' class='hide explanation'>"+value.explanation+"</div></div>"+
+		question += "<div class='ques'><span>"+(value.questionText.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-a-"+value.quesId+"'><span id='option-a-"+value.quesId+"'>a. "+(value.optionA.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-b-"+value.quesId+"'><span id='option-b-"+value.quesId+"'>b. "+(value.optionB.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-c-"+value.quesId+"'><span id='option-c-"+value.quesId+"'>c. "+(value.optionC.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='options' id='div-d-"+value.quesId+"'><span id='option-d-"+value.quesId+"'>d. "+(value.optionD.replace('<p>','')).replace('</p>','')+"</span></div>"+
+					"<div class='exp-btn'><button type='button' id='btnExplanation-"+value.quesId+"' class='btn' onclick='openExplanation(this.id);'>Show Explanation</button></div>"+
+					"<div id='explanation-"+value.quesId+"' class='hide explanation'>"+value.explanation+"</div></div>"+
 					"<hr>";
 		$('#testSolution').append(question);
-		$.each(report.question_details, function(key1, value1){
-			if(value1.ques_id == value.id){
-				//option id of marked_option, if both marked and correct option is same-> then mark the correct/marked as green
-				//and question as correct
-				//else, mark the marked option as red and correct as green and ques as incorrect
-				//if marked_option is null, mark the correct as green and question as unattempted
-				var markedOptionId;
-				if(value1.marked_option != null){
-					markedOptionId = 'div-'+value1.marked_option+"-"+value.id;
-				}
-				var correctOptionId = 'div-'+value1.correct_option+"-"+value.id;
+		//option id of marked_option, if both marked and correct option is same-> then mark the correct/marked as green
+		//and question as correct
+		//else, mark the marked option as red and correct as green and ques as incorrect
+		//if marked_option is null, mark the correct as green and question as unattempted
+		var markedOptionId;
+		if(value.markedOption != null){
+			markedOptionId = 'div-'+value.markedOption+"-"+value.quesId;
+		}
+		var correctOptionId = 'div-'+value.correctOption+"-"+value.quesId;
 				
-				console.log("markedOptionId: "+markedOptionId);
-				console.log("correctOptionId: "+correctOptionId);
-				var idFormed = 'questionStatus-'+value.id;
-				console.log("idFormed: "+idFormed);
-				if(value1.marked_option == null){
-					console.log("Inside null");
-					$('#'+idFormed).text("You didn't attempt this question.");
-					$('#'+idFormed).css('color', 'orange');
-					console.log("correctOptionId: "+correctOptionId);
+		console.log("markedOptionId: "+markedOptionId);
+		console.log("correctOptionId: "+correctOptionId);
+		var idFormed = 'questionStatus-'+value.quesId;
+		console.log("idFormed: "+idFormed);
+		if(value.markedOption == null){
+			console.log("Inside null");
+			$('#'+idFormed).text("You didn't attempt this question.");
+			$('#'+idFormed).css('color', 'orange');
+			console.log("correctOptionId: "+correctOptionId);
 				
-					$('#'+correctOptionId).css('background-color', '#A4CC8C');
-				}
-				else if(value1.marked_option == value1.correct_option){
-					$('#'+idFormed).text("Correct answer !!");
-					$('#'+idFormed).css('color', 'green');
-					$('#'+correctOptionId).css('background-color', '#A4CC8C');
-				}
-				else if(value1.marked_option != value1.correct_option){
-					$('#'+idFormed).text("You got this Question wrong");
-					$('#'+idFormed).css('color', 'red');
-					$('#'+correctOptionId).css('background-color', '#A4CC8C');
-					$('#'+markedOptionId).css('background-color', '#EA8080');
-				}
-				var idTimeSpent = 'timeSpent-'+value.id;
-				$('#'+idTimeSpent).text(value1.time_spent+" secs");
-				return false;
-			}
-		})
-		count++;
-	})
+			$('#'+correctOptionId).css('background-color', '#A4CC8C');
+		}
+		else if(value.markedOption == value.correctOption){
+			$('#'+idFormed).text("Correct answer !!");
+			$('#'+idFormed).css('color', 'green');
+			$('#'+correctOptionId).css('background-color', '#A4CC8C');
+		}
+		else if(value.markedOption != value.correctOption){
+			$('#'+idFormed).text("You got this Question wrong");
+			$('#'+idFormed).css('color', 'red');
+			$('#'+correctOptionId).css('background-color', '#A4CC8C');
+			$('#'+markedOptionId).css('background-color', '#EA8080');
+		}
+		var idTimeSpent = 'timeSpent-'+value.quesId;
+		$('#'+idTimeSpent).text(value.timeSpent+" secs");
+			count++;
+		});
+		
+		
 }
 
 function openExplanation(id){
@@ -352,11 +227,11 @@ function findPercentile(rank, total_candidate){
 }
 
 
-function draw3DPieChart(){
-	
-	var correctAngle = ((report.correct_ques)*100)/report.total_ques;
-	var incorrectAngle = ((report.incorrect_ques)*100)/report.total_ques;
-	var unattemptedAngle = ((report.total_ques-report.ques_attempted)*100)/report.total_ques;
+function draw3DPieChart(correctQues, totalQues, incorrectQues, quesAttempted){
+	console.log("Inside drawing pie chart for questions");
+	var correctAngle = ((correctQues)*100)/totalQues;
+	var incorrectAngle = ((incorrectQues)*100)/totalQues;
+	var unattemptedAngle = ((totalQues-quesAttempted)*100)/totalQues;
 	var chart = {      
                type: 'pie',     
                options3d: {
@@ -445,28 +320,188 @@ function draw3DPieChartTime(correctTime, incorrectTime, unattemptedTime, totalTi
             json.series = series;   
             $('#timePieChart').highcharts(json);
          }
-
-
-
-$(document).ready(function () {
-	var testReport = localStorage.getItem('testReport');
-	report = JSON.parse(testReport);
-	console.log("Document view-report is ready: "+testReport);
-	$('#titleHead').append(localStorage.getItem('testTitle'));
-	
-	$('#idUsername').text(report.username);
-	$('#idYourRank').text(report.rank);
-	//$('#idTotalCandidate').text(result.total_candidate);
-	//$('#idScore').text(report.marks_scored+" / "+result.total_marks);
-	$('#idScore').text(report.marks_scored+" / ");
-	$('#idQuesAttempted').text(report.questions_attempted+" / "+report.total_ques);
-	$('#idTime').text((report.time_taken).toFixed(2));
-	$('#idAccuracy').text(findAccuracy(report.correct_ques, report.questions_attempted)+"%");
-	//$('#idPercentile').text(findPercentile(result.rank, result.total_candidate));
+function getReport(report_id, test_id){
+	var url = serviceIp+"/test-for-sure/view-report/get-report?report_id="+report_id+"&test_id="+test_id;
+	$.ajax({
+                url: url,
+                type: "GET",
+                dataType: 'json',
+				contentType: "application/json",
+                success: function (result) {
+					if(result.status == true){
+						$('#idUsername').text(result.details.username);
+						$('#idYourRank').text(result.details.rank);
+						$('#idTotalCandidate').text(result.details.totalCandidates);
+						$('#idScore').text(result.details.marksScored+" / "+result.details.totalMarks);
+						$('#idQuesAttempted').text(result.details.questionsAttempted+" / "+result.details.totalQuestions);
+						var time = (result.details.timeTaken).toFixed(2);
+						var hrs = 0;
+						var mins = 0;
+						var secs = 0;
+						if(time>=60){
+							hrs = time/60;
+							time = time%60;
+						}
+						var mins = ((time.toString()).split("."))[0];
+						var secs = parseFloat("0."+((time.toString()).split("."))[1])*60;
+						secs = Math.round(secs);
+						console.log("Time taken: "+hrs+" hours   "+mins+" mins   "+Math.round(secs)+" secs"); 
+						if(hrs>0){
+							$('#idHrs').text(hrs+"h "+mins+"m "+secs+"s");
+						}
+						else if(mins>0){
+							$('#idHrs').text(mins+"m "+secs+"s");
+						}
+						else if(secs>0){
+							$('#idHrs').text(secs+"s");
+						}
+						$('#idAccuracy').text(findAccuracy(result.details.correctQues, result.details.questionsAttempted)+"%");
+						$('#idPercentile').text(findPercentile(result.details.rank, result.details.totalCandidates));
 					
-	$('#idCorrect').text(report.correct_ques+"Qs");
-	$('#idIncorrect').text(report.incorrect_ques+"Qs");
-	$('#idNotattempted').text((report.total_ques-report.questions_attempted)+"Qs");
+						$('#idCorrect').text(result.details.correctQues+"Qs");
+						$('#idIncorrect').text(result.details.incorrectQues+"Qs");
+						$('#idNotattempted').text((result.details.totalQuestions-result.details.questionsAttempted)+"Qs");
+						
+						$('#idTopperScore').text(result.details.toppersScore+"/"+result.details.totalMarks);
+						var timeTop = (result.details.toppersTime).toFixed(2);
+						var hrsTop = 0;
+						var minsTop = 0;
+						var secsTop = 0;
+						if(timeTop>=60){
+							hrsTop = timeTop/60;
+							timeTop = timeTop%60;
+						}
+						var minsTop = ((timeTop.toString()).split("."))[0];
+						var secsTop = parseFloat("0."+((timeTop.toString()).split("."))[1])*60;
+						console.log("Time taken: "+hrsTop+" hours   "+minsTop+" mins   "+Math.round(secsTop)+" secs"); 
+						secsTop = Math.round(secsTop);
+						if(hrsTop>0){
+							$('#idTopperTime').text(hrsTop+"h "+minsTop+"m "+secsTop+"s");
+						}
+						else if(minsTop>0){
+							$('#idTopperTime').text(minsTop+"m "+secsTop+"s");
+						}
+						else if(secsTop>0){
+							$('#idTopperTime').text(secsTop+"s");
+						}
+						$('#idAvgScore').text(result.details.avgScore+"/"+result.details.totalMarks);
+						
+						var timeAvg = (result.details.avgTime).toFixed(2);
+						var hrsAvg = 0;
+						var minsAvg = 0;
+						var secsAvg = 0;
+						if(timeAvg>=60){
+							hrsAvg = timeAvg/60;
+							timeAvg = timeAvg%60;
+						}	
+						var minsAvg = ((timeAvg.toString()).split("."))[0];
+						var secsAvg = parseFloat("0."+((timeAvg.toString()).split("."))[1])*60;
+						console.log("Time taken: "+hrsAvg+" hours   "+minsAvg+" mins   "+Math.round(secsAvg)+" secs"); 
+						secsAvg = Math.round(secsAvg);
+						if(hrsAvg>0){
+							$('#idAvgTime').text(hrsAvg+"h "+minsAvg+"m "+secsAvg+"s");
+						}
+						else if(minsAvg>0){
+							$('#idAvgTime').text(minsAvg+"m "+secsAvg+"s");
+						}
+						else if(secsAvg>0){
+							$('#idAvgTime').text(secsAvg+"s");
+						}
+						
+					$('#totalMarksInTable').append('['+result.details.totalMarks+']');
+					var totalRecordsToDisplay;
+					var lengthTopPerformers = result.topPerformers.length;
+					if(lengthTopPerformers>=10){
+						totalRecordsToDisplay = 10;
+					}
+					else if(lengthTopPerformers<10){
+						totalRecordsToDisplay = lengthTopPerformers
+					}
+					for(var i=0;i<totalRecordsToDisplay;i++){
+						var imageName='';
+						if(i==0){
+							//Rank-1
+							imageName = 'gold_rank1_new.png';
+						}
+						else if(i==1){
+							//Rank-2
+							imageName = 'silver_rank2_new.png'
+						}
+						else if(i==2){
+							//Rank-3
+							imageName = 'bronze_rank3_new.png'
+						}
+						$('#topPerformersTableBody').append(topPerformerStructure(result.topPerformers[i].rank, result.topPerformers[i].name, result.topPerformers[i].marks_scored, imageName));
+						if(i+1 == result.details.rank){
+							$('#rank-'+result.topPerformers[i].rank).addClass('font-bold');
+						}
+					}
+					if(result.details.rank>10){
+						imageName='';
+						var j = result.details.rank-1;
+						$('#topPerformersTableBody').append(topPerformerStructure(result.topPerformers[j].rank, result.topPerformers[j].name, result.topPerformers[j].marks_scored, ''));
+						$('#rank-'+result.topPerformers[j].rank).addClass('font-bold');
+					}
+					$('#topPerformers').append("<button type='button' id='downloadTopPerformers' class='btn btn-primary' onclick='downloadFullList();'>Download full list</button>");
+						
+					//div to be downloaded when clicked on Download topPerformers full list
+					for(var i=0;i<result.topPerformers.length;i++){
+						$('#topPerformersFullList').append(topPerformerFullStructure(result.topPerformers[i].rank, result.topPerformers[i].name, result.topPerformers[i].marks_scored, result.details.totalMarks));
+						if(i+1 == result.details.rank){
+							$('#rankFull-'+result.topPerformers[i].rank).addClass('font-bold');
+						}
+					}
+					questionSolutionStructure(result.questions);
+					draw3DPieChart(result.details.correctQues,result.details.totalQuestions, result.details.incorrectQues, result.details.questionsAttempted);
+					
+					//Code to draw the pie chart for time taken(for correct, incorrect and unattempted questions)
+					var correctTime = 0;
+					var incorrectTime = 0;
+					var unattemptedTime = 0;
+					for(var i=0;i<(result.questions).length;i++){
+						if(result.questions[i].markedOption == null){
+							unattemptedTime+=result.questions[i].timeSpent;
+						}
+						else if(result.questions[i].correctOption == result.questions[i].markedOption){
+							correctTime+=result.questions[i].timeSpent;
+						}
+						else if(result.questions[i].correctOption != result.questions[i].markedOption){
+							incorrectTime+=result.questions[i].timeSpent;
+						}
+					}
+					var totalTimeTaken = correctTime+incorrectTime+unattemptedTime;
+					$('#idCorrectTime').text(correctTime+"secs");
+					$('#idIncorrectTime').text(incorrectTime+"secs");
+					$('#idNotattemptedTime').text(unattemptedTime+"secs");
+					draw3DPieChartTime(correctTime, incorrectTime, unattemptedTime, totalTimeTaken);
+					
+						
+					}
+					else{
+						console.log("Error in viewing report");
+					}
+					
+					
+                },
+                error: function () {
+					console.log("Error in getting questions");
+                }
+            });
+}
+
+function getQueryParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+$(document).ready(function () {
+	var report_id = getQueryParameterByName('report_id');
+	var test_id = getQueryParameterByName('test_id');
+	getReport(report_id, test_id);
 	
 })
 

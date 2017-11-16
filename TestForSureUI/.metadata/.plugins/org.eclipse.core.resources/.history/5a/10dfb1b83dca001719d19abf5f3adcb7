@@ -1,0 +1,9 @@
+package edu.tests.TestForSure.sql;
+
+public class ViewReportQueries {
+
+	public static String getQuestions(int report_id, int test_id) {
+		String getTestDetails = "SELECT * from testquestionreport t INNER JOIN questions q WHERE t.test_report_id='"+report_id+"' and q.test_id='"+ test_id+"' and t.ques_id=q.id";
+		return getTestDetails;
+	}
+}

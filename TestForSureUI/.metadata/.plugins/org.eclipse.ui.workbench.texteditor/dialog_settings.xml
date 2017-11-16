@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="addNewSubjectCategory" key="selection"/>
+		<item value="getTopPerformers" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="getTopPerformers"/>
+			<item value="topper"/>
+			<item value="top"/>
+			<item value="get-test-result"/>
+			<item value="publish"/>
 			<item value="addNewSubjectCategory"/>
 			<item value="addnewSubjectCategory"/>
 			<item value="topperTime"/>
-			<item value="resultResponse"/>
-			<item value="time_ta"/>
-			<item value="insertNews"/>
-			<item value="avgs"/>
-			<item value="topper"/>
 		</list>
 		<list key="replacehistory">
 		</list>

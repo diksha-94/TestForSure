@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TestDetails"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetSingleTestDetailsResponse"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserDetails"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestDAO"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.QuestionBankDAO"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AddQuestionsFromBankRequest"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateQuestionBankQueries"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.RegisterUserRequest"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
@@ -15,7 +8,6 @@
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.service.PasswordEncryption"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TopPerformers"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="org.springframework.mail.javamail.JavaMailSender"/>
@@ -31,7 +23,6 @@
 <fullyQualifiedTypeName name="java.util.Properties"/>
 <fullyQualifiedTypeName name="javax.mail.Authenticator"/>
 <fullyQualifiedTypeName name="javax.mail.PasswordAuthentication"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.service.GeneralFunctionality"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.AuthenticateUserRequest"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.UserDAO"/>
 <fullyQualifiedTypeName name="java.io.File"/>
@@ -52,12 +43,21 @@
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.NewsAndNotifications"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 <fullyQualifiedTypeName name="java.math.BigInteger"/>
-<fullyQualifiedTypeName name="java.math.MathContext"/>
-<fullyQualifiedTypeName name="java.math.BigDecimal"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="javax.print.attribute.standard.DateTimeAtCompleted"/>
-<fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.sql.Timestamp"/>
-<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 <fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.ViewReportQueries"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.ViewReportResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.ViewReportDAO"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.TestDAO"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.ViewReportQuestions"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.TopPerformers"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.ViewReportDetails"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.service.GeneralFunctionality"/>
+<fullyQualifiedTypeName name="java.math.RoundingMode"/>
+<fullyQualifiedTypeName name="java.math.MathContext"/>
+<fullyQualifiedTypeName name="java.math.BigDecimal"/>
 </qualifiedTypeNameHistroy>

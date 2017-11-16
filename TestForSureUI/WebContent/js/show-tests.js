@@ -37,7 +37,7 @@ function showTests(categoryId, subCatId){
 												"<span class='glyphicon glyphicon-ok-sign'></span><label class='clear-both test-size'>&nbsp;Correct Question Marks: </label><span class='test-size'>"+test.correct_ques_marks+"</span>"+
 												"</br><span class='glyphicon glyphicon-minus-sign'></span><label class='clear-both test-size'>&nbsp;Negative marks: </label><span class='test-size'>"+test.negative_marks+"</span>"+
 												"</div>"+
-												"<div class='col-md-2 float-left margin-top-40'><a href='start-test-option.html?"+query_string+"' id="+btnId+" class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
+												"<div class='col-md-2 float-left margin-top-40'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
 												"</div>";
 												"</div>";
 								$('#tests').append(newTest);
@@ -55,6 +55,46 @@ function showTests(categoryId, subCatId){
             });
 }
 
+//Check if the test is already attempted or not
+function checkAlreadyAttempted(id){
+	console.log("Take test id: "+id);
+	var query_string = 'test_id='+id;
+	var test_id = ((id).split('-'))[1];
+	
+	var loggedIn = localStorage.getItem("loggedIn");
+	if(loggedIn){
+		var emailid = localStorage.getItem('email');
+		console.log("Email id: "+emailid);
+		var type='GET';
+		var url =serviceIp+'/test-for-sure/test/test-already-attempted?test_id='+test_id+'&email_id='+emailid;
+		$.ajax({
+            url: url,
+            type: type,
+			contentType: 'application/json',
+			//dataType: 'json',
+            success: function (result) {
+                if (result.status) {
+					//Status true means user is authenticated successfully.
+					console.log("Result: "+JSON.stringify(result));
+					window.location.href = "start-test-already-attempted.html?test_id="+id;
+			    }
+                else if (!result.status) {
+					console.log("Result: "+JSON.stringify(result));
+					window.location.href="start-test-option.html?"+query_string;
+                }
+                
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+		});
+	}
+	else{
+		//User not logged in
+		window.location.href="start-test-option.html?"+query_string;
+	}
+}
 $('#linkLogout').on('click', function(){
 	localStorage.clear();
 	window.location.href = 'home.html';

@@ -1,0 +1,9 @@
+package edu.tests.TestForSure.response;
+
+import java.util.ArrayList;
+
+import edu.tests.TestForSure.entity.ViewReportQuestions;
+
+public class ViewReportResponse {
+	private ArrayList<ViewReportQuestions> questions;
+}

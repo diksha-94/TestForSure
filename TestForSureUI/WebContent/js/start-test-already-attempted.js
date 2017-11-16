@@ -60,19 +60,22 @@ $(document).ready(function () {
 
 function buttonStructure(id, index)
 {
-	var buttonStructure = "<button style='margin-top:10px;' type='submit' id='btnViewReport-"+id+"' class='btn btn-primary' onclick='generateReport(id);'>View Report (Attempt - "+index+")</button></br>";
+	var testId = (test_id.split("-"))[1];
+	var buttonStructure = "<button style='margin-top:10px;' type='submit' id='btnViewReport-"+id+"-"+testId+"' class='btn btn-primary' onclick='generateReport(id);'>View Report (Attempt - "+index+")</button></br>";
 	$('#btnsViewReport').append(buttonStructure);
 }
 
 function generateReport(id){
 	
-	for(var i=0;i<testReports.length;i++){
+	/* for(var i=0;i<testReports.length;i++){
 		console.log("Inside for");
 		if(testReports[i].id == (id.split('-'))[1]){
 			localStorage.setItem('testReport', JSON.stringify(testReports[i]));
 		}
-	}
-	window.location.href = 'view-report.html';
+	} */
+	var report_id = (id.split("-"))[1];
+	var currentTestId = (id.split("-"))[2];
+	window.location.href = 'view-report.html?report_id='+report_id+'&test_id='+currentTestId;
 }
 function getQueryParameterByName(name, url) {
     if (!url) url = window.location.href;
