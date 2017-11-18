@@ -1,6 +1,7 @@
 var testDetailsObject;
 var allQuestions=[];
 var no_of_ques;
+var shuffle_ques;
 var candidateResponse={};
 candidateResponse.userDetails={};
 candidateResponse.testDetails={};
@@ -29,6 +30,7 @@ $('#btnProceed').on('click', function(){
                 dataType: 'json',
                 success: function (result) {
 					if(result.status){
+						shuffle_ques = result.testDetails.shuffleQuestions;
 						$('#categoryDisplay').text(result.category+" - "+result.subcategory);
 						var questionNumber = "";
 						console.log(result.testDetails.no_of_ques);
@@ -101,18 +103,10 @@ $('#btnProceed').on('click', function(){
 							$('#remainingTime').css('width',percentage_remaining+"%");
 						}, 1000);
 						
-					}
-					else if(!result.status){
-						console.log("Error: "+result.message);
-					}
-                },
-                error: function () {
-					console.log("Error in getting questions");
-                }
-            });
-			
-			var ques_id;
-	var getQuestions_url = serviceIp+"/test-for-sure/test/get-questions?test_id="+testId;
+						
+						//Get questions after successfully getting test details
+								var ques_id;
+	var getQuestions_url = serviceIp+"/test-for-sure/test/get-questions?test_id="+testId+"&shuffle="+shuffle_ques;
 	$.ajax({
                 url: getQuestions_url,
                 type: "GET",
@@ -170,6 +164,17 @@ $('#btnProceed').on('click', function(){
 					console.log("Error in getting questions");
                 }
             });
+					}
+					else if(!result.status){
+						console.log("Error: "+result.message);
+					}
+                },
+                error: function () {
+					console.log("Error in getting questions");
+                }
+            });
+			
+	
 			
 			//get the time spent on first question, initially it will be first question, when the test starts
 			//var ques_id = allQuestions[1-1].id;

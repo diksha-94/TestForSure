@@ -63,6 +63,7 @@ $('#testDetailsForm').validate({
         var time = $("#txtTime").val();
 		var marks = $("#txtMarks").val();
         var negativeMarks = $("#txtNegativeMarks").val();
+        var shuffleQues = $("#chkShuffleQues").prop('checked');
 		
         var testDetailsSave_url = serviceIp+"/test-for-sure/test/add-update-test";
         var type = 'POST';
@@ -75,6 +76,7 @@ $('#testDetailsForm').validate({
 		requestData.time_limit=time;
 		requestData.correct_ques_marks=marks;
 		requestData.negative_marks=negativeMarks;
+		requestData.shuffleQuestions = shuffleQues;
 		console.log(JSON.stringify(requestData));
 		
         $.ajax({
@@ -266,7 +268,7 @@ $('#addQuesForm').validate({
 
 function getQuestionsOnTestId(test_id){
 	console.log('Test_id: '+test_id);
-	var url = serviceIp+"/test-for-sure/test/get-questions?test_id="+test_id;
+	var url = serviceIp+"/test-for-sure/test/get-questions?test_id="+test_id+"&shuffle=true";
 	$.ajax({
                 url: url,
                 type: "GET",
