@@ -542,6 +542,11 @@ function backToTestDetails(testId){
 					$('#txtTime').val(response.testDetails.time_limit);
 					$('#txtMarks').val(response.testDetails.correct_ques_marks);
 					$('#txtNegativeMarks').val(response.testDetails.negative_marks);
+					var shuffleValue = response.testDetails.shuffleQuestions;
+					console.log("shuffleValue: "+shuffleValue);
+					if(shuffleValue == "true"){
+						$('#chkShuffleQues').prop('checked', true);
+					}
                 }
                 else if (!response.status) {
                     console.log("Error in getting test details with test id: "+localStorage.getItem('test_id')+"    Message: "+response.message);
