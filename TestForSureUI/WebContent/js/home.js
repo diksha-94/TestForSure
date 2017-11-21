@@ -51,7 +51,7 @@ function showTests(categoryId, subCatId){
 												"<span class='glyphicon glyphicon-ok-sign'></span><label  class='clear-both test-size'>&nbsp;Correct Ques Marks: </label><span class='test-size'>"+(result.testDetails)[i].correct_ques_marks+"</span>"+
 												"</br><span class='glyphicon glyphicon-minus-sign'></span><label  class='clear-both test-size'>&nbsp;Negative marks: </label><span class='test-size'>"+(result.testDetails)[i].negative_marks+"</span>"+
 												"</div>"+
-												"<div class='col-md-2 float-left margin-top-40'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
+												"<div class='col-md-2 col-xs-10 col-xs-offset-1 col-md-offset-0 float-left margin-top-40'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
 												//href='start-test-option.html?"+query_string+"'
 												"</div>";
 								$('#all_tests').append(newTest);

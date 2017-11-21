@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Date" key="selection"/>
+		<item value="getNewsByStatus" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="date"/>
-			<item value="getTopPerformers"/>
-			<item value="topper"/>
-			<item value="top"/>
-			<item value="get-test-result"/>
-			<item value="publish"/>
-			<item value="addNewSubjectCategory"/>
-			<item value="addnewSubjectCategory"/>
+			<item value="getNewsByStatus"/>
+			<item value="get-news-bySatatus"/>
+			<item value="timestamp"/>
+			<item value="getTestReport"/>
+			<item value="sql"/>
+			<item value="checkAlreadyAttempted"/>
+			<item value="testreports"/>
+			<item value="getQuestionsQueryBuilder"/>
 		</list>
 		<list key="replacehistory">
 		</list>
@@ -23,8 +23,8 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="380" key="DIALOG_HEIGHT"/>
-		<item value="1269" key="DIALOG_X_ORIGIN"/>
-		<item value="392" key="DIALOG_Y_ORIGIN"/>
+		<item value="413" key="DIALOG_HEIGHT"/>
+		<item value="1247" key="DIALOG_X_ORIGIN"/>
+		<item value="387" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

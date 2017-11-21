@@ -18,7 +18,7 @@ $(document).ready(function () {
 					if(result.status){
 						console.log(JSON.stringify(result));
 						for(var i = 0;i<(result.testReports).length;i++){
-							buttonStructure((result.testReports)[i].id, i+1);
+							buttonStructure((result.testReports)[i].id, i+1, (result.testReports)[i].last_updated_on);
 						}
 						testReports = result.testReports;
 					}
@@ -58,10 +58,10 @@ $(document).ready(function () {
 	
 })
 
-function buttonStructure(id, index)
+function buttonStructure(id, index, last_updated_on)
 {
 	var testId = (test_id.split("-"))[1];
-	var buttonStructure = "<button style='margin-top:10px;' type='submit' id='btnViewReport-"+id+"-"+testId+"' class='btn btn-primary' onclick='generateReport(id);'>View Report (Attempt - "+index+")</button></br>";
+	var buttonStructure = "<button style='margin-top:10px;' type='submit' id='btnViewReport-"+id+"-"+testId+"' class='btn btn-primary' onclick='generateReport(id);'>View Report (Attempted on "+last_updated_on+")</button></br>";
 	$('#btnsViewReport').append(buttonStructure);
 }
 

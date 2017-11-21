@@ -244,7 +244,7 @@ function questionStructure(paraText, quesText, optionA, optionB, optionC, option
 	var question = "";
 	question+="<span class='question-num'>Question "+localStorage.getItem('questionCount')+".</span></br>"
 	if(paraText != ""){
-		question += "<span class='paragraph-text'>"+(paraText.replace('<p>','')).replace('</p>','')+"</span></br>";
+		question += "<span class='paragraph-text'>"+(paraText.replace('<p>','')).replace('</p>','')+"</span></br></br>";
 	}
 	question += "<span class='question-text'>"+(quesText.replace('<p>','')).replace('</p>','')+"</span></br>";
 	var optionsRadioButton = "<div class='funkyradio'>"+

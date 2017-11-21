@@ -41,7 +41,7 @@ function questionStructure(id, question_text, btnId){
 	var onclickDiv = "openViewQuestion('"+btnId+"')";
 	var newQuestion = "<div style='border:solid 1px red ; width:80% ; text-align:center ; clear:both;'>"+
 							"<div style='float:left;width:10%;'>"+id+"</div>"+
-							"<div id='"+btnId+"' style='float:left;width:70%;cursor:pointer;' onclick="+onclickDiv+">"+(question_text).substring(0,200)+" ...</div>"+
+							"<div id='"+btnId+"' style='float:left;width:70%;cursor:pointer;' onclick="+onclickDiv+">"+(question_text).substring(0,500)+" ...</div>"+
 							"<div style='float:left;width:20%;'><a id='"+btnId+"' href='"+onclick+"' class='btn btn-default' >Edit</a></div>"+
 			   		  "</div>";
 					  
@@ -60,6 +60,7 @@ function openViewQuestion(id){
 				$('#txtShowCategory').text(question.category_name);
 				$('#txtShowSubcategory').text(question.subcategory_name);
 				$('#txtShowType').text(question.question_type);
+				
 				$('#txtShowPara').text(question.paragraph_text);
 				$('#txtShowQues').text(question.question_text);
 				$('#txtShowOptionA').text(question.optionA);

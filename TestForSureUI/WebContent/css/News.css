@@ -44,6 +44,10 @@ img{
 	 background-color:#F0F0F0;
 	 border-radius:2%;
 }
+.news-info{
+	margin-bottom:20px;
+	font-weight:bold;
+}
 .news-headline{
 	font-size:25px;
 	font-weight:bold;

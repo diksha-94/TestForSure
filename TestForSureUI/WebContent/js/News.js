@@ -15,7 +15,7 @@ function getExistingNews(){
 					console.log("Got News successfully: "+JSON.stringify(result));
 					
 					for(var i=0;i<(result.news).length;i++){
-						var news = newsStructure((result.news)[i].id, (result.news)[i].headline, (result.news)[i].detail);
+						var news = newsStructure((result.news)[i].id, (result.news)[i].headline, (result.news)[i].detail, (result.news)[i].last_updated_on);
 						$('#news').append(news);
 					}
 				}
@@ -31,7 +31,7 @@ function getExistingNews(){
         });
 }
 
-function newsStructure(id, headline, detail){
+function newsStructure(id, headline, detail, last_updated_on){
 	var data = detail;
 	console.log("HTML data: "+data);
 	//console.log("Text data: "+data.text());
@@ -49,7 +49,8 @@ function newsStructure(id, headline, detail){
 	}
 	var structure = "<div class='ind-news-div'><span style='display:inline-block;' class='glyphicon glyphicon-menu-right'></span>"
 					+"<a style='display:inline-block;' target='_blank' id='news-"+id+"' href='news-detail.html?id="+id+"' target='_blank'><span class='news-headline'>"+headline+"</span></a></br>"
-					+"<span class='news-detail'>"+data.substring(0,len)+"...<a href='news-detail.html?id="+id+"' target='_blank'>Read More</a></span></div>";
+					+"<span class='news-detail'>"+data.substring(0,len)+"...<a href='news-detail.html?id="+id+"' target='_blank'>Read More</a></span></br></br></br>"
+					+"<div class='news-info'><span class='col-md-4'>Posted on "+last_updated_on+"</span></div></div>";
 	return structure;
 }
 
