@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getNewsByStatus" key="selection"/>
+		<item value="sendEmail" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="sendEmail"/>
 			<item value="getNewsByStatus"/>
 			<item value="get-news-bySatatus"/>
 			<item value="timestamp"/>
@@ -15,7 +16,6 @@
 			<item value="sql"/>
 			<item value="checkAlreadyAttempted"/>
 			<item value="testreports"/>
-			<item value="getQuestionsQueryBuilder"/>
 		</list>
 		<list key="replacehistory">
 		</list>

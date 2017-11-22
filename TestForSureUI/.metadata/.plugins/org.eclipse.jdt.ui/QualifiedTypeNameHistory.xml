@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.sql.SQLException"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.RegisterUserRequest"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.User"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.UserCreds"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
@@ -39,7 +36,6 @@
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.response.GetNewsResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.NewsDAO"/>
-<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.entity.NewsAndNotifications"/>
 <fullyQualifiedTypeName name="java.math.BigInteger"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -60,4 +56,8 @@
 <fullyQualifiedTypeName name="java.math.BigDecimal"/>
 <fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateTestQueries"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.sql.CreateContactUsQueries"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.response.CommonResponse"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.datalayer.ContactUsDAO"/>
+<fullyQualifiedTypeName name="edu.tests.TestForSure.entity.ContactUs"/>
 </qualifiedTypeNameHistroy>
