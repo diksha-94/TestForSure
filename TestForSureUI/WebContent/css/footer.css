@@ -39,6 +39,11 @@ ul > li > a{
 }
 ul > li > a:hover{
 	color:white;
+	text-decoration:none;
+}
+ul > li > a:visited{
+	color:white;
+	text-decoration:none;
 }
 .website-links{
 	clear:both;
@@ -46,7 +51,11 @@ ul > li > a:hover{
 	margin-left:10%;
 	text-align:center;
 }
-
+.website-links ul li{
+	
+	margin-left:12px;
+	
+}
 .test-link{
 	clear:both;
 	padding-top:1%;
@@ -59,8 +68,8 @@ ul > li > a> h2{
 }
 .logo-image-footer{
 	height:50px;
-	width:200px;
+	width:50%;
 	float:left;
-	margin-left:150px;
+	margin-left:25%;
 	margin-top:50px;
 }

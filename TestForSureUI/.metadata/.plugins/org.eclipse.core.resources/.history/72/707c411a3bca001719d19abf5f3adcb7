@@ -1,6 +1,0 @@
-package edu.tests.TestForSure.response;
-
-import java.util.ArrayList;
-public class ViewReportResponse {
-	private ArrayList<ViewReportQuestions> questions;
-}

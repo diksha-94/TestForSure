@@ -171,6 +171,19 @@ $('#linkToLogin').on('click', function(){
 //Forgot Password
 $('#linkForgot').on('click', function(){
 	$('#loginModal').modal('toggle');
+	$('#errorOuterForgot').removeClass("show");
+	$('#errorOuterForgot').addClass("hide");
+					
+	$('#successOuter').removeClass("show");
+	$('#successOuter').addClass("hide");
+					
+	$('#forgotPassForm').removeClass('hide');
+	$('#forgotPassForm').addClass('show');
+					
+	$('.footer-forgot').removeClass('show');
+	$('.footer-forgot').addClass('hide');
+	$('#txtForgotEmail').val('');
+	
 	$('#forgotPassModal').modal('show');
 })
 

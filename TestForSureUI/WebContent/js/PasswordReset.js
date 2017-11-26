@@ -43,12 +43,8 @@ $('#resetPassword').validate({
             success: function (result) {
                 if (result.status) {
 					console.log(result.message);
-					$('#updatePasswordError').removeClass("hide");
-					$('#updatePasswordError').addClass("show");
-					
-					$('#updatePasswordError').addClass("alert-success");
-					$('#updatePasswordError').removeClass("alert-danger");
-					$('#updatePassErrorMessage').html(result.message);
+					window.location.href = "home.html";
+					alert("Password changed successfully !!");
 					
 					$('#txtPasswordReg').val('');
 					$('#txtConfirmPassword').val('');
