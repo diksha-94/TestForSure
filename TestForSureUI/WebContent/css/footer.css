@@ -1,6 +1,6 @@
 .footer{
 	background-color:#2E6DA4;
-	height:280px;
+	height:320px;
 	/* max-height:600px; */
 	width:100%;
 	margin-top:15%;
@@ -8,11 +8,12 @@
 	color:white;
 }
 .social-media-links{
-	border:solid 2px white;
-	border-radius:10px;
-	padding:7px;
+	background-color:#6C98BF;
+	
+	border-radius:50%;
+	padding:12px;
 	float:left;
-	width:120px;
+	width:40px;
 	max-height:240px;
 	height:40px;
 	margin-left:5%;
@@ -20,7 +21,7 @@
 }
 .social-media{
 	padding-top:3%;
-	margin-left:5%;
+	margin-left:37%;
 	text-align:center;
 }
 .social-media-links a{
@@ -29,8 +30,9 @@
 }
 .list-inline{
 	list-style:none;
-	float:left;
+	clear:both;
 }
+
 ul > li > a{
 	color:white;
 	font-weight:bold;
@@ -47,8 +49,8 @@ ul > li > a:visited{
 }
 .website-links{
 	clear:both;
-	padding-top:3%;
-	margin-left:10%;
+	padding-top:5%;
+	
 	text-align:center;
 }
 .website-links ul li{
@@ -68,8 +70,58 @@ ul > li > a> h2{
 }
 .logo-image-footer{
 	height:50px;
+	width:30%;
+	float:left;
+	margin-left:15%;
+	margin-top:50px;
+}
+.about-us-footer{
+	clear:both;
+	margin-top:120px;
+	margin-left:15%;
+}
+.footer-right{
+	margin-top:40px;
+	width:40%;
+	float:left;
+}
+.footer-right h3{
+	margin-left:40%;
+	font-weight:bold;
+	
+}
+.footer-left{
+	width:60%;
+	float:left;
+	min-width:200px;
+}
+@media only screen and (max-width: 768px) {
+
+.footer{
+	height:720px;
+	/* max-height:600px; */
+}
+.logo-image-footer{
+	height:60px;
 	width:50%;
 	float:left;
-	margin-left:25%;
+	margin-left:15%;
 	margin-top:50px;
+}
+.about-us-footer{
+	clear:both;
+	margin-top:120px;
+	margin-left:15%;
+	margin-right:15%;
+}
+.footer-left{
+	width:100%;
+}
+.footer-right{
+	width:100%;
+}
+.footer-right h3{
+	margin-left:40%;
+	font-weight:bold;
+}
 }

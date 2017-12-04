@@ -8,56 +8,72 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 	</head>
 	<body>
-		<header>
-			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="home.html"><img src='../img/Logopit_1508700310499.jpg' style='height:50px; width:200px;'alt='TEST-2B-SURE'/></a>
-					</div>
-					<ul class="nav navbar-nav">
-						<li style='margin-left:100px;border-right:solid 1px #286090;border-left:solid 1px #286090;'><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
-						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
-						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
-						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="about-us.html"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
-						<li style='margin-left:0px;border-right:solid 1px #286090;'><a href="contact-us.html"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
-						<li id='menuLogin' style='margin-left:400px;'><button type='button' id='linkLogin' style='background-color:white;color:#2E6DA4;border-radius:10px;height:40px;margin-top:5px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
-						
-						<!--<li id='menuLogin' style='margin-left:300px;border:solid 2px white;background-color:white;color:#2E6DA4;border-radius:10px;height:30px;margin-top:10px;'><a href="#" id="linkLogin" style='color:#2E6DA4;padding:5px 15px 5px 10px;'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</a></li>-->
-						<li id='userProfile' style='margin-left:400px;' onmouseover='openSubMenu();' onmouseout='closeSubMenu();'><a href="#">Hi<span id='loggedInUSer'></span>&nbsp;&nbsp;<span class='glyphicon glyphicon-chevron-down'></span></a>
-							<ul class="nav navbar-nav" style='display:none;' id='subMenu'>
-								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='profile'><a href="#">Profile</a></li>
-								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='changePassword'><a href="#">Change Password</a></li>
-								<li style='clear:both;width:100%;text-align:center;border-bottom:solid 1px #286090;' id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+		<div class='menu-position'>
+			<header>
+				<nav class="navbar navbar-inverse nav-background" style='border-color:#286090;'>
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>                        
+							</button>
+							<a class="navbar-brand" href="home.html"><img src='../img/Logopit_1508700310499.jpg' style='height:50px; width:200px;'alt='TEST-2B-SURE'/></a>
+						</div>
+						<div class="collapse navbar-collapse" id="myNavbar">
+							<ul class="nav navbar-nav">
+								<li class="highlight home-in-menu"><a href="home.html"><span class='test-color glyphicon glyphicon-home'></span>&nbsp;Home</a></li>
+								<li class='menuItems'><a href="show-tests.html"><span class='test-color glyphicon glyphicon-edit'></span>&nbsp;Take Test</a></li>
+								<li class='menuItems'><a href="News.html"><span class='test-color glyphicon glyphicon-bullhorn'></span>&nbsp;News & Notifications</a></li>
+								<li class='menuItems'><a href="about-us.html"><span class='test-color glyphicon glyphicon-info-sign'></span>&nbsp;About Us</a></li>
+								<li class='menuItems'><a href="contact-us.html"><span class='test-color glyphicon glyphicon-earphone'></span>&nbsp;Contact Us</a></li>
 							</ul>
-						</li>
-						<!--<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>-->
-					</ul>
-				</div>
-			</nav>
-		</header>
-		
-		<div class='width-100'>
-			<div class='width-45 float-left margin' id='takeTestAgain'>
-				<h3 style='color:red;'>You have already attempted this test. Take Test again <h3>
-				<div style='height:80px;'>
-					<span id='hand-down' class='glyphicon glyphicon-hand-down'></span></br></br>
-				</div>
-				<button type="submit" id='btnTakeTestAgain' class='btn btn-success'>Take Test again</button>
+							<ul class="nav navbar-nav navbar-right">
+								<li id='menuLogin'><button type='button' id='linkLogin'><span class='test-color glyphicon glyphicon-user'></span>&nbsp;Login/Register</button></li>
+								<li id='userProfile' onclick='openSubMenu();'><a href="#">Hi<span id='loggedInUSer'></span>&nbsp;&nbsp;<span class='glyphicon glyphicon-chevron-down'></span></a>
+									<ul class="nav navbar-nav" id='subMenu'>
+										<li id='profile'><a href="#">Profile</a></li>
+										<li id='changePassword'><a href="#">Change Password</a></li>
+										<li id='menuLogout'><a href="#" id='linkLogout'>Logout</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</header>
+		</div>
+		<div class='down-info-box'>
+			<div class='info-box'>
+				<h4>Resolution best suited for Desktop version. Please allow pop-up of your browser.</h4>
 			</div>
-			<div class='width-10 float-left margin-or'>
-				<img src="../img/OR.jpg"/>
-			</div>
-			<div class='width-45 float-left margin' id='viewReport'>
-				<h3 style='color:red;'>View test reports<h3>
-				<div style='height:80px;'>
-					<span id='hand-down' class='glyphicon glyphicon-hand-down'></span></br></br>
-				</div>
-				<div id='btnsViewReport'>
-				</div>
-			</div>
-				
 		</div>
 		
+		
+		<!--Div that will contain image slide or some information related to website stats-->
+	
+		<div class='content-div'>
+			<div class='width-100'>
+				<div class='width-45 float-left margin' id='takeTestAgain'>
+					<h3 style='color:red;'>You have already attempted this test. Take Test again </h3>
+					<div style='height:80px;'>
+						<span id='hand-down' class='glyphicon glyphicon-hand-down'></span></br></br>
+					</div>
+					<button type="submit" id='btnTakeTestAgain' class='btn btn-success'>Take Test again</button>
+				</div>
+				<div class='width-10 float-left margin-or'>
+					<img src="../img/OR.jpg"/>
+				</div>
+				<div class='width-45 float-left margin' id='viewReport'>
+					<h3 style='color:red;'>View test reports</h3>
+					<div style='height:80px;'>
+						<span id='hand-down' class='glyphicon glyphicon-hand-down'></span></br></br>
+					</div>
+					<div id='btnsViewReport'>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="../js/ckeditor.js"></script>

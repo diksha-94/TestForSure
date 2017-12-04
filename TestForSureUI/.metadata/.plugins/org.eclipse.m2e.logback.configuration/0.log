@@ -7119,3 +7119,13 @@
 2017-11-25 23:27:43,566 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
 2017-11-25 23:27:43,584 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2017-11-25 23:27:43,585 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\MyGit\Test-for-sure-app\Services\TestForSure\src\test\resources
+2017-11-29 00:25:40,936 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-29 00:25:41,050 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-11-29 00:25:41,084 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-11-29 00:25:41,107 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-29 00:25:41,108 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\MyGit\Test-for-sure-app\Services\TestForSure\src\test\resources
+2017-11-30 21:00:18,830 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-30 21:00:18,884 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-11-30 21:00:18,922 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-11-30 21:00:18,942 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-11-30 21:00:18,943 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\MyGit\Test-for-sure-app\Services\TestForSure\src\test\resources

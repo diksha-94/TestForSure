@@ -1,8 +1,18 @@
+var open = false;
 function openSubMenu(){
-	$('#subMenu').css('display','inline-block');
+	if(open == false){
+		console.log("Inside open");
+		$('#subMenu').css('display','inline-block');
+		open = true;
+	}
+	else if(open == true){
+		console.log("Inside close");
+		$('#subMenu').css('display','none');
+		open = false;
+	}
 }
 function closeSubMenu(){
-	$('#subMenu').css('display','none');
+	
 }
 $('#linkLogin').on('click', function(){
 	$('#loginModal').modal();

@@ -254,8 +254,12 @@ body {
 @media screen and (min-width: 980px){
       
 }
-@media screen and (max-width: 640px){
-      
+@media screen and (max-width: 768){
+      #first-slider .carousel .item {
+  min-height: 100px; 
+  height: 20%;
+  
+}
 }
 
 

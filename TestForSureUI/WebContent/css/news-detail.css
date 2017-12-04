@@ -36,7 +36,7 @@
 .width-class{
 	width:100%;
 	margin-top:20px;
-	margin-left:2%;
+	margin-left:0%;
 }
 .news-link{
 	color:white;
@@ -55,4 +55,18 @@
 }
 .more-link:hover{
 	color:yellow;
+}
+
+@media only screen and (max-width: 768px) {
+#news-detail{
+	width:90%;
+	margin-left:5%;
+}
+
+.news-width{
+	width:90%;
+	margin-left:5%;
+}
+
+
 }

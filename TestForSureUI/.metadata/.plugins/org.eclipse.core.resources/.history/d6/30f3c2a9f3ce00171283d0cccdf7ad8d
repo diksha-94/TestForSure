@@ -1,7 +1,0 @@
-package edu.tests.TestForSure.sql;
-
-public class CreateContactUsQueries {
-	public static String insertQuery(ContactUs obj){
-		String insertQuery = "insert into contactus(name, email, query) values ('" + )"
-	}
-}
