@@ -44,7 +44,7 @@ function showTests(categoryId, subCatId){
 												"</span>"+
 												"</div>"+
 												"<div class='col-md-2.75 float-left margin-top-30 margin-left-10 div-width'>"+
-												"<span class='glyphicon glyphicon-th-list'></span><label class='clear-both test-size'>&nbsp;Number of Questions: </label><span class='test-size'>"+(result.testDetails)[i].no_of_ques+"</span>"+
+												"<span class='glyphicon glyphicon-th-list'></span><label class='clear-both test-size'>&nbsp;No. of Questions: </label><span class='test-size'>"+(result.testDetails)[i].no_of_ques+"</span>"+
 												"</br><span class='glyphicon glyphicon-time'></span><label  class='clear-both test-size'>&nbsp;Time Limit(in mins): </label><span class='test-size'>"+(result.testDetails)[i].time_limit+"</span>"+
 												"</div>"+
 												"<div class='col-md-2.75 float-left margin-top-30 div-width'>"+

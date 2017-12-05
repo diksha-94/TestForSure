@@ -215,6 +215,25 @@ function getQueryParameterByName(name, url) {
 }
 $(document).ready(function () {
 	console.log("Document start-test-option is ready");
+	if(localStorage.getItem('loggedIn') == "true"){
+		//means the user is logged in
+		$('#loggedInUSer').text(" "+localStorage.getItem('username'));
+		$('#menuLogin').addClass('hide');
+		$('#menuLogin').removeClass('show');
+		$('#menuLogout').removeClass('hide');
+		$('#menuLogout').addClass('show');
+		$('#userProfile').removeClass('hide');
+		$('#userProfile').addClass('show');
+	}
+	else{
+		$('#menuLogin').removeClass('hide');
+		$('#menuLogin').addClass('show');
+		$('#menuLogout').addClass('hide');
+		$('#menuLogout').removeClass('show');
+		$('#userProfile').addClass('hide');
+		$('#userProfile').removeClass('show');
+	}
+
 	test_id = getQueryParameterByName('test_id');
 	
 	var testId = (test_id.split('-'))[1];
@@ -224,6 +243,7 @@ $(document).ready(function () {
 	$.ajax({
                 url: getTest_url,
                 type: "GET",
+				//async:   false,
                 dataType: 'json',
                 success: function (result) {
 					if(result.status){
