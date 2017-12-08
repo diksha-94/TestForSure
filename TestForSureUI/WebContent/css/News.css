@@ -5,11 +5,21 @@
 }
 .news-width{
 	width: 60%;
-	margin-left:20%;
+	margin-left:2%;
 	background-color:white;
 	color:#2E6DA4;
 	float:left;
 	overflow:auto;
+}
+.left-ad{
+	width:16%;
+	margin-left:2%;
+	float:left;
+}
+.right-ad{
+	width:16%;
+	margin-left:2%;
+	float:left;
 }
 .news-width a{
 	color:#2E6DA4;

@@ -24,6 +24,7 @@ function showTests(categoryId, subCatId){
 							else{
 								number = 10;
 							}
+							
 							for(var i = 0;i<number;i++){
 							//$.each(result.testDetails, function(i, test) {
 								var btnId = 'btnTest-'+(result.testDetails)[i].id;
@@ -54,7 +55,17 @@ function showTests(categoryId, subCatId){
 												"<div class='col-md-2 col-xs-10 col-xs-offset-1 col-md-offset-0 float-left margin-top-40 take-test-button'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
 												//href='start-test-option.html?"+query_string+"'
 												"</div>";
+								
 								$('#all_tests').append(newTest);
+								if(i == 6){
+									var ad = "<div class='outer-test-ad'>"+
+											"<ins class='adsbygoogle' style='display:block;width:100%;' data-ad-format='fluid' data-ad-layout-key='-fm+5r+6l-ft+4e' data-ad-client='ca-pub-1988549768988881' data-ad-slot='9540632733'></ins>"+
+											"<script>"+
+											"(adsbygoogle = window.adsbygoogle || []).push({});"+
+											"</script>"+
+											"</div>";
+											$('#all_tests').append(ad);
+								}
 							}
 							
 						}
