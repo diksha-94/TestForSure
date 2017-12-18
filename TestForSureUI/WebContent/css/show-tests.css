@@ -66,7 +66,38 @@
 	width:70%;
 	margin-left:1%;
 	float:left;
+	margin-bottom:80px;
+	
 }
+.page-numbers{
+	width:100%;
+	margin-bottom:0px;
+	clear:both;
+	text-align:center;
+}
+.page-number{
+	background-color:#F0F0F0;
+	padding:8px 12px;
+	text-decoration:none;
+	color:black;
+	font-weight:bold;
+	display:inline-block;
+	margin-left:10px;
+}
+.page-number a{
+	text-decoration:none;
+	color:black;
+}
+.page-number:hover{
+	background-color:#2e6da4;
+	text-decoration:none;
+	color:white;
+}			
+.page-number a:hover{
+	text-decoration:none;
+	color:white;
+}	
+
 .right-ad{
 	width:13%;
 	margin-left:1%;
@@ -307,3 +338,7 @@
 }
 
 
+
+.footer{
+	margin-top:10%;
+}
