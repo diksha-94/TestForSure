@@ -4,6 +4,7 @@ $('#registerLink').on('click', function(){
 	$('#loginUser').addClass('hide');
 	$('#registerUser').removeClass('hide');
 	$('#registerUser').addClass('show');
+	
 })
 
 $('#loginLink').on('click', function(){
@@ -11,6 +12,7 @@ $('#loginLink').on('click', function(){
 	$('#loginUser').addClass('show');
 	$('#registerUser').removeClass('show');
 	$('#registerUser').addClass('hide');
+	
 })
 
 var loginRules = {

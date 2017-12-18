@@ -7,6 +7,22 @@
 .width-45{
 	width:45%;
 }
+.ad-withoutLogin{
+	width:25%;
+	margin-left:2%;
+	margin-top:-250px;
+	float:left;
+}
+.ad-withLogin{
+	bottom:12%;
+	position:absolute;
+	left:55%;
+}
+.btnWithoutLogin{
+	width:33%;
+	margin-left:33%;
+	float:left;
+}
 .width-30{
 	width:30%;
 }
@@ -15,7 +31,6 @@
 }
 .margin{
 	margin-top:15%;
-	text-align:center;
 }
 .margin-or{
 	margin-top:2%;
@@ -27,6 +42,7 @@
 .margin-login-div{
 	margin-top:10%;
 }
+
 .margin-register-div{
 	margin-top:5%;
 }

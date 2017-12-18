@@ -53,9 +53,24 @@
 	width:70%;
 	margin-left:15%;
 }
-.width-class{
+.outer-div{
 	width:100%;
 	margin-top:100px;
+}
+.left-ad{
+	width:13%;
+	margin-left:1%;
+	float:left;
+}
+.width-class{
+	width:70%;
+	margin-left:1%;
+	float:left;
+}
+.right-ad{
+	width:13%;
+	margin-left:1%;
+	float:left;
 }
 .width-class-test{
 	width:80%;
@@ -78,13 +93,13 @@
 
 
 .outer-test-div{
-	 width:70%;
+	 width:100%;
 	 background-color:#F0F0F0;
 	 border-radius:1%;
 	 margin-top:20px;
 	 height:110px;
 	 overflow:auto;
-	 margin-left:15%;
+	 margin-left:0px;
 }
 .heading-width{
 	width:20%;
