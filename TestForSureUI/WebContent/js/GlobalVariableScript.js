@@ -1,1 +1,1 @@
-var serviceIp="http://localhost:8083";
+var serviceIp="http://13.126.161.84:8083";
