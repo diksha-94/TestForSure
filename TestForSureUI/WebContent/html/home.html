@@ -7,7 +7,7 @@
     		enable_page_level_ads: true
   		});
 		</script>
-	
+		
 		<title>TEST2BSURE</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href= "../css/home.css" rel ="stylesheet"/>
@@ -66,6 +66,7 @@
 		<!--Div that will contain image slide or some information related to website stats-->
 	
 		<div class='content-div'>	
+		
 			<div class="slideshow-container home-page-image-div">
 				<div id="first-slider">
 					<div id="carousel-example-generic" class="carousel slide carousel-fade">
@@ -275,8 +276,10 @@
 						</div>
 					</div>
 					<div class="modal-footer margin-top-20">
+						
 						<div>
-							Forgot password? <a href="#" id="linkForgot">Click here</a>
+							Forgot password? <a href="#" id="linkForgot">Click here</a></br>
+							Didn't receive verification link? <a href="#" id="linkVerification">Click here</a>
 						</div>
 					</div>
 				</div>
@@ -382,6 +385,43 @@
 			</div>
 		</div>
 		
+		
+		<!--Email verification modal-->
+		<div class="modal fade" id="verificationModal" role="dialog" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog modal-lg modal-custom forgotPasswordModal" role='document'>
+    
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title text-center">E-mail verification link</h4>
+					</div>
+					<div class="modal-body">
+						<div id="errorOuterVerification" class="hide">
+							<div class=" alert alert-danger" id="errorMessageVerification"></div>
+						</div>
+						<form id="verForm" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label class='control-label col-md-5'>Enter your e-mail(used for registration)</label>
+								<div class='col-md-7'>
+									<input type="text" class='form-control' id="txtVerEmail" name="txtVerEmailName" required="required" placeholder="abc@example.com"/>
+								</div>
+							</div>
+							<div class='form-group'>
+								<div class="col-md-7 col-md-offset-5 margin-top-10">
+									<button type="submit" id="btnVerSend" class='btn btn-success btn-block'>Send</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer margin-top-20 hide footer-ver">
+						<div>
+							<button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Ok</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="../js/ckeditor.js"></script>
