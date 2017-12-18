@@ -86,12 +86,13 @@ function getQueryParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-$('#btnTakeTestAgain').on('click', function(){
+$('#btnTakeTestAgain').on('click', function(e){
 	
 	
 	var id = (test_id.split('-'))[1];
+	console.log("Id: "+id);
 	var getTest_url = serviceIp+"/test-for-sure/test/get-testsbyId?testId="+id;
-	
+	console.log("getTest_url: "+getTest_url);
 	$.ajax({
                 url: getTest_url,
                 type: "GET",
@@ -100,6 +101,12 @@ $('#btnTakeTestAgain').on('click', function(){
 					if(result.status){
 						console.log(JSON.stringify(result));
 						localStorage.setItem('testDetails',JSON.stringify(result));
+						//window.open("start-test.html?from=login&test_id="+test_id, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
+						e.preventDefault();
+						
+						//window.open("start-test.html?from=login&test_id="+test_id, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
+						//window.open("start-test.html?from=login&test_id="+test_id, 'myWindow', "status=1,toolbar=0,width=1000,height=1000");
+						window.location.href = "start-test.html?from=login&test_id="+test_id;
 					}
 					else if(!result.status){
 						console.log("Error: "+result.message);
@@ -109,8 +116,8 @@ $('#btnTakeTestAgain').on('click', function(){
 					console.log("Error in getting questions");
                 }
             });
-	window.history.back();
-    window.open("start-test.html?from=login&test_id="+test_id, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
+	//window.history.back();
+   
 })
 
 

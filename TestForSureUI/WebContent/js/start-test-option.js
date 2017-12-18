@@ -260,6 +260,7 @@ $(document).ready(function () {
 					console.log("Error in getting questions");
                 }
             });
+		console.log("loggedIn from start-test-option: "+localStorage.getItem('loggedIn'));
 	if(localStorage.getItem('loggedIn') == "true"){
 		window.history.back();
 		//means the user is logged in, then the test should start directly

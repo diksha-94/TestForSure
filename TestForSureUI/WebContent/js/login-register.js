@@ -144,10 +144,24 @@ $('#registerForm').validate({
             success: function (result) {
                 if (result.response.status) {
 					console.log(result.response.message);
-					localStorage.setItem("loggedIn", "true");
-					localStorage.setItem("username", result.username);
-					localStorage.setItem("email", email);
-                    window.location.href = "home.html";
+					//localStorage.setItem("loggedIn", "true");
+					//localStorage.setItem("username", result.username);
+					//localStorage.setItem("email", email);
+                    //window.location.href = "home.html";
+					$('#errorOuterReg').removeClass("hide");
+					$('#errorOuterReg').addClass("show");
+					$('#errorMessageReg').removeClass('alert-danger');
+					$('#errorMessageReg').addClass('alert-success');
+					$('#errorMessageReg').html("An email verification link has been sent to your email id. Verify your email address and then log in");
+					
+					//Empty password and confirm password
+					$('#txtNameReg').val('');
+					$('#txtEmailReg').val('');
+					$('#txtContactReg').val('');
+					$('#txtPasswordReg').val('');
+					$('#txtConfirmPassword').val('');
+					//alert("An email verification link has been sent your email id. Verify your email address and then log in");
+					//$('#registerModal').modal('hide');
 			    }
                 else if (!result.response.status) {
                     console.log(result.response.message)
@@ -197,6 +211,23 @@ $('#linkForgot').on('click', function(){
 	$('#forgotPassModal').modal('show');
 })
 
+
+//Send verification link
+$('#linkVerification').on('click', function(){
+	$('#loginModal').modal('toggle');
+	$('#errorOuterVerification').removeClass("show");
+	$('#errorOuterVerification').addClass("hide");
+					
+					
+	$('#verForm').removeClass('hide');
+	$('#verForm').addClass('show');
+					
+	$('.footer-ver').removeClass('show');
+	$('.footer-ver').addClass('hide');
+	$('#txtVerEmail').val('');
+	
+	$('#verificationModal').modal('show');
+})
 
 var forgotPassRules = {
     'txtForgotEmailName': {
@@ -253,5 +284,64 @@ $('#forgotPassForm').validate({
             }
            
         });
+    }
+});
+
+var verRules = {
+    'txtVerEmailName': {
+		required: true,
+		email: true
+    }
+};
+	
+$('#verForm').validate({
+    rules: verRules,
+
+    ignore: true,
+    highlight: function () {
+        // to remove the red alert on text 
+    },
+    submitHandler: function () {
+		
+		var emailId = $('#txtVerEmail').val();
+		console.log("Inside submit: "+emailId);
+		var url = serviceIp+"/test-for-sure/user/send-verification-email?emailId="+emailId;
+		$.ajax({
+                url: url,
+                type: "GET",
+                
+                dataType: 'json',
+                success: function (result) {
+					console.log("Result from send verification link again: "+JSON.stringify(result));
+					if(result.status){
+						
+						$('#errorOuterVerification').removeClass("hide");
+						$('#errorOuterVerification').addClass("show");
+						$('#errorMessageVerification').removeClass('alert-danger');
+						$('#errorMessageVerification').addClass('alert-success');
+						$('#errorMessageVerification').html(result.message);
+						$('#txtVerEmail').val('');
+						$('#verForm').addClass('hide');
+						$('#verForm').removeClass('show');
+					
+						$('.footer-ver').removeClass('hide');
+						$('.footer-ver').removeClass('show');
+					}
+					else if(!result.status){
+						$('#errorOuterVerification').removeClass("hide");
+						$('#errorOuterVerification').addClass("show");
+						$('#errorMessageVerification').removeClass('alert-success');
+						$('#errorMessageVerification').addClass('alert-danger');
+						$('#errorMessageVerification').html(result.message);
+					}
+                },
+                error: function () {
+					$('#errorOuterVerification').removeClass("hide");
+					$('#errorOuterVerification').addClass("show");
+					$('#errorMessageVerification').removeClass('alert-success');
+					$('#errorMessageVerification').addClass('alert-danger');
+					$('#errorMessageVerification').html("Service is currently unavailable");
+                }
+            });
     }
 });

@@ -1,4 +1,3 @@
-
 //Show tests on home.html load
 function showTests(categoryId, subCatId){
 	$('#all_tests').empty();
