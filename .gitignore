@@ -1,6 +1,7 @@
 /target/
-.setting
+.settings
 bin
 build
 classes
 node_modules
+.metadata
