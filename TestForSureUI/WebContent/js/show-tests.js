@@ -12,6 +12,15 @@ function showTests(categoryId, subCatId){
 					if(result.status){
 						if(result.testDetails != null) {
 							console.log(JSON.stringify(result.testDetails));
+							var adAfter = 0;
+							var len = result.testDetails.length;
+							if(len<7){
+								adAfter = len-1;
+							}
+							else{
+								//mens after 7 tests
+								adAfter = 6;
+							}
 							$.each(result.testDetails, function(i, test) {
 								var btnId = 'btnTest-'+test.id;
 								var query_string = 'test_id='+btnId;
@@ -41,7 +50,7 @@ function showTests(categoryId, subCatId){
 												"</div>";
 												"</div>";
 								$('#tests').append(newTest);
-								if(i == 6){
+								if(i == adAfter){
 									var ad = "<div class='outer-test-ad'>"+
 											"<ins class='adsbygoogle' style='display:block;width:100%;' data-ad-format='fluid' data-ad-layout-key='-fm+5r+6l-ft+4e' data-ad-client='ca-pub-1988549768988881' data-ad-slot='9540632733'></ins>"+
 											"<script>"+
