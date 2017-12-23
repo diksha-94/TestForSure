@@ -41,6 +41,15 @@ function showTests(categoryId, subCatId){
 												"</div>";
 												"</div>";
 								$('#tests').append(newTest);
+								if(i == 6){
+									var ad = "<div class='outer-test-ad'>"+
+											"<ins class='adsbygoogle' style='display:block;width:100%;' data-ad-format='fluid' data-ad-layout-key='-fm+5r+6l-ft+4e' data-ad-client='ca-pub-1988549768988881' data-ad-slot='9540632733'></ins>"+
+											"<script>"+
+											"(adsbygoogle = window.adsbygoogle || []).push({});"+
+											"</script>"+
+											"</div>";
+											$('#tests').append(ad);
+								}
 							});
 							
 						}
