@@ -501,6 +501,8 @@ function getQueryParameterByName(name, url) {
 $(document).ready(function () {
 	var report_id = getQueryParameterByName('report_id');
 	var test_id = getQueryParameterByName('test_id');
+	console.log("Received report_id: "+report_id);
+	console.log("Received test_id: "+test_id);
 	getReport(report_id, test_id);
 	
 })

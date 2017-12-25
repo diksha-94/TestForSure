@@ -1,5 +1,15 @@
+var attemptedTests = {};
+
 //Show tests on home.html load
 function showTests(categoryId, subCatId){
+	console.log("Attempted Tests from Show tests: "+JSON.stringify(attemptedTests));
+	//create an array of all the test_id of attempted tests
+	var testIds = [];
+	if(attemptedTests && attemptedTests.length>0){
+		for(var i=0;i<attemptedTests.length;i++){
+			testIds.push(attemptedTests[i].test_id);
+		}
+	}
 	$('#all_tests').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
@@ -27,6 +37,7 @@ function showTests(categoryId, subCatId){
 							for(var i = 0;i<number;i++){
 							//$.each(result.testDetails, function(i, test) {
 								var btnId = 'btnTest-'+(result.testDetails)[i].id;
+								var divId = 'markAttempted-'+(result.testDetails)[i].id;
 								var query_string = 'test_id='+btnId;
 								console.log("Image Path: "+(result.testDetails)[i].imagePath);
 								var image_path = "'"+(result.testDetails)[i].imagePath+"'";
@@ -51,11 +62,17 @@ function showTests(categoryId, subCatId){
 												"<span class='glyphicon glyphicon-ok-sign'></span><label  class='clear-both test-size'>&nbsp;Correct Ques Marks: </label><span class='test-size'>"+(result.testDetails)[i].correct_ques_marks+"</span>"+
 												"</br><span class='glyphicon glyphicon-minus-sign'></span><label  class='clear-both test-size'>&nbsp;Negative marks: </label><span class='test-size'>"+(result.testDetails)[i].negative_marks+"</span>"+
 												"</div>"+
-												"<div class='col-md-2 col-xs-10 col-xs-offset-1 col-md-offset-0 float-left margin-top-40 take-test-button'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
+												"<div class='col-md-2 col-xs-10 col-xs-offset-1 col-md-offset-0 float-left margin-top-40 take-test-button'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"+
+												"<div id="+divId+" class='glyphicon glyphicon-ok markAttempted' title='attempted'></div>"
 												//href='start-test-option.html?"+query_string+"'
 												"</div>";
 								
 								$('#all_tests').append(newTest);
+								 if(!testIds.includes((result.testDetails)[i].id)){
+									//Means this test is already attempted by the user, so mark it
+									$('#markAttempted-'+(result.testDetails)[i].id).addClass('hide');
+									//$('#markAttempted-'+(result.testDetails)[i].id).addClass('show');
+								}
 								if(i == 6){
 									var ad = "<div class='outer-test-ad'>"+
 											"<ins class='adsbygoogle' style='display:block;width:100%;' data-ad-format='fluid' data-ad-layout-key='-fm+5r+6l-ft+4e' data-ad-client='ca-pub-1988549768988881' data-ad-slot='9540632733'></ins>"+
@@ -183,6 +200,9 @@ $(document).ready(function () {
 		$('#menuLogout').addClass('show');
 		$('#userProfile').removeClass('hide');
 		$('#userProfile').addClass('show');
+		//get the attempted tests and mark them
+		console.log("Email: "+localStorage.getItem('email'));
+		getAttemptedTests(localStorage.getItem('email'));
 	}
 	else{
 		$('#menuLogin').removeClass('hide');
@@ -191,78 +211,40 @@ $(document).ready(function () {
 		$('#menuLogout').removeClass('show');
 		$('#userProfile').addClass('hide');
 		$('#userProfile').removeClass('show');
+		showTests(0, 0);
 	}
 	
+	getExistingNews();
 	
-//PROTOCOL://SERVICES_IP:SUBDOMAINSERVICES_HOST
-					//ajax request to get all env attributes
-					/*$.ajax({
-								type : "GET",
-								url : "http://localhost:8084/getenv",
-								contentType : "application/json",
-								success : function(result) {
-									var env = result.split("|");
-									console.log('GETENV: Successfully got ENV variables');
-									console.log('CRAWL_LEVEL = '+ env[0]);
-									sessionStorage.setItem('PROTOCOL',env[0]);
-									sessionStorage.setItem('SERVICES_IP: ',env[1]);
-									console.log('SERVICE_IP = '+ env[1]);
-									sessionStorage.setItem('',	env[2]);
-									console.log('SERVICES_HOST: '+ env[2]);
-									sessionStorage.setItem(	'SUBDOMAINSERVICES_HOST', env[3]);
-									sessionStorage.setItem('NEWS_NOTIFICATIONS',env[4]);
-									sessionStorage.setItem('QUESTION_BANK',env[5]);
-									sessionStorage.setItem('TEST',env[6]);
-									sessionStorage.setItem('USER',env[7]);
-									sessionStorage.setItem('GET_ALL_NEWS',env[8]);
-									sessionStorage.setItem('GET_NEWS',env[9]);
-									sessionStorage.setItem('INSERT_NEWS',env[10]);
-									sessionStorage.setItem('DELETE_NEWS',env[11]);
-									sessionStorage.setItem('UPDATE_NEWS',env[12]);
-									sessionStorage.setItem('GET_SUBJECT_CATEGORY',env[13]);
-									sessionStorage.setItem('GET_SUBJECT_SUBCATEGORY',env[14]);
-									sessionStorage.setItem('ADD_SUBJECT_CATEGORY',env[15]);
-									sessionStorage.setItem(	'ADD_SUBJECT_SUBCATEGORY', env[16]);
-									sessionStorage.setItem('GET_QUESTIONS_FROM_BANK',env[17]);
-									sessionStorage.setItem('ADD_QUESTION',env[18]);
-									sessionStorage.setItem('DELETE_QUESTION_FROM_BANK',env[19]);
-									sessionStorage.setItem('UPDATE_QUESTION_FROM_BANK',env[20]);
-									sessionStorage.setItem('ADD_QUESTIONS_TO_TEST',env[21]);
-									sessionStorage.setItem('GET_CATEGORY',env[22]);
-									sessionStorage.setItem('GET_SUBCATEGORY',env[23]);
-									sessionStorage.setItem('ADD_UPDATE_TEST',env[24]);
-									sessionStorage.setItem('ADD_QUESTION',env[25]);
-									sessionStorage.setItem('GET_TESTS',env[26]);
-									sessionStorage.setItem('GET_TESTS_BY_STATUS',env[27]);
-									sessionStorage.setItem('GET_TESTS_BY_ID',env[28]);
-									sessionStorage.setItem(	'GET_QUESTIONS', env[29]);
-									sessionStorage.setItem('ADD_CATEGORY',env[30]);
-									sessionStorage.setItem('ADD_SUBCATEGORY',env[31]);
-									sessionStorage.setItem('DELETE_QUESTION',env[32]);
-									sessionStorage.setItem('PUBLISH_TEST',env[33]);
-									sessionStorage.setItem('UNPUBLISH_TEST',env[34]);
-									sessionStorage.setItem('GET_TEST_RESULT',env[35]);
-									sessionStorage.setItem('TEST_ALREADY_ATTEMPTED',env[36]);
-									sessionStorage.setItem('GET_ALL_REPORTS',env[37]);
-									sessionStorage.setItem('GET_TEST_SOLUTION',env[38]);
-									sessionStorage.setItem('REGISTER_USER',env[39]);
-									sessionStorage.setItem('AUTHENTICATE_USER',env[40]);
-									sessionStorage.setItem('FORGOT_PASSWORD',env[41]);
-									sessionStorage.setItem('UPDATE_PASSWORD',env[42]);
-									sessionStorage.setItem('GET_CURRENT_PASSWORD',env[43]);
-									
-								}
-							}).done(function(){
-								getExistingNews();
-								//Initially, on page load show all the tests(Select in category and subcategory has value 0)
 	
-								showTests(0, 0);
-								populateSlider();
-							});*/
-getExistingNews();
-								//Initially, on page load show all the tests(Select in category and subcategory has value 0)
-	
-							showTests(0, 0);
-								populateSlider();
+	populateSlider();
+								
 })
 
+
+function getAttemptedTests(email){
+	var getTests_url = serviceIp+"/test-for-sure/view-report/get-attempted-tests?emailId="+email;
+	$.ajax({
+            url: getTests_url,
+            type: "GET",
+			contentType: 'application/json',
+			success: function (result) {
+				console.log("Response: "+JSON.stringify(result));
+                if (result.response.status) {
+					console.log("Length: "+result.attemptedTests.length);
+					attemptedTests = result.attemptedTests;
+					showTests(0, 0);
+				}
+                else if (!result.response.status) {
+					console.log(result.response.message);
+					attemptedTests = result.attemptedTests;
+					showTests(0, 0);
+                }
+                
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+        });
+}
