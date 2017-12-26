@@ -403,3 +403,12 @@
 	margin-top:20px;
 }
 }
+.markAttempted{
+	margin-top:0px;
+	margin-right:0px;
+	padding:8px 8px;
+	height:30px;
+	width:30px;
+	background-color:#449D44;
+	color:white;
+}

@@ -176,7 +176,10 @@ $('#formEditProfile').validate({
 					$('#editProfileErrorMessage').html(result.message);
 					getUserProfile();
 					populateValues();
-					
+					//Update the username in localstorage
+					localStorage.setItem('username', name);
+					$('#loggedInUSer').text(" "+localStorage.getItem('username'));
+		
 			    }
                 else if (!result.status) {
                     console.log(result.message)

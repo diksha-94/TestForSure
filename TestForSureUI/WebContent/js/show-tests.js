@@ -1,4 +1,13 @@
+var attemptedTests = {};
 function showTests(categoryId, subCatId){
+	console.log("Attempted Tests from Show tests: "+JSON.stringify(attemptedTests));
+	//create an array of all the test_id of attempted tests
+	var testIds = [];
+	if(attemptedTests && attemptedTests.length>0){
+		for(var i=0;i<attemptedTests.length;i++){
+			testIds.push(attemptedTests[i].test_id);
+		}
+	}
 	$('#tests').empty();
 	console.log("Category id: "+categoryId);
 	console.log("Subcategory id: "+subCatId);
@@ -25,6 +34,7 @@ function showTests(categoryId, subCatId){
 								var btnId = 'btnTest-'+test.id;
 								var query_string = 'test_id='+btnId;
 								var image_path = "'"+test.imagePath+"'";
+								var divId = 'markAttempted-'+test.id;
 								
 												
 								var newTest = "<div class='outer-test-div'>"+
@@ -46,10 +56,15 @@ function showTests(categoryId, subCatId){
 												"<span class='glyphicon glyphicon-ok-sign'></span><label class='clear-both test-size'>&nbsp;Correct Question Marks: </label><span class='test-size'>"+test.correct_ques_marks+"</span>"+
 												"</br><span class='glyphicon glyphicon-minus-sign'></span><label class='clear-both test-size'>&nbsp;Negative marks: </label><span class='test-size'>"+test.negative_marks+"</span>"+
 												"</div>"+
-												"<div class='col-md-2 float-left margin-top-40'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"
-												"</div>";
+												"<div class='col-md-2 float-left margin-top-40'><a id="+btnId+" onclick='checkAlreadyAttempted(id)' href='javascript:void(0);' class='btn btn-default btn-block btn-primary'>TAKE TEST</a></div>"+
+												"<div id="+divId+" class='glyphicon glyphicon-ok markAttempted' title='attempted'></div>"+
 												"</div>";
 								$('#tests').append(newTest);
+								if(!testIds.includes(test.id)){
+									//Means this test is already attempted by the user, so mark it
+									$('#markAttempted-'+(test.id)).addClass('hide');
+									//$('#markAttempted-'+(result.testDetails)[i].id).addClass('show');
+								}
 								if(i == adAfter){
 									var ad = "<div class='outer-test-ad'>"+
 											"<ins class='adsbygoogle' style='display:block;width:100%;' data-ad-format='fluid' data-ad-layout-key='-fm+5r+6l-ft+4e' data-ad-client='ca-pub-1988549768988881' data-ad-slot='9540632733'></ins>"+
@@ -210,7 +225,6 @@ $(document).ready(function () {
 	
 			
 	//Initially, on page load show all the tests(Select in category and subcategory has value 0)
-	showTests(0, 0);
 	
 	console.log("Logged in: "+localStorage.getItem('loggedIn'));
 	if(localStorage.getItem('loggedIn') == "true"){
@@ -222,6 +236,7 @@ $(document).ready(function () {
 		$('#menuLogout').addClass('show');
 		$('#userProfile').removeClass('hide');
 		$('#userProfile').addClass('show');
+		getAttemptedTests(localStorage.getItem('email'));
 	}
 	else{
 		$('#menuLogin').removeClass('hide');
@@ -230,7 +245,34 @@ $(document).ready(function () {
 		$('#menuLogout').removeClass('show');
 		$('#userProfile').addClass('hide');
 		$('#userProfile').removeClass('show');
+		showTests(0, 0);
+	
 	}
 	
 })
-
+function getAttemptedTests(email){
+	var getTests_url = serviceIp+"/test-for-sure/view-report/get-attempted-tests?emailId="+email;
+	$.ajax({
+            url: getTests_url,
+            type: "GET",
+			contentType: 'application/json',
+			success: function (result) {
+				console.log("Response: "+JSON.stringify(result));
+                if (result.response.status) {
+					console.log("Length: "+result.attemptedTests.length);
+					attemptedTests = result.attemptedTests;
+					showTests(0, 0);
+				}
+                else if (!result.response.status) {
+					console.log(result.response.message);
+					attemptedTests = result.attemptedTests;
+					showTests(0, 0);
+                }
+                
+            },
+            error: function () {
+                console.log("Service is unavailable");
+            }
+           
+        });
+}
