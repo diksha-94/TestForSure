@@ -1,0 +1,1 @@
+è4WebContent/js/plugins/specialchar/dialogs/lang/pt.js 2jsXh

@@ -1,0 +1,1 @@
+Á4WebContent/js/plugins/specialchar/dialogs/lang/bg.js 2jsXh

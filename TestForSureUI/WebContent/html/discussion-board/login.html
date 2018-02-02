@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title> Login </title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<style>
+			.outerDiv{
+				width:50%;
+				margin-left:25%;
+				padding:1%;
+			}
+			.red{
+				color:red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='outerDiv' ng-app='discussion_board' ng-controller='loginController'>
+		<form class='form-horizontal' role='form'>
+			<div class='form-group'>
+				<h2 class='col-sm-7 col-sm-offset-5'>Login</h2>
+			</div>
+			<div class="form-group">
+				<label class='control-label col-sm-3'>E-mail<span class='red'>*</span></label>
+				<div class='col-sm-7'>
+					 <input type='email' placeholder='xyz@example.com' id='txtEmail' name='username' class='form-control' required='required' ng-model = 'user.username'/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class='control-label col-sm-3'>Password<span class='red'>*</span></label>
+				<div class='col-sm-7'>
+					 <input type='password' placeholder='Password' id='pwdPassword' name='password' class='form-control' required='required' ng-model='user.password'/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class='col-sm-7 col-sm-offset-3'>
+					 <button type='button' class='btn btn-success btn-block' id='btnLogin' ng-click='loginFunction(user)'>Login</button>
+				</div>
+			</div>
+			<span>{{message}}</span>
+		</form>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="controller.js"></script>
+		
+	</body>
+</html>

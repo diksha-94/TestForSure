@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title> Discussion Board </title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<style>
+			.menu ul li{
+				float:left;
+				margin-left:50px;
+				
+			}
+			.menu ul{
+				list-style:none;
+			}
+		</style>
+	</head>
+	<body ng-app='discussion_board' ng-controller='allDiscussionsController'>
+		<div class='menu'>
+			<ul>
+				<li><a href='login.html'>Login</a></li>
+				<li><a href='register.html'>Register</a></li>
+			</ul>
+		</div>
+		<div class='outerDiv' style='margin-top:50px;'>
+			<div ng-repeat = "discussion in allDiscussions" style='background-color:#f0f0f0;padding:10px;'>
+				id: <span ng-bind = "discussion.id"></span></br>
+				user_id: <span ng-bind = "discussion.user_id"></span></br>
+				headline: <span ng-bind = "discussion.headline"></span></br>
+				details: <span ng-bind = "discussion.details"></span></br>
+				last_updated_on: <span ng-bind = "discussion.last_updated_on"></span></br>
+				</br></br></br></br>
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="controller.js"></script>
+		
+	</body>
+</html>

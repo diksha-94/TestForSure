@@ -1,0 +1,1 @@
+©WebContent/js/lang/fr.js 2jsXh

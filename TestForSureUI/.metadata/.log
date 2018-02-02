@@ -11830,3 +11830,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !ENTRY org.eclipse.core.net 4 0 2017-12-23 20:30:18.097
 !MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'The proxy auto-configuration script could not be downloaded
 ' #12167.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-12-27 14:24:01.421
+!MESSAGE No repository found at http://www.pramati.com/downloads/eclipse/updates/.

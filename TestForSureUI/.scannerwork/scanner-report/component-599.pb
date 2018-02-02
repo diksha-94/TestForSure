@@ -1,0 +1,1 @@
+×4WebContent/js/plugins/specialchar/dialogs/lang/gl.js 2jsXh

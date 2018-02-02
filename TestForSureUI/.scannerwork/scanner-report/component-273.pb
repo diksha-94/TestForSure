@@ -1,0 +1,1 @@
+‘WebContent/js/lang/bg.js 2jsXh

@@ -1,0 +1,1 @@
+„%WebContent/js/GlobalVariableScript.js 2jsXh

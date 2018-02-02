@@ -1,0 +1,1 @@
+Ò4WebContent/js/plugins/specialchar/dialogs/lang/fa.js 2jsXh

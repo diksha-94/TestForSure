@@ -1,0 +1,1 @@
+ç7WebContent/js/plugins/specialchar/dialogs/lang/pt-br.js 2jsXh

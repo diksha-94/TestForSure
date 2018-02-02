@@ -1,0 +1,1 @@
+£)WebContent/js/plugins/char_counter.min.js 2jsXh

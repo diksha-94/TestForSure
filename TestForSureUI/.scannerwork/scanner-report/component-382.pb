@@ -1,0 +1,1 @@
+þ1WebContent/js/plugins/a11yhelp/dialogs/lang/ku.js 2jsXh

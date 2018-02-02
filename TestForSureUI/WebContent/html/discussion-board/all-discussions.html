@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<title> Add a Discussion </title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<style>
+			.menu ul li{
+				float:left;
+				margin-left:50px;
+			}
+			.menu ul{
+				list-style:none;
+			}
+			.red{
+				color:red;
+			}
+			.outerDiv{
+				width:70%;
+				margin-left:15%;
+				padding:1%;
+				margin-top:30px;
+			}
+		</style>
+	</head>
+	<body ng-app='discussion_board' ng-controller='allDiscussionsController'>
+		<div class='menu' ng-show={{login}}>
+			<ul>
+				<li><a href='add-discussion.html'>Add a discussion</a></li>
+				<li><a href='Dashboard.html'>Discussion Board</a></li>
+				<li><a href='myposts.html'>My Posts</a></li>
+				<li><a href='#'>Logout</a></li>
+			</ul>
+		</div>
+		<div class='menu' ng-hide={{login}}>
+			<ul>
+				<li><a href='login.html'>Login</a></li>
+				<li><a href='register.html'>Register</a></li>
+			</ul>
+		</div>
+		<div class='outerDiv'>
+			<div ng-repeat = "post in posts" style='background-color:#f0f0f0;padding:10px;'>
+				id: <span ng-bind = "post.id"></span></br>
+				user_id: <span ng-bind = "post.user_id"></span></br>
+				headline: <span ng-bind = "post.headline"></span></br>
+				details: <span ng-bind = "post.details"></span></br>
+				last_updated_on: <span ng-bind = "post.last_updated_on"></span></br>
+				<button type='button' ng-attr-id="{{ 'btnEdit-' + post.id }}" ng-click='editPostFunction(post.id)'>Edit</button></br>
+				<button type='button' ng-attr-id="{{ 'btnDelete-' + post.id }}" ng-click='deletePostFunction(post.id)'>Delete</button></br>
+				</br></br></br>
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="../../js/discussion-board/controller.js"></script>
+		
+	</body>
+</html>
