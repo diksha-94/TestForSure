@@ -201,9 +201,9 @@ $('#registerForm').validate({
 });
 
 $('#btnWithoutLogin').on('click', function(){
-	window.history.back();
-	window.open("start-test.html?from=withoutlogin&test_id="+test_id, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
-	//window.location.href = "start-test.html?from=withoutlogin&test_id="+test_id;
+	//window.history.back();
+	//window.open("start-test.html?from=withoutlogin&test_id="+test_id)//, "myWindow", "status=1,toolbar=0,width=1000,height=1000");
+	window.location.href = "start-test.html?from=withoutlogin&test_id="+test_id;
 })
 
 function getQueryParameterByName(name, url) {

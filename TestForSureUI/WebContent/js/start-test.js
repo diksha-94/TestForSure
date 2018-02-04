@@ -10,6 +10,7 @@ var total_time;
 var total_secs;
 var request_from;
 $('#btnProceed').on('click', function(){
+	localStorage.setItem("page-location", "questions");
 	$('#divInstructions').removeClass('show');
 	$('#divInstructions').addClass('hide');
 	$('#divQuestions').removeClass('hide');
@@ -19,6 +20,16 @@ $('#btnProceed').on('click', function(){
 	$('.submit-button-div').removeClass('hide');
 	$('.submit-button-div').addClass('show');
 	
+	getTestDetailsAndQuestions();
+	
+			
+			//get the time spent on first question, initially it will be first question, when the test starts
+			//var ques_id = allQuestions[1-1].id;
+			
+			
+})
+
+function getTestDetailsAndQuestions(){
 	var testId = ((localStorage.getItem('test_id')).split('-'))[1];
 	console.log("Test id: "+testId);
 	
@@ -174,14 +185,7 @@ $('#btnProceed').on('click', function(){
                 }
             });
 			
-	
-			
-			//get the time spent on first question, initially it will be first question, when the test starts
-			//var ques_id = allQuestions[1-1].id;
-			
-			
-})
-
+}
 function convertTimeToSeconds(hrs, mins, secs){
 	hrs = parseInt((hrs.split(' '))[0]);
 	mins = parseInt((mins.split(' '))[0]);
@@ -200,6 +204,7 @@ function validateEmail(mail)
    }	
 }  
 $('#btnNextToInstructions').on('click', function(){
+	localStorage.setItem("page-location", "instructions");
 	console.log('Get User details and go next');
 	var name=txtName.value;
 	var email=txtEmail.value;
@@ -225,16 +230,18 @@ $('#btnNextToInstructions').on('click', function(){
 	$('#divInstructions').removeClass('hide');
 	$('#divInstructions').addClass('show');
 	//$('#test-title').append(" "+ testDetailsObject.testDetails.testTitle);
-		$('#time-limit').append(" "+ testDetailsObject.testDetails.time_limit);
+	showInstructionValues();	
+	console.log("test---------");
+		
+})
+function showInstructionValues(){
+	$('#time-limit').append(" "+ testDetailsObject.testDetails.time_limit);
 		$('#max-marks').append(" "+ testDetailsObject.testDetails.no_of_ques*testDetailsObject.testDetails.correct_ques_marks);
 		$('#total-ques').append(" "+ testDetailsObject.testDetails.no_of_ques+" Questions");
 		$('#correct-ques').append(" "+ testDetailsObject.testDetails.correct_ques_marks+" marks");
 		$('#negative-marks').append(" "+ testDetailsObject.testDetails.negative_marks+" marks");
 		$('#time-limit-test').append(" "+ testDetailsObject.testDetails.time_limit+" minutes");
-		console.log("test---------");
-		
-})
-
+}
 $('#btnViewAll').on('click', function(){
 	console.log("AllQuestions:"+JSON.stringify(allQuestions));
 
@@ -825,6 +832,12 @@ function noBack() {
     window.history.forward();
 }
 $(document).ready(function () {
+	
+	//Set the localStorage attribute to check whether the start-test.html is opened from start or it is refreshed
+	//test-refresh localstorage value true means the test is refreshed
+	localStorage.setItem("test-refresh", true);
+	var page_location = localStorage.getItem("page-location");
+	localStorage.setItem('page-location','user-details');
 	//localStorage.clear();
 	//to prevent the right click on test screen
 	document.addEventListener('contextmenu', event => event.preventDefault());
@@ -838,6 +851,10 @@ $(document).ready(function () {
 	/*window.onbeforeunload = function(){
 		return "Are you sure you want to leave this page?";
 	}*/
+	
+	//Check what to display when start-test page is refreshed
+	console.log("Page location: "+localStorage.getItem("page-location"));
+	
 	console.log("Document start-test is ready");
 	var test_id = getQueryParameterByName('test_id');
 	request_from = getQueryParameterByName('from');
@@ -851,6 +868,7 @@ $(document).ready(function () {
 	$('#titleHead').append(testDetailsObject.testDetails.testTitle);
 	console.log("Request_from: "+request_from);
 	if(request_from === "login" || request_from === "register"){
+		localStorage.setItem('page-location','instructions');
 		$('#divUserDetails').removeClass('show');
 		$('#divUserDetails').addClass('hide');
 		$('#divInstructions').removeClass('hide');
@@ -861,6 +879,45 @@ $(document).ready(function () {
 		$('#correct-ques').append(" "+ testDetailsObject.testDetails.correct_ques_marks+" marks");
 		$('#negative-marks').append(" "+ testDetailsObject.testDetails.negative_marks+" marks");
 		$('#time-limit-test').append(" "+ testDetailsObject.testDetails.time_limit+" minutes");
+	}
+	
+	//page_location can be user-details, instructions, questions
+	if(page_location == "user_details"){
+		console.log("Page location is user-details");
+		localStorage.setItem('page-location','user-details');
+		$('#divUserDetails').removeClass('hide');
+		$('#divUserDetails').addClass('show');
+		$('#divInstructions').removeClass('show');
+		$('#divInstructions').addClass('hide');
+		$('#divQuestions').removeClass('show');
+		$('#divQuestions').addClass('hide');
+	}
+	else if(page_location == "instructions"){
+		console.log("Page location is instructions");
+		localStorage.setItem('page-location','instructions');
+		$('#divUserDetails').removeClass('show');
+		$('#divUserDetails').addClass('hide');
+		$('#divInstructions').removeClass('hide');
+		$('#divInstructions').addClass('show');
+		$('#divQuestions').removeClass('show');
+		$('#divQuestions').addClass('hide');
+		showInstructionValues();
+		
+	}
+	if(page_location == "questions"){
+		console.log("Page location is questions");
+		localStorage.setItem('page-location','questions');
+		$('#divUserDetails').removeClass('show');
+		$('#divUserDetails').addClass('hide');
+		$('#divInstructions').removeClass('show');
+		$('#divInstructions').addClass('hide');
+		$('#divQuestions').removeClass('hide');
+		$('#divQuestions').addClass('show');
+		$('.question-panel-design').removeClass('hide');
+		$('.question-panel-design').addClass('show');
+		$('.submit-button-div').removeClass('hide');
+		$('.submit-button-div').addClass('show');
+		getTestDetailsAndQuestions();
 	}
 })
 

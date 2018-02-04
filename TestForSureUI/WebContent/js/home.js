@@ -98,6 +98,7 @@ function showTests(categoryId, subCatId){
 
 //Check if the test is already attempted or not
 function checkAlreadyAttempted(id){
+	localStorage.setItem('page-location', null);
 	console.log("Take test id: "+id);
 	var query_string = 'test_id='+id;
 	var test_id = ((id).split('-'))[1];
