@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>Admin Dashboard</title>
+<link href='../../helperCSS/bootstrap.min.css' rel='stylesheet' />
+</head>
+<body>
+	<div class='page-header'></div>
+	<div id='adminProfileBox' class='admin-profile-box'>
+		<buton id='btnChangePass' class='btn btn-primary'>Change
+		Password</buton>
+		<buton id='btnLogout' class='btn btn-primary'>Logout</buton>
+	</div>
+	<div class='admin-menu col-xs-3 col-sm-3 col-md-2 col-lg-2'></div>
+	<div class='dashboard-content col-xs-9 col-sm-9 col-md-10 col-lg-10'>
+		<ul class="nav nav-tabs menu-tabs">
+		</ul>
+
+		<div class="tab-content menu-page-content"></div>
+	</div>
+
+	<!-- Add/Update Question Modal -->
+<div class="modal" id="questionModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Add/Update Question</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Category <b class='red'>*</b></span>
+					<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+						<option value=''>Select</option>
+						<option value='0'>+ Add New category</option>
+					</select>
+				</div>
+				<div class='addQuesCategory' style='display:none;'>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>
+					</span> <input id='txtQuesCategory' type='text'
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+				</div>
+				<div>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Type <b class='red'>*</b></span>
+					<select id='ddQuestionType' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+						<option value=''>Select</option>
+					</select>
+				</div>
+				<div>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph Based <b class='red'>*</b></span>
+					<input type='checkbox' id='chkParagraph' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+				</div>
+				<div>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph
+					<b class='red'>*</b></span> <input id='txtParagraphText' type='text'
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+				</div>
+				<div>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question
+					<b class='red'>*</b></span> <input id='txtQuestionText' type='text'
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+				</div>
+				<div class='divOptions'>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Options
+					<b class='red'>*</b></span> <input type='text'
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4 txtOptions' />
+						<input type='checkbox' class='chkCorrectOption
+					 col-xs-1 col-sm-1 col-md-1 col-lg-1'/>
+				</div>
+				<div>
+					<button type='button' id='btnAddOption' class='col-xs-offset-7 col-sm-offset-7 
+					col-md-offset-7 col-lg-offset-7
+					 col-xs-2 col-sm-2 col-md-2 col-lg-2'> + Add Option</button>
+				</div>
+				<div class='divSolution'>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Solution
+					</span> <input id='txtSolution' type='text'
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div>
+					<button id='btnQuestionSave' type='button'
+						class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+	        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+					<button id='btnQuestionCancel' type="button"
+						class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+	        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-danger"
+						data-dismiss="modal">Cancel</button>
+					<button id='btnQuestionRefresh' type="button"
+					class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary">
+					Refresh</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<link href='../css/header.css' rel='stylesheet' />
+	<link href='../css/dashboard.css' rel='stylesheet' />
+	<link href='../css/category.css' rel='stylesheet' />
+	<link href='../css/exam.css' rel='stylesheet' />
+	<link href='../css/test.css' rel='stylesheet' />
+	<link href='../css/questionbank.css' rel='stylesheet' />
+	<link href='../css/usertracking.css' rel='stylesheet' />
+	<link href='../css/quiz.css' rel='stylesheet' />
+	
+	<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
+	<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
+	<script type='text/javascript' src='../../helperJS/HelperFunctions.js'></script>
+	<script type='text/javascript' src='../../helperJS/AutoComplete.js'></script>
+	<script type='text/javascript' src='../../helperJS/Constants.js'></script>
+	<script type='text/javascript' src='../controller/dashboard.js'></script>
+	<script type='text/javascript' src='../controller/menu.js'></script>
+	<script type='text/javascript' src='../controller/category.js'></script>
+	<script type='text/javascript' src='../controller/exam.js'></script>
+	<script type='text/javascript' src='../controller/test.js'></script>
+	<script type='text/javascript' src='../controller/questionbank.js'></script>
+	<script type='text/javascript' src='../controller/usertracking.js'></script>
+	<script type='text/javascript' src='../controller/quiz.js'></script>
+	<script>
+		new dashboardController();
+	</script>
+</body>
+</html>

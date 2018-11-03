@@ -1,0 +1,52 @@
+<div class='menu-bar'>
+	<div class='col-xs-11 col-sm-11 col-md-11 col-lg-11 addQuestions'>
+		<button id='btnAddQuestion' class='btn btn-primary addEditQuestion'>
+			<span class='glyphicon glyphicon-plus'></span>&nbsp;Add Question
+		</button>
+	</div>
+</div>
+<div class='existing-questions'>
+	<table>
+		<thead>
+			<tr class='table-header'>
+				<th class='col-md-1'>id</th>
+				<th class='col-md-8'>Question</th>
+				<th class='col-md-3'>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+</div>
+
+<!-- Delete Question Modal -->
+<div class="modal deleteModal" id="deleteQuestionModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Question</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div>
+					<p>Are you sure to want to delete question <span></span></p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div>
+					<button id='btnDeleteYes' type='button'
+						class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3
+	        	 col-lg-offset-3 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+					<button id='btnDeleteNo' type="button"
+						class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+	        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-danger"
+						data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

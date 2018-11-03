@@ -1,0 +1,190 @@
+.admin-profile-box {
+	display: none;
+	padding: 20px;
+	border: solid 1px #2E6DA2;
+	position: absolute;
+	top: 70px;
+	right: 80px;
+}
+
+.admin-profile-box div:first-child {
+	border-bottom: solid 1px #2E6DA2;
+}
+
+.admin-menu {
+	position: absolute;
+	left: 0px;
+	top: 70px;
+	text-align: center;
+	border-right: solid 1px #2E6DA2;
+	color: #2E6DA2;
+	height: auto;
+	min-height: 89%;
+	padding: 0px;
+}
+
+.admin-menu ul {
+	padding: 0px;
+	list-style-type: none;
+}
+
+.admin-menu ul li {
+	padding: 10px 0;
+	border-bottom: solid 1px #2E6DA2;
+	cursor: pointer;
+}
+
+.admin-menu ul li span {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.admin-menu ul li.active {
+	background-color: #2E6DA2;
+	color: white;
+	pointer-events: none;
+}
+
+.dashboard-content {
+	position: absolute;
+	left: 15%;
+	top: 70px;
+	padding: 20px;
+	width: 85%;
+}
+
+.menu-tabs li {
+	background-color: #E4E4E4;
+}
+
+.menu-tabs li a {
+	color: black;
+	font-weight: bold;
+}
+
+.menu-tabs li.active {
+	background-color: #2E6DA2;
+	pointer-events: none;
+}
+
+.menu-tabs li.active a {
+	/*color:white;*/
+	
+}
+
+.dashboard-content .menu-page-content {
+	padding: 30px;
+}
+
+.dashboard-content .menu-tabs {
+	border: none;
+	padding: 0 30px;
+}
+
+/* Modal CSS */
+.modal {
+	padding-left: 0px !important;
+	overflow-y: auto;
+}
+
+.modal-dialog {
+	width: 100% !important;
+	height: 100%;
+	margin: 0px;
+	width: 0px;
+	overflow-y: auto;
+}
+
+.modal-content {
+	width: 100%;
+	min-height: 100%;
+	border-radius: 0px;
+	height: auto;
+	overflow-y: auto;
+}
+
+.modal-footer {
+	border-top: solid 1px #e4e4e4;
+	margin-bottom: 0px;
+	bottom: 0px;
+	width: 100%;
+	position: fixed;
+}
+/* Modal CSS ends */
+
+/* Common CSS for input */
+.modal-body input, .modal-body select {
+	border: solid 1px #d3d3d3;
+	border-radius: 5px;
+	height: 25px;
+	padding: 5px;
+	margin-bottom: 20px;
+}
+.modal-body select {
+	padding: 2px;
+}
+.modal-body span {
+	margin-bottom: 20px;
+	font-size: 17px;
+}
+
+.red {
+	color: red;
+}
+
+/* Delete Modal CSS starts */
+.deleteModal {
+	width: 40%;
+	margin-left: 30%;
+	margin-top: 5%;
+}
+
+.deleteModal .modal-header h4 {
+	display: inline;
+}
+
+.deleteModal .modal-footer div {
+	text-align: center;
+}
+
+.deleteModal .modal-dialog {
+	width: unset;
+	height: unset;
+	margin: unset;
+	width: unset;
+}
+
+.deleteModal .modal-content {
+	width: unset;
+	min-height: unset;
+	border-radius: unset;
+	height: unset;
+}
+
+.deleteModal .modal-footer {
+	border-top: none;
+	margin-top: 0px;
+	position: unset;
+}
+
+/* Delete Modal CSS ends */
+.table-header {
+	background-color: #2E6DA2;
+	color: white;
+	height: 30px;
+}
+/* Autocomplete CSS starts */
+.autocomplete-div{
+	border:solid 1px #e4e4e4;
+	border-radius: 5px;
+	padding:5px;
+	height:150px;
+	overflow:auto;
+}
+.autocomplete-div div{
+	cursor: pointer;
+}
+.autocomplete-div div:hover{
+	background-color: #e4e4e4;
+}
+/* Autocomplete CSS ends */

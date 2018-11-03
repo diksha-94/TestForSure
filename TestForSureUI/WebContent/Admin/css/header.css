@@ -1,0 +1,31 @@
+.page-header{
+    width: 100%;
+    border-bottom: solid 2px #2E6DA2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin:0px;
+    padding:0px;
+}
+.page-header .brand-logo{
+	padding: 10px 30px;
+	width:50%;
+}
+.page-header .brand-logo img{
+	height: 50px;
+    width: 210px;
+}
+.page-header .admin-profile{
+	position: absolute;
+	right: 50px;
+	top: 0px;
+	padding: 20px 30px;
+}
+.page-header .admin-profile p{
+	display: inline;
+}
+.page-header .admin-profile img{
+	width:40px;
+	height:40px;
+	margin-left:20px;
+}

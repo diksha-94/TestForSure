@@ -1,0 +1,39 @@
+.menu-bar .searchbar input{
+	height: 25px;
+    border: solid 1px #2E6DA2;
+    border-radius: 5px;
+    width:180px;
+}
+.menu-bar button{
+	padding:0px;
+}
+.existing-users{
+	margin:50px 0px;
+}
+.existing-users table{
+	border:solid 1px #2E6DA2;
+	width:100%;
+}
+.existing-users table tr th,td{
+	text-align: center;
+	padding: 5px 2px;
+}
+.existing-users table tr{
+	border-bottom:solid 1px #2E6DA2;
+}
+.existing-users table tr th,td{
+	border-right:solid 1px #2E6DA2;
+}
+.existing-users table tr th,td button{
+	margin: 0 10px;
+}
+#usertrackingModal .modal-dialog .modal-content .modal-header{
+	padding:10px;
+}
+#usertrackingModal .modal-dialog .modal-content .modal-header h4{
+	display:inline;
+}
+#usertrackingModal .modal-dialog .modal-content .modal-body{
+	height:200px;
+	padding:0px;
+}
