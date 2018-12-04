@@ -23,23 +23,19 @@ examController.prototype.BindEvents = function()
 	$('#ddSearchCategory').on('change', function(e){
 		this.SearchByCategory();
 	}.bind(this));
-	//Search category by name/title - textbox
-	$("#txtSearchExam").unbind().bind('keypress', function(e){
-		if($(e.currentTarget).val().length > 0){
-			$('#btnSearchExam').css('pointer-events', 'auto');
-		}
-		else{
-			$('#btnSearchExam').css('pointer-events', 'none');
-		}
-	});
+	
 	//Search category by name/title - button
 	$('#btnSearchExam').unbind().bind('click', function(){
 		this.SearchByCategory();
 	}.bind(this));
-	
+};
+examController.prototype.BindTableEvents = function()
+{
 	//Add/Update Category
 	$('.addEditExam').unbind().bind('click', function(e){
 		$('#examModal').modal('show');
+		summernoteController.getObj().addEditor('#txtExamDescription');
+		RefreshData('examModal');
 		this.PopulateExamData(e);
 		var id = 0;
 		var update = $(e.currentTarget).hasClass('update');
@@ -50,7 +46,7 @@ examController.prototype.BindEvents = function()
 			this.SaveExam(update, id);
 		}.bind(this));
 		$('#examModal').find('#btnExamRefresh').unbind().bind('click', function(){
-			this.RefreshExamModal();
+			RefreshData('examModal');
 		}.bind(this));
 	}.bind(this));
 	
@@ -69,13 +65,14 @@ examController.prototype.LoadView = function()
 	$('.menu-page-content').load('exam.html', function(){
 		this.LoadAllExams(function(){
 			this.BindEvents();
+			this.BindTableEvents();
 		}.bind(this));
 	}.bind(this));
 };
 examController.prototype.LoadAllExams = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/exam',
+		url: 'http://www.test2bsure.com:8084/test2bsure/exam',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -116,12 +113,12 @@ examController.prototype.SaveExam = function(update, id)
 	var title = $('#txtExamTitle').val();
 	var imageUrl = $('#txtExamImageUrl').val();
 	var categoryId = $('#ddCategory').val();
-	var description = $('#txtExamDescription').val();
+	var description = summernoteController.getObj().getValue('#txtExamDescription');
 	if(name.length == 0 || title.length == 0 || imageUrl.length == 0 || categoryId.length == 0){
 		alert('Please enter all the mandatory fields');
 		return;
 	}
-	var url = 'http://localhost:8083/test2bsure/exam';
+	var url = 'http://www.test2bsure.com:8084/test2bsure/exam';
 	var type = 'POST';
 	var requestData = {
 			'name': name,
@@ -160,7 +157,7 @@ examController.prototype.DeleteExam = function(examId, e)
 	//ajax call to delete the exam
 	//in ajax success, remove the exam from the page
 	$.ajax({
-		url: "http://localhost:8083/test2bsure/exam?id="+examId,
+		url: "http://www.test2bsure.com:8084/test2bsure/exam?id="+examId,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -176,7 +173,7 @@ examController.prototype.DeleteExam = function(examId, e)
 examController.prototype.GetCategories = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/category',
+		url: 'http://www.test2bsure.com:8084/test2bsure/category',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -219,19 +216,15 @@ examController.prototype.PopulateExamData = function(e)
 	$('#examModal').find('#txtExamTitle').val(title);
 	$('#examModal').find('#txtExamImageUrl').val(imageUrl);
 	$('#examModal').find('#ddCategory').val(categoryId);
-	$('#examModal').find('#txtExamDescription').val(desc);
-};
-examController.prototype.RefreshExamModal = function()
-{
-	$('#examModal').find('input[type="text"]').val('');
-	$('#examModal').find('select').val('');
+	summernoteController.getObj().setValue('#txtExamDescription', desc);
+	//$('#examModal').find('#txtExamDescription').val(desc);
 };
 examController.prototype.SearchExamByName = function(callback)
 {
 	console.log('Searching Exam by name/title');
 	var search = $('#txtSearchExam').val();
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/exam?search='+search,
+		url: 'http://www.test2bsure.com:8084/test2bsure/exam?search='+search,
 		type: 'GET',
 		success: function(response){
 			$('.existing-exams').find('table').find('tbody').empty();
@@ -286,6 +279,6 @@ examController.prototype.SearchByCategory = function()
 				$(this).remove();
 			}
 		});
-		this.BindEvents();
+		this.BindTableEvents();
 	}.bind(this));
 };

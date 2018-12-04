@@ -1,3 +1,6 @@
+body{
+	overflow-x:hidden;
+}
 .admin-profile-box {
 	display: none;
 	padding: 20px;
@@ -85,9 +88,10 @@
 .modal {
 	padding-left: 0px !important;
 	overflow-y: auto;
+	padding-right:0px !important;
 }
 
-.modal-dialog {
+.modal-dialog.test2bsure-dialog {
 	width: 100% !important;
 	height: 100%;
 	margin: 0px;
@@ -95,37 +99,43 @@
 	overflow-y: auto;
 }
 
-.modal-content {
+.modal-content.test2bsure-content {
 	width: 100%;
 	min-height: 100%;
 	border-radius: 0px;
 	height: auto;
 	overflow-y: auto;
+	max-height: calc(100vh - 100px);
+	overflow-x: hidden;
 }
 
-.modal-footer {
+.modal-footer.test2bsure-footer {
 	border-top: solid 1px #e4e4e4;
 	margin-bottom: 0px;
 	bottom: 0px;
 	width: 100%;
 	position: fixed;
+	background-color:white;
+}
+.modal-body.test2bsure-body{
+	margin-bottom: 840px;
 }
 /* Modal CSS ends */
 
 /* Common CSS for input */
-.modal-body input, .modal-body select {
+.modal-body.test2bsure-body input, .modal-body.test2bsure-body select {
 	border: solid 1px #d3d3d3;
 	border-radius: 5px;
 	height: 25px;
 	padding: 5px;
 	margin-bottom: 20px;
 }
-.modal-body select {
+.modal-body.test2bsure-body select {
 	padding: 2px;
 }
-.modal-body span {
-	margin-bottom: 20px;
-	font-size: 17px;
+.modal-body.test2bsure-body span {
+	/*margin-bottom: 20px;
+	font-size: 17px;*/
 }
 
 .red {
@@ -188,3 +198,6 @@
 	background-color: #e4e4e4;
 }
 /* Autocomplete CSS ends */
+.lockDetails{
+	display: none;
+}

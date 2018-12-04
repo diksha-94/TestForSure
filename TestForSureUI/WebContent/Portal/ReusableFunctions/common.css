@@ -1,0 +1,20 @@
+.button{
+	height: 30px;
+	width: 100%;
+}
+.button:hover{
+	transform: scale(1.05);
+}
+.button-primary{
+	background-color: #2E6DA4;
+	border: solid 1px #2E6DA4;
+	border-radius: 0px;
+	color: white;
+	font-weight: bold;
+}
+.button-default{
+	border: solid 1px #2E6DA4;
+	border-radius: 0px;
+	color: #2E6DA4;
+	font-weight: bold;
+}

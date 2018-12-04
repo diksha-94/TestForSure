@@ -80,10 +80,6 @@
 	height: 30px;
 	padding: 5px;
 }
-.added-questions{
-	margin:60px 0px;
-		
-}
 .added-questions table{
 	border:solid 1px #2E6DA2;
 	width:100%;
@@ -111,4 +107,13 @@
 }
 .add-more-ques table tr th,td{
 	border:solid 1px #2E6DA2;
+}
+#testQuesModal .divCountQuesTest {
+    text-align: center;
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+#testQuesModal .added-questions {
+    margin: 0px;
 }

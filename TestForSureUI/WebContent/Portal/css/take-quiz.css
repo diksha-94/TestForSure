@@ -1,0 +1,98 @@
+.quiz-header{
+	border-bottom: solid 1px #E4E4E4;
+	height: 80px;
+	padding: 21px;
+	font-weight: bold;
+}
+.quiz-header span{
+	margin-top: 10px;
+	display: block;
+}
+.quiz .quiz-left{
+	height: 500px;
+	overflow-y: auto;
+	border-right: solid 1px #e4e4e4;
+	padding: 40px;
+}
+.quiz .quiz-left .question{
+	border: solid 1px #E4E4E4;
+}
+.quiz .quiz-left .question .question-number{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-color: #E4E4E4;
+	padding-top: 9px;
+	text-align: center;
+}
+.quiz .quiz-left .question .question-text{
+	margin-left: 20px;
+}
+.quiz .quiz-left .question .options{
+	padding: 20px 40px;
+}
+.quiz .quiz-left .question .options .option{
+	padding: 10px;
+	border: solid 1px #e4e4e4;
+	margin-top: 10px;
+	cursor: pointer;
+}
+.quiz .quiz-left .question .options .option.correct{
+	border-color: green;
+}
+.quiz .quiz-left .question .options .option.incorrect{
+	border-color: red;
+}
+.quiz .quiz-left .question .options .option.block-events{
+	pointer-events: none;
+}
+.quiz .quiz-left .question .options .option:hover{
+	transform: scale(1.01, 1.05);
+	box-shadow: 0px 0px 10px #E4E4E4;
+}
+.quiz .quiz-left .question .options .option .option-value{
+	display: inline-block;
+}
+.quiz .quiz-right{
+	padding: 20px;
+}
+.quiz .quiz-right h5{
+	color: #2E6DA2;
+	font-weight: bold;
+}
+.quiz .quiz-right .question-status{
+	border: solid 1px #E4E4E4;
+	padding: 20px;
+}
+.quiz .quiz-right .question-status span{
+	display: inline-block;
+	height: 32px;
+	width: 32px;
+	margin-left: 14px;
+	font-weight: bold;
+	font-size: 1.3em;
+	border-radius: 50%;
+	text-align: center;
+	padding-top: 3px;
+	font-weight: bold;
+}
+.quiz .quiz-right .question-status span.notvisited{
+	border: solid 1px #2E6DA2;
+	background-color: white;
+	color: #2E6DA2;
+}
+.quiz .quiz-right .question-status span.skipped{
+	border: solid 1px #E4E4E4;
+	background-color: #E4E4E4;
+	color: #2E6DA2;
+}
+.quiz .quiz-right .question-status span.correct{
+	border: solid 1px green;
+	background-color: green;
+	color: white;
+}
+.quiz .quiz-right .question-status span.incorrect{
+	border: solid 1px red;
+	background-color: red;
+	color: white;
+}

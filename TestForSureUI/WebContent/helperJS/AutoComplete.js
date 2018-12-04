@@ -11,11 +11,11 @@ AutoComplete.getObj = function(dom)
 	}
 	return _obj;
 };
-AutoComplete.prototype.PopulateList =function()
+AutoComplete.prototype.PopulateList =function(dom)
 {
 	this.selectedItems = [];
-	if($("#selectedExam").find('span.selectedExam').length > 0){
-		$("#selectedExam").find('span.selectedExam').each(function(key, value){
+	if($(dom).find('span.selectedExam').length > 0){
+		$(dom).find('span.selectedExam').each(function(key, value){
 			this.selectedItems.push($(value).attr('data-id'));
 		}.bind(this));
 	}

@@ -40,7 +40,7 @@ usertrackingController.prototype.LoadView = function()
 usertrackingController.prototype.LoadAllUsers = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/users',
+		url: 'http://www.test2bsure.com:8084/users',
 		type: 'GET',
 		contentType: 'application/json',
 		context: this,

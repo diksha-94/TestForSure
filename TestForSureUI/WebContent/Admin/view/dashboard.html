@@ -1,14 +1,18 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>Admin Dashboard</title>
 <link href='../../helperCSS/bootstrap.min.css' rel='stylesheet' />
+<link href='../css/editor.css' rel='stylesheet' />
+<link href='../../Summernote/summernote.css' rel="stylesheet">
+
 </head>
 <body>
 	<div class='page-header'></div>
 	<div id='adminProfileBox' class='admin-profile-box'>
-		<buton id='btnChangePass' class='btn btn-primary'>Change
-		Password</buton>
-		<buton id='btnLogout' class='btn btn-primary'>Logout</buton>
+		<button id='btnChangePass' class='btn btn-primary'>Change
+		Password</button>
+		<button id='btnLogout' class='btn btn-primary'>Logout</button>
 	</div>
 	<div class='admin-menu col-xs-3 col-sm-3 col-md-2 col-lg-2'></div>
 	<div class='dashboard-content col-xs-9 col-sm-9 col-md-10 col-lg-10'>
@@ -20,8 +24,8 @@
 
 	<!-- Add/Update Question Modal -->
 <div class="modal" id="questionModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
+	<div class="modal-dialog test2bsure-dialog">
+		<div class="modal-content test2bsure-content">
 
 			<!-- Modal Header -->
 			<div class="modal-header">
@@ -30,13 +34,13 @@
 			</div>
 
 			<!-- Modal body -->
-			<div class="modal-body">
+			<div class="modal-body test2bsure-body">
 				<div>
 					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Category <b class='red'>*</b></span>
 					<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
 						<option value=''>Select</option>
-						<option value='0'>+ Add New category</option>
+						<option class='newCategoryOption' value='0'>+ Add New category</option>
 					</select>
 				</div>
 				<div class='addQuesCategory' style='display:none;'>
@@ -44,12 +48,27 @@
 					col-xs-2 col-sm-2 col-md-2 col-lg-2'>
 					</span> <input id='txtQuesCategory' type='text'
 						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						<button id='btnAddQuesCategory' class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Add</button>
+				</div>
+				<div>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question SubCategory <b class='red'>*</b></span>
+					<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+						<option value=''>Select</option>
+						<option class='newSubcategoryOption' value='0'>+ Add New sub category</option>
+					</select>
+				</div>
+				<div class='addQuesSubCategory' style='display:none;'>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>
+					</span> <input id='txtQuesSubCategory' type='text'
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						<button id='btnAddQuesSubCategory' class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Add</button>
 				</div>
 				<div>
 					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Type <b class='red'>*</b></span>
 					<select id='ddQuestionType' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-						<option value=''>Select</option>
 					</select>
 				</div>
 				<div>
@@ -60,22 +79,23 @@
 				<div>
 					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph
-					<b class='red'>*</b></span> <input id='txtParagraphText' type='text'
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+					<b class='red'>*</b></span> <div id='txtParagraphText' 
+					class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
 				</div>
 				<div>
 					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question
-					<b class='red'>*</b></span> <input id='txtQuestionText' type='text'
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+					<b class='red'>*</b></span> <div id='txtQuestionText' 
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
 				</div>
 				<div class='divOptions'>
 					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Options
-					<b class='red'>*</b></span> <input type='text'
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4 txtOptions' />
-						<input type='checkbox' class='chkCorrectOption
+					col-xs-1 col-sm-1 col-md-1 col-lg-1'>Options
+					<b class='red'>*</b></span> 
+					<input type='checkbox' class='chkCorrectOption
 					 col-xs-1 col-sm-1 col-md-1 col-lg-1'/>
+					 <div 
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4 txtOptions'></div>
 				</div>
 				<div>
 					<button type='button' id='btnAddOption' class='col-xs-offset-7 col-sm-offset-7 
@@ -85,11 +105,11 @@
 				<div class='divSolution'>
 					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Solution
-					</span> <input id='txtSolution' type='text'
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+					</span> <div id='txtSolution' 
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer test2bsure-footer">
 				<div>
 					<button id='btnQuestionSave' type='button'
 						class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
@@ -116,8 +136,19 @@
 	<link href='../css/usertracking.css' rel='stylesheet' />
 	<link href='../css/quiz.css' rel='stylesheet' />
 	
+	
 	<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 	<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+	<!-- <script type='text/javascript' src='../../ckeditor_4.10.1_0074a8baea8a/ckeditor/ckeditor.js'></script>
+	<script type='text/javascript' src='../../ckeditor_4.10.1_0074a8baea8a/ckeditor/adapters/jquery.js'></script>
+	-->
+	<!--<script type='text/javascript' src='../../Trumbowyg-master/Trumbowyg-master/dist/trumbowyg.min.js'></script>
+	-->
+	<script src="../../Summernote/summernote-math.js"></script>
+	<script src="../../Summernote/summernote.js"></script>
 	<script type='text/javascript' src='../../helperJS/HelperFunctions.js'></script>
 	<script type='text/javascript' src='../../helperJS/AutoComplete.js'></script>
 	<script type='text/javascript' src='../../helperJS/Constants.js'></script>
