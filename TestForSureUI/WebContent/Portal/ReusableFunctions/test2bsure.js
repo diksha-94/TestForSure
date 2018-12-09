@@ -11,7 +11,10 @@ test2bsureController.getObj = function()
 };
 test2bsureController.prototype.GetHeader = function(dom){
 	//should make it custom , as per the need on different pages
-	$(dom).html("<div> TEST2BSURE Header </div>");
+	$(dom).load('header.html', function(){
+		
+	}.bind(this));
+	//$(dom).html("<div> TEST2BSURE Header </div>");
 }
 test2bsureController.prototype.GetFooter = function(dom){
 	//should make it custom , as per the need on different pages
