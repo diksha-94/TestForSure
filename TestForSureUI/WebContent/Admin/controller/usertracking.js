@@ -9,18 +9,11 @@ usertrackingController.prototype.Init = function()
 };
 usertrackingController.prototype.BindEvents = function()
 {
-	//Search user by name/e-mail - textbox
-	$("#txtSearchUser").unbind().bind('keypress', function(e){
-		if($(e.currentTarget).val().length > 0){
-			$('#btnSearchUser').css('pointer-events', 'auto');
-		}
-		else{
-			$('#btnSearchUser').css('pointer-events', 'none');
-		}
-	});
 	//Search user by name/e-mail - button
 	$('#btnSearchUser').unbind().bind('click', function(){
-		this.SearchUserByName();
+		this.SearchUserByName(function(){
+			this.BindEvents();
+		}.bind(this));
 	}.bind(this));
 	
 	//View User
@@ -40,26 +33,32 @@ usertrackingController.prototype.LoadView = function()
 usertrackingController.prototype.LoadAllUsers = function(callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/users',
+		url: 'http://localhost:8083/test2bsure/user',
 		type: 'GET',
 		contentType: 'application/json',
 		context: this,
 		success: function(response){
-			if(response.length > 0){
-				this.users = response;
-				var userObj = "";
-				for(var user in response){
-					userObj += "<tr>"+
-					"<td class='tdUserId'>"+response[user]['id']+"</td>"+
-					"<td class='tdUserName'>"+response[user]['name']+"</td>"+
-					"<td class='tdUserEmail'>"+response[user]['email']+"</td>"+
-					"<td class='tdUserCreatedOn'>"+response[user]['createdOn']+"</td>"+
-					"<td>"+
-						"<button class='btn btn-default btnViewUser'>View</button>"+
-					"</td>"+
-					"</tr>";
+			if(response.response.status == true){
+				if(response.data != null && response.data.length > 0){
+					var users = response.data;
+					var userObj = "";
+					for(var user in users){
+						this.users[users[user]['id']] = users[user];
+						if(users[user]['lastUpdatedOn'] == null){
+							users[user]['lastUpdatedOn'] = '-';
+						}
+						userObj += "<tr>"+
+						"<td class='tdUserId'>"+users[user]['id']+"</td>"+
+						"<td class='tdUserName'>"+users[user]['name']+"</td>"+
+						"<td class='tdUserEmail'>"+users[user]['email']+"</td>"+
+						"<td class='tdUserCreatedOn'>"+users[user]['lastUpdatedOn']+"</td>"+
+						"<td>"+
+							"<button class='btn btn-default btnViewUser'>View</button>"+
+						"</td>"+
+						"</tr>";
+					}
+					$('.existing-users').find('table').find('tbody').append(userObj);
 				}
-				$('.existing-users').find('table').find('tbody').append(userObj);
 			}
 			callback();
 		},
@@ -71,9 +70,55 @@ usertrackingController.prototype.LoadAllUsers = function(callback)
 };
 usertrackingController.prototype.PopulateUser = function(e)
 {
-	
+	var id = $(e.currentTarget).parents('tr').find('.tdUserId').text();
+	var html = "<div>"+
+					"<table>"+
+						"<tr><td>User Id:    </td><td>"+this.users[id].id+"</td></tr>"+
+						"<tr><td>Name:    </td><td>"+this.users[id].name+"</td></tr>"+
+						"<tr><td>Email:    </td><td>"+this.users[id].email+"</td></tr>"+
+						"<tr><td>Mobile Number:    </td><td>"+this.users[id].mobileno+"</td></tr>"+
+						"<tr><td>Created On:    </td><td>"+this.users[id].lastUpdatedOn+"</td></tr>"+
+						"<tr><td>Verified:    </td><td>"+this.users[id].verified+"</td></tr>"+
+					"</table>"+
+				"</div>";
+	$('#userModal').find('.modal-body').empty();
+	$('#userModal').find('.modal-body').html(html);
 };
-usertrackingController.prototype.SearchUserByName = function()
+usertrackingController.prototype.SearchUserByName = function(callback)
 {
 	console.log('Searching user by name/email');
+	var search = $('#txtSearchUser').val();
+	$.ajax({
+		url: 'http://localhost:8083/test2bsure/user?search='+search,
+		type: 'GET',
+		success: function(response){
+			$('.existing-users').find('table').find('tbody').empty();
+			if(response.response.status == true){
+				if(response.data != null && response.data.length > 0){
+					var userObj = "";
+					var users = response.data;
+					for(var user in users){
+						if(users[user]['lastUpdatedOn'] == null){
+							users[user]['lastUpdatedOn'] = '-'
+						}
+						userObj += "<tr>"+
+						"<td class='tdUserId'>"+users[user]['id']+"</td>"+
+						"<td class='tdUserName'>"+users[user]['name']+"</td>"+
+						"<td class='tdUserEmail'>"+users[user]['email']+"</td>"+
+						"<td class='tdUserCreatedOn'>"+users[user]['lastUpdatedOn']+"</td>"+
+						"<td>"+
+							"<button class='btn btn-default btnViewUser'>View</button>"+
+						"</td>"+
+						"</tr>";
+					}
+					$('.existing-users').find('table').find('tbody').append(userObj);
+				}
+			}
+			callback();
+		},
+		error: function(e){
+			console.log(e);
+			callback();
+		}
+	});
 };

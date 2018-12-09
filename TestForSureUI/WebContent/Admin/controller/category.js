@@ -54,7 +54,7 @@ categoryController.prototype.LoadView = function()
 categoryController.prototype.LoadAllCategories = function(callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/category',
+		url: 'http://localhost:8083/test2bsure/category',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -97,7 +97,7 @@ categoryController.prototype.SaveCategory = function(update, id)
 		alert('Please enter all the mandatory fields');
 		return;
 	}
-	var url = 'http://www.test2bsure.com:8084/test2bsure/category';
+	var url = 'http://localhost:8083/test2bsure/category';
 	var type = 'POST';
 	var requestData = {
 			'name': name,
@@ -141,7 +141,7 @@ categoryController.prototype.DeleteCategory = function(categoryId, e)
 	//ajax call to delete the category
 	//in ajax success, remove the category from the page
 	$.ajax({
-		url: "http://www.test2bsure.com:8084/test2bsure/category?id="+categoryId,
+		url: "http://localhost:8083/test2bsure/category?id="+categoryId,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -178,7 +178,7 @@ categoryController.prototype.SearchCategoryByName = function(callback)
 	console.log('Searching category by name/title');
 	var search = $('#txtSearchCategory').val();
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/category?search='+search,
+		url: 'http://localhost:8083/test2bsure/category?search='+search,
 		type: 'GET',
 		success: function(response){
 			$('.existing-categories').find('table').find('tbody').empty();

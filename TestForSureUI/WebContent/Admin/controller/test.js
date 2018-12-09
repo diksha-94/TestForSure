@@ -109,7 +109,7 @@ testController.prototype.LoadView = function()
 testController.prototype.LoadAllTests = function(callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/test',
+		url: 'http://localhost:8083/test2bsure/test',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -204,7 +204,7 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 		alert('Total of time in section should be equal to the the total time');
 		return false;
 	}
-	var url = 'http://www.test2bsure.com:8084/test2bsure/test';
+	var url = 'http://localhost:8083/test2bsure/test';
 	var type = 'POST';
 	var requestData = {
 			'name': name,
@@ -280,7 +280,7 @@ testController.prototype.DeleteTest = function(testId, e)
 {
 	console.log('Delete Test');
 	$.ajax({
-		url: "http://www.test2bsure.com:8084/test2bsure?id="+testId,
+		url: "http://localhost:8083/test2bsure?id="+testId,
 		type: 'DELETE',
 		
 		success: function(response){
@@ -380,7 +380,7 @@ testController.prototype.SearchTestByName = function(callback)
 	console.log('Searching test by name/title');
 	var search = $('#txtSearchTest').val();
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/test?search='+search,
+		url: 'http://localhost:8083/test2bsure/test?search='+search,
 		type: 'GET',
 		success: function(response){
 			$('.existing-tests').find('table').find('tbody').empty();
@@ -450,7 +450,7 @@ testController.prototype.AddSection = function()
 testController.prototype.LoadCategories = function()
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/category',
+		url: 'http://localhost:8083/test2bsure/category',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -470,7 +470,7 @@ testController.prototype.LoadCategories = function()
 testController.prototype.LoadExams = function()
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/exam',
+		url: 'http://localhost:8083/test2bsure/exam',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -494,7 +494,7 @@ testController.prototype.LoadExams = function()
 testController.prototype.SearchExams = function(value, callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/exam?search='+value,
+		url: 'http://localhost:8083/test2bsure/exam?search='+value,
 		type: 'GET',
 		success: function(response){
 			this.exams = {};
@@ -519,7 +519,7 @@ testController.prototype.SearchExams = function(value, callback)
 testController.prototype.LoadQuestions = function(callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/question',
+		url: 'http://localhost:8083/test2bsure/question',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -544,7 +544,7 @@ testController.prototype.LoadQuestions = function(callback)
 testController.prototype.HandleTestStatus = function(id)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/teststatus?id='+id,
+		url: 'http://localhost:8083/test2bsure/teststatus?id='+id,
 		type: 'PUT',
 		success: function(response){
 			console.log(response);
@@ -572,7 +572,7 @@ testController.prototype.HandleTestQuestions = function()
 testController.prototype.PopulateTestQuestions = function(callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/testquestion?testid='+this.id,
+		url: 'http://localhost:8083/test2bsure/testquestion?testid='+this.id,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -625,7 +625,7 @@ testController.prototype.PopulateAllQuestions = function()
 testController.prototype.AddTestQuestion = function(quesId)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/testquestion',
+		url: 'http://localhost:8083/test2bsure/testquestion',
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({
@@ -645,7 +645,7 @@ testController.prototype.AddTestQuestion = function(quesId)
 testController.prototype.DeleteTestQuestion = function(quesId)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/testquestion',
+		url: 'http://localhost:8083/test2bsure/testquestion',
 		type: 'DELETE',
 		contentType: 'application/json',
 		data: JSON.stringify({
@@ -750,7 +750,7 @@ testController.prototype.PopulateFilteredQuestions = function()
 testController.prototype.GetQuestionCategories = function()
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/question-category',
+		url: 'http://localhost:8083/test2bsure/question-category',
 		type: 'GET',
 		success: function(response){
 			console.log(response);

@@ -66,7 +66,7 @@ questionbankController.prototype.LoadView = function()
 questionbankController.prototype.LoadAllQuestions = function(callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/question',
+		url: 'http://localhost:8083/test2bsure/question',
 		type: 'GET',
 		contentType: 'application/json',
 		success: function(response){
@@ -122,7 +122,7 @@ questionbankController.prototype.AddQuestionModal = function()
 				//Add a new Question category POST question-category(String category)
 				var newCategory = $('#questionModal').find('#txtQuesCategory').val();
 				$.ajax({
-					url: "http://www.test2bsure.com:8084/test2bsure/question-category?category="+newCategory,
+					url: "http://localhost:8083/test2bsure/question-category?category="+newCategory,
 					type: 'POST',
 					success: function(response){
 						console.log(response);
@@ -165,7 +165,7 @@ questionbankController.prototype.AddQuestionModal = function()
 				//Add a new Question category POST question-subcategory(int categoryId, String subcategory)
 				var newSubcategory = $('#questionModal').find('#txtQuesSubCategory').val();
 				$.ajax({
-					url: "http://www.test2bsure.com:8084/test2bsure/question-subcategory?categoryId="+$('#questionModal').find('#ddQuestionCategory').val()+"&subcategory="+newSubcategory,
+					url: "http://localhost:8083/test2bsure/question-subcategory?categoryId="+$('#questionModal').find('#ddQuestionCategory').val()+"&subcategory="+newSubcategory,
 					type: 'POST',
 					success: function(response){
 						console.log(response);
@@ -266,7 +266,7 @@ questionbankController.prototype.SaveQuestion = function(update, id)
 		correctOptions.push($(correctOptionDom[i]).prop('checked'));
 	}
 	options += "</options>";
-	var url = 'http://www.test2bsure.com:8084/test2bsure/question';
+	var url = 'http://localhost:8083/test2bsure/question';
 	var type = 'POST';
 	var requestData = {
 			'questionCategory': categoryId,
@@ -312,7 +312,7 @@ questionbankController.prototype.DeleteQuestion = function(questionId, e)
 {
 	console.log('Delete Question');
 	$.ajax({
-		url: "http://www.test2bsure.com:8084/test2bsure/question/id="+questionId,
+		url: "http://localhost:8083/test2bsure/question/id="+questionId,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -391,7 +391,7 @@ questionbankController.prototype.PopulateQuestionData = function(e)
 questionbankController.prototype.GetQuestionCategories = function(callback)
 {
 	$.ajax({
-		url: 'http://www.test2bsure.com:8084/test2bsure/question-category',
+		url: 'http://localhost:8083/test2bsure/question-category',
 		type: 'GET',
 		success: function(response){
 			console.log(response);
