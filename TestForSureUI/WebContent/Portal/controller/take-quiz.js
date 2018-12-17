@@ -52,7 +52,8 @@ quizController.prototype.PopulateQuizDetails = function()
 };
 quizController.prototype.PopulateQuestion = function(solution)
 {
-	$('.quiz').find('.quiz-questions').find('.attempt-controls').empty();
+	var optionValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+	$('.quiz-footer').hide();
 	var question = this.questionsData[this.currentQues];
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
 					"<div class='question-desc'>"+
@@ -88,7 +89,7 @@ quizController.prototype.PopulateQuestion = function(solution)
 			addClass += ' no-hover block-events';
 		}
 		html += "<div class='"+addClass+"' data-option='"+key+"'>"+
-					"<span class='option-count'>"+(key+1)+"</span>"+
+					"<span class='option-count'>"+optionValues[key]+"</span>"+
 					"<span class='option-value'>"+$(value).html()+"</span>"+
 					"<span class='answer-status'></span>"+
 				"</div>";
@@ -164,13 +165,16 @@ quizController.prototype.CheckAnswer = function(node)
 		var correctAnswer = JSON.parse(data.correctAnswer);
 		if(correctAnswer.indexOf(true) == option){
 			$(node).addClass('correct');
+			$(node).find('span.option-count').addClass('correct');
 			$('.question-status').find('span[qid='+quesId+']').removeClass('notvisited').addClass('correct');
 		}
 		else{
 			$(node).addClass('incorrect');
+			$(node).find('span.option-count').addClass('incorrect');
 			$('.question-status').find('span[qid='+quesId+']').removeClass('notvisited').addClass('incorrect');
 			var correctIndex = correctAnswer.indexOf(true);
 			$('.question[question-id='+quesId+']').find('.option[data-option='+correctIndex+']').addClass('correct');
+			$('.question[question-id='+quesId+']').find('.option[data-option='+correctIndex+']').find('span.option-count').addClass('correct');
 		}
 		$(node).parents('.options').find('.option').addClass('block-events');
 		$(node).parents('.options').find('.option').addClass('no-hover');
@@ -185,7 +189,7 @@ quizController.prototype.ManageControls = function(){
 	else{
 		html += "<button type='button' class='btnNext button button-primary'>Next</button>"
 	}
-	$('.quiz').find('.quiz-questions').find('.attempt-controls').html(html);
+	$('.quiz-footer').html(html);
 	
 	$('.btnNext').unbind().bind('click', function(){
 		this.currentQues += 1;
@@ -198,6 +202,7 @@ quizController.prototype.ManageControls = function(){
 }
 quizController.prototype.DisplayReport = function()
 {
+	$('.quiz-footer').hide();
 	$('.quiz').find('.quiz-questions').hide();
 	$('.quiz').find('.quiz-report').show();
 	//find the correct question count
@@ -229,50 +234,53 @@ quizController.prototype.HandleReviewControls = function()
 	var html = "<button type='button' class='btnPrev button button-primary'>Previous</button>"+
 			"<button type='button' class='btnNext button button-primary'>Next</button>"+
 			"<button type='button' class='btnFinish button button-primary'>Finish</button>";
-	$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').html(html);
-	$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').hide();
-	$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').hide();
-	$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').unbind().bind('click', function(){
+	$('.quiz-footer').html(html);
+	$('.quiz-footer').find('.btnPrev').hide();
+	$('.quiz-footer').find('.btnFinish').hide();
+	$('.quiz-footer').find('.btnPrev').unbind().bind('click', function(){
 		this.currentQues -= 1;
-		this.PopulateQuestion();
+		this.PopulateQuestion(true);
+		this.HandleReviewControls();
 		if(this.currentQues == 0){
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').hide();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnNext').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').hide();
+			$('.quiz-footer').find('.btnPrev').hide();
+			$('.quiz-footer').find('.btnNext').show();
+			$('.quiz-footer').find('.btnFinish').hide();
 		}
 		else if(this.currentQues == this.quizInfo.noOfQues - 1){
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnNext').hide();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').show();
+			$('.quiz-footer').find('.btnPrev').show();
+			$('.quiz-footer').find('.btnNext').hide();
+			$('.quiz').find('.btnFinish').show();
 		}
 		else{
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnNext').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').hide();
+			$('.quiz-footer').find('.btnPrev').show();
+			$('.quiz-footer').find('.btnNext').show();
+			$('.quiz-footer').find('.btnFinish').hide();
 		}
 	}.bind(this));
-	$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnNext').unbind().bind('click', function(){
+	$('.quiz-footer').find('.btnNext').unbind().bind('click', function(){
 		this.currentQues += 1;
-		this.PopulateQuestion();
+		this.PopulateQuestion(true);
+		this.HandleReviewControls();
 		if(this.currentQues == 0){
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').hide();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnNext').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').hide();
+			$('.quiz-footer').find('.btnPrev').hide();
+			$('.quiz-footer').find('.btnNext').show();
+			$('.quiz-footer').find('.btnFinish').hide();
 		}
 		else if(this.currentQues == this.quizInfo.noOfQues - 1){
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnNext').hide();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').show();
+			$('.quiz-footer').find('.btnPrev').show();
+			$('.quiz-footer').find('.btnNext').hide();
+			$('.quiz-footer').find('.btnFinish').show();
 		}
 		else{
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnPrev').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnNext').show();
-			$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').hide();
+			$('.quiz-footer').find('.btnPrev').show();
+			$('.quiz-footer').find('.btnNext').show();
+			$('.quiz-footer').find('.btnFinish').hide();
 		}
 	}.bind(this));
-	$('.quiz').find('.quiz-questions').find('.attempt-solution-controls').find('.btnFinish').unbind().bind('click', function(){
+	$('.quiz-footer').find('.btnFinish').unbind().bind('click', function(){
 		this.currentQues = 0;
 		$('.quiz').find('.quiz-questions').hide();
 		$('.quiz').find('.quiz-report').show();
+		$('.quiz-footer').hide();
 	}.bind(this));
 };

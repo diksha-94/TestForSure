@@ -9,7 +9,7 @@
 	display: block;
 }
 .quiz .quiz-questions{
-	height: 500px;
+	height: 76%;
 	overflow-y: auto;
 	border-right: solid 1px #e4e4e4;
 	padding: 40px;
@@ -22,8 +22,10 @@
 	height: 40px;
 	width: 40px;
 	background-color: #E4E4E4;
-	padding-top: 9px;
+	padding-top: 7px;
 	text-align: center;
+	font-weight: bold;
+	font-size: 1.4em;
 }
 .quiz .quiz-questions .question .question-text{
 	margin-left: 20px;
@@ -37,6 +39,22 @@
 	margin-top: 10px;
 	cursor: pointer;
 }
+.quiz .quiz-questions .question .options .option .option-count{
+	height: 39px;
+	width: 39px;
+	display: inline-block;
+	background-color: #E4E4E4;
+	border: solid 1px #e4e4e4;
+	font-weight: bold;
+	font-size: 1.3em;
+	border-radius: 50%;
+	padding: 6px;
+	text-align: center;
+}
+.quiz .quiz-questions .question .question-desc{
+	border-bottom: solid 1px #E4E4E4;
+}
+
 .quiz .quiz-questions .question .options .option.correct{
 	border-color: green;
 }
@@ -52,6 +70,7 @@
 }
 .quiz .quiz-questions .question .options .option .option-value{
 	display: inline-block;
+	margin-left: 15px;
 }
 .quiz .quiz-questions .question .solution{
 	padding: 20px 40px;
@@ -100,4 +119,22 @@
 	border: solid 1px red;
 	background-color: red;
 	color: white;
+}
+.quiz .quiz-questions .question .options .option .option-count.correct{
+	border: solid 1px green;
+	background-color: green;
+	color: white;
+}
+.quiz .quiz-questions .question .options .option .option-count.incorrect{
+	border: solid 1px red;
+	background-color: red;
+	color: white;
+}
+.quiz-footer{
+	margin-top: 40px;
+	margin-bottom: 25px;
+}
+.quiz-footer button{
+	width: 40%;
+	margin-left: 5%;
 }

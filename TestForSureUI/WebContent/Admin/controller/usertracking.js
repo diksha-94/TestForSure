@@ -42,6 +42,7 @@ usertrackingController.prototype.LoadAllUsers = function(callback)
 				if(response.data != null && response.data.length > 0){
 					var users = response.data;
 					var userObj = "";
+					$('.userCount').text(response.response.message.split(":")[1].trim());
 					for(var user in users){
 						this.users[users[user]['id']] = users[user];
 						if(users[user]['lastUpdatedOn'] == null){
@@ -95,6 +96,7 @@ usertrackingController.prototype.SearchUserByName = function(callback)
 			$('.existing-users').find('table').find('tbody').empty();
 			if(response.response.status == true){
 				if(response.data != null && response.data.length > 0){
+					$('.userCount').text(response.response.message.split(":")[1].trim());
 					var userObj = "";
 					var users = response.data;
 					for(var user in users){

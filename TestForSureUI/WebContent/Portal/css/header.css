@@ -47,3 +47,7 @@ height: 100%;
 	padding-top: 26px;
 	margin-left: 10px;
 }
+/* Login Modal CSS */
+#loginModal .modal-footer{
+	margin-top: 35px;
+}
