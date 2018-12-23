@@ -1,5 +1,6 @@
 <link href='../css/header.css' rel='stylesheet' />
-
+<link rel="stylesheet" href="../../helperCSS/font-awesome.min.css">
+<link rel="stylesheet" href="../../helperCSS/animate.min.css">
 <script type='text/javascript' src='../controller/header.js'></script>
 <div class="header">
 	<header>
@@ -63,13 +64,13 @@
 			</div>
 			<div class="modal-body">
 				<div id="errorOuter" class="hide">
-					<div class=" alert alert-danger" id="errorMessage"></div>
+					<div class="text-center alert alert-danger" id="errorMessage"></div>
 				</div>
 				<form id="loginForm" class="form-horizontal" role="form">
 					<div class="form-group">
 						<label class='control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1'>Email</label>
 						<div class='col-xs-12 col-sm-12 col-md-7 col-lg-7'>
-							<input type="text" class='form-control' id="txtEmail" name="txtEmailName" required="required" placeholder="abc@example.com"/>
+							<input type="email" class='form-control' id="txtEmail" name="txtEmailName" required="required" placeholder="abc@example.com"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -80,7 +81,7 @@
 					</div>
 					<div class='form-group'>
 						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-0 col-md-offset-4 col-lg-offset-4">
-							<button type="submit" id="btnLogin" class='button button-primary'>Log in</button>
+							<button type="button" id="btnDoLogin" class='button button-primary'>Log in</button>
 						</div>
 					</div>
 				</form>
@@ -110,25 +111,25 @@
 			</div>
 			<div class="modal-body">
 				<div id="errorOuterReg" class="hide">
-					<div class=" alert alert-danger" id="errorMessageReg"></div>
+					<div class="alert alert-danger text-center" id="errorMessageReg"></div>
 				</div>
 				<form id="registerForm" class="form-horizontal" role="form">
 					<div class="form-group">
 						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Name</label>
 						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-							<input type="text" id="txtNameReg" name="txtNameReg" class="form-control" placeholder="Your name"/>
+							<input type="text" maxlength="40" id="txtNameReg" name="txtNameReg" class="form-control" placeholder="Your name"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Email</label>
 						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-							<input type="text" id="txtEmailReg" name="txtEmailNameReg" class="form-control" placeholder="abc@example.com"/>
+							<input type="email" id="txtEmailReg" name="txtEmailNameReg" class="form-control" placeholder="abc@example.com"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Mobile Number</label>
 						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-							<input type="text" id="txtContactReg" name="txtContactNameReg" class="form-control" placeholder="Mobile number"/>
+							<input type="text"  maxlength="10" id="txtContactReg" name="txtContactNameReg" class="form-control" placeholder="Mobile number"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -145,7 +146,7 @@
 					</div>
 					<div class='form-group'>
 						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-0 col-md-offset-4 col-lg-offset-4">
-							<button type="submit" id="btnRegister" class="btn btn-success btn-block">Register</button>
+							<button type="button" id="btnDoRegister" class="btn btn-success btn-block">Register</button>
 						</div>
 					</div>
 				</form>
@@ -169,7 +170,7 @@
 			</div>
 			<div class="modal-body">
 				<div id="errorOuterForgot" class="hide">
-					<div class=" alert alert-danger" id="errorMessageForgot"></div>
+					<div class="text-center alert alert-danger" id="errorMessageForgot"></div>
 				</div>
 				<div id="successOuter" class="hide">
 					<div class=" alert alert-success" id="successMessage"></div>
@@ -183,7 +184,7 @@
 					</div>
 					<div class='form-group'>
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-5 col-lg-offset-5">
-							<button type="submit" id="btnForgotSend" class='btn btn-success btn-block'>Submit</button>
+							<button type="button" id="btnForgotSend" class='btn btn-success btn-block'>Submit</button>
 						</div>
 					</div>
 				</form>
@@ -210,7 +211,7 @@
 			</div>
 			<div class="modal-body">
 				<div id="errorOuterVerification" class="hide">
-					<div class=" alert alert-danger" id="errorMessageVerification"></div>
+					<div class="text-center alert alert-danger" id="errorMessageVerification"></div>
 				</div>
 				<form id="verForm" class="form-horizontal" role="form">
 					<div class="form-group">
@@ -221,7 +222,7 @@
 					</div>
 					<div class='form-group'>
 						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-5 col-lg-offset-5">
-							<button type="submit" id="btnVerSend" class='btn btn-success btn-block'>Submit</button>
+							<button type="button" id="btnVerSend" class='btn btn-success btn-block'>Submit</button>
 						</div>
 					</div>
 				</form>

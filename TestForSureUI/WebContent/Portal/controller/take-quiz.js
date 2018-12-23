@@ -189,6 +189,7 @@ quizController.prototype.ManageControls = function(){
 	else{
 		html += "<button type='button' class='btnNext button button-primary'>Next</button>"
 	}
+	$('.quiz-footer').show();
 	$('.quiz-footer').html(html);
 	
 	$('.btnNext').unbind().bind('click', function(){
@@ -234,6 +235,7 @@ quizController.prototype.HandleReviewControls = function()
 	var html = "<button type='button' class='btnPrev button button-primary'>Previous</button>"+
 			"<button type='button' class='btnNext button button-primary'>Next</button>"+
 			"<button type='button' class='btnFinish button button-primary'>Finish</button>";
+	$('.quiz-footer').show();
 	$('.quiz-footer').html(html);
 	$('.quiz-footer').find('.btnPrev').hide();
 	$('.quiz-footer').find('.btnFinish').hide();

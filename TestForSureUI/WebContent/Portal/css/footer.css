@@ -1,0 +1,117 @@
+.footer{
+	background-color:#2E6DA4;
+	height:auto;
+	/* max-height:600px; */
+	width:100%;
+	
+	color:black;
+}
+.footer .left{
+	padding: 50px 50px 50px 120px;
+}
+.footer .left img{
+	height:50px;
+	width:30%;
+}
+.footer .left p{
+	padding: 30px 0px;
+}
+.footer .right{
+	padding: 50px;
+}
+.footer .right h3{
+	margin: 0px;
+	text-align: center;
+}
+.footer .right .social-media{
+	padding-top:3%;
+	margin-left:37%;
+}
+.social-media-links{
+	background-color:#6C98BF;
+	
+	border-radius:50%;
+	padding:12px;
+	float:left;
+	width:40px;
+	max-height:240px;
+	height:40px;
+	margin-left:5%;
+	text-align:center;
+}
+.social-media-links a{
+	text-decoration:none;
+	color:white;
+}
+.list-inline{
+	list-style:none;
+	clear:both;
+}
+
+ul > li > a{
+	color:white;
+	font-weight:bold;
+	text-decoration:none;
+	
+}
+ul > li > a:hover{
+	color:white;
+	text-decoration:none;
+}
+ul > li > a:visited{
+	color:white;
+	text-decoration:none;
+}
+.website-links{
+	clear:both;
+	padding-top:5%;
+	
+	text-align:center;
+}
+.website-links ul li{
+	
+	margin-left:12px;
+	
+}
+.test-link{
+	clear:both;
+	padding-top:1%;
+	margin-left:12%;
+	text-align:center;
+	
+}
+ul > li > a> h2{
+	font-weight:bold;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+.footer{
+	height:720px;
+	/* max-height:600px; */
+}
+.logo-image-footer{
+	height:60px;
+	width:50%;
+	float:left;
+	margin-left:15%;
+	margin-top:50px;
+}
+.about-us-footer{
+	clear:both;
+	margin-top:120px;
+	margin-left:15%;
+	margin-right:15%;
+}
+.footer-left{
+	width:100%;
+}
+.footer-right{
+	width:100%;
+}
+.footer-right h3{
+	margin-left:40%;
+	font-weight:bold;
+}
+}

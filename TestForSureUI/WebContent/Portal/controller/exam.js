@@ -70,7 +70,7 @@ examController.prototype.PopulateQuizzes = function(exam)
 		html += "</li>";
 	}
 	$('.quiz-listing .right').append(html);
-	$('.quiz-listing .right').find('.btnStartQuiz').unbind().bind('click', function(e){
+	$('.quiz-listing .right').find('.btnQuizAction').unbind().bind('click', function(e){
 		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
 		window.location.href = 'take-quiz.html?id='+quizId;
 	});
@@ -85,8 +85,21 @@ examController.prototype.QuizCard = function(quiz)
 				"<div class='attempts quiz-detail'>"+
 					"<span>Attempted "+(quiz.candidateCount)+" times</span>"+
 				"</div>"+
-				"<div class='controls'>"+
-					"<button class='btnStartQuiz button button-primary'>Start Quiz</button>"+
-				"</div>";
+				"<div class='controls'>";
+	if(quiz.attemptInfo != null){
+		if(quiz.attemptInfo.state == 2){
+			//Quiz already attempted & finished
+			html += "<button class='btnQuizAction button button-primary'>Report</button>";
+		}
+		else if(quiz.attemptInfo.state == 1){
+			//Quiz already started but not finished
+			html += "<button class='btnQuizAction button button-default'>Resume Quiz</button>";
+		}
+	}
+	else{
+		//Quiz not yet started
+		html += "<button class='btnQuizAction button button-primary'>Start Quiz</button>";
+	}
+	html += "</div>";
 	return html;
 };

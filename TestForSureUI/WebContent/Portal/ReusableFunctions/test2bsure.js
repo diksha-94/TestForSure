@@ -18,7 +18,10 @@ test2bsureController.prototype.GetHeader = function(dom){
 }
 test2bsureController.prototype.GetFooter = function(dom){
 	//should make it custom , as per the need on different pages
-	$(dom).html("<div> TEST2BSURE Footer </div>");
+	$(dom).load('footer.html', function(){
+		
+	}.bind(this));
+	//$(dom).html("<div> TEST2BSURE Footer </div>");
 }
 test2bsureController.prototype.QueryString = function(url, key){
 	var queryString = url.split('?')[1];
@@ -29,4 +32,11 @@ test2bsureController.prototype.QueryString = function(url, key){
 			return queryParam[query].split('=')[1];
 		}
 	}
+};
+test2bsureController.prototype.ValidateEmail = function(email){
+	 var regEx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	 if(regEx.test(email)){
+		 return true;
+	 }
+	 return false;
 };

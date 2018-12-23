@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<title>TEST2BSURE</title>
+		<link href='../../helperCSS/bootstrap.min.css' rel='stylesheet' />
+		<link href='../ReusableFunctions/common.css' rel='stylesheet' />
+		<link href='../css/emailVerification.css' rel='stylesheet' />
+	</head>
+	<body>
+		<div class='emailver-header'>
+			<!-- Load the header here from header.html -->
+		</div>
+		<div style='width:40%;margin-left:30%;margin-top:5%;'>
+		<div id="errorOuter" class="hide">
+			<div class=" alert alert-danger" id="errorMessage"></div>
+		</div>
+		<div class='emailVerDiv' id='emailVerificationDiv' style='width:100%;margin-top:2%;border:solid 1px #F0F0F0;'>
+			<div style='width:100%;background-color:#F0F0F0;padding:5px;text-align:center;'>
+				<h4>E-mail Verification</h4>
+			</div>
+			<div id='emailVerificationMessage' style='padding:20px;text-align:center;'>
+			</div>
+		</div>
+		</div>
+		<div class='emailver-footer'>
+			<!--  Load the footer here from footer.html -->
+		</div>
+		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
+		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
+		<script type='text/javascript' src='../controller/EmailVerification.js'></script>
+		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
+		<script type='text/javascript'>
+			new emailVerificationController();
+		</script>
+	</body>
+</html>
