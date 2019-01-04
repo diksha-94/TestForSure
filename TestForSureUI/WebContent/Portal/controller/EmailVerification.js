@@ -1,5 +1,5 @@
 var emailVerificationController = function(){
-	
+	this.Init();
 };
 emailVerificationController.prototype.Init = function()
 {

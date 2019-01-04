@@ -305,6 +305,10 @@ testController.prototype.PopulateTestData = function(e)
 	var exams = "";
 	var publish = 0;
 	var lock = 0;
+	var negativeMarks = 0;
+	var passPercent = 0;
+	var shuffleQues = 0;
+	var shuffleOptions = 0;
 	var sectionDetails = {};
 	if($(e.currentTarget).hasClass('update')){
 		var currentId = $(e.currentTarget).parents('tr').find('.tdTestId').text();
@@ -313,7 +317,11 @@ testController.prototype.PopulateTestData = function(e)
 		title = test["title"];
 		ques = test["totalQues"];
 		time = test["totalTime"];
-		marks = test["totalTime"];
+		marks = test["totalMarks"];
+		negativeMarks = test["negativeMarks"];
+		passPercent = test["passPercent"];
+		shuffleQues = test["shuffleQues"];
+		shuffleOptions = test["shuffleOptions"];
 		attempts = test["noOfAttempts"];
 		publish = test["publish"];
 		lock = test["lockApply"];
@@ -353,6 +361,8 @@ testController.prototype.PopulateTestData = function(e)
 	$('#testDetailsModal').find('#txtTestQuestions').val(ques);
 	$('#testDetailsModal').find('#txtTestTime').val(time);
 	$('#testDetailsModal').find('#txtTestMarks').val(marks);
+	$('#testDetailsModal').find('#txtTestNegative').val(negativeMarks);
+	$('#testDetailsModal').find('#txtPassPer').val(passPercent);
 	$('#testDetailsModal').find('#txtTestAttempts').val(attempts);
 	$('#testDetailsModal').find('#ddTestExam').val('');
 	var testStatus = false;
@@ -374,6 +384,18 @@ testController.prototype.PopulateTestData = function(e)
 		$('#txtTestLockRupees').addClass('lockDetails');
 	}
 	$('#testDetailsModal').find('#chkTestLock').prop('checked', lockStatus);
+	
+	var shuffleQuesStatus = false;
+	if(shuffleQues == 1){
+		shuffleQuesStatus = true;
+	}
+	$('#testDetailsModal').find('#chkShuffleQues').prop('checked', shuffleQuesStatus);
+	
+	var shuffleOptionsStatus = false;
+	if(shuffleOptions == 1){
+		shuffleOptionsStatus = true;
+	}
+	$('#testDetailsModal').find('#chkShuffleOptions').prop('checked', shuffleOptionsStatus);
 };
 testController.prototype.SearchTestByName = function(callback)
 {
