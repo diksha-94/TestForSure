@@ -45,6 +45,10 @@ examController.prototype.PopulateTests = function()
 		html += "</li>";
 	}
 	$('.test-listing .right').append(html);
+	$('.test-listing .right').find('.btnStartTest').unbind().bind('click', function(e){
+		var testId = $(e.currentTarget).parents('li[test-id]').attr('test-id');
+		window.location.href = 'take-test.html?id='+testId;
+	});
 };
 examController.prototype.TestCard = function(test)
 {
