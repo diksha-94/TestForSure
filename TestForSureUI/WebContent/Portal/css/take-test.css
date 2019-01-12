@@ -61,12 +61,13 @@
 
 .test .test-questions{
 	height: 90%;
-	overflow: hidden;
 	border-right: solid 1px #e4e4e4;
 	padding: 40px;
 }
 .test .test-questions .question{
 	border: solid 1px #E4E4E4;
+	overflow: auto;
+	height: 90%;
 }
 .test .test-questions .question .question-number{
 	display: inline-block;
@@ -116,7 +117,6 @@
 	pointer-events: none;
 }
 .test .test-questions .question .options .option:hover{
-	border-color: #2E6DA4;
 }
 .test .test-questions .question .options .option .option-value{
 	display: inline-block;

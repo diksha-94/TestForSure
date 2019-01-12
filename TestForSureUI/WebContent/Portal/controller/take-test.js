@@ -73,30 +73,8 @@ testController.prototype.DisplayQuestion = function()
 	html += "<span class='question-text'>"+question.questionText+"</span>"+
 			"</div>"+
 			"<div class='options'>";
-	var correct = question.correctOption != null ? (JSON.parse(question.correctOption)).indexOf(true) : -1;
-	var marked = question.markedOption != null ? (JSON.parse(question.markedOption)).indexOf(true) : -1;
-	var redOption = -1;
-	var greenOption = -1;
-	if(correct != null && marked != null){
-		if(correct == marked){
-			greenOption = marked;
-		}
-		else{
-			greenOption = correct;
-			redOption = marked;
-		}
-	}
 	$(question.options).find('option').each(function(key, value){
 		var addClass = 'option';
-		if(key == redOption){
-			addClass = 'option incorrect';
-		}
-		else if(key == greenOption){
-			addClass = 'option correct';
-		}
-		if(typeof solution != 'undefined' && solution == true){
-			addClass += ' no-hover block-events';
-		}
 		html += "<div class='"+addClass+"' data-option='"+key+"'>"+
 					"<span class='option-count'>"+optionValues[key]+"</span>"+
 					"<span class='option-value'>"+$(value).html()+"</span>"+
@@ -108,7 +86,39 @@ testController.prototype.DisplayQuestion = function()
 	$('.test').find('.test-questions').find('.questions').html(html);
 	
 	$('.test').find('.test-questions').find('.questions').find('.option').unbind().bind('click', function(e){
-		console.log("Clicked option");
+		console.log("Clicked option: "+$(e.currentTarget).attr('data-option'));
+		$('.test').find('.test-questions').find('.questions').find('.option').each(function(key, value){
+			$(value).css('border-color','#E4E4E4');
+			$(value).find('.option-count').css('background-color', '#E4E4E4');
+			$(value).find('.option-count').css('border-color', '#E4E4E4');
+			$(value).find('.option-count').css('color', '#000');
+		});
+		$(e.currentTarget).css('border-color', '#2E6DA4');
+		$(e.currentTarget).find('.option-count').css('background-color', '#2E6DA4');
+		$(e.currentTarget).find('.option-count').css('border-color', '#2E6DA4');
+		$(e.currentTarget).find('.option-count').css('color', '#FFF');
+		var selectedOption = parseInt($(e.currentTarget).attr('data-option'));
+		var answer = '[';
+		for(var i=0;i<=selectedOption;i++){
+			if(i == selectedOption){
+				answer += 'true]';
+			}
+			else{
+				answer += 'false,';
+			}
+		}
+		this.questionsData[this.currentQues-1].markedoption = answer;
+		var questionId = $(e.currentTarget).parents('.options').parents('.question').attr('question-id');
+		var requestData = {
+				'sessionId': this.sessionId,
+				'quesId': questionId,
+				'answer': answer,
+				'corectAnswer': null,
+				'timeSpent': 10,
+				'markedForReview': 'false'
+		};
+		this.SaveLastQues(this.sessionId, this.currentQues);
+		this.UpdateTestSessionData(requestData);
 	}.bind(this));
 };
 testController.prototype.PopulateAttemptControls = function()
@@ -131,16 +141,57 @@ testController.prototype.PopulateAttemptControls = function()
 	$('.test').find('.test-questions').find('.attempt-controls').html(html);
 	this.ManageControls();
 	$('.test').find('.test-questions').find('.attempt-controls').find('.btnNext').unbind().bind('click', function(e){
+		this.SaveLastQues(this.sessionId, this.currentQues);
 		this.currentQues = this.currentQues + 1;
 		this.DisplayQuestion();
 		this.ManageControls();
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.btnPrevious').unbind().bind('click', function(e){
+		this.SaveLastQues(this.sessionId, this.currentQues);
 		this.currentQues = this.currentQues - 1;
 		this.DisplayQuestion();
 		this.ManageControls();
 	}.bind(this));
-	
+	$('.test').find('.test-questions').find('.attempt-controls').find('.linkClearSelection').unbind().bind(function(e){
+		e.preventDefault();
+		this.questionsData[this.currentQues-1].markedoption = "[]";
+		var questionId = this.questionsData[this.currentQues-1].id;
+		var requestData = {
+				'sessionId': this.sessionId,
+				'quesId': questionId,
+				'answer': '[]',
+				'corectAnswer': null,
+				'timeSpent': 10,
+				'markedForReview': 'false'
+		};
+		this.UpdateTestSessionData(requestData);
+	}.bind(this));
+	$('.test').find('.test-questions').find('.attempt-controls').find('.linkMark').unbind().bind(function(e){
+		e.preventDefault();
+		var questionId = this.questionsData[this.currentQues-1].id;
+		var requestData = {
+				'sessionId': this.sessionId,
+				'quesId': questionId,
+				'answer': this.questionsData[this.currentQues-1].markedoption,
+				'corectAnswer': null,
+				'timeSpent': 10,
+				'markedForReview': 'true'
+		};
+		this.UpdateTestSessionData(requestData);
+	}.bind(this));
+	$('.test').find('.test-questions').find('.attempt-controls').find('.linkUnmark').unbind().bind(function(e){
+		e.preventDefault();
+		var questionId = this.questionsData[this.currentQues-1].id;
+		var requestData = {
+				'sessionId': this.sessionId,
+				'quesId': questionId,
+				'answer': this.questionsData[this.currentQues-1].markedoption,
+				'corectAnswer': null,
+				'timeSpent': 10,
+				'markedForReview': 'false'
+		};
+		this.UpdateTestSessionData(requestData);
+	}.bind(this));
 };
 testController.prototype.ManageControls = function()
 {
@@ -158,3 +209,43 @@ testController.prototype.ManageControls = function()
 		$('.test').find('.test-questions').find('.attempt-controls').find('.btnPrevious').attr('disabled', false);
 	}
 }
+//Save the last attempted Question, so from next time test will open from the same question
+testController.prototype.SaveLastQues = function(sessionId, lastQues)
+{
+	$.ajax({
+		url: 'http://localhost:8083/test2bsure/lastsavedques?sessionId='+sessionId+'&lastQues='+lastQues,
+		type: 'PUT',
+		success: function(response){
+			if(response.status == true){
+				console.log("Saved last ques");
+			}
+			else{
+				alert(response.message);
+			}
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+};
+//Update the test session data
+testController.prototype.UpdateTestSessionData = function(obj)
+{
+	$.ajax({
+		url: 'http://localhost:8083/test2bsure/updatetestsessiondata',
+		type: 'PUT',
+		data: JSON.stringify(obj),
+		contentType: "application/json",
+		success: function(response){
+			if(response.status == true){
+				console.log("Updated test session data");
+			}
+			else{
+				alert(response.message);
+			}
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+};
