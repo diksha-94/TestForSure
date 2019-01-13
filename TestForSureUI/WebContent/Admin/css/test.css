@@ -44,6 +44,9 @@
 	padding:20px;
 	text-align: center;
 }
+#testDetailsModal .test-instructions{
+	margin-top: 50px;
+}
 #testDetailsModal .modal-dialog .modal-content .modal-header h4{
 	display:inline;
 }

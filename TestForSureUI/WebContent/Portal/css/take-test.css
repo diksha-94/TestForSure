@@ -13,13 +13,41 @@
 	padding: 0px;
 }
 .test-ques-status{
-	border-left: solid 1px red;
-	border-bottom: solid 1px red;
-	max-height: 500px;
-	overflow-y: auto;
+	
 }
 .test-ques-status .ques-status{
-	
+	max-height: 60%;
+	overflow: auto;
+	border-bottom: solid 1px #E4E4E4;
+}
+.test-ques-status .ques-status-info{
+	padding: 12px 8px;
+}
+.test-ques-status .ques-status-info .status-info{
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	margin-right: 10px;
+}
+.test-ques-status .ques-status-info .status-info.not-visited{
+	background-color: #E4E4E4;
+	border: solid 1px #E4E4E4;
+}
+.test-ques-status .ques-status-info .status-info.answered{
+	background-color: #5CB85C;
+	border: solid 1px #5CB85C;
+}
+.test-ques-status .ques-status-info .status-info.unanswered{
+	background-color: #D9534F;
+	border: solid 1px #D9534F;
+}
+.test-ques-status .ques-status-info .status-info.marked{
+	background-color: #9B59B6;
+	border: solid 1px #9B59B6;
+}
+.test-ques-status .ques-status-info .status-info.marked-answered{
+	background-color: #5CB85C;
+	border:solid 2px #9B59B6;
 }
 .test-ques-status .ques-status div[ques-no]{
 	float: left;
@@ -60,9 +88,9 @@
 }
 
 .test .test-questions{
-	height: 90%;
+	height: 88%;
 	border-right: solid 1px #e4e4e4;
-	padding: 40px;
+	padding: 20px;
 }
 .test .test-questions .question{
 	border: solid 1px #E4E4E4;

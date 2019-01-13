@@ -32,6 +32,7 @@ testController.prototype.BindEvents = function()
 	//Add/Update Test$(e.currentTarget).val()
 	$('.addEditTest').unbind().bind('click', function(e){
 		$('#testDetailsModal').modal('show');
+		summernoteController.getObj().addEditor('#txtTestInstructions');
 		RefreshData('testDetailsModal');
 		var obj = AutoComplete.getObj();
 		obj.dom = $('#testDetailsModal').find('#selectedExam');

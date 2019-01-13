@@ -4,6 +4,8 @@ var testController = function(){
 	this.questionsData = {};
 	this.sessionId = 0;
 	this.currentQues = 1;
+	this.totalSecs = 0;
+	this.startSecs = 0;
 	this.Init();
 };
 testController.prototype.Init = function()
@@ -29,8 +31,10 @@ testController.prototype.SetState = function(obj)
 	if(typeof this.testInfo.attemptInfo != 'undefined' && this.testInfo.attemptInfo != null){
 		this.currentQues = parseInt(this.testInfo.attemptInfo.lastQues) + 1;
 	}
+	this.totalSecs = (parseInt(this.testInfo.totalTime) * 60) + 1;
 	this.DisplayQuestion();
 	this.PopulateAttemptControls();
+	this.Timer();
 };
 testController.prototype.PopulateTestInfo = function()
 {
@@ -39,11 +43,11 @@ testController.prototype.PopulateTestInfo = function()
 			   "<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2'>"+
 			   		"<h5>"+this.testInfo.totalQues+" Questions / "+this.testInfo.totalMarks+" Marks</h5>"+
 			   	"</div>"+
-			   	"<div class='col-xs-0 col-sm-0 col-md-3 col-lg-3'>"+
+			   	"<div class='col-xs-0 col-sm-0 col-md-2 col-lg-2'>"+
 			   		"<h5>Time Limit: "+this.testInfo.totalTime+" mins</h5>"+
 			   "</div>"+
-			   "<div class='col-xs-6 col-sm-6 col-md-1 col-lg-1'>"+
-			   		"<h4>00:59:43</h4>"+
+			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2' style='text-align:right;'>"+
+			   		"<h4 class='time-left'>00 : 00 : 00</h4>"+
 			   	"</div>"+
 			   	"<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+
 			   		"<button class='button button-default btnSubmitTest'>Submit Test</button>"+
@@ -52,16 +56,47 @@ testController.prototype.PopulateTestInfo = function()
 };
 testController.prototype.PopulateTestQuestionStatus = function()
 {
-	var html = "<div class='ques-status'>"+
-					"<h4>Question Status</h4>";
+	var html = "<h4>Question Status</h4>";
 	for(var i=0; i<this.testInfo.totalQues; i++){
-		html += "<div class='not-visited' ques-no='"+(i+1)+"' ques-id='"+(i+1)+"'>"+(i+1)+"</div>";
+		var questionStatus = "not-visited";
+		var question = this.questionsData[i];
+		if(question.markedOption == "null"){
+			//unanswered
+			if(question.marked == "true"){
+				//marked but unanswered
+				questionStatus = "marked";
+			}
+			else if(question.marked == "false"){
+				//unanswered
+				questionStatus = "unanswered";
+			}
+		}
+		else if(question.markedOption == "[]"){
+			//not-visited
+			questionStatus = "not-visited";
+		}
+		else{
+			//Answered
+			if(question.marked == "true"){
+				//marked and answered
+				questionStatus = "marked-answered";
+			}
+			else if(question.marked == "false"){
+				//answered
+				questionStatus = "answered";
+			}
+		}
+		html += "<div class='" + questionStatus + "' ques-no='"+(i+1)+"' ques-id='"+(this.questionsData[i].id)+"'>"+(i+1)+"</div>";
 	}
-	html += "</div>";
-	$('.test-ques-status').html(html);
+	$('.test-ques-status').find('.ques-status').html(html);
+	$('.test-ques-status').find('.ques-status').find('div[ques-id]').unbind().bind('click', function(e){
+		this.currentQues = parseInt($(e.currentTarget).attr('ques-no'));
+		this.DisplayQuestion();
+	}.bind(this));
 };
 testController.prototype.DisplayQuestion = function()
 {
+	this.startSecs = this.totalSecs;
 	var optionValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 	var question = this.questionsData[this.currentQues-1];
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
@@ -73,13 +108,26 @@ testController.prototype.DisplayQuestion = function()
 	html += "<span class='question-text'>"+question.questionText+"</span>"+
 			"</div>"+
 			"<div class='options'>";
+	var markedAnswer = -1;
+	if(question.markedOption != 'null' && question.markedOption != null && question.markedOption != '[]'){
+		markedAnswer = (JSON.parse(question.markedOption)).indexOf(true);
+	}
 	$(question.options).find('option').each(function(key, value){
 		var addClass = 'option';
-		html += "<div class='"+addClass+"' data-option='"+key+"'>"+
-					"<span class='option-count'>"+optionValues[key]+"</span>"+
-					"<span class='option-value'>"+$(value).html()+"</span>"+
-					"<span class='answer-status'></span>"+
-				"</div>";
+		if(key == markedAnswer){
+			html += "<div class='"+addClass+"' data-option='"+key+"' selected='selected' style='border-color:rgb(46, 109, 164)'>"+
+						"<span class='option-count' style='background-color: rgb(46, 109, 164); border-color: rgb(46, 109, 164); color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
+						"<span class='option-value'>"+$(value).html()+"</span>"+
+						"<span class='answer-status'></span>"+
+					"</div>";
+		}
+		else{
+			html += "<div class='"+addClass+"' data-option='"+key+"'>"+
+						"<span class='option-count'>"+optionValues[key]+"</span>"+
+						"<span class='option-value'>"+$(value).html()+"</span>"+
+						"<span class='answer-status'></span>"+
+					"</div>";
+		}
 	});
 	html += "</div>";
 	
@@ -87,12 +135,8 @@ testController.prototype.DisplayQuestion = function()
 	
 	$('.test').find('.test-questions').find('.questions').find('.option').unbind().bind('click', function(e){
 		console.log("Clicked option: "+$(e.currentTarget).attr('data-option'));
-		$('.test').find('.test-questions').find('.questions').find('.option').each(function(key, value){
-			$(value).css('border-color','#E4E4E4');
-			$(value).find('.option-count').css('background-color', '#E4E4E4');
-			$(value).find('.option-count').css('border-color', '#E4E4E4');
-			$(value).find('.option-count').css('color', '#000');
-		});
+		this.UnselectAllOptions();
+		$(e.currentTarget).attr('selected', 'true');
 		$(e.currentTarget).css('border-color', '#2E6DA4');
 		$(e.currentTarget).find('.option-count').css('background-color', '#2E6DA4');
 		$(e.currentTarget).find('.option-count').css('border-color', '#2E6DA4');
@@ -107,7 +151,7 @@ testController.prototype.DisplayQuestion = function()
 				answer += 'false,';
 			}
 		}
-		this.questionsData[this.currentQues-1].markedoption = answer;
+		this.questionsData[this.currentQues-1].markedOption = answer;
 		var questionId = $(e.currentTarget).parents('.options').parents('.question').attr('question-id');
 		var requestData = {
 				'sessionId': this.sessionId,
@@ -119,6 +163,13 @@ testController.prototype.DisplayQuestion = function()
 		};
 		this.SaveLastQues(this.sessionId, this.currentQues);
 		this.UpdateTestSessionData(requestData);
+		if(this.questionsData[this.currentQues-1].marked == 'true'){
+			//Marked for review and answered
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited unanswered marked marked-answered').addClass('answered');
+		}
 	}.bind(this));
 };
 testController.prototype.PopulateAttemptControls = function()
@@ -142,55 +193,171 @@ testController.prototype.PopulateAttemptControls = function()
 	this.ManageControls();
 	$('.test').find('.test-questions').find('.attempt-controls').find('.btnNext').unbind().bind('click', function(e){
 		this.SaveLastQues(this.sessionId, this.currentQues);
+		var questionId = this.questionsData[this.currentQues-1].id;
+		var questionFlag = this.questionsData[this.currentQues-1].marked;
+		//Save question
+		var flag = false;
+		var selectedOption = -1;
+		$('.question').find('.options').find('.option').each(function(key, value){
+			if($(value).attr('selected') == 'selected'){
+				flag = true;
+				selectedOption = key;
+			}
+		});
+		var answer = null;
+		if(questionFlag == 'true'){
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked-answered').addClass('marked');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked marked-answered').addClass('unanswered');
+		}
+		if(flag == true){
+			if(questionFlag == 'true'){
+				$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
+			}
+			else{
+				$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited unanswered marked marked-answered').addClass('answered');
+			}
+			answer = '[';
+			for(var i=0;i<=selectedOption;i++){
+				if(i == selectedOption){
+					answer += 'true]';
+				}
+				else{
+					answer += 'false,';
+				}
+			}
+		}
+		this.questionsData[this.currentQues-1].markedOption = answer;
 		this.currentQues = this.currentQues + 1;
+		var requestData = {
+				'sessionId': this.sessionId,
+				'quesId': questionId,
+				'answer': answer,
+				'corectAnswer': null,
+				'timeSpent': (this.startSecs - this.totalSecs),
+				'markedForReview': 'false'
+		};
+		this.UpdateTestSessionData(requestData);
+		
 		this.DisplayQuestion();
 		this.ManageControls();
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.btnPrevious').unbind().bind('click', function(e){
 		this.SaveLastQues(this.sessionId, this.currentQues);
+		var questionId = this.questionsData[this.currentQues-1].id;
+		var questionFlag = this.questionsData[this.currentQues-1].marked;
+		//Save question
+		var flag = false;
+		var selectedOption = -1;
+		$('.question').find('.options').find('.option').each(function(key, value){
+			if($(value).attr('selected') == 'selected'){
+				flag = true;
+				selectedOption = key;
+			}
+		});
+		var answer = null;
+		if(questionFlag == 'true'){
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked-answered').addClass('marked');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked marked-answered').addClass('unanswered');
+		}
+		if(flag == true){
+			if(questionFlag == 'true'){
+				$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
+			}
+			else{
+				$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited unanswered marked marked-answered').addClass('answered');
+			}
+			answer = '[';
+			for(var i=0;i<=selectedOption;i++){
+				if(i == selectedOption){
+					answer += 'true]';
+				}
+				else{
+					answer += 'false,';
+				}
+			}
+		}
+		this.questionsData[this.currentQues-1].markedOption = answer;
 		this.currentQues = this.currentQues - 1;
+		var requestData = {
+				'sessionId': this.sessionId,
+				'quesId': questionId,
+				'answer': answer,
+				'corectAnswer': null,
+				'timeSpent': (this.startSecs - this.totalSecs),
+				'markedForReview': 'false'
+		};
+		this.UpdateTestSessionData(requestData);
+		
 		this.DisplayQuestion();
 		this.ManageControls();
 	}.bind(this));
-	$('.test').find('.test-questions').find('.attempt-controls').find('.linkClearSelection').unbind().bind(function(e){
+	$('.test').find('.test-questions').find('.attempt-controls').find('.linkClearSelection').unbind().bind('click', function(e){
 		e.preventDefault();
-		this.questionsData[this.currentQues-1].markedoption = "[]";
+		this.questionsData[this.currentQues-1].markedOption = "null";
 		var questionId = this.questionsData[this.currentQues-1].id;
 		var requestData = {
 				'sessionId': this.sessionId,
 				'quesId': questionId,
-				'answer': '[]',
+				'answer': "null",
 				'corectAnswer': null,
 				'timeSpent': 10,
 				'markedForReview': 'false'
 		};
 		this.UpdateTestSessionData(requestData);
+		if(this.questionsData[this.currentQues-1].marked == 'true'){
+			//marked for review
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('answered unanswered not-visited marked-answered').addClass('marked');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked marked-answered').addClass('unanswered');
+		}
+		this.UnselectAllOptions();
 	}.bind(this));
-	$('.test').find('.test-questions').find('.attempt-controls').find('.linkMark').unbind().bind(function(e){
+	$('.test').find('.test-questions').find('.attempt-controls').find('.linkMark').unbind().bind('click', function(e){
 		e.preventDefault();
+		this.questionsData[this.currentQues-1].marked = 'true';
 		var questionId = this.questionsData[this.currentQues-1].id;
 		var requestData = {
 				'sessionId': this.sessionId,
 				'quesId': questionId,
-				'answer': this.questionsData[this.currentQues-1].markedoption,
+				'answer': this.questionsData[this.currentQues-1].markedOption,
 				'corectAnswer': null,
 				'timeSpent': 10,
 				'markedForReview': 'true'
 		};
 		this.UpdateTestSessionData(requestData);
+		if(this.questionsData[this.currentQues-1].markedOption != 'null' && this.questionsData[this.currentQues-1].markedOption != '[]'){
+			//means answered and marked
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked-answered').addClass('marked');
+		}
 	}.bind(this));
-	$('.test').find('.test-questions').find('.attempt-controls').find('.linkUnmark').unbind().bind(function(e){
+	$('.test').find('.test-questions').find('.attempt-controls').find('.linkUnmark').unbind().bind('click', function(e){
 		e.preventDefault();
+		this.questionsData[this.currentQues-1].marked = 'false';
 		var questionId = this.questionsData[this.currentQues-1].id;
 		var requestData = {
 				'sessionId': this.sessionId,
 				'quesId': questionId,
-				'answer': this.questionsData[this.currentQues-1].markedoption,
+				'answer': this.questionsData[this.currentQues-1].markedOption,
 				'corectAnswer': null,
 				'timeSpent': 10,
 				'markedForReview': 'false'
 		};
 		this.UpdateTestSessionData(requestData);
+		if(this.questionsData[this.currentQues-1].markedOption != 'null' && this.questionsData[this.currentQues-1].markedOption != '[]'){
+			//means answered and unmarked
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited marked-answered unanswered marked').addClass('answered');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked-answered marked').addClass('unanswered');
+		}
 	}.bind(this));
 };
 testController.prototype.ManageControls = function()
@@ -248,4 +415,42 @@ testController.prototype.UpdateTestSessionData = function(obj)
 			console.log(e);
 		}
 	});
+};
+testController.prototype.UnselectAllOptions = function()
+{
+	$('.test').find('.test-questions').find('.questions').find('.option').each(function(key, value){
+		$(value).css('border-color','#E4E4E4');
+		$(value).find('.option-count').css('background-color', '#E4E4E4');
+		$(value).find('.option-count').css('border-color', '#E4E4E4');
+		$(value).find('.option-count').css('color', '#000');
+		$(value).removeAttr('selected');
+	});
+};
+testController.prototype.Timer = function()
+{
+	var totalSecs = (parseInt(this.testInfo.totalTime) * 60) + 1;
+	this.totalSecs = (parseInt(this.testInfo.totalTime) * 60) + 1;
+	var interval = setInterval(function() {
+		totalSecs = parseInt(totalSecs) - 1;
+		this.totalSecs = parseInt(this.totalSecs) - 1;
+		if(totalSecs <= 0){
+			clearInterval(interval);
+			alert("Time is Over !!");
+		}
+		var mins =  parseInt(totalSecs / 60);
+		var secs = parseInt(totalSecs % 60);
+		var hrs =  parseInt(mins / 60);
+		mins = parseInt(mins % 60);
+		
+		if(hrs<10){
+			hrs = '0'+hrs;
+		}
+		if(mins<10){
+			mins = '0'+mins;
+		}
+		if(secs<10){
+			secs = '0'+secs;
+		}
+		$('.test-header').find('.time-left').html(hrs + " : " + mins + " : " + secs);
+	}.bind(this), 1000);
 };
