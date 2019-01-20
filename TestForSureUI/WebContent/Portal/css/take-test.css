@@ -173,3 +173,28 @@
 .test .test-questions .attempt-controls button{
 	width: 80%;
 }
+/* Submit Test Modal */
+#submitTestModal .modal-header{
+	text-align: center;
+}
+#submitTestModal .modal-header h4{
+	display: inline;
+}
+#submitTestModal table{
+	width: 60%;
+	border-collapse: collapse;
+	margin-left: 20%;
+}
+#submitTestModal table td{ 
+	padding:7px;
+	border:#EFEFEF 1px solid;
+}
+#submitTestModal table tr{
+	background: #FFFFFF;
+}
+#submitTestModal table tr:nth-child(odd){ 
+	background: #FFFFFF;
+}
+#submitTestModal table tr:nth-child(even){
+	background: #FFFFFF;
+}

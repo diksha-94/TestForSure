@@ -34,13 +34,14 @@
 	list-style-type: none;
 }
 .test-listing .right h4 {
-	margin-left: 10px;
+	margin-left: 5px;
 }
 .test-listing .right ul li {
 	border: solid 1px #E4E4E4;
 	margin: 0px 75px 15px 0px;
-	min-height: 200px;
+	min-height: 305px;
 	height: auto;
+	padding: 10px 15px 15px;
 }
 .test-listing .right ul li:hover {
 	box-shadow: 0px 0px 10px #E4E4E4;
@@ -66,4 +67,7 @@
 	background-color: #e4e4e4;
 	border-radius: 30px;
 	font-weight: bold;
+}
+.controls button {
+    margin-top: 8px;
 }

@@ -4,6 +4,7 @@ var testController = function(){
 	this.questionsData = {};
 	this.sessionId = 0;
 	this.currentQues = 1;
+	this.attemptInfo = null;
 	this.totalSecs = 0;
 	this.startSecs = 0;
 	this.Init();
@@ -28,8 +29,16 @@ testController.prototype.SetState = function(obj)
 	}
 	this.PopulateTestInfo();
 	this.PopulateTestQuestionStatus();
-	if(typeof this.testInfo.attemptInfo != 'undefined' && this.testInfo.attemptInfo != null){
-		this.currentQues = parseInt(this.testInfo.attemptInfo.lastQues) + 1;
+	if(typeof this .testInfo.attemptInfo != 'undefined' && this.testInfo.attemptInfo != null && this.testInfo.attemptInfo.length > 0){
+		for(var attempt in this.testInfo.attemptInfo){
+			if(this.testInfo.attemptInfo[attempt].state == 1){
+				//means the test is in resumed state
+				this.attemptInfo = this.testInfo.attemptInfo[attempt];
+			}
+		}
+	}
+	if(typeof this.attemptInfo != 'undefined' && this.attemptInfo != null){
+		this.currentQues = parseInt(this.attemptInfo.lastQues) + 1;
 	}
 	this.totalSecs = (parseInt(this.testInfo.totalTime) * 60) + 1;
 	this.DisplayQuestion();
@@ -53,6 +62,9 @@ testController.prototype.PopulateTestInfo = function()
 			   		"<button class='button button-default btnSubmitTest'>Submit Test</button>"+
 			   "</div>";
 	$('.test-header').html(html);
+	$('.test-header').find('.btnSubmitTest').unbind().bind('click', function(){
+		this.SubmitTest();
+	}.bind(this));
 };
 testController.prototype.PopulateTestQuestionStatus = function()
 {
@@ -184,10 +196,10 @@ testController.prototype.PopulateAttemptControls = function()
 					"<a href='#' class='linkUnmark'>Unmark for Review</a>"+
 				"</div>"+
 				"<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1'>"+
-					"<button class='btn btn-primary btnPrevious'>Previous</button>"+
+					"<button class='button button-primary btnPrevious'>Previous</button>"+
 			    "</div>"+
 			    "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-			    	"<button class='btn btn-primary btnNext'>Next</button>"+
+			    	"<button class='button button-primary btnNext'>Next</button>"+
 				"</div>";
 	$('.test').find('.test-questions').find('.attempt-controls').html(html);
 	this.ManageControls();
@@ -435,6 +447,7 @@ testController.prototype.Timer = function()
 		this.totalSecs = parseInt(this.totalSecs) - 1;
 		if(totalSecs <= 0){
 			clearInterval(interval);
+			this.SubmitTest();
 			alert("Time is Over !!");
 		}
 		var mins =  parseInt(totalSecs / 60);
@@ -454,3 +467,73 @@ testController.prototype.Timer = function()
 		$('.test-header').find('.time-left').html(hrs + " : " + mins + " : " + secs);
 	}.bind(this), 1000);
 };
+testController.prototype.SubmitTest = function()
+{
+	$('#submitTestModal').modal('show');
+	var answered = 0;
+	var unanswered = 0;
+	var notvisited = 0;
+	var marked = 0;
+	$('.test-ques-status').find('.ques-status').find('div[ques-no]').each(function(key, value){
+		if($(value).hasClass('not-visited')){
+			notvisited++;
+		}
+		else if($(value).hasClass('answered')){
+			answered++;
+		}
+		else if($(value).hasClass('unanswered')){
+			unanswered++;
+		}
+		else if($(value).hasClass('marked')){
+			marked++
+		}
+		else if($(value).hasClass('marked-answered')){
+			marked++;
+			answered++;
+		}
+	}.bind(this));
+	var html = '<table>'+
+					'<tr>'+
+						'<td>Total Questions</td>'+
+						'<td>'+this.testInfo.totalQues+'</td>'+
+					'</tr>'+
+						'<tr>'+
+						'<td>Attempted</td>'+
+						'<td>'+answered+'</td>'+
+					'</tr>'+
+					'<tr>'+
+						'<td>Unattempted</td>'+
+						'<td>'+unanswered+'</td>'+
+					'</tr>'+
+					'<tr>'+
+						'<td>Not Visited</td>'+
+						'<td>'+notvisited+'</td>'+
+					'</tr>'+
+					'<tr>'+
+						'<td>Marked for Review</td>'+
+						'<td>'+marked+'</td>'+
+					'</tr>'+
+			   '</table>';
+	$('#submitTestModal').find('.modal-body').html(html);
+	$('#submitTestModal').find('#btnSubmitTestYes').unbind().bind('click', function(){
+		this.SaveReportData();
+	}.bind(this));
+	$('#submitTestModal').find('#btnSubmitTestNo').unbind().bind('click', function(){
+		$('#submitTestModal').modal('hide');
+	});
+};
+testController.prototype.SaveReportData = function()
+{
+	var session = this.sessionId;
+	fetch('http://localhost:8083/test2bsure/submittest?sessionId='+session)
+	  .then(response => response.json())
+	  .then(data => this.HandleTestSubmit());
+};
+testController.prototype.HandleTestSubmit = function()
+{
+	this.OpenTestReport();
+}
+testController.prototype.OpenTestReport = function()
+{
+	window.location.href = 'testreport.html?sessionId='+this.sessionId;
+}

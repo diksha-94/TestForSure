@@ -58,10 +58,41 @@ examController.prototype.TestCard = function(test)
 				"<div class='marks'>"+test.totalMarks+" Marks</div>"+
 				"<div class='time'>"+test.totalTime+" minutes</div>"+
 				"<div class='attempts'>Attempted "+(test.candidateCount)+" times</div>"+
-			"</div>"+
-			"<div class='controls'>"+
-				"<button class='btnStartTest button button-primary'>Start Test</button>"+
 			"</div>";
+	var attemptFlag = false;
+	var resumeFlag = false;
+	var attemptCount = 0;
+	if(typeof test.attemptInfo != 'undefined' && test.attemptInfo != null && test.attemptInfo.length > 0){
+		for(var attempt in test.attemptInfo){
+			if(test.attemptInfo[attempt].state == 2){
+				attemptFlag = true;
+				attemptCount++;
+			}
+			else if(test.attemptInfo[attempt].state == 1){
+				resumeFlag = true;
+			}
+		}
+	}
+	html += "<div class='controls'>";
+	if(attemptFlag == true){
+		//means the test is already attempted atlease once, show the report button
+		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnReportTest button button-default'>Report</button>";
+	}
+	else{
+		//means the test is already attempted atlease once, show the report button
+		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnReportTest button button-default' disabled='disabled'>Report</button>";
+	}
+	if(resumeFlag == true){
+		//means the test is in resumed state
+		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnStartTest button button-primary'>Resume Test</button>";
+	}
+	else if(test.noOfAttempts == -1 || (test.noOfAttempts > 0 && test.noOfAttempts > attemptCount)){
+		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnStartTest button button-primary'>Start Test</button>";
+	}
+	else{
+		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnStartTest button button-primary' disabled='disabled'>Start Test</button>";
+	}
+	html += "</div>";
 	return html;
 };
 examController.prototype.PopulateQuizzes = function(exam)

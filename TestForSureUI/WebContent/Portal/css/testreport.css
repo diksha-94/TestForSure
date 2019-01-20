@@ -1,0 +1,11 @@
+.report-header {
+	min-height: 60px;
+	height: auto;
+	background-color: #2E6DA4;
+	padding: 12px;
+	color: white;
+	font-weight: bold;
+}
+.report-header .divButton{
+	margin-top: 4px;
+}
