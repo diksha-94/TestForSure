@@ -535,5 +535,6 @@ testController.prototype.HandleTestSubmit = function()
 }
 testController.prototype.OpenTestReport = function()
 {
-	window.location.href = 'testreport.html?sessionId='+this.sessionId;
+	//report=1 means show report, report=0 means show solution
+	window.location.href = 'testreport.html?sessionId='+this.sessionId+'&report=1';
 }
