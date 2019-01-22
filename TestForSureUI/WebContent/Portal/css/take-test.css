@@ -12,13 +12,17 @@
 .test{
 	padding: 0px;
 }
-.test-ques-status{
-	
+.test-ques-status h4{
+	margin: 20px 8px 15px;
 }
 .test-ques-status .ques-status{
 	max-height: 60%;
 	overflow: auto;
 	border-bottom: solid 1px #E4E4E4;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 .test-ques-status .ques-status-info{
 	padding: 12px 8px;
@@ -53,7 +57,7 @@
 	float: left;
 	height: 40px;
 	width: 40px;
-	margin: 5px;
+	margin: 1px;
 	padding: 10px;
 	font-size: 15px;
 	font-weight: bold;

@@ -68,7 +68,7 @@ testController.prototype.PopulateTestInfo = function()
 };
 testController.prototype.PopulateTestQuestionStatus = function()
 {
-	var html = "<h4>Question Status</h4>";
+	var html = "";
 	for(var i=0; i<this.testInfo.totalQues; i++){
 		var questionStatus = "not-visited";
 		var question = this.questionsData[i];

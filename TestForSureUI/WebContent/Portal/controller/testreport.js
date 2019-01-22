@@ -40,7 +40,7 @@ testReportController.prototype.SetState = function(obj)
 		this.currentQues = 1;
 		$('.report-section').hide();
 		$('.solution-section').show();
-		$('.btnSolution').text('View Report');
+		$('.btnSolution').text('Analysis');
 		this.PopulateSolution();
 	}
 };
@@ -48,7 +48,7 @@ testReportController.prototype.PopulateReportHeader = function()
 {
 	var html = "<div class='col-xs-12 col-sm-12 col-md-8 col-lg-8'><h4>"+this.testInfo.title+"</h4></div>"+
 		       "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+
-			   		"<button class='button button-default btnSolution'>View Solutions</button>"+
+			   		"<button class='button button-default btnSolution'>Solutions</button>"+
 			   "</div>"+
 			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+
 					"<button class='button button-default btnDownloadReport'>Download Report</button>"+
@@ -64,14 +64,16 @@ testReportController.prototype.SwitchReportSolution = function()
 		this.report = 0;
 		$('.report-section').hide();
 		$('.solution-section').show();
-		$('.btnSolution').text('View Report');
+		$('.btnSolution').text('Analysis');
+		this.PopulateReport();
 	}
 	else if(this.report == 0){
 		this.report = 1;
 		this.currentQues = 1;
 		$('.solution-section').hide();
 		$('.report-section').show();
-		$('.btnSolution').text('View Solutions');
+		$('.btnSolution').text('Solutions');
+		this.PopulateSolution();
 	}
 };
 testReportController.prototype.PopulateReport = function()
@@ -103,36 +105,40 @@ testReportController.prototype.PopulateSolution = function()
 };
 testReportController.prototype.PopulateQuestionStatus = function()
 {
-	var html = "<h4>Question Status</h4>";
+	var html = "";
 	for(var i = 0; i < this.testInfo.totalQues; i++){
-		var questionStatus = "not-visited";
+		var questionStatus = 'missed';
 		var question = this.solutionData[i];
-		if(question.markedOption == "null"){
-			//unanswered
-			if(question.marked == "true"){
-				//marked but unanswered
-				questionStatus = "marked";
+		var markedAnswer = -1;
+		var correctAnswer = -1;
+		if(question.markedOption == 'null' || question.markedOption == null){
+			//Skipped Question
+			questionStatus = 'skipped';		
+		}
+		else if(question.markedOption == '[]'){
+			//Missed Question
+			questionStatus = 'missed';
+		}
+		else if(question.markedOption != 'null' && question.markedOption != null && question.markedOption != '[]'){
+			markedAnswer = (JSON.parse(question.markedOption)).indexOf(true);
+			if(question.correctOption != 'null' && question.correctOption != null && question.correctOption != '[]'){
+				correctAnswer = (JSON.parse(question.correctOption)).indexOf(true);
 			}
-			else if(question.marked == "false"){
-				//unanswered
-				questionStatus = "unanswered";
+			if(markedAnswer == correctAnswer){
+				//correct answer
+				questionStatus = 'correct';
+			}
+			else{
+				//Wrong answer
+				questionStatus = 'wrong';
 			}
 		}
-		else if(question.markedOption == "[]"){
-			//not-visited
-			questionStatus = "not-visited";
+		
+		if(question.marked == 'true'){
+			//Marked for review
+			questionStatus = 'marked';
 		}
-		else{
-			//Answered
-			if(question.marked == "true"){
-				//marked and answered
-				questionStatus = "marked-answered";
-			}
-			else if(question.marked == "false"){
-				//answered
-				questionStatus = "answered";
-			}
-		}
+			
 		html += "<div class='" + questionStatus + "' ques-no='"+(i+1)+"' ques-id='"+(question.id)+"'>"+(i+1)+"</div>";
 	}
 	$('.solution-ques-status').find('.ques-status').html(html);
@@ -144,6 +150,7 @@ testReportController.prototype.PopulateQuestionStatus = function()
 };
 testReportController.prototype.DisplayQuestion = function()
 {
+	this.CurrentQuesStatusHighlight();
 	var optionValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 	var question = this.solutionData[this.currentQues-1];
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
@@ -154,6 +161,7 @@ testReportController.prototype.DisplayQuestion = function()
 	}
 	html += "<span class='question-text'>"+question.questionText+"</span>"+
 			"</div>"+
+			"<div class='question-info'><span>Time Spent: "+question.timeSpent+" secs</span></div>"+
 			"<div class='options'>";
 	var markedAnswer = -1;
 	if(question.markedOption != 'null' && question.markedOption != null && question.markedOption != '[]'){
@@ -166,24 +174,26 @@ testReportController.prototype.DisplayQuestion = function()
 	var correct = -1;
 	var incorrect = -1;
 	if(markedAnswer == correctAnswer){
+		//correct answer
 		correct = markedAnswer;
 	}
 	else{
+		//Wrong answer
 		correct = correctAnswer;
 		incorrect = markedAnswer;
 	}
 	$(question.options).find('option').each(function(key, value){
 		var addClass = 'option';
 		if(key == correct){
-			html += "<div class='"+addClass+"' data-option='"+key+"' selected='selected' style='border-color:green'>"+
-						"<span class='option-count' style='background-color: green; border-color: green; color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
+			html += "<div class='"+addClass+"' data-option='"+key+"' selected='selected' style='border-color:#5CB85C'>"+
+						"<span class='option-count' style='background-color: #5CB85C; border-color: #5CB85C; color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
 						"<span class='option-value'>"+$(value).html()+"</span>"+
 						"<span class='answer-status'></span>"+
 					"</div>";
 		}
 		else if(key == incorrect){
-			html += "<div class='"+addClass+"' data-option='"+key+"' selected='selected' style='border-color:red'>"+
-						"<span class='option-count' style='background-color: red; border-color: red; color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
+			html += "<div class='"+addClass+"' data-option='"+key+"' selected='selected' style='border-color:#D9534F'>"+
+						"<span class='option-count' style='background-color: #D9534F; border-color: #D9534F; color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
 						"<span class='option-value'>"+$(value).html()+"</span>"+
 						"<span class='answer-status'></span>"+
 					"</div>";
@@ -202,7 +212,7 @@ testReportController.prototype.DisplayQuestion = function()
 };
 testReportController.prototype.PopulateAttemptControls = function()
 {
-	var html = "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1'>"+
+	var html = "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-4 col-lg-offset-4'>"+
 					"<button class='button button-primary btnPrevious'>Previous</button>"+
 			    "</div>"+
 			    "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
@@ -237,3 +247,8 @@ testReportController.prototype.ManageControls = function()
 		$('.solution-section').find('.solution-questions').find('.attempt-controls').find('.btnPrevious').attr('disabled', false);
 	}
 }
+testReportController.prototype.CurrentQuesStatusHighlight = function()
+{
+	$('.solution-ques-status').find('.ques-status').find('div').removeClass('selected');
+	$('.solution-ques-status').find('.ques-status').find('div[ques-no='+this.currentQues+']').addClass('selected');
+};

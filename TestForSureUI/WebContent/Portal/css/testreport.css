@@ -21,13 +21,17 @@
 .solution-section{
 	padding: 0px;
 }
-.test-ques-status{
-	
+.solution-ques-status h4{
+	margin: 20px 8px 15px;
 }
 .solution-ques-status .ques-status{
 	max-height: 60%;
 	overflow: auto;
 	border-bottom: solid 1px #E4E4E4;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 .solution-ques-status .ques-status-info{
 	padding: 12px 8px;
@@ -38,15 +42,15 @@
 	display: inline-block;
 	margin-right: 10px;
 }
-.solution-ques-status .ques-status-info .status-info.not-visited{
-	background-color: #E4E4E4;
-	border: solid 1px #E4E4E4;
+.solution-ques-status .ques-status-info .status-info.skipped{
+	background-color: grey;
+	border: solid 1px grey;
 }
-.solution-ques-status .ques-status-info .status-info.answered{
+.solution-ques-status .ques-status-info .status-info.correct{
 	background-color: #5CB85C;
 	border: solid 1px #5CB85C;
 }
-.solution-ques-status .ques-status-info .status-info.unanswered{
+.solution-ques-status .ques-status-info .status-info.wrong{
 	background-color: #D9534F;
 	border: solid 1px #D9534F;
 }
@@ -54,32 +58,38 @@
 	background-color: #9B59B6;
 	border: solid 1px #9B59B6;
 }
-.solution-ques-status .ques-status-info .status-info.marked-answered{
-	background-color: #5CB85C;
-	border:solid 2px #9B59B6;
+.solution-ques-status .ques-status-info .status-info.missed{
+	background-color: #E4E4E4;
+	border:solid 2px #E4E4E4;
 }
 .solution-ques-status .ques-status div[ques-no]{
 	float: left;
 	height: 40px;
 	width: 40px;
-	margin: 5px;
+	margin: 1px;
 	padding: 10px;
 	font-size: 15px;
 	font-weight: bold;
 	text-align: center;
 	cursor: pointer;
 }
-.solution-ques-status .ques-status div[ques-no].not-visited{
+.solution-ques-status .ques-status div[ques-no].selected{
+	cursor: default;
+	box-shadow: rgb(119, 119, 119) 0px 1px 8px 0px;
+	transform: scale(1.05);
+	z-index: 1;
+}
+.solution-ques-status .ques-status div[ques-no].missed{
 	background-color: #E4E4E4;
 	color: #000000;
 	border: solid 1px #E4E4E4;
 }
-.solution-ques-status .ques-status div[ques-no].answered{
+.solution-ques-status .ques-status div[ques-no].correct{
 	background-color: #5CB85C;
 	color: #FFF;
 	border:solid 1px #5CB85C;
 }
-.solution-ques-status .ques-status div[ques-no].unanswered{
+.solution-ques-status .ques-status div[ques-no].wrong{
 	background-color: #D9534F;
 	color: #FFF;
 	border:solid 1px #D9534F;
@@ -89,11 +99,10 @@
 	color: #FFF;
 	border:solid 1px #9B59B6;
 }
-.solution-ques-status .ques-status div[ques-no].marked-answered{
-	background-color: #5CB85C;
+.solution-ques-status .ques-status div[ques-no].skipped{
+	background-color: grey;
 	color: #FFF;
-	border:solid 5px #9B59B6;
-	padding: 5px;
+	border:solid 5px grey;
 }
 
 .solution-section .solution-questions{
@@ -143,7 +152,11 @@
 .solution-section .solution-questions .question .question-desc{
 	border-bottom: solid 1px #E4E4E4;
 }
-
+.solution-section .solution-questions .question .question-info{
+	border-bottom: solid 1px #fbfbfb;
+	padding: 10px;
+	background-color: #FBFBFB;
+}
 .solution-section .solution-questions .question .options .option.correct{
 	border-color: green;
 }
