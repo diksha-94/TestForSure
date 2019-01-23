@@ -1,5 +1,6 @@
 .report-section{
 	display: none;
+	padding: 0px;
 }
 .solution-section{
 	display: none;
@@ -15,6 +16,43 @@
 .report-header .divButton{
 	margin-top: 4px;
 }
+.report-section .report-basic{
+	background-color: #e4e4e4;
+	height: auto;
+	padding: 0px;
+}
+.report-section .report-basic .greeting{
+	text-align: center;
+	margin: 30px;
+}
+.report-section .report-basic .report-detail{
+	padding: 0px;
+	margin-bottom: 30px;
+}
+.report-section .report-basic .report-detail .item{
+	border-top: solid 1px red;
+    padding: 10px;
+    height: auto;
+    border-bottom: solid 1px red;
+    border-right: solid 1px red;
+    text-align: center;
+}
+.report-section .report-basic .report-detail .item.rank{
+	border-left: solid 1px red;
+}
+.report-section .report-basic .report-detail .item img{
+	height: 20px;
+	width: 20px;
+}
+.report-section .report-basic .report-detail .item span{
+	margin-left: 10px;
+	font-size: 1em;
+}
+.report-section .report-basic .report-detail .item span.detail{
+	margin-left: 15px;
+	font-weight: bold;
+}
+
 
 
 /* Test solution CSS */

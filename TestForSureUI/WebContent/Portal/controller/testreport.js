@@ -65,7 +65,7 @@ testReportController.prototype.SwitchReportSolution = function()
 		$('.report-section').hide();
 		$('.solution-section').show();
 		$('.btnSolution').text('Analysis');
-		this.PopulateReport();
+		this.PopulateSolution();
 	}
 	else if(this.report == 0){
 		this.report = 1;
@@ -73,7 +73,7 @@ testReportController.prototype.SwitchReportSolution = function()
 		$('.solution-section').hide();
 		$('.report-section').show();
 		$('.btnSolution').text('Solutions');
-		this.PopulateSolution();
+		this.PopulateReport();
 	}
 };
 testReportController.prototype.PopulateReport = function()
@@ -85,12 +85,98 @@ testReportController.prototype.PopulateReport = function()
 }
 testReportController.prototype.PopulateBasicReport = function()
 {
+	var html = "";
+	var accuracy = Math.floor(((this.reportData.correctCount*100)/this.reportData.quesAttempted), 2);
+	html += "<div class='greeting'>"+
+				"<img src='' alt='award'/>"+
+				"<h4>Congrats User !!</h4>"+
+			"</div>"+
+			"<div class='report-detail col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+				"<div class='item rank col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+					"<img src='../images/dummy.jpg' alt='Rank'/><span>Rank</span><span class='detail'>"+
+					this.reportData.rank+" / "+this.reportData.totalCandidate+"</span>"+
+				"</div>"+
+				"<div class='item score col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+					"<img src='../images/dummy.jpg' alt='Score'/><span>Score</span><span class='detail'>"+
+					this.reportData.markesScored+" / "+this.testInfo.totalMarks+"</span>"+
+				"</div>"+
+				"<div class='item ques col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+					"<img src='../images/dummy.jpg' alt='Questions'/><span>Ques Attempted</span><span class='detail'>"+
+					this.reportData.quesAttempted+" / "+this.testInfo.totalQues+"</span>"+
+				"</div>"+
+				"<div class='item time col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+					"<img src='../images/dummy.jpg' alt='Time'/><span>Time Taken</span><span class='detail'>"+
+					(parseInt(this.reportData.timeTaken/60))+" mins</span>"+
+				"</div>"+
+				"<div class='item accuracy col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+					"<img src='../images/dummy.jpg' alt='Accuracy'/><span>Accuracy</span><span class='detail'>"+
+					accuracy+"</span>"+
+				"</div>"+
+				"<div class='item percentile col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+					"<img src='../images/dummy.jpg' alt='Percentile'/><span>Percentile</span><span class='detail'>50</span>"+
+				"</div>"+
+			"</div>";
+	$('.report-section').find('.report-basic').html(html);
+			
 };
 testReportController.prototype.PopulateTopperAverage = function()
 {
+	var topperScore = this.reportData.leaderboard[0].marksScored;
+	var topperTime = parseInt(this.reportData.leaderboard[0].timeTaken/60);
+	var averageScore = 0;
+	var averageTime = 0;
+	var totalScore = 0;
+	var totalTime = 0;
+	for(var data in this.reportData.leaderboard){
+		totalScore += this.reportData.leaderboard[data]["marksScored"];
+		totalTime += this.reportData.leaderboard[data]["timeTaken"];
+	}
+	averageScore = totalScore;
+	averageTime = parseInt(totalTime/60);
+	var html = "<div class='topper'>"+
+					"<span>Topper's Score: "+topperScore+"</span>"+
+					"<span>Topper's Time: "+topperTime+" mins</span>"+
+			   "</div>"+
+			   "<div class='average'>"+
+					"<span>Average Score: "+averageScore+"</span>"+
+					"<span>Average Time: "+averageTime+" mins</span>"+
+			   "</div>";
+	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
 };
 testReportController.prototype.PopulateLeaderboard = function()
 {
+	var html = "";
+	html = "<table>"+
+				"<thead>"+
+					"<tr>"+
+						"<th>Rank</th>"+
+						"<th>Marks Scored</th>"+
+						"<th>Time Taken</th>"+
+					"</tr>"
+				"</thead>"+
+				"<tbody>";
+	var count = 5;
+	if(this.reportData.leaderboard.length < 5){
+		count = this.reportData.leaderboard.length;
+	}
+	for(var i=0;i<count;i++){
+		html += "<tr>"+
+					"<td>"+(parseInt(i)+1)+"</td>"+
+					"<td>"+(this.reportData.leaderboard[i].marksScored)+"</td>"+
+					"<td>"+(parseInt(this.reportData.leaderboard[i].timeTaken/60))+"</td>"+
+				"</tr>";
+	}
+	if(this.reportData.rank > 5){
+		html += "<tr>"+
+					"<td>"+(this.reportData.rank)+"</td>"+
+					"<td>"+(this.reportData.markesScored)+"</td>"+
+					"<td>"+(parseInt(this.reportData.leaderboard[i].timeTaken/60))+"</td>"+
+				"</tr>";
+	}
+	html += "</tbody>"+
+			"</table>";
+	html += "<div><button class='button button-primary' id='btnShowLeaderboard'>View Full Leaderboard</button>";
+	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
 };
 testReportController.prototype.DisplayCharts = function()
 {
