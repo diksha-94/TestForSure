@@ -110,7 +110,7 @@ quizController.prototype.PopulateQuestion = function(solution)
 };
 quizController.prototype.PopulateQuestionStatus = function()
 {
-	var html = "<h5>Question Status</h5>"+
+	var html = "<h4>Question Status</h4>"+
 			   "<div class='question-status'>";
 	for(var question in this.questionsData){
 		var status = 'notvisited';

@@ -1,8 +1,10 @@
 .quiz-header{
 	border-bottom: solid 1px #E4E4E4;
-	height: 80px;
-	padding: 21px;
+	height: auto;
+	padding: 5px;
 	font-weight: bold;
+	background-color: #2E6DA4;
+	color: white;
 }
 .quiz-header span{
 	margin-top: 10px;
@@ -78,27 +80,34 @@
 	font-weight: bold;
 }
 .quiz .quiz-status{
-	padding: 20px;
+	padding: 4px 30px;
 }
-.quiz .quiz-status h5{
+.quiz .quiz-status h4{
 	color: #2E6DA2;
 	font-weight: bold;
 }
-.quiz .quiz-status .question-status{
+.quiz .quiz-status .question-status {
 	border: solid 1px #E4E4E4;
-	padding: 20px;
+	padding: 15px 6px;
+	max-height: 60%;
+	overflow: auto;
+	border-bottom: solid 1px #E4E4E4;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 }
-.quiz .quiz-status .question-status span{
+.quiz .quiz-status .question-status span {
 	display: inline-block;
 	height: 32px;
 	width: 32px;
 	margin-left: 14px;
-	font-weight: bold;
-	font-size: 1.3em;
-	border-radius: 50%;
+	font-size: 1em;
 	text-align: center;
-	padding-top: 3px;
+	padding-top: 5px;
 	font-weight: bold;
+	margin: 1px;
 }
 .quiz .quiz-status .question-status span.notvisited{
 	border: solid 1px #2E6DA2;
@@ -111,13 +120,13 @@
 	color: #2E6DA2;
 }
 .quiz .quiz-status .question-status span.correct{
-	border: solid 1px green;
-	background-color: green;
+	border: solid 1px #5CB85C;
+	background-color: #5CB85C;
 	color: white;
 }
 .quiz .quiz-status .question-status span.incorrect{
-	border: solid 1px red;
-	background-color: red;
+	border: solid 1px #D9534F;
+	background-color: #D9534F;
 	color: white;
 }
 .quiz .quiz-questions .question .options .option .option-count.correct{
@@ -138,3 +147,10 @@
 	width: 40%;
 	margin-left: 5%;
 }
+/* Quiz report CSS */
+.quiz .quiz-report{
+	border: solid 1px red;
+	margin-top: 15px;
+	padding: 10px;
+}
+/* Quiz report CSS ends */

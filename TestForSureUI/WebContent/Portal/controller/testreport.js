@@ -87,6 +87,8 @@ testReportController.prototype.PopulateBasicReport = function()
 {
 	var html = "";
 	var accuracy = Math.floor(((this.reportData.correctCount*100)/this.reportData.quesAttempted), 2);
+	var percentile = ((this.reportData.totalCandidate - this.reportData.rank)*100)/this.reportData.totalCandidate;
+	percentile = Math.floor(percentile, 2);
 	html += "<div class='greeting'>"+
 				"<img src='' alt='award'/>"+
 				"<h4>Congrats User !!</h4>"+
@@ -113,7 +115,8 @@ testReportController.prototype.PopulateBasicReport = function()
 					accuracy+"</span>"+
 				"</div>"+
 				"<div class='item percentile col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/dummy.jpg' alt='Percentile'/><span>Percentile</span><span class='detail'>50</span>"+
+					"<img src='../images/dummy.jpg' alt='Percentile'/><span>Percentile</span><span class='detail'>"+
+					percentile+"</span>"+
 				"</div>"+
 			"</div>";
 	$('.report-section').find('.report-basic').html(html);
@@ -293,12 +296,15 @@ testReportController.prototype.DisplayQuestion = function()
 		}
 	});
 	html += "</div>";
-	
+	html += "<div class='ques-solution'><h5>Solution: </h5><p>"+question.solution+"</p></div>";
 	$('.solution-section').find('.solution-questions').find('.questions').html(html);
 };
 testReportController.prototype.PopulateAttemptControls = function()
 {
-	var html = "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-4 col-lg-offset-4'>"+
+	var html = "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>"+
+					"<button class='col-xs-12 col-sm-12 col-md-6 col-lg-6 button button-primary btnShowSolution'>Show Solution</button>"+
+			   "</div>"+
+			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-2 col-lg-offset-2'>"+
 					"<button class='button button-primary btnPrevious'>Previous</button>"+
 			    "</div>"+
 			    "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
@@ -316,6 +322,10 @@ testReportController.prototype.PopulateAttemptControls = function()
 		this.DisplayQuestion();
 		this.ManageControls();
 	}.bind(this));
+	$('.solution-section').find('.solution-questions').find('.attempt-controls').find('.btnShowSolution').unbind().bind('click', function(e){	
+		var position = $('.ques-solution').offset();
+		$(".question").animate({ scrollTop: position.top }, 1000);
+	}.bind(this));
 };
 testReportController.prototype.ManageControls = function()
 {
@@ -331,6 +341,15 @@ testReportController.prototype.ManageControls = function()
 	else{
 		$('.solution-section').find('.solution-questions').find('.attempt-controls').find('.btnNext').attr('disabled', false);
 		$('.solution-section').find('.solution-questions').find('.attempt-controls').find('.btnPrevious').attr('disabled', false);
+	}
+	var question = this.solutionData[this.currentQues-1];
+	if(question.solution.length == 0){
+		$('.question').find('.ques-solution').hide();
+		$('.btnShowSolution').hide();
+	}
+	else{
+		$('.question').find('.ques-solution').show();
+		$('.btnShowSolution').show();
 	}
 }
 testReportController.prototype.CurrentQuesStatusHighlight = function()

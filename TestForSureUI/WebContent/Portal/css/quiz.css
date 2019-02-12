@@ -1,0 +1,78 @@
+.quiz-listing .right ul {
+	list-style-type: none;
+	display: flex;
+	flex-direction: row;
+}
+.quiz-listing .right h4 {
+	margin-left: 10px;
+}
+.quiz-listing .right ul li {
+	border: solid 1px #E4E4E4;
+	margin: 0px 15px 15px 0px;
+	min-height: 200px;
+	height: auto;
+	text-align: center;
+}
+.quiz-listing .right ul li:hover {
+	box-shadow: 0px 0px 10px #E4E4E4;
+	transition: 0.2s ease-out;
+}
+.quiz-listing .right ul li img {
+	width: 40px;
+	height: 40px;
+	margin-top: 10px;
+}
+.quiz-listing .right ul li h4 {
+	font-weight: bold;
+	word-wrap: break-word;
+}
+.quiz-listing .right ul li .attempts{
+	font-weight: bold;
+}
+.quiz-listing .right ul li .controls {
+	position: absolute;
+	bottom: 6px;
+	width: 80%;
+	margin-left: 4%;
+}
+.test-listing .right ul {
+	list-style-type: none;
+}
+.test-listing .right h4 {
+	margin-left: 5px;
+}
+.test-listing .right ul li {
+	border: solid 1px #E4E4E4;
+	margin: 0px 75px 15px 0px;
+	min-height: 305px;
+	height: auto;
+	padding: 10px 15px 15px;
+}
+.test-listing .right ul li:hover {
+	box-shadow: 0px 0px 10px #E4E4E4;
+	transition: 0.2s ease-out;
+}
+.test-listing .right ul li h4 {
+	font-weight: bold;
+	word-wrap: break-word;
+}
+.test-listing .right ul li .controls {
+	padding:20px 0px;
+}
+.test-listing .right ul li .test-detail div{
+	padding: 5px;
+	border-bottom: solid 1px #E4E4E4;
+}
+.test-listing .right ul li .test-detail div.time{
+	border: none;
+}
+.test-listing .right ul li .test-detail div.attempts{
+	border: none;
+	text-align: center;
+	background-color: #e4e4e4;
+	border-radius: 30px;
+	font-weight: bold;
+}
+.controls button {
+    margin-top: 8px;
+}

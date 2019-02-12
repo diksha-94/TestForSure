@@ -233,4 +233,12 @@
 .solution-section .solution-questions .attempt-controls button{
 	width: 80%;
 }
+.question .ques-solution{
+	background-color: #e4e4e4;
+	padding: 5px 40px;
+}
+.question .ques-solution h5{
+	font-size: 1.2em;
+	font-weight: bold;
+}
 /* Test Solution CSS ends */
