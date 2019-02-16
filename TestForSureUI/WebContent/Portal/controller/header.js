@@ -1,5 +1,8 @@
 var headerController = function(){
+	this.category = {};
+	this.exam = {};
 	this.Init();
+	this.LoadExams();
 };
 headerController.prototype.Init = function()
 {
@@ -214,6 +217,58 @@ headerController.prototype.Init = function()
 				console.log(e);
 			}
 		});
+	});
+};
+headerController.prototype.LoadExams = function(){
+	fetch('http://localhost:8083/test2bsure/header')
+		  .then(response => response.json())
+		  .then(data => this.SetState({ category: data.category, exam: data.exam }));
+};
+headerController.prototype.SetState = function(obj)
+{
+	for(var key in obj){
+		this[key] = obj[key];
+	}
+	this.PopulateData();
+};
+headerController.prototype.PopulateData = function(){
+	var html = "";
+	var htmlContent = "";
+	var onceTab = false;
+	var onceContent = false;
+	for(var cat in this.category){
+		var catName = this.category[cat].title.replace(/[^a-zA-Z0-9]/g,'_');
+		if(onceTab == true){
+			html += '<li class="exam-menu-item">';
+		}
+		else{
+			html += '<li class="active exam-menu-item">';
+			onceTab = true;
+		}
+		html += '<img src="'+this.category[cat].imageUrl+'" alt="'+this.category[cat].title+'"/>'+
+					'<a data-toggle="tab" href="#'+catName+'">'+this.category[cat].title+'</a>'+
+					'<span>></span>'+
+				'</li>';
+		if(onceContent == true){
+			htmlContent += '<div id="'+catName+'" class="tab-pane fade in"><ul class="exams-list">';
+		}
+		else{
+			htmlContent += '<div id="'+catName+'" class="active tab-pane fade in"><ul class="exams-list">';
+			onceContent = true;
+		}
+	  	for(var exam in this.exam){
+			if(this.exam[exam].category == this.category[cat].id){
+				htmlContent += "<li class='exam-value-item' exam-id='"+this.exam[exam].id+"'>"+this.exam[exam].title+"";
+				htmlContent +=	"</li>";
+			}
+		}
+	  	htmlContent += "</ul></div>";
+	}
+	$('.exam-menu').html(html);
+	$('.exam-content').html(htmlContent);
+	$('.exam-content').find('.exam-value-item').unbind().bind('click', function(e){
+		var examId = $(e.currentTarget).attr('exam-id');
+		window.location.href = 'exam.html?id=' + examId;
 	});
 };
 $(document).ready(function(){

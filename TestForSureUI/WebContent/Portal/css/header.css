@@ -1,54 +1,116 @@
 .header {
-	height: 80px;
+	height: 60px;
 	width: 100%;
-}
-
-.header nav {
-	height: 100%;
-	border-radius: 0px;
-	background-color: white;
-	border: none;
 	border-bottom: solid 1px #E4E4E4;
 }
-
-.header .navbar-brand img {
-	height: 50px;
+.header .brand-logo img {
+	height: 60px;
 	width: 230px;
-	padding-left: 30px;
 }
-
-.header ul.test2bsure-menu {
-	padding: 0px 140px;
+.header .menu-items ul.test2bsure-menu {
 	font-size: 16px;
 	font-weight: bold;
+	list-style-type: none;
+	display: flex;
+	height: 100%;
+	margin-left: 0px;
+	padding-left: 0px;
 }
-
-.header ul.test2bsure-menu li {
+.header .menu-items ul.test2bsure-menu li.menu-item {
+	margin-left: 20px;
+	padding: 0px 10px;
+}
+.header .menu-items ul.test2bsure-menu li.menu-item a.link {
+	color: #2E6DA4;
+	margin-top: 20px;
+	display: block;
+}
+.header ul.test2bsure-menu li.menu-item:hover {
+	background-color: #2E6DA4;
+}
+.header ul.test2bsure-menu li.menu-item:hover a.link {
+	color: #E4E4E4;
+}
+.header .login-register-items ul.test2bsure-options li {
 	padding-top: 15px;
+}
+.exam-menu-div {
+	width: 500px;
+	background-color: #E4E4E4;
+	height: 400px;
+	margin-left: -10px;
+	margin-top: 16px;
+	overflow-y: auto;
+}
+.exam-menu-div .tab-content {
+	padding: 0px 10px;
 	height: 100%;
 }
-
-.header ul.test2bsure-menu li a {
-	color: #2E6DA4;
+.header .menu-items ul.test2bsure-menu .exam-menu {
+	list-style-type: none;
+	padding: 0px;
+	display: flex;
+	flex-direction: column;
+}
+.header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item {
+	height: 50px;
+	color: #000;
+	margin-left: 0px !important;
+	padding: 13px !important;
+}
+.header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item a{
+	color: #000;
 }
 
-.header ul.test2bsure-menu li a:hover {
-	background-color: #2E6DA4;
-	color: #E4E4E4;
+.header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item a {
+	padding: 0px;
+	display: inline;
+	margin-left: 5px;
 }
-
-.header ul.test2bsure-menu li:hover {
-	background-color: #2E6DA4;
-	color: #E4E4E4;
+.header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item img {
+	width: 20px;
+	height: 20px;
 }
-
-.header ul.test2bsure-options {
-	padding: 0px 40px 0px 0px;
+.header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item span {
+	float: right
 }
-
-.header ul.test2bsure-options li {
-	padding-top: 26px;
-	margin-left: 10px;
+.exam-menu-li{
+	width: 110px;
+}
+.exam-tabs{
+	padding: 0px;
+	margin: 0px;
+	background-color: #FFF;
+}
+.exam-menu-div{
+	display:none;
+}
+.exam-menu-li:hover .exam-menu-div{
+	display: block;
+}
+.exam-menu-item:hover{
+	background-color: #E4E4E4;
+}
+.exam-menu-div .exam-tabs .nav-tabs > li > a:hover {
+    border: none !important;
+}
+.exam-menu-div .exam-tabs .nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: unset !important;
+}
+.header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item.active, .header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item.active a{
+	background-color: #E4E4E4;
+	border: none;
+}
+.exam-content .exams-list{
+	list-style-type: none;
+	margin-top: 12px;
+	font-size: 0.8em;
+	color: #a4a4a4;
+}
+.exam-value-item {
+    padding: 3px 0px;
+    cursor: pointer;
 }
 /* Login Modal CSS */
 #loginModal .modal-footer {

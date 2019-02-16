@@ -2,58 +2,57 @@
 <link rel="stylesheet" href="../../helperCSS/font-awesome.min.css">
 <link rel="stylesheet" href="../../helperCSS/animate.min.css">
 <script type='text/javascript' src='../controller/header.js'></script>
-<div class="header">
-	<header>
-		<nav class="navbar navbar-inverse nav-background">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target="#myNavbar">
-						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="home.html"><img
-						src="../../Images/Test2bSure_Logo.jpg" alt="TEST-2B-SURE"></a>
+<div class="header container-fluid">		
+	<div class="brand-logo col-xs-8 col-sm-8 col-md-3 col-lg-3">
+		<a class="brand" href="home.html"><img src="../../Images/Test2bSure_Logo.jpg" alt="TEST-2B-SURE"></a>
+	</div>
+	<div class="menu-items col-md-7 col-lg-7 hide">
+		<ul class="test2bsure-menu">
+			<li class="menu-item active"><a href="home.html" class="link"><span
+					class="test-color glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+			<li class="menu-item exam-menu-li"><a class="link"><span
+					class="test-color glyphicon glyphicon-edit"></span>&nbsp;Exams&nbsp;<span
+					class="glyphicon glyphicon-chevron-down"></span>
+					</a>
+				<div class="exam-menu-div">
+					<div class="col-md-4 col-lg-4 exam-tabs">
+						<ul class='exam-menu nav nav-tabs'>
+						</ul>
+					</div>
+				 	<div class="tab-content exam-content col-md-8 col-lg-8">
+				    </div>
 				</div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<ul class="nav navbar-nav test2bsure-menu">
-						<li class="highlight home-in-menu"><a href="home.html"><span
-								class="test-color glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
-						<li class="menuItems"><a href="show-tests.html"><span
-								class="test-color glyphicon glyphicon-edit"></span>&nbsp;Exams</a></li>
-						<li class="menuItems"><a href="quiz.html"><span
-								class="test-color glyphicon glyphicon-edit"></span>&nbsp;Quizzes</a></li>
-						<li class="menuItems"><a href="about-us.html"><span
-								class="test-color glyphicon glyphicon-info-sign"></span>&nbsp;About
-								Us</a></li>
-						<li class="menuItems"><a href="contact-us.html"><span
-								class="test-color glyphicon glyphicon-earphone"></span>&nbsp;Contact
-								Us</a></li>
-
-					</ul>
-					<ul class="nav navbar-nav navbar-right test2bsure-options">
-						<li id="menuLogin" class="show"><button type="button" class="button button-primary" 
-								id="btnLogin">
-								<span class="test-color glyphicon glyphicon-user"></span>&nbsp;Login
-							</button></li>
-						<li id="menuRegister" class="show"><button type="button" class="button button-default" 
-								id="btnRegister">
-								<span class="test-color glyphicon glyphicon-user"></span>&nbsp;Register
-							</button></li>
-						<li id="userProfile" class="hide"><a
-							href="#">Hi<span id="loggedInUSer"></span>&nbsp;&nbsp;<span
-								class="glyphicon glyphicon-chevron-down"></span></a>
-							<ul class="nav navbar-nav" id="subMenu">
-								<li id="profile"><a href="profile.html">Profile</a></li>
-								<li id="menuLogout" class="hide"><a href="#"
-									id="linkLogout">Logout</a></li>
-							</ul></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
+			</li>
+			<li class="menu-item"><a href="quiz.html" class="link"><span
+					class="test-color glyphicon glyphicon-edit"></span>&nbsp;Quizzes</a></li>
+			<li class="menu-item"><a href="aboutus.html" class="link"><span
+					class="test-color glyphicon glyphicon-info-sign"></span>&nbsp;About
+					Us</a></li>
+			<li class="menu-item"><a href="contactus.html" class="link"><span
+					class="test-color glyphicon glyphicon-earphone"></span>&nbsp;Contact
+					Us</a></li>
+		</ul>
+	</div>
+	<div class="login-register-items col-xs-4 col-sm-4 col-md-2 col-lg-2">
+		<ul class="test2bsure-options">
+			<li id="menuLogin" class="show"><button type="button" class="button button-default" 
+					id="btnLogin">
+					<span class="test-color glyphicon glyphicon-user"></span>&nbsp;Login/Register
+				</button>
+			</li>
+			<li id="userProfile" class="hide"><a
+				href="#">Hi<span id="loggedInUSer"></span>&nbsp;&nbsp;<span
+					class="glyphicon glyphicon-chevron-down"></span></a>
+				<ul class="nav navbar-nav" id="subMenu">
+					<li id="profile"><a href="profile.html">Profile</a></li>
+					<li id="menuLogout" class="hide"><a href="#"
+						id="linkLogout">Logout</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
 </div>
+
 <!--Login modal-->
 <div class="modal fade" id="loginModal" role="dialog" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog loginModal" role='document'>
