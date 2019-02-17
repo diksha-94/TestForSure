@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>Contact Us</title>
+		<link href='../../helperCSS/bootstrap.min.css' rel='stylesheet' />
+		<link href='../ReusableFunctions/common.css' rel='stylesheet' />
+		<link href='../css/contactus.css' rel='stylesheet' />
+	</head>
+	<body>
+		<div class='contactus-header common-header'>
+			<!-- Load the header here from header.html -->
+		</div>
+		<div class='outer'>
+			<h3 class='head'>We'll be in touch soon</h3>
+			<div id="errorContactUs" class="hide col-sm-7 col-sm-offset-3">
+				<div class=" alert alert-danger" id="errorMessageContactUs"></div>
+			</div>
+			<form id="contactUsForm" class="form-horizontal" role="form">
+				<div class="form-group margin-bottom">
+					<label class='control-label col-sm-3'>Name<span class='red'>*</span></label>
+					<div class='col-sm-7'>
+						<input type="text" class='form-control' id="txtName" name="txtNameName" required="required" placeholder="Name"/>
+					</div>
+				</div>
+				<div class="form-group margin-bottom">
+					<label class='control-label col-sm-3'>E-mail<span class='red'>*</span></label>
+					<div class='col-sm-7'>
+						<input type="email"  class='form-control' id="txtEmail" name="txtEmailName" required="required" placeholder="abc@example.com"/>
+					</div>
+				</div>
+				<div class="form-group margin-bottom">
+					<label class='control-label col-sm-3'>Message/Query<span class='red'>*</span></label>
+					<div class='col-sm-7'>
+						<textarea class='form-control' rows="5" id="txtQuery" name="txtQueryName" required="required" placeholder="Write your Query..."></textarea>
+					</div>
+				</div>
+				<div class='form-group'>
+					<div class="col-sm-7 col-sm-offset-3">
+						<button type="submit" id="btnSubmitQuery" class='btn btn-primary btn-block'>Submit Query</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class='contactus-footer common-footer col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+			<!--  Load the footer here from footer.html -->
+		</div>
+		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
+		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
+		<script type='text/javascript' src='../controller/contactus.js'></script>
+		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
+		
+		<script type='text/javascript' src='../controller/header.js'></script>
+	</body>
+</html>

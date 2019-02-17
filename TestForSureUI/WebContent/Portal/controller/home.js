@@ -11,7 +11,7 @@ homeController.prototype.Init = function()
 	test2bsureController.getObj().GetHeader(".home-header");
 	this.LoadCategoriesExams();
 	//Load footer
-	//test2bsureController.getObj().GetFooter(".home-footer");
+	test2bsureController.getObj().GetFooter(".home-footer");
 };
 homeController.prototype.LoadCategoriesExams = function()
 {
