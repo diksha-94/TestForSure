@@ -1,0 +1,18 @@
+Steps to deploy web application(TestForSureUI) in Tomcat-
+
+1.	Go to the folder where Web Content folder is and run "jar -cvf TestForSure.war *"
+2. The war will be created in the step-1, place this war in webapps folder in apache tomcat
+3. Start the tomcat by starting bin/startup.bat
+4. Access in web browser
+
+
+
+Steps to create and run jar(TestForSureServices)-
+
+1. In command prompt, go to the location
+	mvn clean
+	mvn compile
+	mvn package
+	
+2. Jar will be created in the Targets folder
+3. To run the jar , in cmd go to Targets folder and run java -jar jar_name.jar

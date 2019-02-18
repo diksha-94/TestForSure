@@ -65,7 +65,7 @@ homeController.prototype.PopulateAllExams = function(id)
 			for(var exam in this.exam){
 				if(this.exam[exam].category == this.category[category].id){
 					html += "<li class='col-xs-12 col-sm-12 col-md-3 col-lg-3' exam-id='"+this.exam[exam].id+"'>";
-					html += this.ExamCard(this.exam[exam]);
+					html += test2bsureController.getObj().ExamCard(this.exam[exam], this.testCount, this.quizCount);
 					html +=	"</li>";
 				}
 			}
@@ -86,26 +86,4 @@ homeController.prototype.PopulateAllExams = function(id)
 		var examId = $(e.currentTarget).parents('li[exam-id]').attr('exam-id');
 		window.location.href = 'exam.html?id='+examId;
 	});
-};
-homeController.prototype.ExamCard = function(exam)
-{
-	var html = "<img src='"+exam.imageUrl+"' alt='"+exam.title+"'>"+
-				"<h5>"+exam.title+"</h5>"+
-				"<p>"+exam.description+"</p>"+
-				"<div class='exam-data'>";
-	for(var test in this.testCount){
-		if(this.testCount[test].examId == exam.id && this.testCount[test].testCount > 0){
-			html += "<span class='test-count'>"+ this.testCount[test].testCount+" tests</span>";
-			break;
-		}
-	}
-	for(var quiz in this.quizCount){
-		if(this.quizCount[quiz].examId == exam.id && this.quizCount[quiz].quizCount > 0){
-			html += "<span class='quiz-count'>"+ this.quizCount[quiz].quizCount+" quizzes</span>";
-			break;
-		}
-	}
-	html += "</div>";
-	html += "<div class='exam-explore'><button class='button button-primary btnExplore'>Explore Exam</button></div>";
-	return html;
 };
