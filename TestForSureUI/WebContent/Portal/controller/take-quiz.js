@@ -46,8 +46,11 @@ quizController.prototype.ManageQuizState = function()
 };
 quizController.prototype.PopulateQuizDetails = function()
 {
-	var html = "<h4 class='col-xs-6 col-sm-6 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1'>"+this.quizInfo.title+"</h4>"+
-			   "<span>"+this.quizInfo.noOfQues+" Ques / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" Marks</span>";
+	var html = "<div class='brand-logo-quiz col-xs-8 col-sm-8 col-md-3 col-lg-3'>"+
+					"<a class='brand' href='home.html'><img src='../../Images/Test2bSure_Logo.jpg' alt='TEST-2B-SURE'></a>"+
+				"</div>"+
+				"<div class='quiz-title col-xs-6 col-sm-6 col-md-6 col-lg-6'><h4>"+this.quizInfo.title+"</h4></div>"+
+			   "<div class='quiz-info col-xs-3 col-sm-3 col-md-3 col-lg-3'><span>"+this.quizInfo.noOfQues+" Ques / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" Marks</span></div>";
 	$('.quiz-header').html(html);
 };
 quizController.prototype.PopulateQuestion = function(solution)
@@ -217,14 +220,15 @@ quizController.prototype.DisplayReport = function()
 			}
 		}
 	}
-	var html = "<div>Correct: <span>"+correctCount+" / "+this.quizInfo.noOfQues+"</span></div>";
+	var html = "<div class='quiz-report-data'><div>Correct: <span>"+correctCount+" / "+this.quizInfo.noOfQues+"</span></div>";
 	html += "<div>Incorrect: <span>"+(this.quizInfo.noOfQues - correctCount)+" / "+this.quizInfo.noOfQues+"</span></div>";
-	html += "<div>Accuracy: <span>"+(correctCount/this.quizInfo.noOfQues)*100+"%</span></div>";
-	html += "<div><button type='button' class='button button-primary btnReviewQuiz'>Review Quiz</button></div>";
+	html += "<div>Accuracy: <span>"+(correctCount/this.quizInfo.noOfQues)*100+"%</span></div></div>";
+	html += "<div class='quiz-report-btn'><button type='button' class='button button-primary btnReviewQuiz'>Review Quiz</button></div>";
 	$('.quiz').find('.quiz-report').html(html);
 	$('.quiz').find('.quiz-report').find('.btnReviewQuiz').unbind().bind('click', function(e){
-		$('.quiz').find('.quiz-report').hide();
 		$('.quiz').find('.quiz-questions').show();
+		var pos = $('.quiz').find('.quiz-questions').offset().top;
+		$('body').animate({scrollTop:pos});
 		this.PopulateQuestion(true);
 		this.HandleReviewControls();
 	}.bind(this));

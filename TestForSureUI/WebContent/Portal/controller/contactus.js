@@ -5,48 +5,39 @@ contactusController.prototype.Init = function()
 {
 	//Load header
 	test2bsureController.getObj().GetHeader(".contactus-header");
+	this.BindEvents();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".contactus-footer");
 };
-
-/*var contactUsRules = {
-	'txtNameName': {
-		required: true
-    },
-    'txtEmailName': {
-		required: true,
-		email: true
-    },
-	'txtQueryName': {
-		required: true
-    }
-};
-	
-$('#contactUsForm').validate({
-    rules: contactUsRules,
-
-    ignore: true,
-    highlight: function () {
-        // to remove the red alert on text 
-    },
-    submitHandler: function () {
-		console.log("Inside submit");
-		var contact_us_query = serviceIp+"/test-for-sure/contact-us/insert-query";
-		var type = "POST"
-        var name = $('#txtName').val();
+contactusController.prototype.BindEvents = function()
+{
+	$('#btnSubmitQuery').unbind().bind('click', function(){
+		var name = $('#txtName').val();
         var email = $('#txtEmail').val();
 		var query = $('#txtQuery').val();
-		
+		if(name.length == 0 || email.length == 0 || query.length == 0){
+			$('#errorContactUs').removeClass("hide");
+			$('#errorContactUs').addClass("show");
+			$('#errorMessageContactUs').html("Please enter all the fields");
+			$('#errorMessageContactUs').removeClass("alert-success");
+			$('#errorMessageContactUs').addClass("alert-danger");
+			return;
+		}
+		if(!test2bsureController.getObj().ValidateEmail(email)){
+			$('#errorContactUs').removeClass("hide");
+			$('#errorContactUs').addClass("show");
+			$('#errorMessageContactUs').html("Please enter a valid email");
+			$('#errorMessageContactUs').removeClass("alert-success");
+			$('#errorMessageContactUs').addClass("alert-danger");
+			return;
+		}
 		var requestData = {};
 		requestData.name = name;
 		requestData.email = email;
 		requestData.query = query;
-	   
-		console.log(JSON.stringify(requestData));
-		
-        $.ajax({
-            url: contact_us_query,
-            type: type,
+		$.ajax({
+            url: "http://localhost:8083/test2bsure/contactus",
+            type: 'POST',
 			data: JSON.stringify(requestData),
 			contentType: 'application/json',
 			//dataType: 'json',
@@ -81,10 +72,8 @@ $('#contactUsForm').validate({
             }
            
         });
-    }
-});*/
-
-
+	});
+};
 $(document).ready(function () {
 	new contactusController();
 });

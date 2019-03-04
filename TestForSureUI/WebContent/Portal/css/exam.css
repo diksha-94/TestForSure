@@ -37,11 +37,12 @@
 	margin-left: 5px;
 }
 .test-listing .right ul li {
-	border: solid 1px #E4E4E4;
 	margin: 0px 75px 15px 0px;
 	min-height: 305px;
 	height: auto;
 	padding: 10px 15px 15px;
+	border-radius: 2px;
+	box-shadow: 0 7px 17px 0 rgba(0,0,0,.05);
 }
 .test-listing .right ul li:hover {
 	box-shadow: 0px 0px 10px #E4E4E4;

@@ -1,14 +1,24 @@
 .quiz-header{
+	position: fixed;
 	border-bottom: solid 1px #E4E4E4;
-	height: auto;
-	padding: 5px;
 	font-weight: bold;
-	background-color: #2E6DA4;
-	color: white;
+	background-color: white;
+	color: black;
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
+	height: 70px;
+	z-index: 1;
 }
 .quiz-header span{
 	margin-top: 10px;
 	display: block;
+}
+.quiz-outer{
+	position: absolute;
+	top: 70px;
+	padding: 0px;
+}
+.quiz{
+	padding: 0px;
 }
 .quiz .quiz-questions{
 	height: 76%;
@@ -149,8 +159,39 @@
 }
 /* Quiz report CSS */
 .quiz .quiz-report{
-	border: solid 1px red;
-	margin-top: 15px;
 	padding: 10px;
+	background-color: #e4e4e4;
 }
 /* Quiz report CSS ends */
+.brand-logo-quiz img{
+	width: 170px;
+	padding: 8px;
+}
+.quiz-title{
+	text-align: center;
+
+padding-top: 14px;
+}
+.quiz-title h4{
+	font-size: 1.5em;
+}
+.quiz-info{
+	padding-top: 13px;
+
+font-size: 1.2em;
+
+color: gray;
+}
+.quiz-report-data{
+	display: flex;
+}
+.quiz-report-data div{
+	width: 33%;
+text-align: center;
+margin-top: 30px;
+}
+.quiz-report-btn{
+	margin-top: 50px;
+width: 25%;
+margin-left: 37.5%;
+}
