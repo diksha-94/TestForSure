@@ -1,0 +1,47 @@
+.leaderboard-content.table-responsive{
+	width: 80%;
+	overflow-y: hidden;
+	overflow-x: visible;
+	border: 0;
+	margin-bottom: 0;
+	margin-left: 10%;
+}
+.leaderboard-outer{
+	margin: 50px 0px;
+}
+.leaderboard-heading{
+	text-align: center;
+	color: grey;
+	padding: 10px 0;
+}
+.leaderboard-outer h4{
+	display: inline-block;
+}
+.leaderboard-heading span{
+	font-size: 1em;
+	font-weight: bold;
+	color: #2e6da4;
+}
+.table1{
+	min-width: 100%;
+}
+.table1 tr th {
+    text-align: center;
+    background: #2e6da4;
+    padding: 12px 20px;
+    font-size: 11px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.table1 tr .name {
+    text-align: left;
+}
+.table1 tr td {
+    font-size: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    position: relative;
+    color: #424242;
+    border-bottom: 1px dashed #dadada;
+}

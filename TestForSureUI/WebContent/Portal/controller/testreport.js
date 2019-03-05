@@ -124,6 +124,7 @@ testReportController.prototype.PopulateBasicReport = function()
 };
 testReportController.prototype.PopulateTopperAverage = function()
 {
+	$('.report-section').find('.report-advanced').find('.topper-average').empty();
 	var topperScore = this.reportData.leaderboard[0].marksScored;
 	var topperTime = parseInt(this.reportData.leaderboard[0].timeTaken/60);
 	var averageScore = 0;
