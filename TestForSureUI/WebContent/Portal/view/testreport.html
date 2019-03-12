@@ -13,9 +13,34 @@
 			<div class='report-basic col-xs-12 col-sm-12 col-md-12 col-lg-12'>
 			</div>
 			<div class='report-advanced col-xs-12 col-sm-12 col-md-12 col-lg-12 container'>
-				<div class='topper-average col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+				<div class='topper-average col-xs-12 col-sm-12 col-md-3 col-lg-3'>
 				</div>
-				<div class='charts col-xs-12 col-sm-12 col-md-8 col-lg-8'>
+				<div class='charts col-xs-12 col-sm-12 col-md-9 col-lg-9'>
+					<div id="questionsChart" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<div id="questionsPieChart"></div>
+					</div>
+			
+					<div id="timeChart" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<div id="timePieChart"></div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 chartsSummary">
+						<div class='correct'>
+							<span class="info">CORRECT</span>
+							<span class="value"></span>
+						</div>
+						<div class='incorrect'>
+							<span class="info">INCORRECT</span>
+							<span class="value"></span>
+						</div>
+						<div class='unattempted'>
+							<span class="info">UNATTEMPTED</span>
+							<span class="value"></span>
+						</div>
+						<div class='unvisited'>
+							<span class="info">UNVISITED</span>
+							<span class="value"></span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -33,8 +58,8 @@
 				<div class='ques-status-info'>
 					<div><div class='status-info correct'></div><span>Correct Attempt</span></div>
 					<div><div class='status-info wrong'></div><span>Wrong Attempt</span></div>
-					<div><div class='status-info missed'></div><span>Missed Question</span></div>
-					<div><div class='status-info skipped'></div><span>Skipped Question</span></div>
+					<div><div class='status-info missed'></div><span>Missed(Unvisited) Question</span></div>
+					<div><div class='status-info skipped'></div><span>Skipped(Unattempted) Question</span></div>
 					<div><div class='status-info marked'></div><span>Marked For Review</span></div>
 				</div>
 			</div>
@@ -42,6 +67,8 @@
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
 		<script type='text/javascript' src='../controller/testreport.js'></script>
+		<script src = "https://code.highcharts.com/highcharts.js"></script>  
+		<script src = "https://code.highcharts.com/highcharts-3d.js"></script>
 		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
 		<script type='text/javascript'>
 			new testReportController();

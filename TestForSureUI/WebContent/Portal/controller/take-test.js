@@ -27,6 +27,7 @@ testController.prototype.SetState = function(obj)
 	for(var key in obj){
 		this[key] = obj[key];
 	}
+	this.BindEvents();
 	this.PopulateTestInfo();
 	this.PopulateTestQuestionStatus();
 	if(typeof this .testInfo.attemptInfo != 'undefined' && this.testInfo.attemptInfo != null && this.testInfo.attemptInfo.length > 0){
@@ -45,17 +46,34 @@ testController.prototype.SetState = function(obj)
 	this.PopulateAttemptControls();
 	this.Timer();
 };
+testController.prototype.BindEvents = function()
+{
+	$('.link-pallete').unbind().bind('click', function(){
+		if($('.test-ques-status').css('display') == 'none'){
+			//means question pallete is not visible
+			$('.test-ques-status').css('display', 'block');
+			$('.link-pallete').find('img').attr('src', '../images/right-arrow.png');
+			$('.link-pallete').css('right', $('.test-ques-status').width()+34+'px');
+		}
+		else{
+			//means question pallete is visible
+			$('.test-ques-status').css('display', 'none');
+			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').css('right', '0px');
+		}
+	});
+};
 testController.prototype.PopulateTestInfo = function()
 {
 	console.log(this.testInfo);
 	var html = "<div class='col-xs-12 col-sm-12 col-md-4 col-lg-4'><h4>"+this.testInfo.title+"</h4></div>"+
-			   "<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2'>"+
+			   "<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 removeInMobile'>"+
 			   		"<h5>"+this.testInfo.totalQues+" Questions / "+this.testInfo.totalMarks+" Marks</h5>"+
 			   	"</div>"+
-			   	"<div class='col-xs-0 col-sm-0 col-md-2 col-lg-2'>"+
+			   	"<div class='col-xs-0 col-sm-0 col-md-2 col-lg-2 removeInMobile'>"+
 			   		"<h5>Time Limit: "+this.testInfo.totalTime+" mins</h5>"+
 			   "</div>"+
-			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2' style='text-align:right;'>"+
+			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divTimer' style='text-align:right;'>"+
 			   		"<h4 class='time-left'>00 : 00 : 00</h4>"+
 			   	"</div>"+
 			   	"<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+
@@ -189,16 +207,16 @@ testController.prototype.PopulateAttemptControls = function()
 	var html = "<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2'>"+
 					"<a href='#' class='linkClearSelection'>Clear Selection</a>"+
 			   "</div>"+
-			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+			   "<div class='divMark col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<a href='#' class='linkMark'>Mark for Review</a>"+
 				"</div>"+
-				"<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+				"<div class='divUnmark col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<a href='#' class='linkUnmark'>Unmark for Review</a>"+
 				"</div>"+
-				"<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1'>"+
+				"<div class='divPrevious col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1'>"+
 					"<button class='button button-primary btnPrevious'>Previous</button>"+
 			    "</div>"+
-			    "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+			    "<div class='divNext col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 			    	"<button class='button button-primary btnNext'>Next</button>"+
 				"</div>";
 	$('.test').find('.test-questions').find('.attempt-controls').html(html);

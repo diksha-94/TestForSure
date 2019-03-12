@@ -42,7 +42,7 @@ test2bsureController.prototype.ValidateEmail = function(email){
 };
 test2bsureController.prototype.QuizCard = function(quiz)
 {
-	var html = "<img src='../images/quiz.jpg' alt='Quiz'/>"+
+	var html = "<img src='../images/quiz-icon.png' alt='Quiz'/>"+
 				"<h4>"+quiz.title+"</h4>"+
 				"<div class='quiz-detail'>"+
 					"<span>"+quiz.noOfQues+" Ques / "+(quiz.noOfQues * quiz.marksPerQues)+" Marks</span>"+
@@ -135,3 +135,49 @@ test2bsureController.prototype.ExamCard = function(exam, testCount, quizCount)
 	html += "<div class='exam-explore'><button class='button button-primary btnExplore'>Explore Exam</button></div>";
 	return html;
 };
+test2bsureController.prototype.Draw3DPieChart = function(valueObject, total, dom, title){
+	var dataObject = [];
+	for(var obj in valueObject){
+		var arrayObj = [];
+		arrayObj.push(obj);
+		arrayObj.push((valueObject[obj]*100)/total);
+		dataObject.push(arrayObj);
+	}
+	console.log(dataObject);
+	var chart = {      
+       type: 'pie',
+       options3d: {
+          enabled: true,
+          alpha: 45,
+          beta: 0
+       }
+    };
+    var title = {
+       text: title   
+    };   
+	var tooltip = {
+	       pointFormat: '<b>{point.percentage:.1f}%</b>'
+	};
+    var plotOptions = {
+       pie: {
+          cursor: 'pointer',
+          depth: 35,
+          
+          dataLabels: {
+             enabled: true,
+             format: '{point.name}'
+          }
+       }
+    };   
+    var series = [{
+       type: 'pie',
+       data: dataObject
+    }];     
+    var json = {};   
+    json.chart = chart; 
+    json.title = title;       
+    json.tooltip = tooltip; 
+    json.plotOptions = plotOptions; 
+    json.series = series;   
+    $(dom).highcharts(json);
+}

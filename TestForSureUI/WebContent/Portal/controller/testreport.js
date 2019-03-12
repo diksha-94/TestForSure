@@ -40,18 +40,18 @@ testReportController.prototype.SetState = function(obj)
 		this.currentQues = 1;
 		$('.report-section').hide();
 		$('.solution-section').show();
-		$('.btnSolution').text('Analysis');
+		$('.btnSolution').text('Analytics');
 		this.PopulateSolution();
 	}
 };
 testReportController.prototype.PopulateReportHeader = function()
 {
 	var html = "<div class='col-xs-12 col-sm-12 col-md-8 col-lg-8'><h4>"+this.testInfo.title+"</h4></div>"+
-		       "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+
+		       "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 divButton'>"+
 			   		"<button class='button button-default btnSolution'>Solutions</button>"+
-			   "</div>"+
+			   /*"</div>"+
 			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+
-					"<button class='button button-default btnDownloadReport'>Download Report</button>"+
+					"<button class='button button-default btnDownloadReport'>Download Report</button>"+*/
 			   "</div>";
 	$('.report-header').html(html);
 	$('.report-header').find('.btnSolution').unbind().bind('click', function(){
@@ -64,7 +64,7 @@ testReportController.prototype.SwitchReportSolution = function()
 		this.report = 0;
 		$('.report-section').hide();
 		$('.solution-section').show();
-		$('.btnSolution').text('Analysis');
+		$('.btnSolution').text('Analytics');
 		this.PopulateSolution();
 	}
 	else if(this.report == 0){
@@ -90,33 +90,33 @@ testReportController.prototype.PopulateBasicReport = function()
 	var percentile = ((this.reportData.totalCandidate - this.reportData.rank)*100)/this.reportData.totalCandidate;
 	percentile = Math.floor(percentile, 2);
 	html += "<div class='greeting'>"+
-				"<img src='' alt='award'/>"+
+				"<img src='../images/trophy.png' alt='Trophy' class='trophy'/>"+
 				"<h4>Congrats User !!</h4>"+
 			"</div>"+
 			"<div class='report-detail col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
 				"<div class='item rank col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/dummy.jpg' alt='Rank'/><span>Rank</span><span class='detail'>"+
-					this.reportData.rank+" / "+this.reportData.totalCandidate+"</span>"+
+					"<img src='../images/rank.png' alt='Rank'/><div class='values'><span>Rank</span><span class='detail'>"+
+					this.reportData.rank+" / "+this.reportData.totalCandidate+"</span></div>"+
 				"</div>"+
 				"<div class='item score col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/dummy.jpg' alt='Score'/><span>Score</span><span class='detail'>"+
-					this.reportData.markesScored+" / "+this.testInfo.totalMarks+"</span>"+
+					"<img src='../images/score.png' alt='Score'/><div class='values'><span>Score</span><span class='detail'>"+
+					this.reportData.markesScored+" / "+this.testInfo.totalMarks+"</span></div>"+
 				"</div>"+
 				"<div class='item ques col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/dummy.jpg' alt='Questions'/><span>Ques Attempted</span><span class='detail'>"+
-					this.reportData.quesAttempted+" / "+this.testInfo.totalQues+"</span>"+
+					"<img src='../images/attempts.png' alt='Attempts'/><div class='values'><span>Ques Attempted</span><span class='detail'>"+
+					this.reportData.quesAttempted+" / "+this.testInfo.totalQues+"</span></div>"+
 				"</div>"+
 				"<div class='item time col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/dummy.jpg' alt='Time'/><span>Time Taken</span><span class='detail'>"+
-					(parseInt(this.reportData.timeTaken/60))+" mins</span>"+
+					"<img src='../images/time.png' alt='Time'/><div class='values'><span>Time Taken</span><span class='detail'>"+
+					(parseInt(this.reportData.timeTaken/60))+" mins</span></div>"+
 				"</div>"+
 				"<div class='item accuracy col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/dummy.jpg' alt='Accuracy'/><span>Accuracy</span><span class='detail'>"+
-					accuracy+"</span>"+
+					"<img src='../images/accuracy.png' alt='Accuracy'/><div class='values'><span>Accuracy</span><span class='detail'>"+
+					accuracy+"</span></div>"+
 				"</div>"+
 				"<div class='item percentile col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/dummy.jpg' alt='Percentile'/><span>Percentile</span><span class='detail'>"+
-					percentile+"</span>"+
+					"<img src='../images/percentile.png' alt='Percentile'/><div class='values'><span>Percentile</span><span class='detail'>"+
+					percentile+"</span></div>"+
 				"</div>"+
 			"</div>";
 	$('.report-section').find('.report-basic').html(html);
@@ -150,40 +150,67 @@ testReportController.prototype.PopulateTopperAverage = function()
 testReportController.prototype.PopulateLeaderboard = function()
 {
 	var html = "";
-	html = "<table>"+
-				"<thead>"+
-					"<tr>"+
-						"<th>Rank</th>"+
-						"<th>Marks Scored</th>"+
-						"<th>Time Taken</th>"+
-					"</tr>"
-				"</thead>"+
-				"<tbody>";
-	var count = 5;
-	if(this.reportData.leaderboard.length < 5){
-		count = this.reportData.leaderboard.length;
-	}
-	for(var i=0;i<count;i++){
-		html += "<tr>"+
-					"<td>"+(parseInt(i)+1)+"</td>"+
-					"<td>"+(this.reportData.leaderboard[i].marksScored)+"</td>"+
-					"<td>"+(parseInt(this.reportData.leaderboard[i].timeTaken/60))+"</td>"+
-				"</tr>";
-	}
-	if(this.reportData.rank > 5){
-		html += "<tr>"+
-					"<td>"+(this.reportData.rank)+"</td>"+
-					"<td>"+(this.reportData.markesScored)+"</td>"+
-					"<td>"+(parseInt(this.reportData.leaderboard[i].timeTaken/60))+"</td>"+
-				"</tr>";
-	}
-	html += "</tbody>"+
-			"</table>";
-	html += "<div><button class='button button-primary' id='btnShowLeaderboard'>View Full Leaderboard</button>";
+	html += "<div class='btnHolder'><button class='button button-primary' id='btnShowLeaderboard'>View Full Leaderboard</button>";
 	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
+	$('#btnShowLeaderboard').unbind().bind('click', function(){
+		window.location.href = 'leaderboard.html?type=test&id='+this.testInfo.id;
+	}.bind(this));
 };
 testReportController.prototype.DisplayCharts = function()
 {
+	//Question attempt chart
+	var quesObject = {
+			"Correct":0,
+			"Incorrect":0,
+			"Unattempted":0, //Skipped
+			"Unvisited":0 //Missed
+	};
+	//Time Spent Chart
+	var timeObject = {
+			"Correct":0,
+			"Incorrect":0,
+			"Unattempted":0,
+			"Unvisited":0
+	}
+	for(var i = 0; i < this.testInfo.totalQues; i++){
+		var question = this.solutionData[i];
+		var markedAnswer = -1;
+		var correctAnswer = -1;
+		if(question.markedOption == 'null' || question.markedOption == null){
+			//Skipped Question
+			quesObject["Unattempted"] += 1;
+			timeObject["Unattempted"] += question.timeSpent;
+		}
+		else if(question.markedOption == '[]'){
+			//Missed Question
+			quesObject["Unvisited"] += 1;
+			timeObject["Unvisited"] += question.timeSpent;
+		}
+		else if(question.markedOption != 'null' && question.markedOption != null && question.markedOption != '[]'){
+			markedAnswer = (JSON.parse(question.markedOption)).indexOf(true);
+			if(question.correctOption != 'null' && question.correctOption != null && question.correctOption != '[]'){
+				correctAnswer = (JSON.parse(question.correctOption)).indexOf(true);
+			}
+			if(markedAnswer == correctAnswer){
+				//correct answer
+				quesObject["Correct"] += 1;
+				timeObject["Correct"] += question.timeSpent;
+			}
+			else{
+				//Wrong answer
+				quesObject["Incorrect"] += 1;
+				timeObject["Incorrect"] += question.timeSpent;
+			}
+		}
+	}
+	timeObject["Unvisited"] = (parseInt(this.testInfo.totalTime) * 60) - timeObject["Unattempted"] - timeObject["Correct"] - timeObject["Incorrect"];
+	test2bsureController.getObj().Draw3DPieChart(quesObject, this.testInfo.totalQues, "#questionsPieChart", "Answer Distribution");
+	test2bsureController.getObj().Draw3DPieChart(timeObject, parseInt(this.testInfo.totalTime) * 60, "#timePieChart", "Time Spent");
+	//Populate charts summary
+	$('.chartsSummary').find('div.correct').find('span.value').text(quesObject["Correct"] + " QUES, "+timeObject["Correct"]+ " SECS");
+	$('.chartsSummary').find('div.incorrect').find('span.value').text(quesObject["Incorrect"] + " QUES, "+timeObject["Incorrect"]+ " SECS");
+	$('.chartsSummary').find('div.unattempted').find('span.value').text(quesObject["Unattempted"] + " QUES, "+timeObject["Unattempted"]+ " SECS");
+	$('.chartsSummary').find('div.unvisited').find('span.value').text(quesObject["Unvisited"] + " QUES, "+timeObject["Unvisited"]+ " SECS");
 };
 
 
@@ -245,13 +272,20 @@ testReportController.prototype.DisplayQuestion = function()
 	var question = this.solutionData[this.currentQues-1];
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
 					"<div class='question-desc'>"+
-						"<span class='question-number'>"+(this.currentQues)+"</span>";
+						"<span class='question-number'>Question No. "+(this.currentQues)+"</span>";
+	var quesStatus = $('.ques-status').find('div[ques-no='+this.currentQues+']').attr('class').split(' ')[0];
+	var bgColor = $('.ques-status').find('div[ques-no='+this.currentQues+']').css('background-color');
+	var color = $('.ques-status').find('div[ques-no='+this.currentQues+']').css('color');
+	console.log(quesStatus);
+	html +=	"<span class='ques-status'>"+quesStatus+"</span>"+
+				"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+question.timeSpent+" SECS</span></span>"+
+			"</div>"+
+			"<div class='ques-detail'>";
 	if(question.paragraph == "true"){
 		html += "<span class='para-text'>"+question.paragraphText+"</span>";
 	}
 	html += "<span class='question-text'>"+question.questionText+"</span>"+
 			"</div>"+
-			"<div class='question-info'><span>Time Spent: "+question.timeSpent+" secs</span></div>"+
 			"<div class='options'>";
 	var markedAnswer = -1;
 	if(question.markedOption != 'null' && question.markedOption != null && question.markedOption != '[]'){
@@ -299,13 +333,15 @@ testReportController.prototype.DisplayQuestion = function()
 	html += "</div>";
 	html += "<div class='ques-solution'><h5>Solution: </h5><p>"+question.solution+"</p></div>";
 	$('.solution-section').find('.solution-questions').find('.questions').html(html);
+	$('.question').find('.question-desc').find('.ques-status').css('background-color', bgColor);
+	$('.question').find('.question-desc').find('.ques-status').css('color', color);
 };
 testReportController.prototype.PopulateAttemptControls = function()
 {
-	var html = "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>"+
-					"<button class='col-xs-12 col-sm-12 col-md-6 col-lg-6 button button-primary btnShowSolution'>Show Solution</button>"+
+	var html = "<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>"+
+					"<button class='col-xs-12 col-sm-12 col-md-2 col-lg-2 button button-primary btnShowSolution'>Show Solution</button>"+
 			   "</div>"+
-			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-2 col-lg-offset-2'>"+
+			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-5 col-lg-offset-5'>"+
 					"<button class='button button-primary btnPrevious'>Previous</button>"+
 			    "</div>"+
 			    "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
@@ -324,7 +360,8 @@ testReportController.prototype.PopulateAttemptControls = function()
 		this.ManageControls();
 	}.bind(this));
 	$('.solution-section').find('.solution-questions').find('.attempt-controls').find('.btnShowSolution').unbind().bind('click', function(e){	
-		var position = $('.ques-solution').offset();
+		$('.question[question-index='+this.currentQues+']').find('.ques-solution').show();
+		var position = $('.question[question-index='+this.currentQues+']').find('.ques-solution').offset();
 		$(".question").animate({ scrollTop: position.top }, 1000);
 	}.bind(this));
 };
@@ -345,11 +382,11 @@ testReportController.prototype.ManageControls = function()
 	}
 	var question = this.solutionData[this.currentQues-1];
 	if(question.solution.length == 0){
-		$('.question').find('.ques-solution').hide();
+		//$('.question').find('.ques-solution').hide();
 		$('.btnShowSolution').hide();
 	}
 	else{
-		$('.question').find('.ques-solution').show();
+		//$('.question').find('.ques-solution').show();
 		$('.btnShowSolution').show();
 	}
 }

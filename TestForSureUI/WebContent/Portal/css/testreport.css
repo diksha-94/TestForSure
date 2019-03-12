@@ -25,20 +25,29 @@
 	text-align: center;
 	margin: 30px;
 }
+.report-section .report-basic .greeting img.trophy{
+	width: 90px;
+}
+.report-section .report-basic .greeting .user-award{
+	font-size: 80px;
+	color: #2E6DA4;
+}
 .report-section .report-basic .report-detail{
 	padding: 0px;
 	margin-bottom: 30px;
+	background-color: white;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 .report-section .report-basic .report-detail .item{
-	border-top: solid 1px red;
-    padding: 10px;
-    height: auto;
-    border-bottom: solid 1px red;
-    border-right: solid 1px red;
-    text-align: center;
+	padding: 10px;
+	height: auto;
+	text-align: center;
+	box-shadow: 0px 0px 5px #E4E4E4;
 }
-.report-section .report-basic .report-detail .item.rank{
-	border-left: solid 1px red;
+.report-section .report-basic .report-detail .item .values{
+	display: inline-block;
+	margin-top: 1px;
 }
 .report-section .report-basic .report-detail .item img{
 	height: 20px;
@@ -46,11 +55,13 @@
 }
 .report-section .report-basic .report-detail .item span{
 	margin-left: 10px;
-	font-size: 1em;
+	font-size: 0.9em;
+	color: gray;
 }
 .report-section .report-basic .report-detail .item span.detail{
-	margin-left: 15px;
+	margin-left: 10px;
 	font-weight: bold;
+	font-size: 1em;
 }
 
 
@@ -63,7 +74,7 @@
 	margin: 20px 8px 15px;
 }
 .solution-ques-status .ques-status{
-	max-height: 60%;
+	max-height: 70%;
 	overflow: auto;
 	border-bottom: solid 1px #E4E4E4;
 	width: 100%;
@@ -141,12 +152,16 @@
 	background-color: grey;
 	color: #FFF;
 	border:solid 5px grey;
+	padding: 5px;
 }
 
 .solution-section .solution-questions{
 	height: 88%;
 	border-right: solid 1px #e4e4e4;
 	padding: 20px;
+}
+.solution-section .solution-ques-status{
+	height: 88%;
 }
 .solution-section .solution-questions .question{
 	border: solid 1px #E4E4E4;
@@ -155,16 +170,17 @@
 }
 .solution-section .solution-questions .question .question-number{
 	display: inline-block;
-	height: 40px;
-	width: 40px;
-	background-color: #E4E4E4;
-	padding-top: 10px;
+	padding: 5px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 15px;
 }
+.solution-section .solution-questions .question .para-text{
+	margin-left: 10px;
+	font-weight: bold;
+}
 .solution-section .solution-questions .question .question-text{
-	margin-left: 20px;
+	margin-left: 10px;
 }
 .solution-section .solution-questions .question .options{
 	padding: 20px 40px;
@@ -189,6 +205,30 @@
 }
 .solution-section .solution-questions .question .question-desc{
 	border-bottom: solid 1px #E4E4E4;
+}
+.solution-section .solution-questions .question .question-desc .ques-status{
+	margin-left: 20px;
+	text-transform: uppercase;
+	font-size: 0.85em;
+	color: white;
+	font-weight: bold;
+	padding: 5px 10px;
+	border-radius: 14px;
+}
+.solution-section .solution-questions .question .question-desc .ques-time{
+	margin-left: 40px;
+	font-size: 0.85em;
+	font-weight: bold;
+}
+.solution-section .solution-questions .question .question-desc .ques-time span{
+	margin-left: 8px;
+}
+.solution-section .solution-questions .question .question-desc .ques-time img{
+	height: 20px;
+	width: 20px;
+}
+.solution-section .solution-questions .question .ques-detail{
+	padding: 10px 5px 5px;
 }
 .solution-section .solution-questions .question .question-info{
 	border-bottom: solid 1px #fbfbfb;
@@ -234,11 +274,65 @@
 	width: 80%;
 }
 .question .ques-solution{
-	background-color: #e4e4e4;
-	padding: 5px 40px;
+	border-top: solid 1px #e4e4e4;
+	padding: 5px 15px;
+	display: none;
 }
 .question .ques-solution h5{
-	font-size: 1.2em;
+	font-size: 1em;
 	font-weight: bold;
 }
 /* Test Solution CSS ends */
+
+.topper-average{
+	background-color: #e4e4e4;
+	margin: 10px auto 10px;
+	border-radius: 2px;
+	padding: 10px 20px;
+}
+.topper-average .topper, .topper-average .average{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	text-transform: uppercase;
+	font-size: 0.85em;
+	font-weight: bold;
+}
+.topper-average .average, .btnHolder{
+	margin-top: 10px;
+}
+.charts{
+	margin-top: 10px;
+}
+.highcharts-title{
+	font-size: 1.2em !important;
+	text-transform: uppercase;
+}
+.chartsSummary div span.info::before{
+	content: "";
+	height: 10px;
+	width: 10px;
+	display: inline-block;
+	margin-right: 10px;
+}
+.chartsSummary div.correct span.info::before{
+	background-color: #9FC9F1;
+}
+.chartsSummary div.incorrect span.info::before{
+	background-color: #555559;
+}
+.chartsSummary div.unattempted span.info::before{
+	background-color: #9DEF8D;
+}
+.chartsSummary div.unvisited span.info::before{
+	background-color: #FFBC75;
+}
+.chartsSummary div span.value{
+	float: right;
+}
+.chartsSummary{
+	margin-top: 20px;
+	margin-bottom: 50px;
+	font-size: 0.85em;
+	font-weight: bold;
+}
