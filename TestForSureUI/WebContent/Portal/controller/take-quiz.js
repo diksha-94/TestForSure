@@ -49,8 +49,8 @@ quizController.prototype.PopulateQuizDetails = function()
 	var html = "<div class='brand-logo-quiz col-xs-8 col-sm-8 col-md-3 col-lg-3'>"+
 					"<a class='brand' href='home.html'><img src='../../Images/Test2bSure_Logo.jpg' alt='TEST-2B-SURE'></a>"+
 				"</div>"+
-				"<div class='quiz-title col-xs-6 col-sm-6 col-md-6 col-lg-6'><h4>"+this.quizInfo.title+"</h4></div>"+
-			   "<div class='quiz-info col-xs-3 col-sm-3 col-md-3 col-lg-3'><span>"+this.quizInfo.noOfQues+" Ques / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" Marks</span></div>";
+				"<div class='quiz-title col-xs-12 col-sm-12 col-md-6 col-lg-6'><h4>"+this.quizInfo.title+"</h4></div>"+
+			   "<div class='quiz-info col-xs-12 col-sm-12 col-md-3 col-lg-3'><span>"+this.quizInfo.noOfQues+" QUES / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" MARKS</span></div>";
 	$('.quiz-header').html(html);
 };
 quizController.prototype.PopulateQuestion = function(solution)

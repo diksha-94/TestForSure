@@ -121,6 +121,11 @@ testController.prototype.PopulateTestQuestionStatus = function()
 	$('.test-ques-status').find('.ques-status').html(html);
 	$('.test-ques-status').find('.ques-status').find('div[ques-id]').unbind().bind('click', function(e){
 		this.currentQues = parseInt($(e.currentTarget).attr('ques-no'));
+		if($('.link-pallete').css('display') == 'block'){
+			$('.test-ques-status').css('display', 'none');
+			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').css('right', '0px');
+		}
 		this.DisplayQuestion();
 	}.bind(this));
 };

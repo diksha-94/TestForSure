@@ -247,8 +247,11 @@
 .solution-section .solution-questions .question .options .option:hover{
 }
 .solution-section .solution-questions .question .options .option .option-value{
-	display: inline-block;
+	display: inline;
 	margin-left: 15px;
+}
+.solution-section .solution-questions .question .options .option .option-value p{
+	display: inline;
 }
 .solution-section .solution-questions .question .solution{
 	padding: 20px 40px;
@@ -335,4 +338,84 @@
 	margin-bottom: 50px;
 	font-size: 0.85em;
 	font-weight: bold;
+}
+.link-pallete{
+	display:none;
+}
+@media only screen and (max-width: 767px) {
+	.solution-section .solution-questions {
+		height: 72%;
+		border-right: solid 1px #e4e4e4;
+		padding: 0px;
+		margin: 0px;
+	}
+	.solution-section .solution-questions .questions {
+		padding: 0px;
+		height: 100%;
+	}
+	.solution-section .solution-questions .question {
+		height: 100%;
+	}
+	.solution-section .solution-questions .question .options {
+		padding: 4px 8px;
+	}
+	.solution-section .solution-questions .question .options .option {
+		padding: 3px;
+	}
+	.solution-section .solution-questions .attempt-controls {
+		position: unset;
+		bottom: 0px;
+		overflow: hidden;
+		margin-top: 10px;
+	}
+	.solution-section .solution-questions .attempt-controls button{
+		width: 100%;
+	}
+	.solution-section .solution-questions .attempt-controls button.btnShowSolution{
+		height: auto;
+	}
+	.solution-section .solution-ques-status {
+		display: none;
+		position: absolute;
+		top: 0px;
+		width: 80%;
+		right: 0px;
+		background-color: white;
+		border: solid 2px #e4e4e4;
+		z-index: 10;
+		height: 116%;
+	}
+	.solution-ques-status .ques-status {
+		max-height: 60%;
+		overflow: auto;
+		border-bottom: solid 1px #E4E4E4;
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.removeInMobile {
+		display: none;
+	}
+	.divPrevious, .divNext {
+		margin-top: 10px;
+	}
+	.divMark, .divUnmark {
+		margin-top: 5px;
+	}
+	.divTImer {
+		text-align: left !important;
+	}
+	.link-pallete {
+		display: block;
+		position: absolute;
+		top: 50%;
+		right: 0;
+		z-index: 100;
+		background-color: #fb6d15;
+		padding: 8px 0px;
+	}
+	.link-pallete img {
+		height: 25px;
+	}
 }

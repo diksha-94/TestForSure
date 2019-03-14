@@ -30,6 +30,7 @@ testReportController.prototype.SetState = function(obj)
 	for(var key in obj){
 		this[key] = obj[key];
 	}
+	this.BindEvents();
 	this.PopulateReportHeader();
 	if(this.report == 1){
 		$('.solution-section').hide();
@@ -43,6 +44,23 @@ testReportController.prototype.SetState = function(obj)
 		$('.btnSolution').text('Analytics');
 		this.PopulateSolution();
 	}
+};
+testReportController.prototype.BindEvents = function()
+{
+	$('.link-pallete').unbind().bind('click', function(){
+		if($('.solution-ques-status').css('display') == 'none'){
+			//means question pallete is not visible
+			$('.solution-ques-status').css('display', 'block');
+			$('.link-pallete').find('img').attr('src', '../images/right-arrow.png');
+			$('.link-pallete').css('right', $('.solution-ques-status').width()+34+'px');
+		}
+		else{
+			//means question pallete is visible
+			$('.solution-ques-status').css('display', 'none');
+			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').css('right', '0px');
+		}
+	});
 };
 testReportController.prototype.PopulateReportHeader = function()
 {
@@ -103,7 +121,7 @@ testReportController.prototype.PopulateBasicReport = function()
 					this.reportData.markesScored+" / "+this.testInfo.totalMarks+"</span></div>"+
 				"</div>"+
 				"<div class='item ques col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<img src='../images/attempts.png' alt='Attempts'/><div class='values'><span>Ques Attempted</span><span class='detail'>"+
+					"<img src='../images/attempts.png' alt='Attempts'/><div class='values'><span>Qs Attempt</span><span class='detail'>"+
 					this.reportData.quesAttempted+" / "+this.testInfo.totalQues+"</span></div>"+
 				"</div>"+
 				"<div class='item time col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
@@ -112,7 +130,7 @@ testReportController.prototype.PopulateBasicReport = function()
 				"</div>"+
 				"<div class='item accuracy col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<img src='../images/accuracy.png' alt='Accuracy'/><div class='values'><span>Accuracy</span><span class='detail'>"+
-					accuracy+"</span></div>"+
+					accuracy+"%</span></div>"+
 				"</div>"+
 				"<div class='item percentile col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<img src='../images/percentile.png' alt='Percentile'/><div class='values'><span>Percentile</span><span class='detail'>"+
@@ -261,6 +279,11 @@ testReportController.prototype.PopulateQuestionStatus = function()
 	$('.solution-ques-status').find('.ques-status').html(html);
 	$('.solution-ques-status').find('.ques-status').find('div[ques-id]').unbind().bind('click', function(e){
 		this.currentQues = parseInt($(e.currentTarget).attr('ques-no'));
+		if($('.link-pallete').css('display') == 'block'){
+			$('.solution-ques-status').css('display', 'none');
+			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').css('right', '0px');
+		}
 		this.DisplayQuestion();
 		this.ManageControls();
 	}.bind(this));
@@ -338,13 +361,13 @@ testReportController.prototype.DisplayQuestion = function()
 };
 testReportController.prototype.PopulateAttemptControls = function()
 {
-	var html = "<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>"+
+	var html = "<div class='col-xs-4 col-sm-4 col-md-3 col-lg-3'>"+
 					"<button class='col-xs-12 col-sm-12 col-md-2 col-lg-2 button button-primary btnShowSolution'>Show Solution</button>"+
 			   "</div>"+
-			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-5 col-lg-offset-5'>"+
-					"<button class='button button-primary btnPrevious'>Previous</button>"+
+			   "<div class='col-xs-4 col-sm-4 col-md-2 col-lg-2 col-md-offset-5 col-lg-offset-5'>"+
+					"<button class='button button-primary btnPrevious'>Prev</button>"+
 			    "</div>"+
-			    "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+			    "<div class='col-xs-4 col-sm-4 col-md-2 col-lg-2'>"+
 			    	"<button class='button button-primary btnNext'>Next</button>"+
 				"</div>";
 	$('.solution-section').find('.solution-questions').find('.attempt-controls').html(html);
