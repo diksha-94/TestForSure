@@ -9,19 +9,31 @@
 </head>
 <body>
 	<div class='page-header'></div>
-	<div id='adminProfileBox' class='admin-profile-box'>
-		<button id='btnChangePass' class='btn btn-primary'>Change
-		Password</button>
-		<button id='btnLogout' class='btn btn-primary'>Logout</button>
+	<div class='login-box'>
+		<div class='heading'>
+			<span>Login</span>
+		</div>
+		<div class='content'>
+			<div class='input-box'><input id='txtEmail' type='text' placeholder='Email'/></div>
+			<div class='input-box'><input id='passPassword' type='password' placeholder='Password'/></div>
+			<div class='button-box'><input id='btnLogin' class='btn btn-primary' type='button' value='Login'/></div>
+			<div class='error-message'></div>
+		</div>
 	</div>
-	<div class='admin-menu col-xs-3 col-sm-3 col-md-2 col-lg-2'></div>
-	<div class='dashboard-content col-xs-9 col-sm-9 col-md-10 col-lg-10'>
-		<ul class="nav nav-tabs menu-tabs">
-		</ul>
-
-		<div class="tab-content menu-page-content"></div>
+	<div class='after-login'>
+		<div id='adminProfileBox' class='admin-profile-box'>
+			<button id='btnChangePass' class='btn btn-primary'>Change
+			Password</button>
+			<button id='btnLogout' class='btn btn-primary'>Logout</button>
+		</div>
+		<div class='admin-menu col-xs-3 col-sm-3 col-md-2 col-lg-2'></div>
+		<div class='dashboard-content col-xs-9 col-sm-9 col-md-10 col-lg-10'>
+			<ul class="nav nav-tabs menu-tabs">
+			</ul>
+	
+			<div class="tab-content menu-page-content"></div>
+		</div>
 	</div>
-
 	<!-- Add/Update Question Modal -->
 <div class="modal" id="questionModal">
 	<div class="modal-dialog test2bsure-dialog">
