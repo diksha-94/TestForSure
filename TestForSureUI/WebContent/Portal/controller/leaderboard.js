@@ -17,7 +17,7 @@ leaderboardController.prototype.Init = function()
 };
 leaderboardController.prototype.LoadData = function()
 {
-	fetch('http://localhost:8083/test2bsure/leaderboard?type='+this.type+'&id='+this.id)
+	fetch(remoteServer+'/test2bsure/leaderboard?type='+this.type+'&id='+this.id)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ data: data }));
 }

@@ -13,7 +13,7 @@ quizController.prototype.Init = function()
 };
 quizController.prototype.LoadData = function()
 {
-	fetch('http://localhost:8083/test2bsure/quizzes')
+	fetch(remoteServer+'/test2bsure/quizzes')
 	  .then(response => response.json())
 	  .then(data => this.SetState({ quizzes: data.quizzes }));
 }

@@ -64,7 +64,7 @@ dashboardController.prototype.BindEvents = function()
 };
 dashboardController.prototype.Login = function(email, password)
 {
-	var url = 'http://localhost:8083/test2bsure/authenticate-user'
+	var url = remoteServer+'/test2bsure/authenticate-user'
 	var type = 'POST';
 	var requestData = {
 		"email": email,

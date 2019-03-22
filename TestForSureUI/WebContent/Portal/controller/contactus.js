@@ -36,7 +36,7 @@ contactusController.prototype.BindEvents = function()
 		requestData.email = email;
 		requestData.query = query;
 		$.ajax({
-            url: "http://localhost:8083/test2bsure/contactus",
+            url: remoteServer+"/test2bsure/contactus",
             type: 'POST',
 			data: JSON.stringify(requestData),
 			contentType: 'application/json',

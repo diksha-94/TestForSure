@@ -72,7 +72,7 @@ examController.prototype.LoadView = function()
 examController.prototype.LoadAllExams = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/exam',
+		url: remoteServer+'/test2bsure/exam',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -118,7 +118,7 @@ examController.prototype.SaveExam = function(update, id)
 		alert('Please enter all the mandatory fields');
 		return;
 	}
-	var url = 'http://localhost:8083/test2bsure/exam';
+	var url = remoteServer+'/test2bsure/exam';
 	var type = 'POST';
 	var requestData = {
 			'name': name,
@@ -157,7 +157,7 @@ examController.prototype.DeleteExam = function(examId, e)
 	//ajax call to delete the exam
 	//in ajax success, remove the exam from the page
 	$.ajax({
-		url: "http://localhost:8083/test2bsure/exam?id="+examId,
+		url: remoteServer+"/test2bsure/exam?id="+examId,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -173,7 +173,7 @@ examController.prototype.DeleteExam = function(examId, e)
 examController.prototype.GetCategories = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/category',
+		url: remoteServer+'/test2bsure/category',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -224,7 +224,7 @@ examController.prototype.SearchExamByName = function(callback)
 	console.log('Searching Exam by name/title');
 	var search = $('#txtSearchExam').val();
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/exam?search='+search,
+		url: remoteServer+'/test2bsure/exam?search='+search,
 		type: 'GET',
 		success: function(response){
 			$('.existing-exams').find('table').find('tbody').empty();

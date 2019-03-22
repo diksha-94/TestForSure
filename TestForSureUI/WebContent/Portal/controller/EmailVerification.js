@@ -26,7 +26,7 @@ function clickHere(){
 
 function btnSendClick(){
 	var emailId = $('#emailId').val();
-	var url = serviceIp+"/test-for-sure/user/send-verification-email?emailId="+emailId;
+	var url = remoteServer+"/test-for-sure/user/send-verification-email?emailId="+emailId;
 	$.ajax({
                 url: url,
                 type: "GET",

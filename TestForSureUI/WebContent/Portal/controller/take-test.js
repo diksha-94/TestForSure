@@ -18,7 +18,7 @@ testController.prototype.Init = function()
 testController.prototype.LoadData = function()
 {
 	var id = this.id;
-	fetch('http://localhost:8083/test2bsure/testdata?testId='+id)
+	fetch(remoteServer+'/test2bsure/testdata?testId='+id)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ testInfo: data.testInfo, questionsData: data.questionsData, sessionId: data.sessionId }));
 }
@@ -415,7 +415,7 @@ testController.prototype.ManageControls = function()
 testController.prototype.SaveLastQues = function(sessionId, lastQues)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/lastsavedques?sessionId='+sessionId+'&lastQues='+lastQues,
+		url: remoteServer+'/test2bsure/lastsavedques?sessionId='+sessionId+'&lastQues='+lastQues,
 		type: 'PUT',
 		success: function(response){
 			if(response.status == true){
@@ -434,7 +434,7 @@ testController.prototype.SaveLastQues = function(sessionId, lastQues)
 testController.prototype.UpdateTestSessionData = function(obj)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/updatetestsessiondata',
+		url: remoteServer+'/test2bsure/updatetestsessiondata',
 		type: 'PUT',
 		data: JSON.stringify(obj),
 		contentType: "application/json",
@@ -548,7 +548,7 @@ testController.prototype.SubmitTest = function()
 testController.prototype.SaveReportData = function()
 {
 	var session = this.sessionId;
-	fetch('http://localhost:8083/test2bsure/submittest?sessionId='+session)
+	fetch(remoteServer+'/test2bsure/submittest?sessionId='+session)
 	  .then(response => response.json())
 	  .then(data => this.HandleTestSubmit());
 };

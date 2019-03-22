@@ -33,7 +33,7 @@ usertrackingController.prototype.LoadView = function()
 usertrackingController.prototype.LoadAllUsers = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/user',
+		url: remoteServer+'/test2bsure/user',
 		type: 'GET',
 		contentType: 'application/json',
 		context: this,
@@ -90,7 +90,7 @@ usertrackingController.prototype.SearchUserByName = function(callback)
 	console.log('Searching user by name/email');
 	var search = $('#txtSearchUser').val();
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/user?search='+search,
+		url: remoteServer+'/test2bsure/user?search='+search,
 		type: 'GET',
 		success: function(response){
 			$('.existing-users').find('table').find('tbody').empty();

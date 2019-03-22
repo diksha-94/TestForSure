@@ -1,3 +1,4 @@
+var remoteServer = "http://18.219.24.151:8083";
 function validateEmail(email){
 	 var regEx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 	 if(regEx.test(email)){

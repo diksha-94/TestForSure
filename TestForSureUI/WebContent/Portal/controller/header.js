@@ -118,7 +118,7 @@ headerController.prototype.Init = function()
 			$('#registerModal').find('#txtConfirmPassword').css('border-color', 'red');
 			return;
 		}
-		var url = 'http://localhost:8083/test2bsure/register-user'
+		var url = remoteServer+'/test2bsure/register-user'
 		var type = 'POST';
 		var requestData = {
 			"userId": name+"-"+(Math.floor((Math.random() * 100000) + 1)),
@@ -190,7 +190,7 @@ headerController.prototype.Init = function()
 			return;
 		}
 		
-		var url = 'http://localhost:8083/test2bsure/authenticate-user'
+		var url = remoteServer+'/test2bsure/authenticate-user'
 		var type = 'POST';
 		var requestData = {
 			"email": email,
@@ -220,7 +220,7 @@ headerController.prototype.Init = function()
 	});
 };
 headerController.prototype.LoadExams = function(){
-	fetch('http://localhost:8083/test2bsure/header')
+	fetch(remoteServer+'/test2bsure/header')
 		  .then(response => response.json())
 		  .then(data => this.SetState({ category: data.category, exam: data.exam }));
 };

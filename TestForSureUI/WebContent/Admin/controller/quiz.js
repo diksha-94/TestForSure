@@ -103,7 +103,7 @@ quizController.prototype.LoadView = function()
 quizController.prototype.LoadAllQuiz = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/quiz',
+		url: remoteServer+'/test2bsure/quiz',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -166,7 +166,7 @@ quizController.prototype.SaveQuizDetails = function(update, id, navigate)
 		alert('Please enter all the mandatory fields');
 		return;
 	}
-	var url = 'http://localhost:8083/test2bsure/quiz';
+	var url = remoteServer+'/test2bsure/quiz';
 	var type = 'POST';
 	var requestData = {
 		'name': name,
@@ -234,7 +234,7 @@ quizController.prototype.DeleteQuiz = function(quizId, e)
 {
 	console.log('Delete Quiz');
 	$.ajax({
-		url: "http://localhost:8083/test2bsure/quiz?id="+quizId,
+		url: remoteServer+"/test2bsure/quiz?id="+quizId,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -321,7 +321,7 @@ quizController.prototype.SearchQuizByName = function(callback)
 	console.log('Searching quiz by name/title');
 	var search = $('#txtSearchQuiz').val();
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/quiz?search='+search,
+		url: remoteServer+'/test2bsure/quiz?search='+search,
 		type: 'GET',
 		success: function(response){
 			$('.existing-quizzes').find('table').find('tbody').empty();
@@ -360,7 +360,7 @@ quizController.prototype.SearchQuizByName = function(callback)
 quizController.prototype.LoadCategories = function()
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/category',
+		url: remoteServer+'/test2bsure/category',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -380,7 +380,7 @@ quizController.prototype.LoadCategories = function()
 quizController.prototype.SearchExams = function(value, callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/exam?search='+value,
+		url: remoteServer+'/test2bsure/exam?search='+value,
 		type: 'GET',
 		success: function(response){
 			this.exams = {};
@@ -405,7 +405,7 @@ quizController.prototype.SearchExams = function(value, callback)
 quizController.prototype.LoadExams = function()
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/exam',
+		url: remoteServer+'/test2bsure/exam',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -429,7 +429,7 @@ quizController.prototype.LoadExams = function()
 quizController.prototype.LoadQuestions = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/question',
+		url: remoteServer+'/test2bsure/question',
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -454,7 +454,7 @@ quizController.prototype.LoadQuestions = function(callback)
 quizController.prototype.HandleQuizStatus = function(id)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/quizstatus?id='+id,
+		url: remoteServer+'/test2bsure/quizstatus?id='+id,
 		type: 'PUT',
 		success: function(response){
 			console.log(response);
@@ -491,7 +491,7 @@ quizController.prototype.HandleQuizQuestions = function()
 quizController.prototype.PopulateQuizQuestions = function(callback)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/quizquestion?quizid='+this.quizId,
+		url: remoteServer+'/test2bsure/quizquestion?quizid='+this.quizId,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -544,7 +544,7 @@ quizController.prototype.PopulateAllQuestions = function()
 quizController.prototype.AddQuizQuestion = function(quesId)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/quizquestion',
+		url: remoteServer+'/test2bsure/quizquestion',
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({
@@ -564,7 +564,7 @@ quizController.prototype.AddQuizQuestion = function(quesId)
 quizController.prototype.DeleteQuizQuestion = function(quesId)
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/quizquestion',
+		url: remoteServer+'/test2bsure/quizquestion',
 		type: 'DELETE',
 		contentType: 'application/json',
 		data: JSON.stringify({
@@ -672,7 +672,7 @@ quizController.prototype.PopulateFilteredQuestions = function()
 quizController.prototype.GetQuestionCategories = function()
 {
 	$.ajax({
-		url: 'http://localhost:8083/test2bsure/question-category',
+		url: remoteServer+'/test2bsure/question-category',
 		type: 'GET',
 		success: function(response){
 			console.log(response);

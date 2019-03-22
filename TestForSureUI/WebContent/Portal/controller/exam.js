@@ -18,7 +18,7 @@ examController.prototype.Init = function()
 examController.prototype.LoadData = function()
 {
 	var id = this.id;
-	fetch('http://localhost:8083/test2bsure/exampage?id='+id)
+	fetch(remoteServer+'/test2bsure/exampage?id='+id)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ exam: data.exam, tests: data.tests, quizzes: data.quizzes }));
 }

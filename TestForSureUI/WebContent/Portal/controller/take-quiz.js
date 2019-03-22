@@ -16,7 +16,7 @@ quizController.prototype.Init = function()
 quizController.prototype.LoadData = function()
 {
 	var id = this.id;
-	fetch('http://localhost:8083/test2bsure/quizdata?quizId='+id)
+	fetch(remoteServer+'/test2bsure/quizdata?quizId='+id)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ quizInfo: data.quizInfo, questionsData: data.questionsData, sessionId: data.sessionId }));
 }
@@ -155,7 +155,7 @@ quizController.prototype.CheckAnswer = function(node)
 		submit = 1;
 	}
 	var obj = this;
-	var url = 'http://localhost:8083/test2bsure/checkanswer?quesid='+quesId+'&quesindex='+quesIndex+'&sessionid='+sessionId+'&answer='+answer+'&submit='+submit;
+	var url = remoteServer+'/test2bsure/checkanswer?quesid='+quesId+'&quesindex='+quesIndex+'&sessionid='+sessionId+'&answer='+answer+'&submit='+submit;
 	fetch(url)
 	.then(response => response.json())
 	.then(function(data){

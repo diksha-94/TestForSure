@@ -15,7 +15,7 @@ homeController.prototype.Init = function()
 };
 homeController.prototype.LoadCategoriesExams = function()
 {
-	fetch('http://localhost:8083/test2bsure/home')
+	fetch(remoteServer+'/test2bsure/home')
 	  .then(response => response.json())
 	  .then(data => this.SetState({ category: data.category, exam: data.exam, testCount: data.testCount, quizCount: data.quizCount }));
 }

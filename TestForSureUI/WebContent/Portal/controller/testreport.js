@@ -21,7 +21,7 @@ testReportController.prototype.Init = function()
 testReportController.prototype.LoadData = function()
 {
 	var id = this.id;
-	fetch('http://localhost:8083/test2bsure/testreportdata?sessionId='+id)
+	fetch(remoteServer+'/test2bsure/testreportdata?sessionId='+id)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ testInfo: data.testInfo, reportData: data.reportData, solutionData: data.solutionData }));
 }
