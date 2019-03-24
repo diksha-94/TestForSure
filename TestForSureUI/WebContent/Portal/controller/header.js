@@ -8,9 +8,15 @@ headerController.prototype.Init = function()
 {
 	console.log("Init header");
 	$('#btnLogin').unbind().bind('click', function(e){
+		if($('#loginModal').length == 0){
+			$('body').append(loginModal());
+		}
 		$('#loginModal').modal('show');
 	});
 	$('#btnRegister').unbind().bind('click', function(e){
+		if($('#registerModal').length == 0){
+			$('body').append(registerModal());
+		}
 		$('#registerModal').modal('show');
 	});
 	$('#linkRegister').unbind().bind('click', function(e){
@@ -23,20 +29,26 @@ headerController.prototype.Init = function()
 	});
 	$('#linkForgot').unbind().bind('click', function(e){
 		$('#loginModal').modal('toggle');
+		if($('#forgotPassModal').length == 0){
+			$('body').append(forgotPassModal());
+		}
+		$('#forgotPassModal').modal('show');
 		$('#errorOuterForgot').hide();
 		$('#successOuter').hide();
 		$('#forgotPassForm').show();
 		$('.footer-forgot').hide();
 		$('#txtForgotEmail').val('');
-		$('#forgotPassModal').modal('show');
 	});
 	$('#linkVerification').unbind().bind('click', function(e){
 		$('#loginModal').modal('toggle');
+		if($('#verificationModal').length == 0){
+			$('body').append(verificationModal());
+		}
+		$('#verificationModal').modal('show');
 		$('#errorOuterVerification').hide();
 		$('#verForm').show();
 		$('.footer-ver').hide();
 		$('#txtVerEmail').val('');
-		$('#verificationModal').modal('show');
 	});
 	
 	$('#registerModal').find('#btnDoRegister').unbind().bind('click', function(){
