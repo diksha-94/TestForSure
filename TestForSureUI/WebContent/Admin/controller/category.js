@@ -66,7 +66,7 @@ categoryController.prototype.LoadAllCategories = function(callback)
 						"<td class='tdCategoryId'>"+categories[category]['id']+"</td>"+
 						"<td class='tdCategoryName'>"+categories[category]['name']+"</td>"+
 						"<td class='tdCategoryTitle'>"+categories[category]['title']+"</td>"+
-						"<td class='tdCategoryImageUrl'>"+categories[category]['imageUrl']+"</td>"+
+						"<td class='tdCategoryImageUrl'><img src='"+categories[category]['imageUrl']+"' alt='Not Available'/></td>"+
 						"<td>"+
 							"<button class='btn btn-default addEditCategory update'>Edit</button>"+
 							"<button class='btn btn-default deleteCategory'>Delete</button>"+
@@ -167,7 +167,7 @@ categoryController.prototype.PopulateCategoryData = function(e)
 		var currentCategory = $(e.currentTarget).parents('tr');
 		name = currentCategory.find('.tdCategoryName').text();
 		title = currentCategory.find('.tdCategoryTitle').text();
-		imageUrl = currentCategory.find('.tdCategoryImageUrl').text();
+		imageUrl = currentCategory.find('.tdCategoryImageUrl').find('img').attr('src');
 	}
 	$('#categoryModal').find('#txtCategoryName').val(name);
 	$('#categoryModal').find('#txtCategoryTitle').val(title);
@@ -191,7 +191,7 @@ categoryController.prototype.SearchCategoryByName = function(callback)
 						"<td class='tdCategoryId'>"+categories[category]['id']+"</td>"+
 						"<td class='tdCategoryName'>"+categories[category]['name']+"</td>"+
 						"<td class='tdCategoryTitle'>"+categories[category]['title']+"</td>"+
-						"<td class='tdCategoryImageUrl'>"+categories[category]['imageUrl']+"</td>"+
+						"<td class='tdCategoryImageUrl'><img src='"+categories[category]['imageUrl']+"' alt='Not Available'/></td>"+
 						"<td>"+
 							"<button class='btn btn-default addEditCategory update'>Edit</button>"+
 							"<button class='btn btn-default deleteCategory'>Delete</button>"+

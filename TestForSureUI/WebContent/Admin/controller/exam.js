@@ -31,6 +31,7 @@ examController.prototype.BindEvents = function()
 };
 examController.prototype.BindTableEvents = function()
 {
+	console.log("Inside bind table events");
 	//Add/Update Category
 	$('.addEditExam').unbind().bind('click', function(e){
 		$('#examModal').modal('show');
@@ -269,6 +270,7 @@ examController.prototype.GetCategoryName = function(id)
 examController.prototype.SearchByCategory = function()
 {
 	this.SearchExamByName(function(){
+		this.BindTableEvents();
 		var search = 0;
 		search = $('#ddSearchCategory').val();
 		if(search == 0){
@@ -279,6 +281,6 @@ examController.prototype.SearchByCategory = function()
 				$(this).remove();
 			}
 		});
-		this.BindTableEvents();
+		console.log(this);
 	}.bind(this));
 };
