@@ -11,8 +11,8 @@ usertrackingController.prototype.BindEvents = function()
 {
 	//Search user by name/e-mail - button
 	$('#btnSearchUser').unbind().bind('click', function(){
-		this.SearchUserByName(function(){
-			this.BindEvents();
+		this.SearchUserByName(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 	
@@ -25,24 +25,24 @@ usertrackingController.prototype.BindEvents = function()
 usertrackingController.prototype.LoadView = function()
 {
 	$('.menu-page-content').load('usertracking.html', function(){
-		this.LoadAllUsers(function(){
-			this.BindEvents();
+		this.LoadAllUsers(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 };
-usertrackingController.prototype.LoadAllUsers = function(callback)
+usertrackingController.prototype.LoadAllUsers = function(start, callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/user',
+		url: remoteServer+'/test2bsure/user?count='+perPage+'&start='+start,
 		type: 'GET',
 		contentType: 'application/json',
 		context: this,
 		success: function(response){
-			if(response.response.status == true){
+			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
 					var users = response.data;
 					var userObj = "";
-					$('.userCount').text(response.response.message.split(":")[1].trim());
+					$('.userCount').text(response.result.message.split(":")[1].trim());
 					for(var user in users){
 						this.users[users[user]['id']] = users[user];
 						if(users[user]['lastUpdatedOn'] == null){
@@ -58,14 +58,17 @@ usertrackingController.prototype.LoadAllUsers = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-users').find('table').find('tbody').append(userObj);
+					$('.existing-users').find('table').find('tbody').html(userObj);
+					this.BindEvents();
 				}
 			}
-			callback();
-		},
+			if(typeof callback == 'function')
+				callback(response.result.length);
+		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback(0);
 		}
 	});
 };
@@ -85,18 +88,17 @@ usertrackingController.prototype.PopulateUser = function(e)
 	$('#userModal').find('.modal-body').empty();
 	$('#userModal').find('.modal-body').html(html);
 };
-usertrackingController.prototype.SearchUserByName = function(callback)
+usertrackingController.prototype.SearchUserByName = function(start, callback)
 {
-	console.log('Searching user by name/email');
 	var search = $('#txtSearchUser').val();
 	$.ajax({
-		url: remoteServer+'/test2bsure/user?search='+search,
+		url: remoteServer+'/test2bsure/user?search='+search+'&count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			$('.existing-users').find('table').find('tbody').empty();
-			if(response.response.status == true){
+			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
-					$('.userCount').text(response.response.message.split(":")[1].trim());
+					$('.userCount').text(response.result.message.split(":")[1].trim());
 					var userObj = "";
 					var users = response.data;
 					for(var user in users){
@@ -113,14 +115,33 @@ usertrackingController.prototype.SearchUserByName = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-users').find('table').find('tbody').append(userObj);
+					$('.existing-users').find('table').find('tbody').html(userObj);
+					this.BindEvents();
 				}
 			}
-			callback();
-		},
+			if(typeof callback == 'function')
+				callback(response.result.length);
+		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback(0);
 		}
 	});
+};
+usertrackingController.prototype.HandleRecords = function(len){
+	$('.counter').find('.itemCount').find('span').text(len);
+	if(len > 0){
+		$('.paginationDiv').html(pagination(len));
+		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
+			var search = $('#txtSearchUser').val();
+			var start = $(e.currentTarget).find(":selected").attr('data-start');
+			if(search.length > 0){
+				this.SearchUserByName(start);
+			}
+			else{
+				this.LoadAllUsers(start);
+			}
+		}.bind(this));
+	}
 };

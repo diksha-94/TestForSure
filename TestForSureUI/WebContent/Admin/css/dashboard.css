@@ -241,3 +241,31 @@ body{
 	color:red;
 }
 /* Login CSS ends */
+
+/* Counter CSS starts */
+.counter{
+	margin: 20px 0px;
+}
+/* Counter CSS ends */
+/* Pagination CSS Starts */
+.paginationDiv{
+	display: flex;
+}
+.paginationDiv .pagination{
+	display: flex;
+	margin: 0px 20px;
+}
+.paginationDiv .pagination select{
+	width: 80px;
+}
+.paginationDiv .pagination div:hover, .paginationDiv .pagination div.active{
+	background-color: #2E6DA2;
+	cursor: pointer;
+	color: white;
+}
+.paginationDiv .pagination div.previous, .paginationDiv .pagination div.next{
+	padding: 4px 10px;
+	width: auto;
+	display: none;
+}
+/* Pagination CSS ends */

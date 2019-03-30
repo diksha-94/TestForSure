@@ -24,8 +24,8 @@ testController.prototype.BindEvents = function()
 {
 	//Search quiz by name/title - button
 	$('#btnSearchTest').unbind().bind('click', function(){
-		this.SearchTestByName(function(){
-			this.BindEvents();
+		this.SearchTestByName(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 	
@@ -102,15 +102,15 @@ testController.prototype.BindEvents = function()
 testController.prototype.LoadView = function()
 {
 	$('.menu-page-content').load('test.html', function(){
-		this.LoadAllTests(function(){
-			this.BindEvents();
+		this.LoadAllTests(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 };
-testController.prototype.LoadAllTests = function(callback)
+testController.prototype.LoadAllTests = function(start, callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/test',
+		url: remoteServer+'/test2bsure/test?count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -136,14 +136,17 @@ testController.prototype.LoadAllTests = function(callback)
 										"</td>"+
 									"</tr>";
 					}
-					$('.existing-tests').find('table').find('tbody').append(testObj);
+					$('.existing-tests').find('table').find('tbody').html(testObj);
+					this.BindEvents();
 				}
 			}
-			callback();
+			if(typeof callback == 'function')
+				callback(response.result.length);
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback(0);
 		}
 	});
 };
@@ -255,14 +258,16 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 						var entered = $('#testDetailsModal').find('#txtTestQuestions').val();
 						var added = $('#testQuesModal').find('.divCountQuesTest').find('span.noOfQues').text();
 						if(entered != added){
-							alert("Number of questions entered and added are not same," +
-									" updating the total number of questions as per the added number of questions");
-							$('#testDetailsModal').find('#txtTestQuestions').val(added);
-							this.SaveTestDetails(true, this.id, false);
+							if (window.confirm("Number of questions entered and added are not same," +
+							" updating the total number of questions as per the added number of questions")) { 
+								$('#testDetailsModal').find('#txtTestQuestions').val(added);
+								this.SaveTestDetails(true, this.id, false);
+								$('#testQuesModal').modal('hide');
+								$('#testDetailsModal').modal('hide');
+								$('.menu-tabs').find('li[class="active"]').find('a').click();
+							}
+							else{}
 						}
-						$('#testQuesModal').modal('hide');
-						$('#testDetailsModal').modal('hide');
-						$('.menu-tabs').find('li[class="active"]').find('a').click();
 					}.bind(this));
 					this.HandleTestQuestions();
 				}
@@ -398,12 +403,11 @@ testController.prototype.PopulateTestData = function(e)
 	}
 	$('#testDetailsModal').find('#chkShuffleOptions').prop('checked', shuffleOptionsStatus);
 };
-testController.prototype.SearchTestByName = function(callback)
+testController.prototype.SearchTestByName = function(start, callback)
 {
-	console.log('Searching test by name/title');
 	var search = $('#txtSearchTest').val();
 	$.ajax({
-		url: remoteServer+'/test2bsure/test?search='+search,
+		url: remoteServer+'/test2bsure/test?search='+search+'&count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			$('.existing-tests').find('table').find('tbody').empty();
@@ -430,14 +434,19 @@ testController.prototype.SearchTestByName = function(callback)
 										"</td>"+
 									"</tr>";
 					}
-					$('.existing-tests').find('table').find('tbody').append(testObj);
+					$('.existing-tests').find('table').find('tbody').html(testObj);
+					this.BindEvents();
 				}
 			}
-			callback();
+			if(typeof callback == 'function'){
+				callback(response.result.length);
+			}
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function'){
+				callback(0);
+			}
 		}
 	});
 };
@@ -809,4 +818,20 @@ testController.prototype.PopulateQuestionSubcategory = function(categoryId)
 		}
 	}
 	return html;
+};
+testController.prototype.HandleRecords = function(len){
+	$('.counter').find('.itemCount').find('span').text(len);
+	if(len > 0){
+		$('.paginationDiv').html(pagination(len));
+		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
+			var search = $('#txtSearchTest').val();
+			var start = $(e.currentTarget).find(":selected").attr('data-start');
+			if(search.length > 0){
+				this.SearchTestByName(start);
+			}
+			else{
+				this.LoadAllTests(start);
+			}
+		}.bind(this));
+	}
 };

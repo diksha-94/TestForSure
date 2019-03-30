@@ -55,6 +55,7 @@
 	margin: 0px 71px 20px 0px;
 	height: auto;
 	min-height: 200px;
+	max-height: 270px;
 }
 .category-exam-listing .exam-listing ul li:hover{
 	box-shadow: 0px 0px 10px #E4E4E4;
@@ -69,6 +70,10 @@
 .category-exam-listing .exam-listing ul li h5{
 	text-align: center;
 	font-weight: bold;
+	height: 33px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
 }
 .category-exam-listing .exam-listing ul li p{
 	max-height: 60px;

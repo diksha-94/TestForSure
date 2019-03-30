@@ -57,16 +57,17 @@ questionbankController.prototype.BindTableEvents = function()
 questionbankController.prototype.LoadView = function()
 {
 	$('.menu-page-content').load('questionbank.html', function(){
-		this.LoadAllQuestions(function(){
+		this.LoadAllQuestions(0, function(length){
+			this.HandleRecords(length);
 			this.BindEvents();
 			this.BindTableEvents();
 		}.bind(this));
 	}.bind(this));
 };
-questionbankController.prototype.LoadAllQuestions = function(callback)
+questionbankController.prototype.LoadAllQuestions = function(start, callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/question',
+		url: remoteServer+'/test2bsure/question?count='+perPage+'&start='+start,
 		type: 'GET',
 		contentType: 'application/json',
 		success: function(response){
@@ -85,14 +86,16 @@ questionbankController.prototype.LoadAllQuestions = function(callback)
 							"</td>"+
 							"</tr>";
 					}
-					$('.existing-questions').find('table').find('tbody').append(quesObj);
+					$('.existing-questions').find('table').find('tbody').html(quesObj);
 				}
 			}
-			callback();
+			if(typeof callback == 'function')
+				callback(response.result.length);
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback();
 		}
 	});
 };
@@ -121,6 +124,10 @@ questionbankController.prototype.AddQuestionModal = function()
 			$('#questionModal').find('.addQuesCategory').find('#btnAddQuesCategory').unbind().bind('click', function(){
 				//Add a new Question category POST question-category(String category)
 				var newCategory = $('#questionModal').find('#txtQuesCategory').val();
+				if(newCategory.length == 0){
+					alert("Please enter Question Category.");
+					return;
+				}
 				$.ajax({
 					url: remoteServer+"/test2bsure/question-category?category="+newCategory,
 					type: 'POST',
@@ -164,6 +171,10 @@ questionbankController.prototype.AddQuestionModal = function()
 			$('#questionModal').find('.addQuesSubCategory').find('#btnAddQuesSubCategory').unbind().bind('click', function(){
 				//Add a new Question category POST question-subcategory(int categoryId, String subcategory)
 				var newSubcategory = $('#questionModal').find('#txtQuesSubCategory').val();
+				if(newSubcategory.length == 0){
+					alert("Please enter Question Sub Category.");
+					return;
+				}
 				$.ajax({
 					url: remoteServer+"/test2bsure/question-subcategory?categoryId="+$('#questionModal').find('#ddQuestionCategory').val()+"&subcategory="+newSubcategory,
 					type: 'POST',
@@ -312,7 +323,7 @@ questionbankController.prototype.DeleteQuestion = function(questionId, e)
 {
 	console.log('Delete Question');
 	$.ajax({
-		url: remoteServer+"/test2bsure/question/id="+questionId,
+		url: remoteServer+"/test2bsure/question?id="+questionId,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -494,4 +505,14 @@ questionbankController.prototype.PopulateFilteredQuestions = function(category, 
 	$('.existing-questions').find('table').find('tbody').empty();
 	$('.existing-questions').find('table').find('tbody').append(html);
 	this.BindTableEvents();
+};
+questionbankController.prototype.HandleRecords = function(len){
+	$('.counter').find('.itemCount').find('span').text(len);
+	if(len > 0){
+		$('.paginationDiv').html(pagination(len));
+		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
+			var start = $(e.currentTarget).find(":selected").attr('data-start');
+			this.LoadAllQuestions(start);
+		}.bind(this));
+	}
 };

@@ -23,8 +23,8 @@ quizController.prototype.BindEvents = function()
 {
 	//Search quiz by name/title - button
 	$('#btnSearchQuiz').unbind().bind('click', function(){
-		this.SearchQuizByName(function(){
-			this.BindEvents();
+		this.SearchQuizByName(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 	
@@ -95,15 +95,15 @@ quizController.prototype.BindEvents = function()
 quizController.prototype.LoadView = function()
 {
 	$('.menu-page-content').load('quiz.html', function(){
-		this.LoadAllQuiz(function(){
-			this.BindEvents();
+		this.LoadAllQuiz(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 };
-quizController.prototype.LoadAllQuiz = function(callback)
+quizController.prototype.LoadAllQuiz = function(start, callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/quiz',
+		url: remoteServer+'/test2bsure/quiz?count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -128,14 +128,17 @@ quizController.prototype.LoadAllQuiz = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-quizzes').find('table').find('tbody').append(quizObj);
+					$('.existing-quizzes').find('table').find('tbody').html(quizObj);
+					this.BindEvents();
 				}
 			}
-			callback();
+			if(typeof callback == 'function')
+				callback(response.result.length);
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback();
 		}
 	});
 };
@@ -316,12 +319,11 @@ quizController.prototype.PopulateQuizData = function(e)
 	}
 	$('#quizModal').find('#chkQuizLock').prop('checked', lockStatus);
 };
-quizController.prototype.SearchQuizByName = function(callback)
+quizController.prototype.SearchQuizByName = function(start, callback)
 {
-	console.log('Searching quiz by name/title');
 	var search = $('#txtSearchQuiz').val();
 	$.ajax({
-		url: remoteServer+'/test2bsure/quiz?search='+search,
+		url: remoteServer+'/test2bsure/quiz?search='+search+'&count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			$('.existing-quizzes').find('table').find('tbody').empty();
@@ -346,14 +348,17 @@ quizController.prototype.SearchQuizByName = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-quizzes').find('table').find('tbody').append(quizObj);
+					$('.existing-quizzes').find('table').find('tbody').html(quizObj);
+					this.BindEvents();
 				}
 			}
-			callback();
-		},
+			if(typeof callback == 'function')
+				callback(response.result.length);
+		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback(0);
 		}
 	});
 };
@@ -708,4 +713,20 @@ quizController.prototype.PopulateQuestionSubcategory = function(categoryId)
 		}
 	}
 	return html;
+};
+quizController.prototype.HandleRecords = function(len){
+	$('.counter').find('.itemCount').find('span').text(len);
+	if(len > 0){
+		$('.paginationDiv').html(pagination(len));
+		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
+			var search = $('#txtSearchQuiz').val();
+			var start = $(e.currentTarget).find(":selected").attr('data-start');
+			if(search.length > 0){
+				this.SearchQuizByName(start);
+			}
+			else{
+				this.LoadAllQuiz(start);
+			}
+		}.bind(this));
+	}
 };

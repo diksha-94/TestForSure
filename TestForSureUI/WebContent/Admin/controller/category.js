@@ -10,8 +10,8 @@ categoryController.prototype.BindEvents = function()
 {
 	//Search category by name/title - button
 	$('#btnSearchCategory').unbind().bind('click', function(){
-		this.SearchCategoryByName(function(){
-			this.BindEvents();
+		this.SearchCategoryByName(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 	
@@ -36,8 +36,10 @@ categoryController.prototype.BindEvents = function()
 	$('.deleteCategory').unbind().bind('click', function(e){
 		var categoryId = $(e.currentTarget).parents('tr').find('td:first-child').text();
 		console.log(categoryId);
+		var currentCategory = $(e.currentTarget).parents('tr');
+		var title = currentCategory.find('.tdCategoryTitle').text();
 		$('#deleteCategoryModal').modal('show');
-		$('#deleteCategoryModal').find('.modal-body').find('p').find('span').text("SSC ?");
+		$('#deleteCategoryModal').find('.modal-body').find('p').find('span').text(title+" ?");
 		$('#deleteCategoryModal').find('#btnDeleteYes').unbind().bind('click', function(){
 			this.DeleteCategory(categoryId, e);
 		}.bind(this));
@@ -46,15 +48,15 @@ categoryController.prototype.BindEvents = function()
 categoryController.prototype.LoadView = function()
 {
 	$('.menu-page-content').load('category.html', function(){
-		this.LoadAllCategories(function(){
-			this.BindEvents();
+		this.LoadAllCategories(0, function(length){
+			this.HandleRecords(length);
 		}.bind(this));
 	}.bind(this));
 };
-categoryController.prototype.LoadAllCategories = function(callback)
+categoryController.prototype.LoadAllCategories = function(start, callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/category',
+		url: remoteServer+'/test2bsure/category?count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -73,17 +75,22 @@ categoryController.prototype.LoadAllCategories = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-categories').find('table').find('tbody').append(catObj);
+					$('.existing-categories').find('table').find('tbody').html(catObj);
+					this.BindEvents();
 				}
 			}
 			else{
-				alert(response.result.message);
+				$('.existing-categories').html('<h3>'+response.result.message+' !!</h3>');
 			}
-			callback();
-		},
+			if(typeof callback == 'function'){
+				callback(response.result.length);
+			}
+		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function'){
+				callback(0);
+			}
 		}
 	});
 };
@@ -173,12 +180,11 @@ categoryController.prototype.PopulateCategoryData = function(e)
 	$('#categoryModal').find('#txtCategoryTitle').val(title);
 	$('#categoryModal').find('#txtCategoryImageUrl').val(imageUrl);
 };
-categoryController.prototype.SearchCategoryByName = function(callback)
+categoryController.prototype.SearchCategoryByName = function(start, callback)
 {
-	console.log('Searching category by name/title');
 	var search = $('#txtSearchCategory').val();
 	$.ajax({
-		url: remoteServer+'/test2bsure/category?search='+search,
+		url: remoteServer+'/test2bsure/category?search='+search+'&count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			$('.existing-categories').find('table').find('tbody').empty();
@@ -198,14 +204,35 @@ categoryController.prototype.SearchCategoryByName = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-categories').find('table').find('tbody').append(catObj);
+					$('.existing-categories').find('table').find('tbody').html(catObj);
+					this.BindEvents();
 				}
 			}
-			callback();
-		},
+			if(typeof callback == 'function'){
+				callback(response.result.length);
+			}
+		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function'){
+				callback(0);
+			}
 		}
 	});
+};
+categoryController.prototype.HandleRecords = function(len){
+	$('.counter').find('.itemCount').find('span').text(len);
+	if(len > 0){
+		$('.paginationDiv').html(pagination(len));
+		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
+			var search = $('#txtSearchCategory').val();
+			var start = $(e.currentTarget).find(":selected").attr('data-start');
+			if(search.length > 0){
+				this.SearchCategoryByName(start);
+			}
+			else{
+				this.LoadAllCategories(start);
+			}
+		}.bind(this));
+	}
 };

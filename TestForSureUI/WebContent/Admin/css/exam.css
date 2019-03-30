@@ -26,6 +26,7 @@
 .existing-exams table{
 	border:solid 1px #2E6DA2;
 	width:100%;
+	table-layout: fixed;
 }
 .existing-exams table tr th,td{
 	text-align: center;

@@ -20,7 +20,7 @@ function loginModal(){
 								'<div class="form-group">'+
 									'<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Password</label>'+
 									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">'+
-									'<input type="password"  class="form-control" id="txtPassword" name="txtPasswordName" required="required" placeholder="Password"/>
+									'<input type="password"  class="form-control" id="txtPassword" name="txtPasswordName" required="required" placeholder="Password"/>'+
 									'</div>'+
 								'</div>'+
 								'<div class="form-group">'+
@@ -88,7 +88,7 @@ function registerModal(){
 										'<input type="password" id="txtConfirmPassword" name="txtConfirmNameReg" class="form-control" placeholder="Confirm Password"/>'+
 									'</div>'+
 								'</div>'+
-								'<div class='form-group'>'+
+								'<div class="form-group">'+
 									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-0 col-md-offset-4 col-lg-offset-4">'+
 										'<button type="button" id="btnDoRegister" class="btn btn-success btn-block">Register</button>'+
 									'</div>'+
@@ -119,7 +119,7 @@ function forgotPassModal(){
 				'<div id="successOuter" class="hide">'+
 					'<div class=" alert alert-success" id="successMessage"></div>'+
 				'</div>'+
-	'<form id="forgotPassForm" class="form-horizontal" role="form">'+
+				'<form id="forgotPassForm" class="form-horizontal" role="form">'+
 					'<div class="form-group">'+
 						'<label class="control-label col-xs-12 col-sm-12 col-md-5 col-lg-5 col-xs-offset-0 col-sm-offset-0 col-xs-offset-1 col-sm-offset-1">Enter your registered e-mail</label>'+
 						'<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">'+

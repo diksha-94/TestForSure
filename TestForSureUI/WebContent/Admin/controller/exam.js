@@ -31,7 +31,6 @@ examController.prototype.BindEvents = function()
 };
 examController.prototype.BindTableEvents = function()
 {
-	console.log("Inside bind table events");
 	//Add/Update Category
 	$('.addEditExam').unbind().bind('click', function(e){
 		$('#examModal').modal('show');
@@ -64,16 +63,17 @@ examController.prototype.BindTableEvents = function()
 examController.prototype.LoadView = function()
 {
 	$('.menu-page-content').load('exam.html', function(){
-		this.LoadAllExams(function(){
+		this.LoadAllExams(0, function(length){
+			this.HandleRecords(length);
 			this.BindEvents();
 			this.BindTableEvents();
 		}.bind(this));
 	}.bind(this));
 };
-examController.prototype.LoadAllExams = function(callback)
+examController.prototype.LoadAllExams = function(start, callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/exam',
+		url: remoteServer+'/test2bsure/exam?count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -86,7 +86,7 @@ examController.prototype.LoadAllExams = function(callback)
 						"<td class='tdExamId'>"+exams[exam]['id']+"</td>"+
 						"<td class='tdExamName'>"+exams[exam]['name']+"</td>"+
 						"<td class='tdExamTitle'>"+exams[exam]['title']+"</td>"+
-						"<td class='tdExamImageUrl'>"+exams[exam]['imageUrl']+"</td>"+		
+						"<td class='tdExamImageUrl'><img src='"+exams[exam]['imageUrl']+"' alt='Not Available'/></td>"+		
 						"<td class='tdExamCategoryId'><span>"+exams[exam]['category']+"</span> - "+this.GetCategoryName(exams[exam]['category'])+"</td>"+
 						"<td>"+
 							"<button class='btn btn-default addEditExam update'>Edit</button>"+
@@ -94,16 +94,20 @@ examController.prototype.LoadAllExams = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-exams').find('table').find('tbody').append(examObj);
-					callback();
-					return false;
+					$('.existing-exams').find('table').find('tbody').html(examObj);
 				}
 			}
-			callback();
+			else{
+				$('.existing-exams').html('<h3>'+response.result.message+' !!</h3>');
+			}
+			if(typeof callback == 'function'){
+				callback(response.result.length);
+			}
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback(0);
 		}
 	});
 };
@@ -209,7 +213,7 @@ examController.prototype.PopulateExamData = function(e)
 		var currentExam = $(e.currentTarget).parents('tr');
 		name = currentExam.find('.tdExamName').text();
 		title = currentExam.find('.tdExamTitle').text();
-		imageUrl = currentExam.find('.tdExamImageUrl').text();
+		imageUrl = currentExam.find('.tdExamImageUrl').find('img').attr('src');
 		categoryId = currentExam.find('.tdExamCategoryId').find('span').text();
 		desc = this.exams[currentExam.find('.tdExamId').text()].description;
 	}
@@ -220,12 +224,11 @@ examController.prototype.PopulateExamData = function(e)
 	summernoteController.getObj().setValue('#txtExamDescription', desc);
 	//$('#examModal').find('#txtExamDescription').val(desc);
 };
-examController.prototype.SearchExamByName = function(callback)
+examController.prototype.SearchExamByName = function(start, callback)
 {
-	console.log('Searching Exam by name/title');
 	var search = $('#txtSearchExam').val();
 	$.ajax({
-		url: remoteServer+'/test2bsure/exam?search='+search,
+		url: remoteServer+'/test2bsure/exam?search='+search+'&count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			$('.existing-exams').find('table').find('tbody').empty();
@@ -238,7 +241,7 @@ examController.prototype.SearchExamByName = function(callback)
 						"<td class='tdExamId'>"+exams[exam]['id']+"</td>"+
 						"<td class='tdExamName'>"+exams[exam]['name']+"</td>"+
 						"<td class='tdExamTitle'>"+exams[exam]['title']+"</td>"+
-						"<td class='tdExamImageUrl'>"+exams[exam]['imageUrl']+"</td>"+
+						"<td class='tdExamImageUrl'><img src='"+exams[exam]['imageUrl']+"' alt='Not Available'/></td>"+
 						"<td class='tdExamCategoryId'><span>"+exams[exam]['category']+"</span> - "+this.GetCategoryName(exams[exam]['category'])+"</td>"+
 						"<td>"+
 							"<button class='btn btn-default addEditExam update'>Edit</button>"+
@@ -246,14 +249,16 @@ examController.prototype.SearchExamByName = function(callback)
 						"</td>"+
 						"</tr>";
 					}
-					$('.existing-exams').find('table').find('tbody').append(examObj);
+					$('.existing-exams').find('table').find('tbody').html(examObj);
 				}
 			}
-			callback();
+			if(typeof callback == 'function')
+				callback(response.result.length);
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
+			if(typeof callback == 'function')
+				callback(0);
 		}
 	});
 };
@@ -269,8 +274,9 @@ examController.prototype.GetCategoryName = function(id)
 };
 examController.prototype.SearchByCategory = function()
 {
-	this.SearchExamByName(function(){
+	this.SearchExamByName(0, function(length){
 		this.BindTableEvents();
+		this.HandleRecords(length);
 		var search = 0;
 		search = $('#ddSearchCategory').val();
 		if(search == 0){
@@ -281,6 +287,31 @@ examController.prototype.SearchByCategory = function()
 				$(this).remove();
 			}
 		});
-		console.log(this);
+		var totalRecords = $('.existing-exams').find('table').find('tbody').find('tr').length;
+		var totalPages = $('.paginationDiv').find('.pagination').find('div').length;
+		var totalPagesReq = parseInt(totalRecords/perPage);
+		var index = 1;
+		$('.paginationDiv').find('.pagination').find('div').each(function(e){
+			if(index > totalPagesReq){
+				$(this).remove();
+			}
+			index++;
+		});
 	}.bind(this));
+};
+examController.prototype.HandleRecords = function(len){
+	$('.counter').find('.itemCount').find('span').text(len);
+	if(len > 0){
+		$('.paginationDiv').html(pagination(len));
+		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
+			var search = $('#txtSearchExam').val();
+			var start = $(e.currentTarget).find(":selected").attr('data-start');
+			if(search.length > 0){
+				this.SearchExamByName(start);
+			}
+			else{
+				this.LoadAllExams(start);
+			}
+		}.bind(this));
+	}
 };

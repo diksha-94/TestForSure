@@ -1,4 +1,5 @@
-var remoteServer = "http://18.219.24.151:8083";
+var remoteServer = "http://localhost:8083";
+var perPage = 15;
 function validateEmail(email){
 	 var regEx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 	 if(regEx.test(email)){
@@ -36,4 +37,25 @@ function getCookie(cname){
         }
     }
     return "";
+}
+function pagination(count){
+	var html = "<div><span>Select Page</span></div>";
+	html += "<div class='pagination' data-records='"+perPage+"'><select class='pagination-dropdown'>";
+	var index = 0;
+	var done = false;
+	while(count >= perPage){
+		var className = "page";
+		if(done == false){
+			className = "page active";
+			done = true;
+		}
+		html += "<option class='"+className+"' data-start='"+(index*perPage)+"' value='"+(index+1)+"'>"+(index+1)+"</option>";
+		count -= perPage;
+		index++;
+	}
+	if(count > 0){
+		html += "<option class='page' data-start='"+(index*perPage)+"' value='"+(index+1)+"'>"+(index+1)+"</option>";
+	}
+	html += "</select></div>";
+	return html;
 }
