@@ -220,7 +220,27 @@
 			<!-- Modal body -->
 			<div class="modal-body test2bsure-body">
 				<div class='divCountQuesTest'>Number of Questions added: <span class='noOfQues'>0</span></div>
+				<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+					<div>
+						<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question Category <b class='red'>*</b></span>
+						<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+							<option value=''>All</option>
+						</select>
+					</div>
+					<div style='clear:both;'>
+						<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question SubCategory <b class='red'>*</b></span>
+						<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+							<option value=''>All</option>
+						</select>
+						<button class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
+						col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' id='btnSearchQues'>Search</button>
+						<div class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
+						col-xs-2 col-sm-2 col-md-2 col-lg-2'></>Select Page: <select id='ddPages'></select>
+					</div>
+				</div>
 				<div class='added-questions col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+					<!-- <div class='paginationDiv'>
+					</div> -->
 					<table>
 						<thead>
 							<tr class='table-header'>
@@ -235,20 +255,8 @@
 					</table>
 				</div>
 				<div class='all-questions col-xs-8 col-sm-8 col-md-8 col-lg-8'>
-					<div>
-						<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question Category <b class='red'>*</b></span>
-						<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-							<option value=''>All</option>
-						</select>
-					</div>
-					<div style='clear:both;'>
-						<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question SubCategory <b class='red'>*</b></span>
-						<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-							<option value=''>All</option>
-						</select>
-						<button class='col-xs-offset-2 cl-sm-offset-2 col-md-offset-2 col-lg-offset-2 
-						col-xs-3 col-sm-3 col-md-3 col-lg-3 btn btn-primary' id='btnSearchQues'>Search</button>
-					</div>
+					<!-- <div class='paginationDiv'>
+					</div> -->
 					<table width='100%' style='table-layout:fixed;'>
 						<thead>
 							<tr class='table-header'>
@@ -263,7 +271,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="modal-footer test2bsure-body">
+			<div class="modal-footer test2bsure-footer">
 				<div>
 					<button id='btnTestBack' type='button'
 					    	class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
@@ -271,8 +279,7 @@
 	        	 		data-dismiss="modal">Back</button>
 					<button id='btnTestFinish' type='button'
 						class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
-			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' 
-			        	 data-dismiss="modal">Finish</button>
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Finish</button>
 				</div>
 			</div>
 		</div>
@@ -303,6 +310,35 @@
 					<button id='btnDeleteNo' type="button"
 						class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
 	        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-danger"
+						data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Question Update Modal -->
+<div class="modal updateQuesModal" id="updateQuesModal" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Please confirm</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div>
+					<p>Number of questions entered and added are not same, updating the total number of questions as per the added number of questions.
+						Do you want to continue?</p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div>
+					<button id='btnUpdateYes' type='button'
+						class='btn btn-primary'>Yes</button>
+					<button id='btnUpdateNo' type="button"
+						class="btn btn-danger"
 						data-dismiss="modal">No</button>
 				</div>
 			</div>

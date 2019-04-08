@@ -1,5 +1,6 @@
 var obj = null;
-var remoteServer = "http://localhost:8083";
+var remoteServer = "http://18.219.24.151:8083";
+//18.219.24.151
 var test2bsureController = function(){
 	this.userData = null;
 };

@@ -9,14 +9,14 @@ var testController = function(){
 	this.questionSubcategory = {};
 	this.selectedQuestions = [];
 	this.allExams = {};
+	this.allQuesLength = 0;
 	this.Init();
 };
 testController.prototype.Init = function()
 {
-	console.log('Initiate Test');
 	this.LoadCategories();
 	this.LoadExams();
-	this.LoadQuestions();
+	this.LoadQuestions(0);
 	this.GetQuestionCategories();
 	this.LoadView();
 };
@@ -78,13 +78,15 @@ testController.prototype.BindEvents = function()
 	$('.deleteTest').unbind().bind('click', function(e){
 		var testId = $(e.currentTarget).parents('tr').find('td:first-child').text();
 		console.log(testId);
+		var currentTest = $(e.currentTarget).parents('tr');
+		var title = currentTest.find('.tdTestTitle').text();
 		$('#deleteTestModal').modal('show');
-		$('#deleteTestModal').find('.modal-body').find('p').find('span').text("SSC ?");
+		$('#deleteTestModal').find('.modal-body').find('p').find('span').text(title+" ?");
 		$('#deleteTestModal').find('#btnDeleteYes').unbind().bind('click', function(){
 			this.DeleteTest(testId, e);
 		}.bind(this));
 	}.bind(this));
-	
+		
 	//Publish/Unpublish Test
 	$('.testStatus').unbind().bind('click', function(e){
 		var testId = $(e.currentTarget).parents('tr').find('td:first-child').text();
@@ -137,11 +139,11 @@ testController.prototype.LoadAllTests = function(start, callback)
 									"</tr>";
 					}
 					$('.existing-tests').find('table').find('tbody').html(testObj);
-					this.BindEvents();
 				}
 			}
 			if(typeof callback == 'function')
 				callback(response.result.length);
+			this.BindEvents();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
@@ -251,6 +253,7 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 				this.id = response.message;
 				if(navigate == true){
 					$('#testQuesModal').modal('show');
+					//this.HandleAllQuestionsLen();
 					this.BindQuestionCategoryEvents();
 					$('#testQuesModal').find('#btnTestFinish').unbind().bind('click', function(){
 						//Check the no. of ques added and entered are same or not
@@ -258,15 +261,20 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 						var entered = $('#testDetailsModal').find('#txtTestQuestions').val();
 						var added = $('#testQuesModal').find('.divCountQuesTest').find('span.noOfQues').text();
 						if(entered != added){
-							if (window.confirm("Number of questions entered and added are not same," +
-							" updating the total number of questions as per the added number of questions")) { 
+							$('#updateQuesModal').modal('show');
+							$('#updateQuesModal').find('#btnUpdateYes').unbind().bind('click', function(){
+								$('#updateQuesModal').modal('hide');
 								$('#testDetailsModal').find('#txtTestQuestions').val(added);
 								this.SaveTestDetails(true, this.id, false);
 								$('#testQuesModal').modal('hide');
 								$('#testDetailsModal').modal('hide');
 								$('.menu-tabs').find('li[class="active"]').find('a').click();
-							}
-							else{}
+							}.bind(this));
+						}
+						else{
+							$('#testQuesModal').modal('hide');
+							$('#testDetailsModal').modal('hide');
+							$('.menu-tabs').find('li[class="active"]').find('a').click();
 						}
 					}.bind(this));
 					this.HandleTestQuestions();
@@ -286,7 +294,7 @@ testController.prototype.DeleteTest = function(testId, e)
 {
 	console.log('Delete Test');
 	$.ajax({
-		url: remoteServer+"/test2bsure?id="+testId,
+		url: remoteServer+"/test2bsure/test?id="+testId,
 		type: 'DELETE',
 		
 		success: function(response){
@@ -548,10 +556,10 @@ testController.prototype.SearchExams = function(value, callback)
 		}
 	});
 };
-testController.prototype.LoadQuestions = function(callback)
+testController.prototype.LoadQuestions = function(start, callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/question',
+		url: remoteServer+'/test2bsure/question',//?count='+perPage+'&start='+start,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
@@ -560,8 +568,8 @@ testController.prototype.LoadQuestions = function(callback)
 					for(var ques in questions){
 						this.questions[questions[ques]["id"]] = questions[ques];
 					}
-					
 				}
+				this.allQuesLength = response.result.length;
 			}
 			if(typeof callback != 'undefined')
 				callback();
@@ -646,12 +654,16 @@ testController.prototype.PopulateAllQuestions = function()
 						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
 						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
 						"<td><button class='btn btn-primary selectQues'>Add</button>"+
+						"<button class='btn btn-primary viewQues'>View</button></td>"+
 					"</tr>";
 		}
 	}
 	$('#testQuesModal').find('.all-questions').find('tbody').html(html);
 	$('#testQuesModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
 		this.AddTestQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
+	}.bind(this));
+	$('#testQuesModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
+		this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
 	}.bind(this));
 };
 testController.prototype.AddTestQuestion = function(quesId)
@@ -673,6 +685,53 @@ testController.prototype.AddTestQuestion = function(quesId)
 			console.log(e);
 		}
 	});
+};
+testController.prototype.ViewQuestion = function(quesId)
+{
+	$('#viewQuestionModal').modal('show');
+	var category = this.questions[quesId].questionCategory;
+	var subcategory = this.questions[quesId].questionSubcategory;
+	for(var cat in this.questionCategory){
+		if(this.questionCategory[cat].id == category){
+			category = this.questionCategory[cat]["name"];
+		}
+	}
+	for(var subcat in this.questionSubcategory){
+		if(this.questionSubcategory[subcat].id == subcategory){
+			subcategory = this.questionSubcategory[subcat]["name"];
+		}
+	}
+	var html = "<div>";
+	html += "<div><span><b>Question Id:  </b>"+quesId+"</span></div>";
+	html += "<div><span><b>Question Category:  </b>"+category+"</span></div>";
+	html += "<div><span><b>Question Subcategory:  </b>"+subcategory+"</span></div>";
+	if(this.questions[quesId].paragraph == "true"){
+		html += "</br><div><span><b>Paragraph Text: "+this.questions[quesId].paragraphText+"</b></span></div>";
+	}
+	html += "</br><div><span><b>Question: </b>"+this.questions[quesId].questionText+"</span></div>";
+	var options = this.questions[quesId].options;
+	var index = 97;
+	var correctOption = JSON.parse(this.questions[quesId].correctOption).indexOf(true);
+	var i = 0;
+	$.each($(options).find('option'), function(key, value){
+		console.log(key);
+		console.log(value);
+		html += "<div class='option'>";
+		html += "<span style='display:inline;'><b>"+String.fromCharCode(index)+".   </b></span>"+$(value).html()+"";
+		html += "</div>";
+		if(correctOption == i){
+			correctOption = index;
+		}
+		index++;
+		i++;
+	});
+	html += "</br><div><span><b>Correct Option:  </b>"+String.fromCharCode(correctOption)+"</span></div>";
+	if(this.questions[quesId].solution.length > 0){
+		html += "</br><div><span><b>Solution:  </b>"+this.questions[quesId].solution+"</span></div>";
+	}
+	html += "</div>";
+	$('#viewQuestionModal').find('.modal-body').empty();
+	$('#viewQuestionModal').find('.modal-body').html(html);
 };
 testController.prototype.DeleteTestQuestion = function(quesId)
 {
@@ -720,63 +779,118 @@ testController.prototype.BindQuestionCategoryEvents = function()
 		this.PopulateFilteredQuestions();
 	}.bind(this));
 };
-testController.prototype.PopulateFilteredQuestions = function()
+testController.prototype.PopulateFilteredQuestions = function(start = 1, repopulate = true)
 {
 	var category = $('#testQuesModal').find('#ddQuestionCategory').val();
 	var subcategory = $('#testQuesModal').find('#ddQuestionSubCategory').val();
 	var html = "";
+	if(repopulate == true){
+		var totalQues = Object.keys(this.questions).length - this.selectedQuestions.length;
+		var pages = parseInt(totalQues/50);
+		if(pages*50 < totalQues){
+			pages++;
+		}
+		var elem = "";
+		for(var j=1; j<=pages; j++){
+			elem += "<option value='"+j+"'>"+j+"</option>";
+		}
+		$('#testQuesModal').find('#ddPages').html(elem);
+		$('#testQuesModal').find('#ddPages').unbind().bind('change', function(e){
+			var pageNo = $(e.currentTarget).find(":selected").attr('value');
+			var startNo = ((pageNo - 1) * 50) + 1;
+			this.PopulateFilteredQuestions(startNo, false);
+		}.bind(this));
+	}
+	var count = 1;
 	for(var ques in this.questions){
-		if(category.length == 0){
-			//All category selected
-			if(subcategory.length == 0){
-				//All category and all subcategory selected
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-					"</tr>";
+		
+			if(category.length == 0){
+				//All category selected
+				if(subcategory.length == 0){
+					//All category and all subcategory selected
+					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1){
+						if(count < start){
+							count++;
+							continue;
+						}
+						else if(count < (start+50)){
+						html += "<tr>"+
+							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
+							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
+							"<td><button class='btn btn-primary selectQues'>Add</button>"+
+							"<button class='btn btn-primary viewQues'>View</button></td>"+
+						"</tr>";
+						count++;
+						}
+					}
+				}
+				else{
+					//All category selected but not all subcategory
+					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionSubcategory"] == subcategory){
+						if(count < start){
+							count++;
+							continue;
+						}
+						else if(count < (start+50)){
+						html += "<tr>"+
+							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
+							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
+							"<td><button class='btn btn-primary selectQues'>Add</button>"+
+							"<button class='btn btn-primary viewQues'>View</button></td>"+
+						"</tr>";
+						count++;
+						}
+					}
 				}
 			}
 			else{
-				//All category selected but not all subcategory
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionSubcategory"] == subcategory){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-					"</tr>";
+				//All category not selected
+				if(subcategory.length == 0){
+					//All category not selected but all subcategory selected
+					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category){
+						if(count < start){
+							count++;
+							continue;
+						}
+						else if(count < (start+50)){
+						html += "<tr>"+
+							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
+							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
+							"<td><button class='btn btn-primary selectQues'>Add</button>"+
+							"<button class='btn btn-primary viewQues'>View</button></td>"+
+						"</tr>";
+						count++;
+						}
+					}
+				}
+				else{
+					//All category not selected and all subcategory not selected
+					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category && this.questions[ques]["questionSubcategory"] == subcategory){
+						if(count < start){
+							count++;
+							continue;
+						}
+						else if(count < (start+50)){
+						html += "<tr>"+
+							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
+							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
+							"<td><button class='btn btn-primary selectQues'>Add</button>"+
+							"<button class='btn btn-primary viewQues'>View</button></td>"+
+						"</tr>";
+						count++;
+						}
+	
+					}
 				}
 			}
-		}
-		else{
-			//All category not selected
-			if(subcategory.length == 0){
-				//All category not selected but all subcategory selected
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-					"</tr>";
-				}
-			}
-			else{
-				//All category not selected and all subcategory not selected
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category && this.questions[ques]["questionSubcategory"] == subcategory){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-					"</tr>";
-
-				}
-			}
-		}
+		
 	}
 	$('#testQuesModal').find('.all-questions').find('tbody').html(html);
 	$('#testQuesModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
 		this.AddTestQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
+	}.bind(this));
+	$('#testQuesModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
+		this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
 	}.bind(this));
 };
 testController.prototype.GetQuestionCategories = function()
@@ -835,3 +949,12 @@ testController.prototype.HandleRecords = function(len){
 		}.bind(this));
 	}
 };
+/*testController.prototype.HandleAllQuestionsLen = function(){
+	if(this.allQuesLength > 0){
+		$('.all-questions').find('.paginationDiv').html(pagination(this.allQuesLength));
+		$('.all-questions').find('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
+			var start = $(e.currentTarget).find(":selected").attr('data-start');
+			this.LoadQuestions(start);
+		}.bind(this));
+	}
+};*/

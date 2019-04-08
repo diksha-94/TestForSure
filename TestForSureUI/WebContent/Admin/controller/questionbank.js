@@ -113,12 +113,13 @@ questionbankController.prototype.AddQuestionModal = function()
 	//Question Category
 	var categoryHtml = "<option value=''>Select</option>";
 	for(var category in this.questionCategory){
-		categoryHtml += "<option value = '"+this.questionCategory[category].id+"'>"+this.questionCategory[category].name+"</option>"
+		categoryHtml += "<option value = '"+this.questionCategory[category].id+"' data-count='"+this.questionCategory[category].quesCount+"'>"+this.questionCategory[category].name+"</option>"
 	}
 	categoryHtml += "<option value='0'>+ Add new category</option>";
 	$('#questionModal').find('#ddQuestionCategory').html(categoryHtml);
 	
 	$('#questionModal').find('#ddQuestionCategory').on('change', function(e){
+		$('#questionModal').find('#btnRemoveSubcategory').css('display', 'none');
 		if($(e.currentTarget).val() == '0'){
 			$('#questionModal').find('.addQuesCategory').show();
 			$('#questionModal').find('.addQuesCategory').find('#btnAddQuesCategory').unbind().bind('click', function(){
@@ -151,6 +152,22 @@ questionbankController.prototype.AddQuestionModal = function()
 			}.bind(this));
 		}
 		else{
+			//Find number of questions with the category
+			var categoryCount = $(e.currentTarget).find(":selected").attr('data-count');
+			var categoryId = $(e.currentTarget).find(":selected").attr('value');
+			if(categoryCount == 0){
+				$('#questionModal').find('#btnRemoveCategory').css('display', 'block');
+				$('#questionModal').find('#btnRemoveCategory').unbind().bind('click', function(evt){
+					this.DeleteCategory(categoryId, function(){
+						$('#questionModal').find('#ddQuestionCategory').find('option[value='+categoryId+']').remove();
+						$('#questionModal').find('#ddQuestionCategory').val("");
+						$('#questionModal').find('#btnRemoveCategory').css('display', 'none');
+					});
+				}.bind(this));
+			}
+			else{
+				$('#questionModal').find('#btnRemoveCategory').css('display', 'none');
+			}
 			$('#questionModal').find('.addQuesCategory').hide();
 			var html = "<option value=''>Select</option>";
 			html += this.PopulateQuestionSubcategory($(e.currentTarget).val());
@@ -161,7 +178,7 @@ questionbankController.prototype.AddQuestionModal = function()
 	//Question Subcategory
 	var subcategoryHtml = "<option value=''>Select</option>";
 	for(var subcategory in this.questionSubcategory){
-		subcategoryHtml += "<option value = '"+this.questionSubcategory[subcategory].id+"'>"+this.questionSubcategory[subcategory].name+"</option>"
+		subcategoryHtml += "<option value = '"+this.questionSubcategory[subcategory].id+"' data-count='"+this.questionSubcategory[subcategory].quesCount+"'>"+this.questionSubcategory[subcategory].name+"</option>"
 	}
 	subcategoryHtml += "<option value='0'>+ Add new subcategory</option>";
 	$('#questionModal').find('#ddQuestionSubCategory').html(subcategoryHtml);
@@ -193,9 +210,24 @@ questionbankController.prototype.AddQuestionModal = function()
 			});
 		}
 		else{
+			var subcategoryCount = $(e.currentTarget).find(":selected").attr('data-count');
+			var subcategoryId = $(e.currentTarget).find(":selected").attr('value');
+			if(subcategoryCount == 0){
+				$('#questionModal').find('#btnRemoveSubcategory').css('display', 'block');
+				$('#questionModal').find('#btnRemoveSubcategory').unbind().bind('click', function(e){
+					this.DeleteSubcategory(subcategoryId, function(){
+						$('#questionModal').find('#ddQuestionSubCategory').find('option[value='+subcategoryId+']').remove();
+						$('#questionModal').find('#ddQuestionSubCategory').val("");
+						$('#questionModal').find('#btnRemoveSubcategory').css('display', 'none');
+					});
+				}.bind(this));
+			}
+			else{
+				$('#questionModal').find('#btnRemoveSubcategory').css('display', 'none');
+			}
 			$('#questionModal').find('.addQuesSubCategory').hide();
 		}
-	});
+	}.bind(this));
 	
 	//Populate QuestionType
 	var questionType = Object.keys(QuestionType);
@@ -432,10 +464,10 @@ questionbankController.prototype.PopulateQuestionSubcategory = function(category
 	if(this.questionSubcategory.length > 0){
 		for(var obj in this.questionSubcategory){
 			if(categoryId == ''){
-				html += "<option value='"+this.questionSubcategory[obj]['id']+"'>"+this.questionSubcategory[obj]['name']+"</option>";
+				html += "<option value='"+this.questionSubcategory[obj]['id']+"' data-count='"+this.questionSubcategory[obj].quesCount+"'>"+this.questionSubcategory[obj]['name']+"</option>";
 			}
 			else if(this.questionSubcategory[obj]["categoryId"] == categoryId){
-				html += "<option value='"+this.questionSubcategory[obj]['id']+"'>"+this.questionSubcategory[obj]['name']+"</option>";
+				html += "<option value='"+this.questionSubcategory[obj]['id']+"' data-count='"+this.questionSubcategory[obj].quesCount+"'>"+this.questionSubcategory[obj]['name']+"</option>";
 			}
 		}
 	}
@@ -515,4 +547,32 @@ questionbankController.prototype.HandleRecords = function(len){
 			this.LoadAllQuestions(start);
 		}.bind(this));
 	}
+};
+questionbankController.prototype.DeleteCategory = function(id, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/question-category?id='+id,
+		type: 'DELETE',
+		success: function(response){
+			alert(response.message);
+			callback();
+		}.bind(this),
+		error: function(e){
+			alert(e);
+			callback();
+		}
+	});
+};
+questionbankController.prototype.DeleteSubcategory = function(id, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/question-subcategory?id='+id,
+		type: 'DELETE',
+		success: function(response){
+			alert(response.message);
+			callback();
+		}.bind(this),
+		error: function(e){
+			alert(e);
+			callback();
+		}
+	});
 };

@@ -76,7 +76,6 @@ categoryController.prototype.LoadAllCategories = function(start, callback)
 						"</tr>";
 					}
 					$('.existing-categories').find('table').find('tbody').html(catObj);
-					this.BindEvents();
 				}
 			}
 			else{
@@ -85,6 +84,7 @@ categoryController.prototype.LoadAllCategories = function(start, callback)
 			if(typeof callback == 'function'){
 				callback(response.result.length);
 			}
+			this.BindEvents();
 		}.bind(this),
 		error: function(e){
 			console.log(e);

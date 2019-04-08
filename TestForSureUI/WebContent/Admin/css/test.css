@@ -120,3 +120,15 @@
 #testQuesModal .added-questions {
     margin: 0px;
 }
+#testQuesModal .all-questions{
+	margin-bottom: 100px;
+	padding-bottom: 100px;
+}
+
+#testQuesModal .all-questions button{
+	width: 44px;
+	padding: 6px 0px;
+}
+#viewQuestionModal .option p{
+	display: inline;
+}

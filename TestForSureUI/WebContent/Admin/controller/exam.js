@@ -95,6 +95,7 @@ examController.prototype.LoadAllExams = function(start, callback)
 						"</tr>";
 					}
 					$('.existing-exams').find('table').find('tbody').html(examObj);
+					this.BindTableEvents();
 				}
 			}
 			else{
@@ -237,6 +238,7 @@ examController.prototype.SearchExamByName = function(start, callback)
 					var examObj = "";
 					var exams = response.data;
 					for(var exam in exams){
+						this.exams[exams[exam]['id']] = exams[exam];
 						examObj += "<tr>"+
 						"<td class='tdExamId'>"+exams[exam]['id']+"</td>"+
 						"<td class='tdExamName'>"+exams[exam]['name']+"</td>"+
@@ -250,6 +252,7 @@ examController.prototype.SearchExamByName = function(start, callback)
 						"</tr>";
 					}
 					$('.existing-exams').find('table').find('tbody').html(examObj);
+					this.BindTableEvents();
 				}
 			}
 			if(typeof callback == 'function')
@@ -288,10 +291,18 @@ examController.prototype.SearchByCategory = function()
 			}
 		});
 		var totalRecords = $('.existing-exams').find('table').find('tbody').find('tr').length;
-		var totalPages = $('.paginationDiv').find('.pagination').find('div').length;
-		var totalPagesReq = parseInt(totalRecords/perPage);
+		$('.counter').find('.itemCount').find('span').text(totalRecords);
+		var totalPages = $('.paginationDiv').find('.pagination').find('option').length;
+		var totalPagesReq = 0;
+		while(totalRecords >= perPage){
+			totalPagesReq++;
+			totalRecords -= perPage;
+		}
+		if(totalRecords > 0){
+			totalPagesReq++;
+		}
 		var index = 1;
-		$('.paginationDiv').find('.pagination').find('div').each(function(e){
+		$('.paginationDiv').find('.pagination').find('option').each(function(e){
 			if(index > totalPagesReq){
 				$(this).remove();
 			}

@@ -45,3 +45,6 @@
 	margin-top:20px;
 	padding:0px;
 }
+#questionModal .modal-dialog .modal-content .modal-body #btnRemoveCategory, #questionModal .modal-dialog .modal-content .modal-body #btnRemoveSubcategory{
+	display: none;
+}

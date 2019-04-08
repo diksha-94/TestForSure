@@ -38,6 +38,9 @@
 .existing-exams table tr th,td{
 	border-right:solid 1px #2E6DA2;
 }
+.existing-exams table tr th, .existing-exams table tr td img {
+    width: 80px;
+}
 .existing-exams table tr th,td button{
 	margin: 0 10px;
 }
