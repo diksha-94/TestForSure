@@ -1,4 +1,4 @@
-var remoteServer = "http://18.219.24.151:8083";
+var remoteServer = "http://localhost:8083";
 //18.219.24.151
 var perPage = 15;
 function validateEmail(email){
@@ -59,4 +59,10 @@ function pagination(count){
 	}
 	html += "</select></div>";
 	return html;
+}
+function showLoader(){
+	$('.loader').show();
+}
+function removeLoader(){
+	$('.loader').hide();
 }

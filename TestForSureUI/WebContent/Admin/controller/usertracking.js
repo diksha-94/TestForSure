@@ -5,6 +5,7 @@ var usertrackingController = function(){
 usertrackingController.prototype.Init = function()
 {
 	console.log('Initiate user');
+	showLoader();
 	this.LoadView();
 };
 usertrackingController.prototype.BindEvents = function()
@@ -21,12 +22,17 @@ usertrackingController.prototype.BindEvents = function()
 		$('#userModal').modal('show');
 		this.PopulateUser(e);
 	}.bind(this));
+	
+	$('.chkIsAdmin').unbind().bind('change', function(e){
+		this.UserAdmin(e);
+	}.bind(this));
 };
 usertrackingController.prototype.LoadView = function()
 {
 	$('.menu-page-content').load('usertracking.html', function(){
 		this.LoadAllUsers(0, function(length){
 			this.HandleRecords(length);
+			removeLoader();
 		}.bind(this));
 	}.bind(this));
 };
@@ -48,6 +54,10 @@ usertrackingController.prototype.LoadAllUsers = function(start, callback)
 						if(users[user]['lastUpdatedOn'] == null){
 							users[user]['lastUpdatedOn'] = '-';
 						}
+						var chkValue = "";
+						if(users[user]['isAdmin'] == 1){
+							chkValue = "checked = checked";
+						}
 						userObj += "<tr>"+
 						"<td class='tdUserId'>"+users[user]['id']+"</td>"+
 						"<td class='tdUserName'>"+users[user]['name']+"</td>"+
@@ -56,11 +66,17 @@ usertrackingController.prototype.LoadAllUsers = function(start, callback)
 						"<td>"+
 							"<button class='btn btn-default btnViewUser'>View</button>"+
 						"</td>"+
+						"<td>"+
+							"<input type='checkbox' class='chkIsAdmin' "+chkValue+"/>"+
+						"</td>"+
 						"</tr>";
 					}
 					$('.existing-users').find('table').find('tbody').html(userObj);
 					this.BindEvents();
 				}
+			}
+			else{
+				$('.existing-users').html('<h3>'+response.result.message+' !!</h3>');
 			}
 			if(typeof callback == 'function')
 				callback(response.result.length);
@@ -90,6 +106,7 @@ usertrackingController.prototype.PopulateUser = function(e)
 };
 usertrackingController.prototype.SearchUserByName = function(start, callback)
 {
+	showLoader();
 	var search = $('#txtSearchUser').val();
 	$.ajax({
 		url: remoteServer+'/test2bsure/user?search='+search+'&count='+perPage+'&start='+start,
@@ -105,6 +122,10 @@ usertrackingController.prototype.SearchUserByName = function(start, callback)
 						if(users[user]['lastUpdatedOn'] == null){
 							users[user]['lastUpdatedOn'] = '-'
 						}
+						var chkValue = "";
+						if(users[user]['isAdmin'] == 1){
+							chkValue = "checked = checked";
+						}
 						userObj += "<tr>"+
 						"<td class='tdUserId'>"+users[user]['id']+"</td>"+
 						"<td class='tdUserName'>"+users[user]['name']+"</td>"+
@@ -113,19 +134,27 @@ usertrackingController.prototype.SearchUserByName = function(start, callback)
 						"<td>"+
 							"<button class='btn btn-default btnViewUser'>View</button>"+
 						"</td>"+
+						"<td>"+
+							"<input type='checkbox' class='chkIsAdmin' "+chkValue+"/>"+
+						"</td>"+
 						"</tr>";
 					}
 					$('.existing-users').find('table').find('tbody').html(userObj);
 					this.BindEvents();
 				}
 			}
+			else{
+				$('.existing-users').html('<h3>'+response.result.message+' !!</h3>');
+			}
 			if(typeof callback == 'function')
 				callback(response.result.length);
+			removeLoader();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
 			if(typeof callback == 'function')
 				callback(0);
+			removeLoader();
 		}
 	});
 };
@@ -144,4 +173,19 @@ usertrackingController.prototype.HandleRecords = function(len){
 			}
 		}.bind(this));
 	}
+};
+usertrackingController.prototype.UserAdmin = function(e){
+	var id = $(e.currentTarget).parents('tr').find('.tdUserId').text();
+	$.ajax({
+		url: remoteServer+'/test2bsure/useradmin?id='+id,
+		type: 'PUT',
+		success: function(response){
+			if(response.result.status == true){
+				
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
 };

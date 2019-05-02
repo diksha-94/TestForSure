@@ -13,6 +13,7 @@ var quizController = function(){
 quizController.prototype.Init = function()
 {
 	console.log('Initiate Quiz');
+	showLoader();
 	this.LoadCategories();
 	this.LoadExams();
 	this.LoadQuestions();
@@ -99,6 +100,7 @@ quizController.prototype.LoadView = function()
 	$('.menu-page-content').load('quiz.html', function(){
 		this.LoadAllQuiz(0, function(length){
 			this.HandleRecords(length);
+			removeLoader();
 		}.bind(this));
 	}.bind(this));
 };
@@ -133,12 +135,16 @@ quizController.prototype.LoadAllQuiz = function(start, callback)
 					$('.existing-quizzes').find('table').find('tbody').html(quizObj);
 				}
 			}
+			else{
+				$('.existing-quizzes').html('<h3>'+response.result.message+' !!</h3>');
+			}
 			if(typeof callback == 'function')
 				callback(response.result.length);
 			this.BindEvents();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
+			$('.existing-quizzes').html("<h4>No Quizzes available !!</h4>");
 			if(typeof callback == 'function')
 				callback();
 		}
@@ -330,6 +336,7 @@ quizController.prototype.PopulateQuizData = function(e)
 };
 quizController.prototype.SearchQuizByName = function(start, callback)
 {
+	showLoader();
 	var search = $('#txtSearchQuiz').val();
 	$.ajax({
 		url: remoteServer+'/test2bsure/quiz?search='+search+'&count='+perPage+'&start='+start,
@@ -361,13 +368,18 @@ quizController.prototype.SearchQuizByName = function(start, callback)
 					this.BindEvents();
 				}
 			}
+			else{
+				$('.existing-quizzes').html('<h3>'+response.result.message+' !!</h3>');
+			}
 			if(typeof callback == 'function')
 				callback(response.result.length);
+			removeLoader();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
 			if(typeof callback == 'function')
 				callback(0);
+			removeLoader();
 		}
 	});
 };

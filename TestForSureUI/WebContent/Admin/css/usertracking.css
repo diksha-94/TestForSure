@@ -15,6 +15,9 @@
 .existing-users{
 	margin:50px 0px;
 }
+.existing-users h3{
+	text-align: center;
+}
 .existing-users table{
 	border:solid 1px #2E6DA2;
 	width:100%;

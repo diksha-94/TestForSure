@@ -6,6 +6,7 @@ var examController = function(){
 examController.prototype.Init = function()
 {
 	console.log('Initiate exam');
+	showLoader();
 	this.GetCategories(function(){
 		this.LoadView();
 	}.bind(this));
@@ -67,6 +68,7 @@ examController.prototype.LoadView = function()
 			this.HandleRecords(length);
 			this.BindEvents();
 			this.BindTableEvents();
+			removeLoader();
 		}.bind(this));
 	}.bind(this));
 };
@@ -227,6 +229,7 @@ examController.prototype.PopulateExamData = function(e)
 };
 examController.prototype.SearchExamByName = function(start, callback)
 {
+	showLoader();
 	var search = $('#txtSearchExam').val();
 	$.ajax({
 		url: remoteServer+'/test2bsure/exam?search='+search+'&count='+perPage+'&start='+start,
@@ -255,13 +258,18 @@ examController.prototype.SearchExamByName = function(start, callback)
 					this.BindTableEvents();
 				}
 			}
+			else{
+				$('.existing-exams').html('<h3>'+response.result.message+' !!</h3>');
+			}
 			if(typeof callback == 'function')
 				callback(response.result.length);
+			removeLoader();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
 			if(typeof callback == 'function')
 				callback(0);
+			removeLoader();
 		}
 	});
 };

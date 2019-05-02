@@ -23,6 +23,9 @@
 	margin:50px 0px;
 		
 }
+.existing-quizzes h3{
+	text-align: center;
+}
 .existing-quizzes table{
 	border:solid 1px #2E6DA2;
 	width:100%;

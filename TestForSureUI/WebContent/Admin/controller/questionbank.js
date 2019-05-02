@@ -7,6 +7,7 @@ var questionbankController = function(){
 questionbankController.prototype.Init = function()
 {
 	console.log('Initiate question bank');
+	showLoader();
 	this.GetQuestionCategories(function(){
 		this.LoadView();
 	}.bind(this));
@@ -61,6 +62,7 @@ questionbankController.prototype.LoadView = function()
 			this.HandleRecords(length);
 			this.BindEvents();
 			this.BindTableEvents();
+			removeLoader();
 		}.bind(this));
 	}.bind(this));
 };
@@ -88,6 +90,9 @@ questionbankController.prototype.LoadAllQuestions = function(start, callback)
 					}
 					$('.existing-questions').find('table').find('tbody').html(quesObj);
 				}
+			}
+			else{
+				$('.existing-exams').html('<h3>'+response.result.message+' !!</h3>');
 			}
 			if(typeof callback == 'function')
 				callback(response.result.length);

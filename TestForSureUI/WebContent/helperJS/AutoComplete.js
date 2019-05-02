@@ -6,16 +6,16 @@ var AutoComplete = function(){
 };
 AutoComplete.getObj = function(dom)
 {
-	if(_obj == null){
+	//if(_obj == null){
 		_obj = new AutoComplete();
-	}
+	//}
 	return _obj;
 };
-AutoComplete.prototype.PopulateList =function(dom)
+AutoComplete.prototype.PopulateList =function(dom, classVal)
 {
 	this.selectedItems = [];
-	if($(dom).find('span.selectedExam').length > 0){
-		$(dom).find('span.selectedExam').each(function(key, value){
+	if($(dom).find('span.'+classVal).length > 0){
+		$(dom).find('span.'+classVal).each(function(key, value){
 			this.selectedItems.push($(value).attr('data-id'));
 		}.bind(this));
 	}
@@ -29,23 +29,23 @@ AutoComplete.prototype.PopulateList =function(dom)
 	$('.autocomplete-div').remove();
 	
 	$(html).insertAfter(this.dom);
-	this.Select();
+	this.Select(classVal);
 	
 };
-AutoComplete.prototype.Select =function()
+AutoComplete.prototype.Select =function(classVal)
 {
 	$('.autocomplete-div').find('div').unbind().bind('click', function(e){
 		var html = "<span>"+
-						"<span class='selectedExam' data-id='"+$(e.currentTarget).find("span").attr("data-id")+"'>"+
+						"<span class='"+classVal+"' data-id='"+$(e.currentTarget).find("span").attr("data-id")+"'>"+
 						$(e.currentTarget).find("span").text()+"</span>"+
 						"<button>x</button>"+
 					"</span>";
 		(this.dom).append(html);
-		$(e.currentTarget).remove();
+		$(e.currentTarget).remove(classVal);
 		this.Remove();
 	}.bind(this));
 };
-AutoComplete.prototype.Remove =function()
+AutoComplete.prototype.Remove =function(classVal)
 {
 	$(this.dom).find('button').unbind().bind('click', function(e){
 		console.log("remove clicked");
@@ -55,6 +55,6 @@ AutoComplete.prototype.Remove =function()
      			   '</div>';
 		$('.autocomplete-div').append(html);
 		$(e.currentTarget).parents('span').remove();
-		this.Select();
+		this.Select(classVal);
 	}.bind(this));
 };

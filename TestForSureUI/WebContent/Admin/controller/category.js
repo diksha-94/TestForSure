@@ -4,6 +4,7 @@ var categoryController = function(){
 categoryController.prototype.Init = function()
 {
 	console.log('Initiate category');
+	showLoader();
 	this.LoadView();
 };
 categoryController.prototype.BindEvents = function()
@@ -50,6 +51,7 @@ categoryController.prototype.LoadView = function()
 	$('.menu-page-content').load('category.html', function(){
 		this.LoadAllCategories(0, function(length){
 			this.HandleRecords(length);
+			removeLoader();
 		}.bind(this));
 	}.bind(this));
 };
@@ -183,6 +185,7 @@ categoryController.prototype.PopulateCategoryData = function(e)
 categoryController.prototype.SearchCategoryByName = function(start, callback)
 {
 	var search = $('#txtSearchCategory').val();
+	showLoader();
 	$.ajax({
 		url: remoteServer+'/test2bsure/category?search='+search+'&count='+perPage+'&start='+start,
 		type: 'GET',
@@ -208,15 +211,20 @@ categoryController.prototype.SearchCategoryByName = function(start, callback)
 					this.BindEvents();
 				}
 			}
+			else{
+				$('.existing-categories').html('<h3>'+response.result.message+' !!</h3>');
+			}
 			if(typeof callback == 'function'){
 				callback(response.result.length);
 			}
+			removeLoader();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
 			if(typeof callback == 'function'){
 				callback(0);
 			}
+			removeLoader();
 		}
 	});
 };

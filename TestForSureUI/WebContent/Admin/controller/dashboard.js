@@ -68,7 +68,8 @@ dashboardController.prototype.Login = function(email, password)
 	var type = 'POST';
 	var requestData = {
 		"email": email,
-		"password": password
+		"password": password,
+		"isAdmin": 1
 	};
 	$.ajax({
 		url: url,

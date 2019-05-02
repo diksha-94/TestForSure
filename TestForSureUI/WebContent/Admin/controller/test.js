@@ -14,6 +14,7 @@ var testController = function(){
 };
 testController.prototype.Init = function()
 {
+	showLoader();
 	this.LoadCategories();
 	this.LoadExams();
 	this.LoadQuestions(0);
@@ -39,7 +40,16 @@ testController.prototype.BindEvents = function()
 		$('#testDetailsModal').find('#ddTestExam').unbind().bind('keyup', function(evt){
 			this.SearchExams($(evt.currentTarget).val(), function(){
 				obj.list = this.exams;
-				obj.PopulateList($('#testDetailsModal').find('#selectedExam'));
+				obj.PopulateList($('#testDetailsModal').find('#selectedExam'), 'selectedExam');
+			}.bind(this));
+		}.bind(this));
+		
+		var obj1 = AutoComplete.getObj();
+		obj1.dom = $('#testDetailsModal').find('#suggestedTest');
+		$('#testDetailsModal').find('#ddRelatedTests').unbind().bind('keyup', function(evt){
+			this.SearchExams($(evt.currentTarget).val(), function(){
+				obj1.list = this.exams;
+				obj1.PopulateList($('#testDetailsModal').find('#suggestedTest'), 'suggestedTest');
 			}.bind(this));
 		}.bind(this));
 		this.PopulateTestData(e);
@@ -106,6 +116,7 @@ testController.prototype.LoadView = function()
 	$('.menu-page-content').load('test.html', function(){
 		this.LoadAllTests(0, function(length){
 			this.HandleRecords(length);
+			removeLoader();
 		}.bind(this));
 	}.bind(this));
 };
@@ -140,6 +151,9 @@ testController.prototype.LoadAllTests = function(start, callback)
 					}
 					$('.existing-tests').find('table').find('tbody').html(testObj);
 				}
+			}
+			else{
+				$('.existing-tests').html('<h3>'+response.result.message+' !!</h3>');
 			}
 			if(typeof callback == 'function')
 				callback(response.result.length);
@@ -413,6 +427,7 @@ testController.prototype.PopulateTestData = function(e)
 };
 testController.prototype.SearchTestByName = function(start, callback)
 {
+	showLoader();
 	var search = $('#txtSearchTest').val();
 	$.ajax({
 		url: remoteServer+'/test2bsure/test?search='+search+'&count='+perPage+'&start='+start,
@@ -446,15 +461,20 @@ testController.prototype.SearchTestByName = function(start, callback)
 					this.BindEvents();
 				}
 			}
+			else{
+				$('.existing-tests').html('<h3>'+response.result.message+' !!</h3>');
+			}
 			if(typeof callback == 'function'){
 				callback(response.result.length);
 			}
+			removeLoader();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
 			if(typeof callback == 'function'){
 				callback(0);
 			}
+			removeLoader();
 		}
 	});
 };

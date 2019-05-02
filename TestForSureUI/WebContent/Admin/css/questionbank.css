@@ -19,6 +19,9 @@
 .existing-questions{
 	margin:50px 0px;
 }
+.existing-questions h3{
+	text-align: center;
+}
 .existing-questions table{
 	border:solid 1px #2E6DA2;
 	width:100%;

@@ -269,3 +269,12 @@ body{
 	display: none;
 }
 /* Pagination CSS ends */
+.loader{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: none;
+}
+.loader img{
+	width: 50px;
+}
