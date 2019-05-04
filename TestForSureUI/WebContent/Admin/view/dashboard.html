@@ -21,11 +21,6 @@
 		</div>
 	</div>
 	<div class='after-login'>
-		<div id='adminProfileBox' class='admin-profile-box'>
-			<button id='btnChangePass' class='btn btn-primary'>Change
-			Password</button>
-			<button id='btnLogout' class='btn btn-primary'>Logout</button>
-		</div>
 		<div class='admin-menu col-xs-3 col-sm-3 col-md-2 col-lg-2'></div>
 		<div class='dashboard-content col-xs-9 col-sm-9 col-md-10 col-lg-10'>
 			<ul class="nav nav-tabs menu-tabs">
@@ -38,7 +33,8 @@
 			<img src="../images/loader.gif" alt="loader">
 		</div>
 	</div>
-	<!-- Add/Update Question Modal -->
+	
+<!-- Add/Update Question Modal -->
 <div class="modal" id="questionModal">
 	<div class="modal-dialog test2bsure-dialog">
 		<div class="modal-content test2bsure-content">
@@ -166,6 +162,38 @@
 		</div>
 	</div>
 </div>
+
+<!-- Admin Change Password Modal -->
+<div class="modal" id="changePasswordModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title" style='display: inline;'>Change Password</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body" style='height: 150px;'>
+				<div>
+					<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Enter new Password
+					<b class='red'>*</b></span> <input type='password' id='passNew' 
+					class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+				</div>
+				<div style='margin-top: 55px;'>
+					<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Re-enter new Password
+					<b class='red'>*</b></span> <input type='password' id='passNewReenter' 
+					class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+				</div>
+				<div class='password-error' style='color: red; margin-top: 100px;'></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id='btnChangePassword'>Save</button>
+			</div>
+		</div>
+	</div>
+</div>
 	<link href='../css/header.css' rel='stylesheet' />
 	<link href='../css/dashboard.css' rel='stylesheet' />
 	<link href='../css/category.css' rel='stylesheet' />
@@ -179,7 +207,7 @@
 	<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 	<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
 	<script src="../../Summernote/summernote-defined.js"></script>
-	<link href="../../Summernote/katex.min.css" rel="stylesheet">
+	<link href="../../Summernote/katex.min.css" rel="stylesheet"/>
     <script src="../../Summernote/katex.min.js"></script>
 	<script src="../../Summernote/summernote-math.js"></script>
 	<script src="../../Summernote/summernote.js"></script>

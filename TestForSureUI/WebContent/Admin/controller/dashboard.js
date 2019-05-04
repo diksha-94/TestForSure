@@ -6,8 +6,6 @@ dashboardController.prototype.Init = function()
 {
 	$('.page-header').load('header.html', function(){
 		$('.admin-menu').load('menu.html', function(){
-			$('.page-header').find('.admin-profile').html('<p>Logged in as Admin</p>'+
-			'<img src="../../Images/admin_user.jpg" alt="Admin"/>');
 			this.BindEvents();
 			new menuController($('.admin-menu'));
 			this.userId = getCookie('test2bsure_admin');
@@ -27,19 +25,12 @@ dashboardController.prototype.Init = function()
 };
 dashboardController.prototype.BindEvents = function()
 {
-	/*$('body').bind('click', function(e){
-		if($('.admin-profile-box').attr('showProfile') == 'true' && e.currentTarget.id != 'adminProfileBox'){
-			$('.admin-profile-box').attr('showProfile', 'false');
-			$('.admin-profile-box').fadeOut();
-		}
-	});*/
-	$('.page-header').find('.admin-profile').unbind().bind('click', function(){
-		$('.admin-profile-box').show();
-		$('.admin-profile-box').attr('showProfile', 'true');
-		$('.admin-profile-box').find('#btnChangePass').unbind().bind('click', function(){
-			
-		});
-	});
+	$('.adminChangePassword').unbind().bind('click', function(){
+		$('#changePasswordModal').modal('show');
+		$('#changePasswordModal').find('#btnChangePassword').unbind().bind('click', function(){
+			this.ChangePassword();
+		}.bind(this));
+	}.bind(this));
 	$('#btnLogin').unbind().bind('click', function(){
 		$('.error-message').empty();
 		var email = $('#txtEmail').val();
@@ -98,4 +89,47 @@ dashboardController.prototype.Logout = function()
 	//remove the cookie
 	setCookie("test2bsure_admin", "", -1);
 	window.location.reload();
+}
+
+dashboardController.prototype.ChangePassword = function()
+{
+	var newPassword = $('#passNew').val();
+	var newReenterPassword = $('#passNewReenter').val();
+	if(newPassword.length == 0 || newReenterPassword.length == 0){
+		$('.password-error').html("Please enter all the fields.");
+		return;
+	}
+	if(newPassword.length < 6){
+		$('.password-error').html("Password should contain atleast 6 characters.");
+		return;
+	}
+	if(newPassword != newReenterPassword){
+		$('.password-error').html("Please re-enter the same password.");
+		return;
+	}
+	var url = remoteServer+'/test2bsure/changepassword'
+	var type = 'PUT';
+	var requestData = {
+		"emailId": this.userId,
+		"newPassword": newPassword,
+	};
+	$.ajax({
+		url: url,
+		type: type,
+		contentType: "application/json",
+		data: JSON.stringify(requestData),
+		success: function(response){
+			if(response.status == true){
+				alert("Password updated successfully");
+				$('#changePasswordModal').modal('hide');
+			}
+			else{
+				$('.password-error').html(response.message);
+			}
+			
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
 }
