@@ -130,48 +130,7 @@ headerController.prototype.Init = function()
 			$('#registerModal').find('#txtConfirmPassword').css('border-color', 'red');
 			return;
 		}
-		var url = remoteServer+'/test2bsure/register-user'
-		var type = 'POST';
-		var requestData = {
-			"userId": name+"-"+(Math.floor((Math.random() * 100000) + 1)),
-			"name": name,
-			"email": email,
-			"mobileNo": contact,
-			"password": password
-		};
-		$.ajax({
-			url: url,
-			type: type,
-			contentType: "application/json",
-			data: JSON.stringify(requestData),
-			success: function(response){
-				console.log(response);
-				if(response.result.status == true){
-					$('#registerModal').find('#errorOuterReg').removeClass("hide");
-					$('#registerModal').find('#errorMessageReg').removeClass('alert-danger');
-					$('#registerModal').find('#errorMessageReg').addClass('alert-success');
-					$('#registerModal').find('#errorMessageReg').html("An email verification link has been sent to your email id. Verify your email address and then log in");
-					
-					//Empty password and confirm password
-					$('#registerModal').find('#txtNameReg').val('');
-					$('#registerModal').find('#txtEmailReg').val('');
-					$('#registerModal').find('#txtContactReg').val('');
-					$('#registerModal').find('#txtPasswordReg').val('');
-					$('#registerModal').find('#txtConfirmPassword').val('');
-				}
-				else{
-					$('#registerModal').find('#errorOuterReg').removeClass('hide');
-					$('#registerModal').find('#errorMessageReg').empty();
-					$('#registerModal').find('#errorMessageReg').html(response.result.message);
-					$('#registerModal').find('#txtPasswordReg').val('');
-					$('#registerModal').find('#txtConfirmPassword').val('');
-				}
-				
-			},
-			error: function(e){
-				console.log(e);
-			}
-		});
+		test2bsureController.getObj().Register(name, email, contact, password);
 	});
 	
 	$('#loginModal').find('#btnDoLogin').unbind().bind('click', function(){
@@ -201,34 +160,7 @@ headerController.prototype.Init = function()
 			$('#loginModal').find('#txtPassword').css('border-color', 'red');
 			return;
 		}
-		
-		var url = remoteServer+'/test2bsure/authenticate-user'
-		var type = 'POST';
-		var requestData = {
-			"email": email,
-			"password": password
-		};
-		$.ajax({
-			url: url,
-			type: type,
-			contentType: "application/json",
-			data: JSON.stringify(requestData),
-			success: function(response){
-				console.log(response);
-				if(response.result.status == true){
-					window.location.reload();
-				}
-				else{
-					$('#loginModal').find('#errorOuter').removeClass('hide');
-					$('#loginModal').find('#errorMessage').empty();
-					$('#loginModal').find('#errorMessage').html(response.result.message);
-				}
-				
-			},
-			error: function(e){
-				console.log(e);
-			}
-		});
+		test2bsureController.getObj().Login(email, password);
 	});
 };
 headerController.prototype.LoadExams = function(){
