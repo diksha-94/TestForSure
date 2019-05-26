@@ -1,0 +1,105 @@
+<div class='menu-bar col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+	<div class='col-xs-7 col-sm-7 col-md-7 col-lg-7 searchbar'>
+		<span>Search: </span> <input type='text' placeholder='by Title'
+			id='txtSearchFilter' />
+		<button id='btnSearchFilter' class='btn btn-primary'>Search</button>
+	</div>
+	<div class='col-xs-5 col-sm-5 col-md-5 col-lg-5 addFilters'>
+		<button id='btnAddFilter' class='btn btn-primary addEditFilter'>
+			<span class='glyphicon glyphicon-plus'></span>&nbsp;Add Filter
+		</button>
+	</div>
+</div>
+<div class='counter col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+	<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4 itemCount'>
+		Total Filters - <span></span>
+	</div>
+	<div class='col-xs-5 col-sm-5 col-md-5 col-lg-5'>
+	</div>
+	<div class='col-xs-3 col-sm-3 col-md-3 col-lg-3 paginationDiv'>
+	</div>
+</div>
+<div class='existing-filters'>
+	<table>
+		<thead>
+			<tr class='table-header'>
+				<th class='col-md-1'>id</th>
+				<th class='col-md-2'>Title</th>
+				<th class='col-md-3'>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+</div>
+
+<!-- Add/Update Filter Modal -->
+<div class="modal" id="filterModal">
+	<div class="modal-dialog test2bsure-dialog">
+		<div class="modal-content test2bsure-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Add/Update Filter</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body test2bsure-body">
+				<div>
+					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+						id='txtFilterName' type='text'
+						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+				</div>
+			</div>
+			<div class="modal-footer test2bsure-footer">
+				<div>
+					<button id='btnFilterSave' type='button'
+						class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+	        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+					<button id='btnFilterCancel' type="button"
+						class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+	        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-danger"
+						data-dismiss="modal">Cancel</button>
+					<button id='btnFilterRefresh' type="button"
+					class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary">
+					Clear Data</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Delete Filter Modal -->
+<div class="modal deleteModal" id="deleteFilterModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Filter</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div>
+					<p>Are you sure to delete filter <span></span> Deleting this filter will remove it from all the items.</p>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div>
+					<button id='btnDeleteYes' type='button'
+						class='col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+	        	 col-lg-offset-4 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+					<button id='btnDeleteNo' type="button"
+						class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+	        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-danger"
+						data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

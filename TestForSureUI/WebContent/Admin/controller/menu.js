@@ -11,9 +11,10 @@ menuController.prototype.BindMenuEvents = function()
 	$(this.view).find('ul').find('li').unbind().bind('click', function(e){
 		var action = $(e.currentTarget).data('action');
 		var title = $(e.currentTarget).data('title');
+		var controller = $(e.currentTarget).data('controller');
 		$('.menu-tabs').find('li').removeClass('active');
 		if($('.menu-tabs').find('li').find('a[href="#'+action+'"]').length == 0){
-			var tab = '<li class="active"><a data-toggle="pill" href="#'+action+'">'+title+'</li>';
+			var tab = '<li class="active"><a data-toggle="pill" href="#'+action+'" data-controller="' +controller + '">'+title+'</li>';
 			$('.menu-tabs').append(tab);
 		}
 		
@@ -28,13 +29,18 @@ menuController.prototype.HandleEvents = function(e)
 {
 	var href = $(e.currentTarget).attr('href');
 	var data_action = href.substring(1);
+	var data_controller = $(e.currentTarget).attr('data-controller');
 	$(this.view).find('ul').find('li').removeClass('active');
 	$(this.view).find('ul').find('li[data-action="'+data_action+'"]').addClass('active');
 	
 	$('.menu-tabs').find('li').removeClass('active');
 	$(e.currentTarget).parents('li').addClass('active');
-	
-	switch(data_action){
+	LoadCSS(data_controller);
+	LoadJS(data_controller, function(){
+		var controller = data_controller + "Controller";
+		eval("new " + controller + "()");
+	});
+	/*switch(data_action){
 		case 'menu_category':
 			new categoryController();
 			break;
@@ -58,6 +64,10 @@ menuController.prototype.HandleEvents = function(e)
 			$('.menu-page-content').html('User Tracking');
 			new usertrackingController();
 			break;
-	}
+		case 'menu_filter':
+			$('.menu-page-content').html('Filter');
+			new filterController();
+			break;
+	}*/
 	console.log($(e.currentTarget).attr('href'));
 };

@@ -1,6 +1,7 @@
 var quizController = function(){
 	this.categories = {};
 	this.exams = {};
+	this.filters = {};
 	this.questions = {};
 	this.questionCategory = {};
 	this.questionSubcategory = {};
@@ -34,12 +35,24 @@ quizController.prototype.BindEvents = function()
 		this.quizId = 0;
 		$('#quizModal').modal('show');
 		RefreshData('quizModal');
+		
+		//Selected Exam
 		var obj = AutoComplete.getObj();
 		obj.dom = $('#quizModal').find('#selectedExam');
 		$('#quizModal').find('#ddQuizExam').unbind().bind('keyup', function(evt){
 			this.SearchExams($(evt.currentTarget).val(), function(){
 				obj.list = this.exams;
 				obj.PopulateList($('#quizModal').find('#selectedExam'));
+			}.bind(this));
+		}.bind(this));
+		
+		//Selected Filter
+		var obj = AutoComplete.getObj();
+		obj.dom = $('#quizModal').find('#selectedFilter');
+		$('#quizModal').find('#ddQuizFilter').unbind().bind('keyup', function(evt){
+			this.SearchFilter($(evt.currentTarget).val(), function(){
+				obj.list = this.exams;
+				obj.PopulateList($('#quizModal').find('#selectedFilter'));
 			}.bind(this));
 		}.bind(this));
 		
@@ -415,6 +428,31 @@ quizController.prototype.SearchExams = function(value, callback)
 					var exams = response.data;
 					for(var exam in exams){
 						this.exams[exams[exam]["id"]] = exams[exam];
+					}
+				}
+			}
+			if(typeof callback != 'undefined')
+				callback();
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			if(typeof callback != 'undefined')
+				callback();
+		}
+	});
+};
+quizController.prototype.SearchFilter = function(value, callback)
+{
+	$.ajax({
+		url: remoteServer+'/test2bsure/filter?search='+value,
+		type: 'GET',
+		success: function(response){
+			this.exams = {};
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					var filters = response.data;
+					for(var filter in filters){
+						this.filters[filters[filter]["id"]] = filters[filter];
 					}
 				}
 			}

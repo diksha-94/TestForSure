@@ -1,0 +1,66 @@
+.menu-bar .addFilters #btnAddFilter{
+	height: 25px;
+	width: 180px;
+}
+.menu-bar .addFilters{
+	text-align:right;
+}
+.menu-bar .searchbar #btnSearch{
+	height:25px;
+	width:100px;
+	margin-left:20px;
+}
+.menu-bar .searchbar #btnSearchFilter{
+	height:25px;
+	width:100px;
+	margin-left:20px;
+}
+.menu-bar .searchbar input{
+	height: 25px;
+    border: solid 1px #2E6DA2;
+    border-radius: 5px;
+    width:180px;
+}
+.menu-bar button{
+	padding:0px;
+}
+.existing-filters{
+	margin:50px 0px;
+		
+}
+.existing-filters h3{
+	text-align: center;
+}
+.existing-filters table{
+	border:solid 1px #2E6DA2;
+	width:100%;
+	table-layout: fixed;
+}
+.existing-filters table tr th,td{
+	text-align: center;
+	padding: 5px 2px;
+}
+.existing-filters table tr th, .existing-filters table tr td img{
+	width: 80px;
+}
+.existing-filters table tr{
+	border-bottom:solid 1px #2E6DA2;
+}
+.existing-filters table tr th,td{
+	border-right:solid 1px #2E6DA2;
+}
+.existing-filters table tr th,td button{
+	margin: 0 10px;
+}
+#filterModal .modal-dialog .modal-content .modal-header{
+	padding:20px;
+	text-align: center;
+}
+#filterModal .modal-dialog .modal-content .modal-header h4{
+	display:inline;
+}
+#filterModal .modal-dialog .modal-content .modal-body{
+	height: auto;
+	margin-top:20px;
+	padding:0px;
+}

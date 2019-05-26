@@ -60,13 +60,16 @@ quizController.prototype.PopulateQuestion = function(solution)
 	var question = this.questionsData[this.currentQues];
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
 					"<div class='question-desc'>"+
-						"<span class='question-number'>"+(this.currentQues+1)+"</span>";
+						"<div class='question-number'>Question No. "+(this.currentQues+1)+"</div>";
 	if(question.paragraph == "true"){
 		html += "<span class='para-text'>"+question.paragraphText+"</span>";
 	}
 	html += "<span class='question-text'>"+question.questionText+"</span>"+
 			"</div>"+
-			"<div class='options'>";
+			"</div>";
+	$('.quiz-content').find('.quiz-questions').find('.quiz-question').html(html);
+	var optionHtml = "";
+	optionHtml += "<div class='options'><div class='question-number'>Select Option</div>";
 	var correct = question.correctOption != null ? (JSON.parse(question.correctOption)).indexOf(true) : -1;
 	var marked = question.markedOption != null ? (JSON.parse(question.markedOption)).indexOf(true) : -1;
 	var redOption = -1;
@@ -91,15 +94,15 @@ quizController.prototype.PopulateQuestion = function(solution)
 		if(typeof solution != 'undefined' && solution == true){
 			addClass += ' no-hover block-events';
 		}
-		html += "<div class='"+addClass+"' data-option='"+key+"'>"+
+		optionHtml += "<div class='"+addClass+"' data-option='"+key+"'>"+
 					"<span class='option-count'>"+optionValues[key]+"</span>"+
 					"<span class='option-value'>"+$(value).html()+"</span>"+
 					"<span class='answer-status'></span>"+
 				"</div>";
 	});
-	html += "</div>";
-	html += "<div class='solution' style='display:none;'>"+
+	optionHtml += "<div class='solution' style='display:none;'>"+
 			"</div>";
+	$('.quiz-content').find('.quiz-questions').find('.quiz-options').html(optionHtml);
 	$('.quiz').find('.quiz-questions').find('.questions').html(html);
 	if(question.solution != null && question.solution.length > 0){
 		var html = "<h5>Solution:</h5>"+
@@ -107,7 +110,7 @@ quizController.prototype.PopulateQuestion = function(solution)
 		$('.quiz-questions').find('.questions').find('.question').find('.solution').show();
 		$('.quiz-questions').find('.questions').find('.question').find('.solution').html(html);
 	}
-	$('.quiz').find('.quiz-questions').find('.questions').find('.option').unbind().bind('click', function(e){
+	$('.quiz-main').find('.quiz-questions').find('.quiz-options').find('.option').unbind().bind('click', function(e){
 		this.CheckAnswer(e.currentTarget);	
 	}.bind(this));				
 };
@@ -148,8 +151,8 @@ quizController.prototype.CheckAnswer = function(node)
 	}
 	//Check answer
 	var sessionId = this.sessionId;
-	var quesId = $(node).parents('.question').attr('question-id');
-	var quesIndex = parseInt($(node).parents('.question').attr('question-index')) + 1;
+	var quesId = $('.quiz-main').find('.quiz-question').find('.question').attr('question-id');
+	var quesIndex = parseInt($('.quiz-main').find('.quiz-question').find('.question').attr('question-index')) + 1;
 	var submit = 0;
 	if(this.currentQues == this.quizInfo.noOfQues-1){
 		submit = 1;
@@ -192,8 +195,7 @@ quizController.prototype.ManageControls = function(){
 	else{
 		html += "<button type='button' class='btnNext button button-primary'>Next</button>"
 	}
-	$('.quiz-footer').show();
-	$('.quiz-footer').html(html);
+	$('.quiz-main').find('.quiz-status').find('.attempt-controls').html(html);
 	
 	$('.btnNext').unbind().bind('click', function(){
 		this.currentQues += 1;
