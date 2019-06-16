@@ -386,7 +386,7 @@ questionbankController.prototype.PopulateQuestionData = function(e)
 	var solution = "";
 	if($(e.currentTarget).hasClass('update')){
 		var currentQues = $(e.currentTarget).parents('tr').find('.tdQuestionId').text();
-		quesCategory = this.questions[currentQues]["questioncategory"];
+		quesCategory = this.questions[currentQues]["questionCategory"];
 		quesSubcategory = this.questions[currentQues]["questionSubcategory"];
 		quesType = this.questions[currentQues]["questionType"];
 		paraBased = this.questions[currentQues]["paragraph"];
