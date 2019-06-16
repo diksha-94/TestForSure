@@ -126,7 +126,6 @@ body{
 /* Common CSS for input */
 .modal-body.test2bsure-body input, .modal-body.test2bsure-body select{
 	border: solid 1px #d3d3d3;
-	border-radius: 5px;
 	height: 25px;
 	padding: 5px;
 	margin-bottom: 20px;
@@ -189,17 +188,46 @@ body{
 }
 /* Autocomplete CSS starts */
 .autocomplete-div{
-	border:solid 1px #e4e4e4;
-	border-radius: 5px;
-	padding:5px;
-	height:150px;
-	overflow:auto;
+	border: solid 1px #e4e4e4;
+	padding: 5px;
+	height: 150px;
+	overflow: auto;
+	margin-top: -22px;
 }
 .autocomplete-div div{
 	cursor: pointer;
 }
 .autocomplete-div div:hover{
 	background-color: #e4e4e4;
+}
+.outerSpan {
+    background-color: blue;
+	padding: 0px 5px;
+	margin-left: 10px;
+	display: block;
+	height: 22px;
+	margin-bottom: 10px;
+	color: white;
+	border: solid 1px blue;
+	border-radius: 10px;
+	max-width: 120px;
+	width: auto;
+	float: left;
+}
+.outerSpan span:first-child{
+	width: 100px;
+	display: inline-block;
+	overflow: hidden;
+	word-wrap: break-word;
+	white-space: pre;
+	text-overflow: ellipsis;
+}
+.outerSpan span:last-child{
+	float: right;
+}
+.autocomplete-selected{
+	position: absolute;
+	right: 0px;
 }
 /* Autocomplete CSS ends */
 .lockDetails{

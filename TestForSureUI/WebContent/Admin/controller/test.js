@@ -35,23 +35,24 @@ testController.prototype.BindEvents = function()
 		$('#testDetailsModal').modal('show');
 		summernoteController.getObj().addEditor('#txtTestInstructions');
 		RefreshData('testDetailsModal');
-		var obj = AutoComplete.getObj();
+		/*var obj = AutoComplete.getObj();
 		obj.dom = $('#testDetailsModal').find('#selectedExam');
 		$('#testDetailsModal').find('#ddTestExam').unbind().bind('keyup', function(evt){
 			this.SearchExams($(evt.currentTarget).val(), function(){
 				obj.list = this.exams;
 				obj.PopulateList($('#testDetailsModal').find('#selectedExam'), 'selectedExam');
 			}.bind(this));
-		}.bind(this));
-		
-		var obj1 = AutoComplete.getObj();
+		}.bind(this));*/
+		//new AutoComplete('id of input', what to search);
+		new AutoComplete('#ddTestExam', 'exams');
+		/*var obj1 = AutoComplete.getObj();
 		obj1.dom = $('#testDetailsModal').find('#suggestedTest');
 		$('#testDetailsModal').find('#ddRelatedTests').unbind().bind('keyup', function(evt){
 			this.SearchExams($(evt.currentTarget).val(), function(){
 				obj1.list = this.exams;
 				obj1.PopulateList($('#testDetailsModal').find('#suggestedTest'), 'suggestedTest');
 			}.bind(this));
-		}.bind(this));
+		}.bind(this));*/
 		this.PopulateTestData(e);
 		var id = 0;
 		var update = $(e.currentTarget).hasClass('update');
