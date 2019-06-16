@@ -1,6 +1,5 @@
 var QuestionType = {
-     'MCQ': 0,
-     'One Word Answer': 1
+     'MCQ': 0
 };
 var ItemType = {
 	'TEST': 0,
