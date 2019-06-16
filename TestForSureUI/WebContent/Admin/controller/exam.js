@@ -13,6 +13,10 @@ examController.prototype.Init = function()
 };
 examController.prototype.BindEvents = function()
 {
+	//Show image preview
+	$('#txtExamImageUrl').unbind().bind('keyup', function(){
+		$('#imgExamImagePreview').attr('src', $('#txtExamImageUrl').val());
+	});
 	if(this.categories.length > 0){
 		var catObj = "";
 		for(var category in this.categories){
@@ -225,6 +229,7 @@ examController.prototype.PopulateExamData = function(e)
 	$('#examModal').find('#txtExamImageUrl').val(imageUrl);
 	$('#examModal').find('#ddCategory').val(categoryId);
 	summernoteController.getObj().setValue('#txtExamDescription', desc);
+	$('#examModal').find('#imgExamImagePreview').attr('src', imageUrl);
 	//$('#examModal').find('#txtExamDescription').val(desc);
 };
 examController.prototype.SearchExamByName = function(start, callback)

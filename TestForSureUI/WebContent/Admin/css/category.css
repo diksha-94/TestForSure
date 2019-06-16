@@ -64,3 +64,6 @@
 	margin-top:20px;
 	padding:0px;
 }
+#categoryModal #imgCategoryImagePreview{
+	width: 80px;
+}

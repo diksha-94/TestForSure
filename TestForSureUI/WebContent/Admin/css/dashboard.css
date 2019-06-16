@@ -124,11 +124,14 @@ body{
 /* Modal CSS ends */
 
 /* Common CSS for input */
-.modal-body.test2bsure-body input, .modal-body.test2bsure-body select {
+.modal-body.test2bsure-body input, .modal-body.test2bsure-body select{
 	border: solid 1px #d3d3d3;
 	border-radius: 5px;
 	height: 25px;
 	padding: 5px;
+	margin-bottom: 20px;
+}
+.modal-body.test2bsure-body img {
 	margin-bottom: 20px;
 }
 .modal-body.test2bsure-body select {
@@ -277,4 +280,7 @@ body{
 }
 .loader img{
 	width: 50px;
+}
+.imagePreviewDiv{
+	padding: 0px;
 }

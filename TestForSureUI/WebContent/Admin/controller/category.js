@@ -9,6 +9,10 @@ categoryController.prototype.Init = function()
 };
 categoryController.prototype.BindEvents = function()
 {
+	//Show image preview
+	$('#txtCategoryImageUrl').unbind().bind('keyup', function(){
+		$('#imgCategoryImagePreview').attr('src', $('#txtCategoryImageUrl').val());
+	});
 	//Search category by name/title - button
 	$('#btnSearchCategory').unbind().bind('click', function(){
 		this.SearchCategoryByName(0, function(length){
@@ -181,6 +185,7 @@ categoryController.prototype.PopulateCategoryData = function(e)
 	$('#categoryModal').find('#txtCategoryName').val(name);
 	$('#categoryModal').find('#txtCategoryTitle').val(title);
 	$('#categoryModal').find('#txtCategoryImageUrl').val(imageUrl);
+	$('#categoryModal').find('#imgCategoryImagePreview').attr('src', imageUrl);
 };
 categoryController.prototype.SearchCategoryByName = function(start, callback)
 {
