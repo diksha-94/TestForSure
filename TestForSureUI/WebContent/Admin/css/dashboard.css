@@ -229,6 +229,12 @@ body{
 	position: absolute;
 	right: 0px;
 }
+.autocomplete-div .no-results{
+	color: red;
+}
+.autocomplete-selecteddiv .btnRemove{
+	cursor: pointer;
+}
 /* Autocomplete CSS ends */
 .lockDetails{
 	display: none;

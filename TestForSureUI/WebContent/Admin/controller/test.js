@@ -35,24 +35,6 @@ testController.prototype.BindEvents = function()
 		$('#testDetailsModal').modal('show');
 		summernoteController.getObj().addEditor('#txtTestInstructions');
 		RefreshData('testDetailsModal');
-		/*var obj = AutoComplete.getObj();
-		obj.dom = $('#testDetailsModal').find('#selectedExam');
-		$('#testDetailsModal').find('#ddTestExam').unbind().bind('keyup', function(evt){
-			this.SearchExams($(evt.currentTarget).val(), function(){
-				obj.list = this.exams;
-				obj.PopulateList($('#testDetailsModal').find('#selectedExam'), 'selectedExam');
-			}.bind(this));
-		}.bind(this));*/
-		//new AutoComplete('id of input', what to search);
-		new AutoComplete('#ddTestExam', 'exams');
-		/*var obj1 = AutoComplete.getObj();
-		obj1.dom = $('#testDetailsModal').find('#suggestedTest');
-		$('#testDetailsModal').find('#ddRelatedTests').unbind().bind('keyup', function(evt){
-			this.SearchExams($(evt.currentTarget).val(), function(){
-				obj1.list = this.exams;
-				obj1.PopulateList($('#testDetailsModal').find('#suggestedTest'), 'suggestedTest');
-			}.bind(this));
-		}.bind(this));*/
 		this.PopulateTestData(e);
 		var id = 0;
 		var update = $(e.currentTarget).hasClass('update');
@@ -180,7 +162,7 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 	var marks = $('#txtTestMarks').val();
 	var allowedAttempts = $('#txtTestAttempts').val();
 	var publish = $('#chkTestPublish').prop('checked') == true ? 1 : 0;
-	var exams = [];
+	var exams = GetSelectedValues('ddTestExam');
 	var lock = ($('#chkTestLock').prop('checked') == true) ? 1 : 0;
 	var lockPoints = (typeof $('#txtTestLockPoints').val() != 'undefined') ? $('#txtTestLockPoints').val() : 0;
 	var lockRupees = (typeof $('#txtTestLockRupees').val() != 'undefined') ? $('#txtTestLockRupees').val() : 0;
@@ -188,11 +170,8 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 	var passPercent = $('#txtPassPer').val();
 	var shuffleQues = $('#chkShuffleQues').prop('checked') == true ? 1 : 0;
 	var shuffleOptions = $('#chkShuffleOptions').prop('checked') == true ? 1 : 0;
+	var suggestedTests = GetSelectedValues('ddRelatedTests');
 	
-	$('#testDetailsModal').find('#selectedExam').find('span.selectedExam').each(function(e){
-		console.log(this);
-		exams.push($(this).attr("data-id"));
-	});
 	if(name.length == 0 || title.length == 0 || questions.lenght == 0 || time.length == 0 || marks.length == 0 ||
 			allowedAttempts.length == 0 || negativeMarks.length == 0 || passPercent.length == 0){
 		alert('Please enter all the mandatory fields');
@@ -245,10 +224,9 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 			'negativeMarks' : negativeMarks,
 			'passPercent' : passPercent,
 			'shuffleQues' : shuffleQues,
-			'shuffleOptions' : shuffleOptions
-	
+			'shuffleOptions' : shuffleOptions,
+			'suggestedTests' : suggestedTests
 		};
-	console.log(requestData);
 	if(update){
 		requestData.id = id;
 		type = 'PUT';
@@ -356,23 +334,17 @@ testController.prototype.PopulateTestData = function(e)
 		lock = test["lockApply"];
 		sectionDetails = test["sectionDetails"];
 		if(test["exams"] != null && test["exams"].length > 0){
-			var html = "";
+			var data = [];
 			for(var exam in test["exams"]){
-				console.log(exam);
-				console.log(test["exams"][exam]);
-				html += "<span>"+
-							"<span class='selectedExam' data-id='"+test["exams"][exam]+"'>"+
-							this.allExams[test["exams"][exam]].title+"</span>"+
-							"<button>x</button>"+
-						"</span>";
+				var obj = {};
+				obj.id = test["exams"][exam];
+				obj.title = this.allExams[test["exams"][exam]].title;
+				data.push(obj);
 			}
-			$('#selectedExam').html(html);
-			$("#selectedExam").find('button').unbind().bind('click', function(e){
-				$(e.currentTarget).parent('span').remove();
-			});
+			new AutoComplete('ddTestExam', 'exams').SetSelectedValues('ddTestExam', data);
 		}
 		else{
-			$('#selectedExam').html('');
+			new AutoComplete('ddTestExam', 'exams');
 		}
 		
 		if((sectionDetails != null && sectionDetails != "null") && JSON.parse(sectionDetails).length > 0){
@@ -384,6 +356,23 @@ testController.prototype.PopulateTestData = function(e)
 				$('#testDetailsModal').find('.section').find('.txtSectionTime-'+(i+1)).val(section.time);
 			}
 		}
+		if(test["suggestedTests"] != null && test["suggestedTests"].length > 0){
+			var data = [];
+			for(var t in test["suggestedTests"]){
+				var obj = {};
+				obj.id = test["suggestedTests"][t];
+				obj.title = "TODO title";//this.allExams[test["suggestedTests"][t]].title;
+				data.push(obj);
+			}
+			new AutoComplete('ddRelatedTests', 'tests').SetSelectedValues('ddRelatedTests', data);
+		}
+		else{
+			new AutoComplete('ddRelatedTests', 'tests');
+		}
+	}
+	else{
+		new AutoComplete('ddTestExam', 'exams');
+		new AutoComplete('ddRelatedTests', 'tests');
 	}
 	$('#testDetailsModal').find('#txtTestName').val(name);
 	$('#testDetailsModal').find('#txtTestTitle').val(title);
