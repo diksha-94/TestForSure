@@ -171,6 +171,7 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 	var shuffleQues = $('#chkShuffleQues').prop('checked') == true ? 1 : 0;
 	var shuffleOptions = $('#chkShuffleOptions').prop('checked') == true ? 1 : 0;
 	var suggestedTests = GetSelectedValues('ddRelatedTests');
+	var instructions = summernoteController.getObj().getValue('#txtTestInstructions');
 	
 	if(name.length == 0 || title.length == 0 || questions.lenght == 0 || time.length == 0 || marks.length == 0 ||
 			allowedAttempts.length == 0 || negativeMarks.length == 0 || passPercent.length == 0){
@@ -225,7 +226,8 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 			'passPercent' : passPercent,
 			'shuffleQues' : shuffleQues,
 			'shuffleOptions' : shuffleOptions,
-			'suggestedTests' : suggestedTests
+			'suggestedTests' : suggestedTests,
+			'instructions' : instructions
 		};
 	if(update){
 		requestData.id = id;
@@ -317,6 +319,7 @@ testController.prototype.PopulateTestData = function(e)
 	var shuffleQues = 0;
 	var shuffleOptions = 0;
 	var sectionDetails = {};
+	var instructions = "";
 	if($(e.currentTarget).hasClass('update')){
 		var currentId = $(e.currentTarget).parents('tr').find('.tdTestId').text();
 		var test = this.tests[currentId];
@@ -352,7 +355,8 @@ testController.prototype.PopulateTestData = function(e)
 				var section = JSON.parse(sectionDetails)[i];
 				$('#testDetailsModal').find('#btnAddSection').click();
 				$('#testDetailsModal').find('.section').find('.txtSectionName-'+(i+1)).val(section.name);
-				$('#testDetailsModal').find('.section').find('.txtSectionQues-'+(i+1)).val(section.questions);
+				$
+				('#testDetailsModal').find('.section').find('.txtSectionQues-'+(i+1)).val(section.questions);
 				$('#testDetailsModal').find('.section').find('.txtSectionTime-'+(i+1)).val(section.time);
 			}
 		}
@@ -369,6 +373,8 @@ testController.prototype.PopulateTestData = function(e)
 		else{
 			new AutoComplete('ddRelatedTests', 'tests');
 		}
+		
+		instructions = test["instructions"];
 	}
 	else{
 		new AutoComplete('ddTestExam', 'exams');
@@ -414,6 +420,7 @@ testController.prototype.PopulateTestData = function(e)
 		shuffleOptionsStatus = true;
 	}
 	$('#testDetailsModal').find('#chkShuffleOptions').prop('checked', shuffleOptionsStatus);
+	summernoteController.getObj().setValue('#txtTestInstructions', instructions);
 };
 testController.prototype.SearchTestByName = function(start, callback)
 {
