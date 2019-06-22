@@ -26,6 +26,9 @@ menuController.prototype.BindMenuEvents = function()
 	}.bind(this));
 	//Click Dashboard on page load
 	$(this.view).find('ul').find('li#menuDashboard').click();
+	$('.brand-logo').find('img').unbind().bind('click', function(){
+		$(this.view).find('ul').find('li#menuDashboard').click();
+	}.bind(this));
 };
 menuController.prototype.HandleEvents = function(e)
 {

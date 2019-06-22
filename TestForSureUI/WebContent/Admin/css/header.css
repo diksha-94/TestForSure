@@ -14,6 +14,7 @@
 .page-header .brand-logo img{
 	height: 50px;
     width: 210px;
+    cursor: pointer;
 }
 .page-header .admin-profile{
 	position: absolute;
