@@ -36,26 +36,6 @@ quizController.prototype.BindEvents = function()
 		$('#quizModal').modal('show');
 		RefreshData('quizModal');
 		
-		//Selected Exam
-		var obj = AutoComplete.getObj();
-		obj.dom = $('#quizModal').find('#selectedExam');
-		$('#quizModal').find('#ddQuizExam').unbind().bind('keyup', function(evt){
-			this.SearchExams($(evt.currentTarget).val(), function(){
-				obj.list = this.exams;
-				obj.PopulateList($('#quizModal').find('#selectedExam'));
-			}.bind(this));
-		}.bind(this));
-		
-		//Selected Filter
-		var obj = AutoComplete.getObj();
-		obj.dom = $('#quizModal').find('#selectedFilter');
-		$('#quizModal').find('#ddQuizFilter').unbind().bind('keyup', function(evt){
-			this.SearchFilter($(evt.currentTarget).val(), function(){
-				obj.list = this.exams;
-				obj.PopulateList($('#quizModal').find('#selectedFilter'));
-			}.bind(this));
-		}.bind(this));
-		
 		this.PopulateQuizData(e);
 		var id = 0;
 		var update = $(e.currentTarget).hasClass('update');
@@ -179,11 +159,8 @@ quizController.prototype.SaveQuizDetails = function(update, id, navigate)
 	var lock = ($('#chkQuizLock').prop('checked') == true) ? 1 : 0;
 	var lockPoints = (typeof $('#txtQuizLockPoints').val() != 'undefined') ? $('#txtQuizLockPoints').val() : 0;
 	var lockRupees = (typeof $('#txtQuizLockRupees').val() != 'undefined') ? $('#txtQuizLockRupees').val() : 0;
-	
-	$('#quizModal').find('#selectedExam').find('span.selectedExam').each(function(e){
-		console.log(this);
-		exams.push($(this).attr("data-id"));
-	});
+	var exams = GetSelectedValues('ddQuizExam');
+	var filters = GetSelectedValues('ddQuizFilter');
 	
 	if(name.length == 0 || title.length == 0 || questions.length == 0 || marks.length == 0 ||
 			attempts.length == 0){
@@ -203,7 +180,8 @@ quizController.prototype.SaveQuizDetails = function(update, id, navigate)
 		'publish': publish,
 		'lockApply': lock,
 		'lockPoints': lockPoints,
-		'lockRupees': lockRupees
+		'lockRupees': lockRupees,
+		'filters': filters
 	};
 	console.log(requestData);
 	if(update){
@@ -291,6 +269,7 @@ quizController.prototype.PopulateQuizData = function(e)
 	var exams = "";
 	var publish = 0;
 	var lock = 0;
+	var filters = "";
 	if($(e.currentTarget).hasClass('update')){
 		var currentId = $(e.currentTarget).parents('tr').find('.tdQuizId').text();
 		var quiz = this.quiz[currentId];
@@ -302,23 +281,30 @@ quizController.prototype.PopulateQuizData = function(e)
 		publish = quiz["publish"];
 		lock = quiz["lockApply"];
 		if(quiz["exams"] != null && quiz["exams"].length > 0){
-			var html = "";
+			var data = [];
 			for(var exam in quiz["exams"]){
-				console.log(exam);
-				console.log(quiz["exams"][exam]);
-				html += "<span>"+
-							"<span class='selectedExam' data-id='"+quiz["exams"][exam]+"'>"+
-							this.allExams[quiz["exams"][exam]].title+"</span>"+
-							"<button>x</button>"+
-						"</span>";
+				var obj = {};
+				obj.id = quiz["exams"][exam];
+				obj.title = this.allExams[quiz["exams"][exam]].title;
+				data.push(obj);
 			}
-			$('#selectedExam').html(html);
-			$("#selectedExam").find('button').unbind().bind('click', function(e){
-				$(e.currentTarget).parent('span').remove();
-			});
+			new AutoComplete('ddQuizExam', 'exams').SetSelectedValues('ddQuizExam', data);
 		}
 		else{
-			$('#selectedExam').html('');
+			new AutoComplete('ddQuizExam', 'exams');
+		}
+		if(quiz["filters"] != null && quiz["filters"].length > 0){
+			var data = [];
+			for(var filter in quiz["filters"]){
+				var obj = {};
+				obj.id = quiz["filters"][filter];
+				obj.title = "TODO title";//this.allExams[quiz["filters"][exam]].title;
+				data.push(obj);
+			}
+			new AutoComplete('ddQuizFilter', 'filters').SetSelectedValues('ddQuizFilter', data);
+		}
+		else{
+			new AutoComplete('ddQuizFilter', 'filters');
 		}
 	}
 	$('#quizModal').find('#txtQuizName').val(name);
@@ -428,31 +414,6 @@ quizController.prototype.SearchExams = function(value, callback)
 					var exams = response.data;
 					for(var exam in exams){
 						this.exams[exams[exam]["id"]] = exams[exam];
-					}
-				}
-			}
-			if(typeof callback != 'undefined')
-				callback();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback != 'undefined')
-				callback();
-		}
-	});
-};
-quizController.prototype.SearchFilter = function(value, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/filter?search='+value,
-		type: 'GET',
-		success: function(response){
-			this.exams = {};
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var filters = response.data;
-					for(var filter in filters){
-						this.filters[filters[filter]["id"]] = filters[filter];
 					}
 				}
 			}

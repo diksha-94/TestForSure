@@ -34,6 +34,9 @@ AutoComplete.prototype.Search = function()
 		case 'tests':
 			url = remoteServer+'/test2bsure/test?search='+search;
 			break;
+		case 'filters':
+			url = remoteServer+'/test2bsure/filter?search='+search;
+			break;
 	}
 	this.SearchData(search, url, function(){
 		if(Object.keys(this.result).length > 0){

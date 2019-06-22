@@ -24,6 +24,8 @@ menuController.prototype.BindMenuEvents = function()
 		}.bind(this));
 		$('.menu-tabs').find('li').find('a[href="#'+action+'"]').click();
 	}.bind(this));
+	//Click Dashboard on page load
+	$(this.view).find('ul').find('li#menuDashboard').click();
 };
 menuController.prototype.HandleEvents = function(e)
 {
