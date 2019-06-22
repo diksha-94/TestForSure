@@ -160,8 +160,14 @@ quizController.prototype.SaveQuizDetails = function(update, id, navigate)
 	var lockPoints = (typeof $('#txtQuizLockPoints').val() != 'undefined') ? $('#txtQuizLockPoints').val() : 0;
 	var lockRupees = (typeof $('#txtQuizLockRupees').val() != 'undefined') ? $('#txtQuizLockRupees').val() : 0;
 	var exams = GetSelectedValues('ddQuizExam');
-	var filters = GetSelectedValues('ddQuizFilter');
-	
+	var filter = GetSelectedValues('ddQuizFilter');
+	var filters = [];
+	for(var f in filter){
+		var obj = {};
+		obj.id = filter[f];
+		obj.title = "";
+		filters.push(obj);
+	}
 	if(name.length == 0 || title.length == 0 || questions.length == 0 || marks.length == 0 ||
 			attempts.length == 0){
 		alert('Please enter all the mandatory fields');
@@ -297,8 +303,8 @@ quizController.prototype.PopulateQuizData = function(e)
 			var data = [];
 			for(var filter in quiz["filters"]){
 				var obj = {};
-				obj.id = quiz["filters"][filter];
-				obj.title = "TODO title";//this.allExams[quiz["filters"][exam]].title;
+				obj.id = quiz["filters"][filter]["id"];
+				obj.title = quiz["filters"][filter]["title"];//this.allExams[quiz["filters"][exam]].title;
 				data.push(obj);
 			}
 			new AutoComplete('ddQuizFilter', 'filters').SetSelectedValues('ddQuizFilter', data);

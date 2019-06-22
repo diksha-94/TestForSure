@@ -170,7 +170,15 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 	var passPercent = $('#txtPassPer').val();
 	var shuffleQues = $('#chkShuffleQues').prop('checked') == true ? 1 : 0;
 	var shuffleOptions = $('#chkShuffleOptions').prop('checked') == true ? 1 : 0;
-	var suggestedTests = GetSelectedValues('ddRelatedTests');
+	var suggestedTest = GetSelectedValues('ddRelatedTests');
+	var suggestedTests = [];
+	for(var t in suggestedTest){
+		var obj = {};
+		obj.id = suggestedTest[t];
+		obj.title = "";
+		suggestedTests.push(obj);
+	}
+	
 	var instructions = summernoteController.getObj().getValue('#txtTestInstructions');
 	
 	if(name.length == 0 || title.length == 0 || questions.lenght == 0 || time.length == 0 || marks.length == 0 ||
@@ -364,8 +372,8 @@ testController.prototype.PopulateTestData = function(e)
 			var data = [];
 			for(var t in test["suggestedTests"]){
 				var obj = {};
-				obj.id = test["suggestedTests"][t];
-				obj.title = "TODO title";//this.allExams[test["suggestedTests"][t]].title;
+				obj.id = test["suggestedTests"][t]["id"];
+				obj.title = test["suggestedTests"][t]["title"];//this.allExams[test["suggestedTests"][t]].title;
 				data.push(obj);
 			}
 			new AutoComplete('ddRelatedTests', 'tests').SetSelectedValues('ddRelatedTests', data);
