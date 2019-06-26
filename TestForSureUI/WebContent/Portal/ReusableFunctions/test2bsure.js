@@ -44,15 +44,14 @@ test2bsureController.prototype.ValidateEmail = function(email){
 };
 test2bsureController.prototype.QuizCard = function(quiz)
 {
-	var html = "<img src='../images/quiz-icon.png' alt='Quiz'/>"+
-				"<h4>"+quiz.title+"</h4>"+
-				"<div class='quiz-detail'>"+
-					"<span>"+quiz.noOfQues+" Ques / "+(quiz.noOfQues * quiz.marksPerQues)+" Marks</span>"+
-				"</div>"+
-				"<div class='attempts quiz-detail'>"+
-					"<span>Attempted "+(quiz.candidateCount)+" times</span>"+
-				"</div>"+
-				"<div class='controls'>";
+	console.log(quiz);
+	var html = "<div class='quiz-title' title='"+quiz.title+"'>"+quiz.title+"</div>"+
+			   "<div class='quiz-border'></div>"+
+			   "<div class='quiz-image'><img src='../images/quiz-icon.png' alt='Quiz'/></div>"+
+			   "<div class='quiz-ques'>No. of Questions: "+quiz.noOfQues+"</div>"+
+			   "<div class='quiz-marks'>Total Marks: "+(quiz.noOfQues * quiz.marksPerQues)+"</div>"+
+			   "<div class='quiz-attempts'>Attempted "+(quiz.candidateCount)+" times</div>"+
+			   "<div class='controls'>";
 	if(quiz.attemptInfo != null){
 		if(quiz.attemptInfo.state == 2){
 			//Quiz already attempted & finished

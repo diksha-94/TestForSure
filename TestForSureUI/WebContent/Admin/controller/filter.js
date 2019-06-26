@@ -68,7 +68,7 @@ filterController.prototype.LoadAllFilters = function(start, callback)
 					for(var filter in filters){
 						obj += "<tr>"+
 						"<td class='tdFilterId'>"+filters[filter]['id']+"</td>"+
-						"<td class='tdFilterName'>"+filters[filter]['name']+"</td>"+
+						"<td class='tdFilterName'>"+filters[filter]['title']+"</td>"+
 						"<td>"+
 							"<button class='btn btn-default addEditFilter update'>Edit</button>"+
 							"<button class='btn btn-default deleteFilter'>Delete</button>"+
@@ -105,7 +105,7 @@ filterController.prototype.SaveFilter = function(update, id)
 	var url = remoteServer+'/test2bsure/filter';
 	var type = 'POST';
 	var requestData = {
-		'name': name
+		'title': name
 	};
 	console.log(requestData);
 	if(update){
@@ -180,7 +180,7 @@ filterController.prototype.SearchFilterByName = function(start, callback)
 					for(var filter in filters){
 						obj += "<tr>"+
 						"<td class='tdFilterId'>"+filters[filter]['id']+"</td>"+
-						"<td class='tdFilterName'>"+filters[filter]['name']+"</td>"+
+						"<td class='tdFilterName'>"+filters[filter]['title']+"</td>"+
 						"<td>"+
 							"<button class='btn btn-default addEditFilter update'>Edit</button>"+
 							"<button class='btn btn-default deleteFilter'>Delete</button>"+
