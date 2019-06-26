@@ -5,3 +5,4 @@ build
 classes
 node_modules
 .metadata
+/TestForSureUI/TestForSure.war
