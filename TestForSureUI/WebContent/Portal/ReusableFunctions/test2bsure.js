@@ -116,24 +116,26 @@ test2bsureController.prototype.TestCard = function(test)
 };
 test2bsureController.prototype.ExamCard = function(exam, testCount, quizCount)
 {
-	var html = "<img src='"+exam.imageUrl+"' alt='"+exam.title+"'>"+
-				"<h5>"+exam.title+"</h5>"+
-				"<p>"+exam.description+"</p>"+
-				"<div class='exam-data'>";
+	var html = "<div class='top-div'></div>"+
+			   "<img src='"+exam.imageUrl+"' alt='"+exam.title+"'>"+
+			   "<div class='bottom-div'>"+
+			   "<h5>"+exam.title+"</h5>"+
+			   "<div class='exam-data'>";
 	for(var test in testCount){
 		if(testCount[test].examId == exam.id && testCount[test].testCount > 0){
-			html += "<span class='test-count'>"+ testCount[test].testCount+" tests</span>";
+			html += "<div class='test-count item-count'>Number of Tests<span>"+ testCount[test].testCount+"</span></div>";
 			break;
 		}
 	}
 	for(var quiz in quizCount){
 		if(quizCount[quiz].examId == exam.id && quizCount[quiz].quizCount > 0){
-			html += "<span class='quiz-count'>"+ quizCount[quiz].quizCount+" quizzes</span>";
+			html += "<div class='test-count item-count'>Number of Quizzes<span>"+ quizCount[quiz].quizCount+"</span></div>";
 			break;
 		}
 	}
 	html += "</div>";
 	html += "<div class='exam-explore'><button class='button button-primary btnExplore'>Explore Exam</button></div>";
+	html += "</div>";
 	return html;
 };
 test2bsureController.prototype.Draw3DPieChart = function(valueObject, total, dom, title){

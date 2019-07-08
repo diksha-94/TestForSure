@@ -59,7 +59,8 @@ homeController.prototype.PopulateAllExams = function(id)
 	var html = "";
 	for(var category in this.category){
 		if((typeof id == 'undefined') || (typeof id != 'undefined' && this.category[category].id == id)){
-			html += "<div category-id='"+this.category[category].id+"'>"+
+			html += "<div class='outer-category'>"+
+						"<div category-id='"+this.category[category].id+"'>"+
 						"<h4>"+this.category[category].title+"</h4>"+
 						"<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 			for(var exam in this.exam){
@@ -70,6 +71,7 @@ homeController.prototype.PopulateAllExams = function(id)
 				}
 			}
 			html += "</li>"+
+					"</div>"+
 					"</div>";
 		}
 	}

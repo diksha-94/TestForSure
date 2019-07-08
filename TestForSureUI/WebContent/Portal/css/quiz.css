@@ -64,8 +64,6 @@
 }
 
 .quiz-listing .right ul li img {
-	width: 55px;
-	height: 55px;
 	margin-top: 10px;
 }
 
@@ -84,7 +82,7 @@
 	margin-bottom: 10px;
 }
 
-}
+
 .test-listing .right ul {
 	list-style-type: none;
 }

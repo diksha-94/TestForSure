@@ -1,34 +1,85 @@
 .quiz-listing ul {
 	list-style-type: none;
 }
+
 .quiz-listing h4 {
 	margin-left: 10px;
 }
+
 .quiz-listing ul li {
 	border: solid 1px #E4E4E4;
-	margin: 0px 75px 15px 0px;
-	min-height: 200px;
+	margin: 0px 17px 17px 0px;
+	min-height: 235px;
 	height: auto;
 	text-align: center;
+	padding: 0px;
+	width: 215px;
 }
+
+.quiz-listing ul li .quiz-title {
+	border-bottom: solid 1px #e4e4e4;
+	padding: 5px 2px;
+	font-size: 15px;
+	font-weight: bold;
+	overflow: hidden;
+	height: 32px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	background-color: #e4e4e4;
+}
+
+.quiz-listing ul li .quiz-border {
+	height: 10px;
+	width: 10px;
+	background-color: #e4e4e4;
+	margin-left: 50%;
+	transform: translate(-50%, -54%) rotate(45deg);
+}
+
+.quiz-listing ul li .quiz-image {
+	margin-bottom: 12px;
+}
+
+.quiz-listing ul li .quiz-ques, .quiz-listing ul li .quiz-marks
+	{
+	margin-bottom: 5px;
+	border-bottom: solid 1px #e4e4e4;
+	width: 70%;
+	margin-left: 15%;
+	padding-bottom: 5px;
+}
+
+.quiz-listing ul li .quiz-marks {
+	width: 54%;
+	margin-left: 23%;
+}
+
+.quiz-listing ul li .quiz-attempts {
+	margin-bottom: 5px;
+}
+
 .quiz-listing ul li:hover {
 	box-shadow: 0px 0px 10px #E4E4E4;
 	transition: 0.2s ease-out;
 }
+
 .quiz-listing ul li img {
-	width: 55px;
-	height: 55px;
 	margin-top: 10px;
 }
+
 .quiz-listing ul li h4 {
 	font-weight: bold;
 	word-wrap: break-word;
 }
-.quiz-listing ul li .attempts{
+
+.quiz-listing ul li .attempts {
 	font-weight: bold;
 }
+
 .quiz-listing ul li .controls {
-	padding: 20px 0px;
+	width: 80%;
+	margin-left: 10%;
+	margin-bottom: 10px;
 }
 .test-listing ul {
 	list-style-type: none;
