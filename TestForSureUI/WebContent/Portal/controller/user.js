@@ -75,7 +75,7 @@ userController.prototype.Login = function(email, password)
 			if(response.result.status == true){
 				//window.location.reload();
 				test2bsureController.getObj().SetCookie('test2bsure_userLoginId', response.cookieValue, 100);
-				this.selfAuth();
+				this.SelfAuth(true);
 			}
 			else{
 				$('#loginModal').find('#errorOuter').removeClass('hide');
@@ -88,8 +88,9 @@ userController.prototype.Login = function(email, password)
 		}
 	});
 };
-userController.prototype.SelfAuth = function()
+userController.prototype.SelfAuth = function(reload)
 {
+	var reload = typeof reload != 'undefined' ? reload : false;
 	var value = test2bsureController.getObj().getCookie('test2bsure_userLoginId');
 	if(value.length > 0){
 		//Cookie is set for the user, send a request to server for self auth for the user 
@@ -104,16 +105,20 @@ userController.prototype.SelfAuth = function()
 			type: type,
 			contentType: "application/json",
 			data: JSON.stringify(requestData),
+			context: this,
 			success: function(response){
 				this.userData = response.userDetails;
-				console.log(response);
 				if(response.result.status == true){
-					//window.location.reload();
-				}
-				else{
-					//$('#loginModal').find('#errorOuter').removeClass('hide');
-					//$('#loginModal').find('#errorMessage').empty();
-					//$('#loginModal').find('#errorMessage').html(response.result.message);
+					if(reload){
+						window.location.reload();
+					}
+					$('#menuLogin').removeClass('show').addClass('hide');
+					$('#userProfile').removeClass('hide').addClass('show');
+					$('#loggedInUSer').text(userController.getObj().userData.name)
+				}else{
+					$('#loginModal').find('#errorOuter').removeClass('hide');
+					$('#loginModal').find('#errorMessage').empty();
+					$('#loginModal').find('#errorMessage').html(response.result.message);
 				}
 				
 			},
@@ -126,6 +131,29 @@ userController.prototype.SelfAuth = function()
 userController.prototype.ChangePassword = function()
 {
 };
-userController.prototype.ForgetPassword = function()
+userController.prototype.ForgetPassword = function(email)
 {
+	var url = remoteServer+'/test2bsure/forgot-password?emailId='+email;
+	var type = 'POST';
+	$.ajax({
+		url: url,
+		type: type,
+		contentType: "application/json",
+		context: this,
+		success: function(response){
+			if(response.status == true){
+				$('#forgotPassModal').find('#successOuter').removeClass('hide').addClass('show');
+				$('#forgotPassModal').find('#successMessage').empty();
+				$('#forgotPassModal').find('#successMessage').html("A Forget Password e-mail has been sent to your registered email id.");
+			}
+			else{
+				$('#forgotPassModal').find('#errorOuterForgot').removeClass('hide').addClass('show');
+				$('#forgotPassModal').find('#errorMessageForgot').empty();
+				$('#forgotPassModal').find('#errorMessageForgot').html(response.message);
+			}
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
 };

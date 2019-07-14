@@ -36,7 +36,7 @@ function loginModal(){
 						'<div class="modal-footer">'+
 							'<div>'+
 								'Forgot password? <a href="#" id="linkForgot">Click here</a></br>'+
-								'Didn\'t receive verification link? <a href="#" id="linkVerification">Click here</a>'+
+								//'Didn\'t receive verification link? <a href="#" id="linkVerification">Click here</a>'+
 							'</div>'+
 						'</div>'+
 					'</div>'+

@@ -12,6 +12,7 @@ homeController.prototype.Init = function()
 	this.LoadCategoriesExams();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".home-footer");
+	userController.getObj().SelfAuth();
 };
 homeController.prototype.LoadCategoriesExams = function()
 {
