@@ -36,7 +36,8 @@ examController.prototype.PopulateExamDetails = function()
 	var html = '';
 	html += '<h4>'+this.exam.title+'</h4>';
 	html += this.exam.description;
-	$('.exam-details').html(html);
+	$('.exam-details').find('.exam-info').html(html);
+	$('.exam-info-detail').html(html);
 };
 examController.prototype.PopulateTests = function()
 {

@@ -27,7 +27,7 @@
 .common-footer{
 	padding: 0px;
 	height: 250px;
-	top: 120px;
+	/*top: 120px;*/
 }
 @media only screen and (max-width: 767px) {
 	.common-footer{
@@ -44,8 +44,9 @@
 }
 .common-content{
 	top: 70px;
-	position: relative;
+	position: absolute;
 	padding: 0px;
+	height: 300px;
 }
 .highcharts-credits {
     display: none;

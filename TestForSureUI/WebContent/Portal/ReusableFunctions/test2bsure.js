@@ -14,7 +14,7 @@ test2bsureController.getObj = function()
 test2bsureController.prototype.GetHeader = function(dom){
 	//should make it custom , as per the need on different pages
 	$(dom).load('header.html', function(){
-		
+		//new headerController();
 	}.bind(this));
 	//$(dom).html("<div> TEST2BSURE Header </div>");
 }
