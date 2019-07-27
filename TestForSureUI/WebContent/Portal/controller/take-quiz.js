@@ -25,8 +25,14 @@ quizController.prototype.SetState = function(obj)
 	for(var key in obj){
 		this[key] = obj[key];
 	}
+	this.QuizInfo();
 	this.ManageQuizState();
 };
+quizController.prototype.QuizInfo = function()
+{
+	$('.quiz-info-value').find('.quiz-title-value').html(this.quizInfo.title);
+};
+
 quizController.prototype.ManageQuizState = function()
 {
 	if(typeof this.quizInfo.attemptInfo != 'undefined' && this.quizInfo.attemptInfo != null){
@@ -95,15 +101,17 @@ quizController.prototype.PopulateQuestion = function(solution)
 			addClass += ' no-hover block-events';
 		}
 		optionHtml += "<div class='"+addClass+"' data-option='"+key+"'>"+
-					"<span class='option-count'>"+optionValues[key]+"</span>"+
-					"<span class='option-value'>"+$(value).html()+"</span>"+
-					"<span class='answer-status'></span>"+
+					"<span class='option-count'>"+optionValues[key]+".</span>"+
+					"<div class='option-value'>"+$(value).html()+"</div>"+
+					"<span class='answer-status'><img src=''/></span>"+
 				"</div>";
 	});
 	optionHtml += "<div class='solution' style='display:none;'>"+
 			"</div>";
 	$('.quiz-content').find('.quiz-questions').find('.quiz-options').html(optionHtml);
-	$('.quiz').find('.quiz-questions').find('.questions').html(html);
+	$('.quiz-main').find('.quiz-questions').find('.questions').html(html);
+	$('.quiz-main .quiz-questions .quiz-options .options .option.correct').find('.answer-status').find('img').attr('src', '../images/correct.png');
+	$('.quiz-main .quiz-questions .quiz-options .options .option.incorrect').find('.answer-status').find('img').attr('src', '../images/wrong.png');
 	if(question.solution != null && question.solution.length > 0){
 		var html = "<h5>Solution:</h5>"+
 				   "<div>"+question.solution+"</div>";
@@ -116,8 +124,8 @@ quizController.prototype.PopulateQuestion = function(solution)
 };
 quizController.prototype.PopulateQuestionStatus = function()
 {
-	var html = "<h4>Question Status</h4>"+
-			   "<div class='question-status'>";
+	var html = "<h4>Question Status</h4>";
+	html += "<div class='status'>";
 	for(var question in this.questionsData){
 		var status = 'notvisited';
 		if(this.questionsData[question].correctOption != null){
@@ -133,8 +141,8 @@ quizController.prototype.PopulateQuestionStatus = function()
 		}
 		html += "<span class='"+status+"' qindex='"+(question)+"' qId='"+(this.questionsData[question]).id+"'>"+(parseInt(question)+1)+"</span>";
 	}
-	html += "</div>";
-	$('.quiz').find('.quiz-status').html(html);
+	html += '</div>';
+	$('.quiz-main').find('.quiz-status').find('.question-status').html(html);
 };
 quizController.prototype.CheckAnswer = function(node)
 {
@@ -179,11 +187,14 @@ quizController.prototype.CheckAnswer = function(node)
 			$(node).find('span.option-count').addClass('incorrect');
 			$('.question-status').find('span[qid='+quesId+']').removeClass('notvisited').addClass('incorrect');
 			var correctIndex = correctAnswer.indexOf(true);
-			$('.question[question-id='+quesId+']').find('.option[data-option='+correctIndex+']').addClass('correct');
-			$('.question[question-id='+quesId+']').find('.option[data-option='+correctIndex+']').find('span.option-count').addClass('correct');
+			$('.quiz-options').find('.option[data-option='+correctIndex+']').addClass('correct');
+			$('.quiz-options').find('.option[data-option='+correctIndex+']').find('span.option-count').addClass('correct');
 		}
 		$(node).parents('.options').find('.option').addClass('block-events');
 		$(node).parents('.options').find('.option').addClass('no-hover');
+		$('.quiz-main .quiz-questions .quiz-options .options .option.correct').find('.answer-status').find('img').attr('src', '../images/correct.png');
+		$('.quiz-main .quiz-questions .quiz-options .options .option.incorrect').find('.answer-status').find('img').attr('src', '../images/wrong.png');
+		
 		obj.ManageControls();
 	});
 };
@@ -198,6 +209,7 @@ quizController.prototype.ManageControls = function(){
 	$('.quiz-main').find('.quiz-status').find('.attempt-controls').html(html);
 	
 	$('.btnNext').unbind().bind('click', function(){
+		$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').hide();
 		this.currentQues += 1;
 		this.PopulateQuestion();
 	}.bind(this));
@@ -209,8 +221,8 @@ quizController.prototype.ManageControls = function(){
 quizController.prototype.DisplayReport = function()
 {
 	$('.quiz-footer').hide();
-	$('.quiz').find('.quiz-questions').hide();
-	$('.quiz').find('.quiz-report').show();
+	$('.quiz-content').find('.quiz-main').hide();
+	$('.quiz-content').find('.quiz-report').show();
 	//find the correct question count
 	var correctCount = 0;
 	for(var question in this.questionsData){
@@ -226,10 +238,12 @@ quizController.prototype.DisplayReport = function()
 	html += "<div>Incorrect: <span>"+(this.quizInfo.noOfQues - correctCount)+" / "+this.quizInfo.noOfQues+"</span></div>";
 	html += "<div>Accuracy: <span>"+(correctCount/this.quizInfo.noOfQues)*100+"%</span></div></div>";
 	html += "<div class='quiz-report-btn'><button type='button' class='button button-primary btnReviewQuiz'>Review Quiz</button></div>";
-	$('.quiz').find('.quiz-report').html(html);
-	$('.quiz').find('.quiz-report').find('.btnReviewQuiz').unbind().bind('click', function(e){
-		$('.quiz').find('.quiz-questions').show();
-		var pos = $('.quiz').find('.quiz-questions').offset().top;
+	$('.quiz-content').find('.quiz-report').html(html);
+	$('.quiz-content').find('.quiz-report').find('.btnReviewQuiz').unbind().bind('click', function(e){
+		$(e.currentTarget).hide();
+		//$('.quiz-content').find('.quiz-report').hide();
+		$('.quiz-content').find('.quiz-main').show();
+		var pos = $('.quiz-content').find('.quiz-main').offset().top;
 		$('body').animate({scrollTop:pos});
 		this.PopulateQuestion(true);
 		this.HandleReviewControls();
@@ -241,54 +255,58 @@ quizController.prototype.HandleReviewControls = function()
 	var html = "<button type='button' class='btnPrev button button-primary'>Previous</button>"+
 			"<button type='button' class='btnNext button button-primary'>Next</button>"+
 			"<button type='button' class='btnFinish button button-primary'>Finish</button>";
-	$('.quiz-footer').show();
-	$('.quiz-footer').html(html);
-	$('.quiz-footer').find('.btnPrev').hide();
-	$('.quiz-footer').find('.btnFinish').hide();
-	$('.quiz-footer').find('.btnPrev').unbind().bind('click', function(){
+	$('.quiz-main').find('.quiz-status').find('.attempt-controls').html(html);
+	$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').hide();
+	if(this.quizInfo.noOfQues == 1){
+		$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').hide();
+	}
+	else{
+		$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').hide();
+	}
+	$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').unbind().bind('click', function(){
 		this.currentQues -= 1;
 		this.PopulateQuestion(true);
 		this.HandleReviewControls();
 		if(this.currentQues == 0){
-			$('.quiz-footer').find('.btnPrev').hide();
-			$('.quiz-footer').find('.btnNext').show();
-			$('.quiz-footer').find('.btnFinish').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').hide();
 		}
 		else if(this.currentQues == this.quizInfo.noOfQues - 1){
-			$('.quiz-footer').find('.btnPrev').show();
-			$('.quiz-footer').find('.btnNext').hide();
-			$('.quiz').find('.btnFinish').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').show();
 		}
 		else{
-			$('.quiz-footer').find('.btnPrev').show();
-			$('.quiz-footer').find('.btnNext').show();
-			$('.quiz-footer').find('.btnFinish').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').hide();
 		}
 	}.bind(this));
-	$('.quiz-footer').find('.btnNext').unbind().bind('click', function(){
+	$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').unbind().bind('click', function(){
 		this.currentQues += 1;
 		this.PopulateQuestion(true);
 		this.HandleReviewControls();
 		if(this.currentQues == 0){
-			$('.quiz-footer').find('.btnPrev').hide();
-			$('.quiz-footer').find('.btnNext').show();
-			$('.quiz-footer').find('.btnFinish').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').hide();
 		}
 		else if(this.currentQues == this.quizInfo.noOfQues - 1){
-			$('.quiz-footer').find('.btnPrev').show();
-			$('.quiz-footer').find('.btnNext').hide();
-			$('.quiz-footer').find('.btnFinish').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').show();
 		}
 		else{
-			$('.quiz-footer').find('.btnPrev').show();
-			$('.quiz-footer').find('.btnNext').show();
-			$('.quiz-footer').find('.btnFinish').hide();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnPrev').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnNext').show();
+			$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').hide();
 		}
 	}.bind(this));
-	$('.quiz-footer').find('.btnFinish').unbind().bind('click', function(){
+	$('.quiz-main').find('.quiz-status').find('.attempt-controls').find('.btnFinish').unbind().bind('click', function(){
 		this.currentQues = 0;
-		$('.quiz').find('.quiz-questions').hide();
-		$('.quiz').find('.quiz-report').show();
-		$('.quiz-footer').hide();
+		$('.quiz-content').find('.quiz-main').hide();
+		$('.quiz-content').find('.quiz-report').show();
+		$('.btnReviewQuiz').show();
 	}.bind(this));
 };
