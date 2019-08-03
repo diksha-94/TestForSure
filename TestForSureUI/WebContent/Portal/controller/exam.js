@@ -18,7 +18,11 @@ examController.prototype.Init = function()
 examController.prototype.LoadData = function()
 {
 	var id = this.id;
-	fetch(remoteServer+'/test2bsure/exampage?id='+id)
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	fetch(remoteServer+'/test2bsure/exampage?id='+id+'&userId='+userId)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ exam: data.exam, tests: data.tests, quizzes: data.quizzes }));
 }
@@ -57,6 +61,15 @@ examController.prototype.PopulateTests = function()
 	}
 	$('.test-listing').append(html);
 	$('.test-listing').find('.btnStartTest').unbind().bind('click', function(e){
+		var userId = -1;
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+			userId = userController.getObj().userData.id;
+		}
+		if(userId == -1){
+			//User not logged in
+			$('#btnLogin').click();
+			return false;
+		}
 		var testId = $(e.currentTarget).parents('li[test-id]').attr('test-id');
 		window.location.href = 'take-test.html?id='+testId;
 	});
@@ -78,6 +91,15 @@ examController.prototype.PopulateQuizzes = function(exam)
 	}
 	$('.quiz-listing').append(html);
 	$('.quiz-listing').find('.btnQuizAction').unbind().bind('click', function(e){
+		var userId = -1;
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+			userId = userController.getObj().userData.id;
+		}
+		if(userId == -1){
+			//User not logged in
+			$('#btnLogin').click();
+			return false;
+		}
 		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
 		window.location.href = 'take-quiz.html?id='+quizId;
 	});

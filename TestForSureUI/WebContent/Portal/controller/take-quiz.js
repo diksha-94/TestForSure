@@ -16,7 +16,11 @@ quizController.prototype.Init = function()
 quizController.prototype.LoadData = function()
 {
 	var id = this.id;
-	fetch(remoteServer+'/test2bsure/quizdata?quizId='+id)
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	fetch(remoteServer+'/test2bsure/quizdata?quizId='+id+'&userId='+userId)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ quizInfo: data.quizInfo, questionsData: data.questionsData, sessionId: data.sessionId }));
 }
@@ -234,11 +238,23 @@ quizController.prototype.DisplayReport = function()
 			}
 		}
 	}
-	var html = "<div class='quiz-report-data'><div>Correct: <span>"+correctCount+" / "+this.quizInfo.noOfQues+"</span></div>";
-	html += "<div>Incorrect: <span>"+(this.quizInfo.noOfQues - correctCount)+" / "+this.quizInfo.noOfQues+"</span></div>";
-	html += "<div>Accuracy: <span>"+(correctCount/this.quizInfo.noOfQues)*100+"%</span></div></div>";
+	//var html = "<div class='quiz-report-data'><div>Correct: <span>"+correctCount+" / "+this.quizInfo.noOfQues+"</span></div>";
+	//html += "<div>Incorrect: <span>"+(this.quizInfo.noOfQues - correctCount)+" / "+this.quizInfo.noOfQues+"</span></div>";
+	//html += "<div>Accuracy: <span>"+(correctCount/this.quizInfo.noOfQues)*100+"%</span></div></div>";
+	
+	var html = "";
+	html += '<div class="description-block correct"><span class="report-text">CORRECT</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="correct-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label">'+correctCount+'/'+this.quizInfo.noOfQues+'</span></div>';
+	html += '<div class="description-block incorrect"><span class="report-text">INCORRECT</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="incorrect-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label">'+(this.quizInfo.noOfQues - correctCount)+'/'+this.quizInfo.noOfQues+'</span></div>';
+	html += '<div class="description-block accuracy"><span class="report-text">ACCURACY</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="accuracy-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label">'+(correctCount/this.quizInfo.noOfQues)*100+'%</span></div>';
+	
+	
 	html += "<div class='quiz-report-btn'><button type='button' class='button button-primary btnReviewQuiz'>Review Quiz</button></div>";
 	$('.quiz-content').find('.quiz-report').html(html);
+	var correctPer = (correctCount*100)/this.quizInfo.noOfQues;
+	var incorrectPer = ((this.quizInfo.noOfQues - correctCount)*100)/this.quizInfo.noOfQues;
+	$('.correct-per').attr('stroke-dasharray', ''+correctPer+', 100');
+	$('.incorrect-per').attr('stroke-dasharray', ''+incorrectPer+', 100');
+	$('.accuracy-per').attr('stroke-dasharray', ''+correctPer+', 100');
 	$('.quiz-content').find('.quiz-report').find('.btnReviewQuiz').unbind().bind('click', function(e){
 		$(e.currentTarget).hide();
 		//$('.quiz-content').find('.quiz-report').hide();

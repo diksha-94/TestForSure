@@ -15,7 +15,11 @@ quizController.prototype.Init = function()
 };
 quizController.prototype.LoadData = function(filterValues)
 {
-	var url = remoteServer+'/test2bsure/quizzes';
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	var url = remoteServer+'/test2bsure/quizzes?userId='+userId;
 	if(typeof filterValues != 'undefined' && filterValues.length > 0){
 		url += '?filters='+filterValues;
 	}
@@ -54,6 +58,15 @@ quizController.prototype.PopulateQuizzes = function()
 	}
 	$('.quiz-listing .right').html(html);
 	$('.quiz-listing .right').find('.btnQuizAction').unbind().bind('click', function(e){
+		var userId = -1;
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+			userId = userController.getObj().userData.id;
+		}
+		if(userId == -1){
+			//User not logged in
+			$('#btnLogin').click();
+			return false;
+		}
 		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
 		window.location.href = 'take-quiz.html?id='+quizId;
 	});

@@ -18,7 +18,11 @@ testController.prototype.Init = function()
 testController.prototype.LoadData = function()
 {
 	var id = this.id;
-	fetch(remoteServer+'/test2bsure/testdata?testId='+id)
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	fetch(remoteServer+'/test2bsure/testdata?testId='+id+'&userId='+userId)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ testInfo: data.testInfo, questionsData: data.questionsData, sessionId: data.sessionId }));
 }
@@ -548,7 +552,11 @@ testController.prototype.SubmitTest = function()
 testController.prototype.SaveReportData = function()
 {
 	var session = this.sessionId;
-	fetch(remoteServer+'/test2bsure/submittest?sessionId='+session)
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	fetch(remoteServer+'/test2bsure/submittest?sessionId='+session+'&userId='+userId)
 	  .then(response => response.json())
 	  .then(data => this.HandleTestSubmit());
 };

@@ -347,3 +347,19 @@
 		text-align: center;
 	}
 }
+.description-block {
+    height: 100px;
+    width: 100px;
+    margin: auto;
+    font-weight: bold;
+}
+.svgholder{
+    position: absolute;
+    height: inherit;
+    width: inherit;
+}
+.svgholder svg {
+    position: absolute;
+    height: inherit;
+    left: 0;
+}
