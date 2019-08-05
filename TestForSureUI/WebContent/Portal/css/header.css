@@ -26,6 +26,7 @@
 	font-weight: normal;
 	font-size: 1em;
 	text-decoration: none;
+	color: white;
 }
 .header ul.test2bsure-menu li.menu-item:hover {
 	background-color: #2E6DA4;

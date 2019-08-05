@@ -13,17 +13,94 @@ test2bsureController.getObj = function()
 };
 test2bsureController.prototype.GetHeader = function(dom){
 	//should make it custom , as per the need on different pages
-	$(dom).load('header.html', function(){
-		//new headerController();
-	}.bind(this));
-	//$(dom).html("<div> TEST2BSURE Header </div>");
+	var html = '<div class="header container-fluid">'+		
+					'<div class="brand-logo col-xs-8 col-sm-8 col-md-3 col-lg-3">'+
+						'<a class="brand" href="home.html"><img src="../../Images/Test2bSure_Logo.jpg" alt="TEST-2B-SURE"></a>'+
+					'</div>'+
+					'<div class="menu-items col-md-7 col-lg-7">'+
+						'<ul class="test2bsure-menu">'+
+							'<li class="menu-item active"><a href="home.html" class="link"><span class="test-color glyphicon glyphicon-home"></span>&nbsp;Home</a></li>'+
+							'<li class="menu-item exam-menu-li"><a class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Exams&nbsp;<span class="glyphicon glyphicon-chevron-down"></span>'+
+								'</a>'+
+								'<div class="exam-menu-div">'+
+									'<div class="col-md-4 col-lg-4 exam-tabs">'+
+										'<ul class="exam-menu nav nav-tabs">'+
+										'</ul>'+
+									'</div>'+
+									'<div class="tab-content exam-content col-md-8 col-lg-8">'+
+									'</div>'+
+								'</div>'+
+							'</li>'+
+							'<li class="menu-item"><a href="quiz.html" class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Quizzes</a></li>'+
+							'<li class="menu-item"><a href="aboutus.html" class="link"><span class="test-color glyphicon glyphicon-info-sign"></span>&nbsp;About Us</a></li>'+
+							'<li class="menu-item"><a href="contactus.html" class="link"><span class="test-color glyphicon glyphicon-earphone"></span>&nbsp;Contact Us</a></li>'+
+						'</ul>'+
+					'</div>'+
+					'<div class="login-register-items col-xs-4 col-sm-4 col-md-2 col-lg-2">'+
+						'<ul class="test2bsure-options">'+
+							'<li id="menuLogin" class="show"><button type="button" class="button button-default" id="btnLogin">'+
+								'<span class="test-color glyphicon glyphicon-user"></span>&nbsp;Login/Register</button>'+
+							'</li>'+
+							'<li id="userProfile" class="hide"><a href="#">Hi<span id="loggedInUSer"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down"></span></a>'+
+								'<ul class="nav navbar-nav" id="subMenu">'+
+									'<li id="profile"><a href="profile.html">Profile</a></li>'+
+									'<li id="menuLogout" class="hide"><a href="#" id="linkLogout">Logout</a></li>'+
+								'</ul>'+
+							'</li>'+
+						'</ul>'+
+					'</div>'+
+				'</div>';
+	$(dom).append(html);
+	//Load CSS, JS
+	LoadCSS('header');
+	LoadJS('../controller/user', function(){
+		LoadJS('../ReusableFunctions/modal-struct', function(){
+			LoadJS('../controller/header', function(){
+				userController.getObj().SelfAuth();
+			});
+		});
+	});
 }
 test2bsureController.prototype.GetFooter = function(dom){
 	//should make it custom , as per the need on different pages
-	$(dom).load('footer.html', function(){
-		
-	}.bind(this));
-	//$(dom).html("<div> TEST2BSURE Footer </div>");
+	var html = "<div class='footer'>"+
+					"<div class='left col-xs-12 col-sm-12 col-md-7 col-lg-7'>"+
+						"<img src='../../Images/Test2bSure_Logo.jpg' class='logo-image-footer' alt='TEST-2B-SURE' />"+
+						"<p class='about-us-footer'>Test2BSure.com is an online portal for "+
+						"all types of competitive exams (Technical and Non-Technical) to "+
+						"check performance/capability of a candidate before the actual exam. "+
+						"This portal is especially focussed on those competitive exams which "+
+						"are not easily available online. Using this portal, a candidate can "+
+						"take a test free of cost and analyze his/her weak and strong points "+
+						"with the help of statistics in the form of graphs provided in the "+
+						"report section after end of the test and able to improve his/her "+
+						"weak points.</p>"+
+					"</div>"+
+					"<div class='right col-xs-12 col-sm-12 col-md-5 col-lg-5'>"+
+						"<h3>Follow Us</h3>"+
+						"<div class='social-media'>"+
+							"<div class='social-media-links' id='facebook'>"+
+								"<a href='https://www.facebook.com/test2bsure' target='_blank'><i class='fa fa-facebook'></i></a>"+
+							"</div>"+
+							"<div class='social-media-links' id='email'>"+
+								"<a target='_blank' href='mailto:info.test2bsure@gmail.com'><i class='fa fa-envelope-o'></i></a>"+
+							"</div>"+
+						"</div>"+
+						"<div class='website-links'>"+
+							"<ul class='list-inline'>"+
+								"<li><a href='aboutus.html' target='_blank'>About Us</a></li>"+
+								"<li><a href='contactus.html' target='_blank'>Contact Us</a></li>"+
+							"</ul>"+
+							"<ul class='list-inline'>"+
+								"<li><a href='disclaimer.html' target='_blank'>Disclaimer</a></li>"+
+								"<li><a href='privacy.html' target='_blank'>Privacy Policy</a></li>"+
+							"</ul>"+
+						"</div>"+
+					"</div>"+
+				"</div>";
+	$(dom).append(html);
+	LoadCSS('footer');
+	LoadJS('../controller/footer');
 }
 test2bsureController.prototype.QueryString = function(url, key){
 	var queryString = url.split('?')[1];
@@ -206,4 +283,39 @@ test2bsureController.prototype.getCookie = function(cname)
         }
     }
     return "";
+};
+function LoadCSS(filename) {
+	var id = "CSS_" + filename.replace(/[^a-zA-Z0-9_]+/, "_").replace(".", "_");
+	if (!document.getElementById(id)) {
+		link = document.createElement('link');
+		link.id = id;
+		link.type = 'text/css';
+		link.rel = 'stylesheet';
+		link.href = "../css/" + filename + ".css";
+		document.head.appendChild(link);
+	}
+};
+
+function LoadJS(src, callback) {
+	var id = "JS_" + src.replace(/[^a-zA-Z0-9_]+/, "_").replace(".", "_");
+	if (!document.getElementById(id)) {
+		var s = document.createElement('script');
+		s.id = id;
+		s.src =  src + ".js";
+		s.async = true;
+		s.onreadystatechange = s.onload = function() {
+			if ( typeof this.callback != 'undefined') {
+				this.callback();
+			}
+		}.bind({
+			obj : s,
+			callback : callback
+		});
+		document.getElementsByTagName('head')[0].appendChild(s);
+	} else {
+		if ( typeof callback !== "undefined") {
+			callback.done = true;
+			callback();
+		}
+	}
 };

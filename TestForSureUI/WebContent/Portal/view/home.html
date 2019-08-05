@@ -8,103 +8,54 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link href='../ReusableFunctions/common.css' rel='stylesheet' />
 		<link href='../css/home.css' rel='stylesheet' />
-		<link href='../css/header.css' rel='stylesheet' />
 	</head>
 	<body>
 		<div class='home-header common-header'>
 			<!-- Load the header here from header.html -->
-			<div class="header container-fluid">		
-	<div class="brand-logo col-xs-8 col-sm-8 col-md-3 col-lg-3">
-		<a class="brand" href="home.html"><img src="../../Images/Test2bSure_Logo.jpg" alt="TEST-2B-SURE"></a>
-	</div>
-	<div class="menu-items col-md-7 col-lg-7">
-		<ul class="test2bsure-menu">
-			<li class="menu-item active"><a href="home.html" class="link"><span
-					class="test-color glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
-			<li class="menu-item exam-menu-li"><a class="link"><span
-					class="test-color glyphicon glyphicon-edit"></span>&nbsp;Exams&nbsp;<span
-					class="glyphicon glyphicon-chevron-down"></span>
-					</a>
-				<div class="exam-menu-div">
-					<div class="col-md-4 col-lg-4 exam-tabs">
-						<ul class='exam-menu nav nav-tabs'>
-						</ul>
-					</div>
-				 	<div class="tab-content exam-content col-md-8 col-lg-8">
-				    </div>
-				</div>
-			</li>
-			<li class="menu-item"><a href="quiz.html" class="link"><span
-					class="test-color glyphicon glyphicon-edit"></span>&nbsp;Quizzes</a></li>
-			<li class="menu-item"><a href="aboutus.html" class="link"><span
-					class="test-color glyphicon glyphicon-info-sign"></span>&nbsp;About
-					Us</a></li>
-			<li class="menu-item"><a href="contactus.html" class="link"><span
-					class="test-color glyphicon glyphicon-earphone"></span>&nbsp;Contact
-					Us</a></li>
-		</ul>
-	</div>
-	<div class="login-register-items col-xs-4 col-sm-4 col-md-2 col-lg-2">
-		<ul class="test2bsure-options">
-			<li id="menuLogin" class="show"><button type="button" class="button button-default" 
-					id="btnLogin">
-					<span class="test-color glyphicon glyphicon-user"></span>&nbsp;Login/Register
-				</button>
-			</li>
-			<li id="userProfile" class="hide"><a
-				href="#">Hi<span id="loggedInUSer"></span>&nbsp;&nbsp;<span
-					class="glyphicon glyphicon-chevron-down"></span></a>
-				<ul class="nav navbar-nav" id="subMenu">
-					<li id="profile"><a href="profile.html">Profile</a></li>
-					<li id="menuLogout" class="hide"><a href="#"
-						id="linkLogout">Logout</a></li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-</div>
 		</div>
-		<div class='banner common-content col-xs-12 col-sm-12 col-md-12 col-lg-12 container' style='z-index: -1;'>
-			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		    <!-- Indicators -->
-		    <ol class="carousel-indicators">
-		      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-		      <li data-target="#myCarousel" data-slide-to="1"></li>
-		      <li data-target="#myCarousel" data-slide-to="2"></li>
-		    </ol>
-		
-		    <!-- Wrapper for slides -->
-		    <div class="carousel-inner">
-		      <div class="item active">
-		        <img src="../images/item1.jpg" alt="Los Angeles" style="width:100%;height:300px;">
-		      </div>
-		
-		      <div class="item">
-		        <img src="../images/item2.jpg" alt="Chicago" style="width:100%;height:300px;">
-		      </div>
-		    
-		      <div class="item">
-		        <img src="../images/item3.jpg" alt="New york" style="width:100%;height:300px;">
-		      </div>
-		    </div>
-		
-		    <!-- Left and right controls -->
-		    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-		      <span class="glyphicon glyphicon-chevron-left"></span>
-		      <span class="sr-only">Previous</span>
-		    </a>
-		    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-		      <span class="glyphicon glyphicon-chevron-right"></span>
-		      <span class="sr-only">Next</span>
-		    </a>
-		  </div>
-		</div>
-		<div class='category-exam-listing col-xs-12 col-sm-12 col-md-12 col-lg-12 container'>
-			<div class='category-listing col-xs-12 col-sm-12 col-md-3 col-lg-3 hide'>
-				Categories listed here
+		<div class='common-content home-content col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+			<div class='banner col-xs-12 col-sm-12 col-md-12 col-lg-12 container' style='z-index: -1;'>
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			    <!-- Indicators -->
+			    <ol class="carousel-indicators">
+			      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			      <li data-target="#myCarousel" data-slide-to="1"></li>
+			      <li data-target="#myCarousel" data-slide-to="2"></li>
+			    </ol>
+			
+			    <!-- Wrapper for slides -->
+			    <div class="carousel-inner">
+			      <div class="item active">
+			        <img src="../images/item1.jpg" alt="Los Angeles" style="width:100%;height:300px;">
+			      </div>
+			
+			      <div class="item">
+			        <img src="../images/item2.jpg" alt="Chicago" style="width:100%;height:300px;">
+			      </div>
+			    
+			      <div class="item">
+			        <img src="../images/item3.jpg" alt="New york" style="width:100%;height:300px;">
+			      </div>
+			    </div>
+			
+			    <!-- Left and right controls -->
+			    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			      <span class="glyphicon glyphicon-chevron-left"></span>
+			      <span class="sr-only">Previous</span>
+			    </a>
+			    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+			      <span class="glyphicon glyphicon-chevron-right"></span>
+			      <span class="sr-only">Next</span>
+			    </a>
+			  </div>
 			</div>
-			<div class='exam-listing col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-				Exams listed here
+			<div class='category-exam-listing col-xs-12 col-sm-12 col-md-12 col-lg-12 container'>
+				<div class='category-listing col-xs-12 col-sm-12 col-md-3 col-lg-3 hide'>
+					Categories listed here
+				</div>
+				<div class='exam-listing col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+					Exams listed here
+				</div>
 			</div>
 		</div>
 		<div class='home-footer common-footer col-xs-12 col-sm-12 col-md-12 col-lg-12'>
@@ -113,10 +64,7 @@
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
 		<script type='text/javascript' src='../controller/home.js'></script>
-		<script type='text/javascript' src='../controller/header.js'></script>
-		<script type='text/javascript' src='../controller/user.js'></script>
 		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
-		<script type='text/javascript' src='../ReusableFunctions/modal-struct.js'></script>
 		<script type='text/javascript'>
 			new homeController();
 		</script>

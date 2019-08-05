@@ -17,7 +17,7 @@ quizController.prototype.LoadData = function()
 {
 	var id = this.id;
 	var userId = -1;
-	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 		userId = userController.getObj().userData.id;
 	}
 	fetch(remoteServer+'/test2bsure/quizdata?quizId='+id+'&userId='+userId)

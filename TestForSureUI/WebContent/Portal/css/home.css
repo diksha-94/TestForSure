@@ -1,6 +1,4 @@
 .category-exam-listing{
-	top: 370px;
-	position: relative;
 	padding: 30px 0px;
 }
 .category-exam-listing .category-listing{
@@ -154,7 +152,6 @@
 		padding: 10px 0px 1px 0px;
 	}
 }
-
-.home-footer{
-	top: 370px;
+.home-content .banner{
+	padding: 0px;
 }

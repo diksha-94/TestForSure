@@ -12,7 +12,6 @@ homeController.prototype.Init = function()
 	this.LoadCategoriesExams();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".home-footer");
-	userController.getObj().SelfAuth();
 };
 homeController.prototype.LoadCategoriesExams = function()
 {
@@ -27,6 +26,7 @@ homeController.prototype.SetState = function(obj)
 	}
 	this.PopulateAllCategories();
 	this.PopulateAllExams();
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 };
 homeController.prototype.PopulateAllCategories = function()
 {

@@ -16,7 +16,7 @@ quizController.prototype.Init = function()
 quizController.prototype.LoadData = function(filterValues)
 {
 	var userId = -1;
-	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 		userId = userController.getObj().userData.id;
 	}
 	var url = remoteServer+'/test2bsure/quizzes?userId='+userId;
@@ -33,6 +33,7 @@ quizController.prototype.SetState = function(obj)
 		this[key] = obj[key];
 	}
 	this.PopulateQuizzes();
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 };
 quizController.prototype.LoadFilters = function()
 {
@@ -59,7 +60,7 @@ quizController.prototype.PopulateQuizzes = function()
 	$('.quiz-listing .right').html(html);
 	$('.quiz-listing .right').find('.btnQuizAction').unbind().bind('click', function(e){
 		var userId = -1;
-		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 			userId = userController.getObj().userData.id;
 		}
 		if(userId == -1){

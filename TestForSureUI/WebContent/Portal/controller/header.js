@@ -225,6 +225,10 @@ headerController.prototype.PopulateData = function(){
 	$('.exam-menu').html(html);
 	$('.exam-content').html(htmlContent);
 	$('.exam-content').find('.exam-value-item').unbind().bind('click', function(e){
+		var userId = -1;
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+			userId = userController.getObj().userData.id;
+		}
 		var examId = $(e.currentTarget).attr('exam-id');
 		window.location.href = 'exam.html?id=' + examId;
 	});

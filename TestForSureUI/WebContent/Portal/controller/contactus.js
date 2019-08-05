@@ -8,6 +8,7 @@ contactusController.prototype.Init = function()
 	this.BindEvents();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".contactus-footer");
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 };
 contactusController.prototype.BindEvents = function()
 {

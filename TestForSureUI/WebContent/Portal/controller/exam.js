@@ -19,7 +19,7 @@ examController.prototype.LoadData = function()
 {
 	var id = this.id;
 	var userId = -1;
-	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 		userId = userController.getObj().userData.id;
 	}
 	fetch(remoteServer+'/test2bsure/exampage?id='+id+'&userId='+userId)
@@ -34,6 +34,7 @@ examController.prototype.SetState = function(obj)
 	this.PopulateExamDetails();
 	this.PopulateTests();
 	this.PopulateQuizzes();
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 };
 examController.prototype.PopulateExamDetails = function()
 {
@@ -62,7 +63,7 @@ examController.prototype.PopulateTests = function()
 	$('.test-listing').append(html);
 	$('.test-listing').find('.btnStartTest').unbind().bind('click', function(e){
 		var userId = -1;
-		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 			userId = userController.getObj().userData.id;
 		}
 		if(userId == -1){
@@ -92,7 +93,7 @@ examController.prototype.PopulateQuizzes = function(exam)
 	$('.quiz-listing').append(html);
 	$('.quiz-listing').find('.btnQuizAction').unbind().bind('click', function(e){
 		var userId = -1;
-		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && typeof userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 			userId = userController.getObj().userData.id;
 		}
 		if(userId == -1){
