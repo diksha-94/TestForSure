@@ -16,7 +16,9 @@ testReportController.prototype.Init = function()
 	if(this.report == undefined){
 		this.report = 1;
 	}
-	this.LoadData();
+	test2bsureController.getObj().SelfAuth(function(){
+		this.LoadData();
+	}.bind(this));
 }
 testReportController.prototype.LoadData = function()
 {
@@ -98,6 +100,7 @@ testReportController.prototype.PopulateReport = function()
 {
 	this.PopulateBasicReport();
 	this.PopulateTopperAverage();
+	this.PopulateSuggestedTests();
 	this.PopulateLeaderboard();
 	this.DisplayCharts();
 }
@@ -109,7 +112,7 @@ testReportController.prototype.PopulateBasicReport = function()
 	percentile = Math.floor(percentile, 2);
 	html += "<div class='greeting'>"+
 				"<img src='../images/trophy.png' alt='Trophy' class='trophy'/>"+
-				"<h4>Congrats User !!</h4>"+
+				"<h4>Congrats "+ userController.getObj().userData.name + " !!</h4>"+
 			"</div>"+
 			"<div class='report-detail col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
 				"<div class='item rank col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
@@ -164,6 +167,39 @@ testReportController.prototype.PopulateTopperAverage = function()
 					"<span>Average Time: "+averageTime+" mins</span>"+
 			   "</div>";
 	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
+};
+testReportController.prototype.PopulateSuggestedTests = function()
+{
+	var html = "";
+	if(this.testInfo.suggestedTests != null && this.testInfo.suggestedTests.length > 0){
+		for(var i in this.testInfo.suggestedTests){
+			var test = this.testInfo.suggestedTests[i];
+			html += "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' test-id='" + test["id"] + "'>"+
+						"<span class='col-xs-9 col-sm-9 col-md-9 col-lg-9'>"+test["title"]+"</span>"+
+						"<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3 testBtn'><a>Take Test</a></span>"+
+					"</div>";
+		}
+		$('.left-side').find('.suggested-tests').append(html);
+		$('.suggested-tests').find('.testBtn').unbind().bind('click', function(e){
+			var userId = -1;
+			if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+				userId = userController.getObj().userData.id;
+			}
+			if(userId == -1){
+				//User not logged in
+				if($('#loginModal').length == 0){
+					$('body').append(loginModal());
+				}
+				$('#loginModal').modal('show');
+				return false;
+			}
+			var testId = $(e.currentTarget).parents('div[test-id]').attr('test-id');
+			window.location.href = 'take-test.html?id='+testId;
+		});
+	}
+	else{
+		$('.left-side').find('.suggested-tests').hide();
+	}
 };
 testReportController.prototype.PopulateLeaderboard = function()
 {

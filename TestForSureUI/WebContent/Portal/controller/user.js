@@ -88,7 +88,7 @@ userController.prototype.Login = function(email, password)
 		}
 	});
 };
-userController.prototype.SelfAuth = function(reload)
+userController.prototype.SelfAuth = function(reload, callback)
 {
 	var reload = typeof reload != 'undefined' ? reload : false;
 	var value = test2bsureController.getObj().getCookie('test2bsure_userLoginId');
@@ -120,10 +120,15 @@ userController.prototype.SelfAuth = function(reload)
 					$('#loginModal').find('#errorMessage').empty();
 					$('#loginModal').find('#errorMessage').html(response.result.message);
 				}
-				
+				if(typeof callback == 'function'){
+					callback();
+				}
 			},
 			error: function(e){
 				console.log(e);
+				if(typeof callback == 'function'){
+					callback();
+				}
 			}
 		});
 	}

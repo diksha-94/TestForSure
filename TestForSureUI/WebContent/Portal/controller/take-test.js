@@ -13,7 +13,9 @@ testController.prototype.Init = function()
 {
 	//Read id from query string
 	this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
-	this.LoadData();
+	test2bsureController.getObj().SelfAuth(function(){
+		this.LoadData();
+	}.bind(this));
 };
 testController.prototype.LoadData = function()
 {
@@ -154,16 +156,24 @@ testController.prototype.DisplayQuestion = function()
 	$(question.options).find('option').each(function(key, value){
 		var addClass = 'option';
 		if(key == markedAnswer){
-			html += "<div class='"+addClass+"' data-option='"+key+"' selected='selected' style='border-color:rgb(46, 109, 164)'>"+
-						"<span class='option-count' style='background-color: rgb(46, 109, 164); border-color: rgb(46, 109, 164); color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
-						"<span class='option-value'>"+$(value).html()+"</span>"+
+			html += "<div class='"+addClass+" col-xs-12 col-sm-12 col-md-12 col-lg-12' data-option='"+key+"' selected='selected' style='border-color:rgb(46, 109, 164)'>"+
+						"<div class='col-xs-1 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
+							"<span class='option-count' style='background-color: rgb(46, 109, 164); border-color: rgb(46, 109, 164); color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
+						"</div>"+
+						"<div class='col-xs-11 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
+							"<span class='option-value'>"+$(value).html()+"</span>"+
+						"</div>"+
 						"<span class='answer-status'></span>"+
 					"</div>";
 		}
 		else{
-			html += "<div class='"+addClass+"' data-option='"+key+"'>"+
-						"<span class='option-count'>"+optionValues[key]+"</span>"+
-						"<span class='option-value'>"+$(value).html()+"</span>"+
+			html += "<div class='"+addClass+" col-xs-12 col-sm-12 col-md-12 col-lg-12' data-option='"+key+"'>"+
+						"<div class='col-xs-1 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
+							"<span class='option-count'>"+optionValues[key]+"</span>"+
+						"</div>"+
+						"<div class='col-xs-11 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
+							"<span class='option-value'>"+$(value).html()+"</span>"+
+						"</div>"+
 						"<span class='answer-status'></span>"+
 					"</div>";
 		}

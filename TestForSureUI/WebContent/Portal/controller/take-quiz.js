@@ -11,7 +11,9 @@ quizController.prototype.Init = function()
 {
 	//Read id from query string
 	this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
-	this.LoadData();
+	test2bsureController.getObj().SelfAuth(function(){
+		this.LoadData();
+	}.bind(this));
 };
 quizController.prototype.LoadData = function()
 {

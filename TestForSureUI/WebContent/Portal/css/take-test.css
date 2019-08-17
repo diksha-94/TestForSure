@@ -1,8 +1,8 @@
 .test-header {
-	min-height: 60px;
+	min-height: 50px;
 	height: auto;
 	background-color: #2E6DA4;
-	padding: 12px;
+	padding: 7px;
 	color: white;
 	font-weight: bold;
 }
@@ -121,7 +121,7 @@
 	padding: 20px 40px;
 }
 .test .test-questions .question .options .option{
-	padding: 10px;
+	padding: 8px;
 	border: solid 1px #e4e4e4;
 	margin-top: 10px;
 	cursor: pointer;
@@ -155,7 +155,8 @@
 }
 .test .test-questions .question .options .option .option-value{
 	display: inline-block;
-	margin-left: 15px;
+	/*margin-left: 15px;*/
+	min-height: 39px;
 }
 .test .test-questions .question .solution{
 	padding: 20px 40px;

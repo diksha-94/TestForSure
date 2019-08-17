@@ -319,3 +319,13 @@ function LoadJS(src, callback) {
 		}
 	}
 };
+test2bsureController.prototype.SelfAuth = function(callback)
+{
+	LoadJS('../controller/user', function(){
+		userController.getObj().SelfAuth(false, function(){
+			if(typeof callback == 'function'){
+				callback();
+			}
+		});
+	});
+};

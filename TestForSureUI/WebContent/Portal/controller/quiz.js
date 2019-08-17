@@ -21,7 +21,7 @@ quizController.prototype.LoadData = function(filterValues)
 	}
 	var url = remoteServer+'/test2bsure/quizzes?userId='+userId;
 	if(typeof filterValues != 'undefined' && filterValues.length > 0){
-		url += '?filters='+filterValues;
+		url += '&filters='+filterValues;
 	}
 	fetch(url)
 	  .then(response => response.json())

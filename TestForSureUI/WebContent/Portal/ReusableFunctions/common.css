@@ -50,3 +50,6 @@
 .highcharts-credits {
     display: none;
 }
+.modal-dialog .modal-content{
+	border-radius: 0px;
+}

@@ -6,10 +6,10 @@
 	display: none;
 }
 .report-header {
-	min-height: 60px;
+	min-height: 50px;
 	height: auto;
 	background-color: #2E6DA4;
-	padding: 12px;
+	padding: 7px;
 	color: white;
 	font-weight: bold;
 }
@@ -43,7 +43,12 @@
 	padding: 10px;
 	height: auto;
 	text-align: center;
-	box-shadow: 0px 0px 5px #E4E4E4;
+	border-top: solid 1px #ff901d;
+	border-bottom: solid 1px #ff901d;
+	border-right: solid 1px #ff901d;
+}
+.report-section .report-basic .report-detail .item:first-child{
+	border-left: solid 1px #ff901d;
 }
 .report-section .report-basic .report-detail .item .values{
 	display: inline-block;
@@ -419,3 +424,27 @@
 		height: 25px;
 	}
 }
+.report-advanced .left-side{
+	padding: 0px;
+}
+.report-advanced .left-side .suggested-tests{
+	height: auto;
+	background-color: #e4e4e4;
+	padding: 5px 15px 10px;
+}
+.report-advanced .left-side .suggested-tests h5{
+	text-align: center;
+	font-weight: bold;
+}
+.report-advanced .left-side .suggested-tests div{
+	padding: 5px 0px;
+}
+.report-advanced .left-side .suggested-tests div span{
+	padding: 0px;
+}
+.report-advanced .left-side .suggested-tests div span.testBtn{
+	text-align: right;
+	font-weight: bold;
+	cursor: pointer;
+}
+
