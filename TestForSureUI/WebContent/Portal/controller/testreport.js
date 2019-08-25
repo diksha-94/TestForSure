@@ -107,9 +107,15 @@ testReportController.prototype.PopulateReport = function()
 testReportController.prototype.PopulateBasicReport = function()
 {
 	var html = "";
-	var accuracy = Math.floor(((this.reportData.correctCount*100)/this.reportData.quesAttempted), 2);
-	var percentile = ((this.reportData.totalCandidate - this.reportData.rank)*100)/this.reportData.totalCandidate;
-	percentile = Math.floor(percentile, 2);
+	var accuracy = 0;
+	if(this.reportData.quesAttempted > 0){
+		accuracy = Math.floor(((this.reportData.correctCount*100)/this.reportData.quesAttempted), 2);
+	}
+	var percentile = 0;
+	if(this.reportData.totalCandidate > 0){
+		percentile = ((this.reportData.totalCandidate - this.reportData.rank)*100)/this.reportData.totalCandidate;
+		percentile = Math.floor(percentile, 2);
+	}
 	html += "<div class='greeting'>"+
 				"<img src='../images/trophy.png' alt='Trophy' class='trophy'/>"+
 				"<h4>Congrats "+ userController.getObj().userData.name + " !!</h4>"+
@@ -258,8 +264,31 @@ testReportController.prototype.DisplayCharts = function()
 		}
 	}
 	timeObject["Unvisited"] = (parseInt(this.testInfo.totalTime) * 60) - timeObject["Unattempted"] - timeObject["Correct"] - timeObject["Incorrect"];
-	test2bsureController.getObj().Draw3DPieChart(quesObject, this.testInfo.totalQues, "#questionsPieChart", "Answer Distribution");
-	test2bsureController.getObj().Draw3DPieChart(timeObject, parseInt(this.testInfo.totalTime) * 60, "#timePieChart", "Time Spent");
+	console.log(quesObject);
+	console.log(timeObject);
+	
+	//cosole();
+	//Question Pie Chart
+	var colors 	= ['#54A1EF', '#FF8383', '#FABA20', '#DD8EFF'];
+	var series = [
+				 ["Correct", quesObject.Correct],
+				 ["Incorrect", quesObject.Incorrect],
+				 ["Unattempted", quesObject.Unattempted],
+				 ["Unvisited", quesObject.Unvisited]
+			 ];
+	var params = {id: 'questionsPieChart', title: 'ANSWER DISTRIBUTION', key: 'Questions', colors: colors, series: series};
+	test2bsureController.getObj().PieChart(params);
+	
+	//Time Pie Chart
+	colors 	= ['#54A1EF', '#FF8383', '#FABA20', '#DD8EFF'];
+	series = [
+				 ["Correct", timeObject.Correct],
+				 ["Incorrect", timeObject.Incorrect],
+				 ["Unattempted", timeObject.Unattempted],
+				 ["Unvisited", timeObject.Unvisited]
+			 ];
+	params = {id: 'timePieChart', title: 'TIME SPENT', key: 'secs', colors: colors, series: series};
+	test2bsureController.getObj().PieChart(params);
 	//Populate charts summary
 	$('.chartsSummary').find('div.correct').find('span.value').text(quesObject["Correct"] + " QUES, "+timeObject["Correct"]+ " SECS");
 	$('.chartsSummary').find('div.incorrect').find('span.value').text(quesObject["Incorrect"] + " QUES, "+timeObject["Incorrect"]+ " SECS");

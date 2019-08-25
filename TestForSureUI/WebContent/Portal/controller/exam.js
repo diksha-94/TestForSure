@@ -8,12 +8,13 @@ var examController = function(){
 examController.prototype.Init = function()
 {
 	//Load header
-	test2bsureController.getObj().GetHeader(".exam-header");
-	//Read id from query string
-	this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
-	this.LoadData();
-	//Load footer
-	test2bsureController.getObj().GetFooter(".exam-footer");
+	test2bsureController.getObj().GetHeader(".exam-header", function(){
+		//Read id from query string
+		this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
+		this.LoadData();
+		//Load footer
+		test2bsureController.getObj().GetFooter(".exam-footer");
+	}.bind(this));
 };
 examController.prototype.LoadData = function()
 {
@@ -73,6 +74,34 @@ examController.prototype.PopulateTests = function()
 		}
 		var testId = $(e.currentTarget).parents('li[test-id]').attr('test-id');
 		window.location.href = 'take-test.html?id='+testId;
+	});
+	$('.test-listing').find('.btnReportTest').unbind().bind('click', function(e){
+		var userId = -1;
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+			userId = userController.getObj().userData.id;
+		}
+		if(userId == -1){
+			//User not logged in
+			$('#btnLogin').click();
+			return false;
+		}
+		var testId = $(e.currentTarget).parents('li[test-id]').attr('test-id');
+		//Get the last session Id
+		var url = remoteServer+'/test2bsure/testsessionid?testId='+testId+'&userId='+userId;
+		var type = 'GET';
+		$.ajax({
+			url: url,
+			type: type,
+			contentType: "application/json",
+			context: this,
+			success: function(response){
+				console.log(response);
+				window.location.href = 'testreport.html?sessionId='+response+'&report=1';
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
 	});
 };
 examController.prototype.PopulateQuizzes = function(exam)

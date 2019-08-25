@@ -322,18 +322,19 @@
 	width: 10px;
 	display: inline-block;
 	margin-right: 10px;
+	border-radius: 50%;
 }
 .chartsSummary div.correct span.info::before{
-	background-color: #9FC9F1;
+	background-color: #317ecc;
 }
 .chartsSummary div.incorrect span.info::before{
-	background-color: #555559;
+	background-color: #cc5050;
 }
 .chartsSummary div.unattempted span.info::before{
-	background-color: #9DEF8D;
+	background-color: #c08007;
 }
 .chartsSummary div.unvisited span.info::before{
-	background-color: #FFBC75;
+	background-color: #a455c6;
 }
 .chartsSummary div span.value{
 	float: right;
@@ -448,3 +449,7 @@
 	cursor: pointer;
 }
 
+
+.highcharts-data-label-connector, .highcharts-data-label{
+	display: none;
+}

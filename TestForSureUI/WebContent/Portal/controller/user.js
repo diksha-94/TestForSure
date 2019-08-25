@@ -132,6 +132,11 @@ userController.prototype.SelfAuth = function(reload, callback)
 			}
 		});
 	}
+	else{
+		if(typeof callback == 'function'){
+			callback();
+		}
+	}
 };
 userController.prototype.ChangePassword = function()
 {

@@ -11,7 +11,7 @@ test2bsureController.getObj = function()
 	}
 	return obj;
 };
-test2bsureController.prototype.GetHeader = function(dom){
+test2bsureController.prototype.GetHeader = function(dom, callback){
 	//should make it custom , as per the need on different pages
 	var html = '<div class="header container-fluid">'+		
 					'<div class="brand-logo col-xs-8 col-sm-8 col-md-3 col-lg-3">'+
@@ -56,7 +56,11 @@ test2bsureController.prototype.GetHeader = function(dom){
 	LoadJS('../controller/user', function(){
 		LoadJS('../ReusableFunctions/modal-struct', function(){
 			LoadJS('../controller/header', function(){
-				userController.getObj().SelfAuth();
+				userController.getObj().SelfAuth(false, function(){
+					if(typeof callback == 'function'){
+						callback();
+					}
+				});
 			});
 		});
 	});
@@ -171,12 +175,12 @@ test2bsureController.prototype.TestCard = function(test)
 	}
 	html += "<div class='controls'>";
 	if(attemptFlag == true){
-		//means the test is already attempted atlease once, show the report button
+		//means the test is already attempted atleast once, show the report button
 		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnReportTest button button-default'>Report</button>";
 	}
 	else{
 		//means the test is already attempted atlease once, show the report button
-		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnReportTest button button-default' disabled='disabled'>Report</button>";
+		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnReportTest button button-default' disabled='disabled' title='You haven't attempted this test'>Report</button>";
 	}
 	if(resumeFlag == true){
 		//means the test is in resumed state
@@ -186,7 +190,7 @@ test2bsureController.prototype.TestCard = function(test)
 		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnStartTest button button-primary'>Start Test</button>";
 	}
 	else{
-		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnStartTest button button-primary' disabled='disabled'>Start Test</button>";
+		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnStartTest button button-primary' disabled='disabled' title='No. of Attempts finished'>Start Test</button>";
 	}
 	html += "</div>";
 	return html;
@@ -327,5 +331,61 @@ test2bsureController.prototype.SelfAuth = function(callback)
 				callback();
 			}
 		});
+	});
+};
+test2bsureController.prototype.PieChart = function(params)
+{
+	Highcharts.chart(params.id, {
+	    chart: {
+	        type: 'pie',
+	    },
+	    title: {
+           text: params.title ,
+           verticalAlign: 'middle',
+		   floating:true,	
+		   //widthAdjust: -300,
+		   x: 0,
+       	   y: 0,
+		   style: {
+	            color: '#333333',
+	            fontWeight: 'bold',
+	            fontSize:'10px'
+	        }
+		},
+
+	    plotOptions: {
+           pie: {
+		      innerSize: 180,
+		      depth: 50,
+		      showInLegend: true
+		    },
+		},
+		colors: Highcharts.map(params.colors, function (color) {
+	        return {
+	            linearGradient: {
+	                cx: 0.5,
+	                cy: 0.3,
+	                r: 0.7
+	            },
+	            stops: [
+	                [0, color],
+	                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+	            ]
+	        };
+	    }),
+		tooltip: {
+			formatter: function () {
+				var percent = Math.round(this.percentage * 100) / 100;
+				var y = Math.round(this.y * 100) / 100;
+				return this.key +": <b>"+ percent +"% </b> <br/> <b> " + y + "</b> " + params.key ;
+        	}
+		},
+		credits: {
+			enabled: false
+		},
+	    series: [{
+	        data: params.series,
+	        size: '70%'
+	    }]
 	});
 };

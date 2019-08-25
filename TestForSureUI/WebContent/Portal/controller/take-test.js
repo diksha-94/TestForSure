@@ -477,8 +477,33 @@ testController.prototype.UnselectAllOptions = function()
 };
 testController.prototype.Timer = function()
 {
+	//Resumed state
+	var startedAt = "";
+	if(typeof this.testInfo.attemptInfo != 'undefined' && this.testInfo.attemptInfo != null && this.testInfo.attemptInfo.length > 0){
+		for(var attempt in this.testInfo.attemptInfo){
+			if(this.testInfo.attemptInfo[attempt].state == 1){
+				//means the test is in resumed state
+				startedAt = this.testInfo.attemptInfo[attempt].updatedOn;
+			}
+		}
+	}
+	var passedSeconds = 0;
+	if(startedAt.length > 0){
+		startedAt = new Date(startedAt);
+		passedSeconds = (new Date() - startedAt)/1000;
+	}
+	
 	var totalSecs = (parseInt(this.testInfo.totalTime) * 60) + 1;
 	this.totalSecs = (parseInt(this.testInfo.totalTime) * 60) + 1;
+	if(passedSeconds > 0){
+		totalSecs = totalSecs - passedSeconds;
+		this.totalSecs = this.totalSecs - passedSeconds;
+	}
+	if(totalSecs <= 0){
+		this.SubmitTest();
+		alert("Time is Over !!");
+		return;
+	}
 	var interval = setInterval(function() {
 		totalSecs = parseInt(totalSecs) - 1;
 		this.totalSecs = parseInt(this.totalSecs) - 1;

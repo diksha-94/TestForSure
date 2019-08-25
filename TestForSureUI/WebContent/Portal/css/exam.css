@@ -94,6 +94,7 @@
 	padding: 10px 15px 15px;
 	border-radius: 2px;
 	box-shadow: 0 7px 17px 0 rgba(0,0,0,.05);
+	border: solid 1px #e4e4e4;
 }
 .test-listing ul li:hover {
 	box-shadow: 0px 0px 10px #E4E4E4;
@@ -105,6 +106,13 @@
 }
 .test-listing ul li .controls {
 	padding:20px 0px;
+}
+.test-listing ul li .controls .button[disabled="disabled"]:hover {
+    transform: scale(1);
+}
+.test-listing ul li .controls .button[disabled="disabled"] {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 .test-listing ul li .test-detail div{
 	padding: 5px;

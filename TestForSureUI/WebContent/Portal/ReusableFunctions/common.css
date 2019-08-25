@@ -3,12 +3,12 @@
 	width: 100%;
 }
 .button-primary:hover, .button-default:hover{
-	/*transform: scale(1.02);*/
+	transform: scale(1.02);
 }
 .button-default:hover{
-	color: #fff;
+	/*color: #fff;
 	background-color: #2E6DA4;
-	border-color: #fff;
+	border-color: #fff;*/
 }
 .button-primary{
 	background-color: #2E6DA4;
