@@ -9,5 +9,6 @@ disclaimerController.prototype.Init = function()
 	test2bsureController.getObj().GetFooter(".disclaimer-footer");
 };
 $(document).ready(function () {
-	new disclaimerController();	
+	new disclaimerController();
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 });

@@ -244,16 +244,20 @@ quizController.prototype.DisplayReport = function()
 	//html += "<div>Incorrect: <span>"+(this.quizInfo.noOfQues - correctCount)+" / "+this.quizInfo.noOfQues+"</span></div>";
 	//html += "<div>Accuracy: <span>"+(correctCount/this.quizInfo.noOfQues)*100+"%</span></div></div>";
 	
-	var html = "";
-	html += '<div class="description-block correct"><span class="report-text">CORRECT</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="correct-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label">'+correctCount+'/'+this.quizInfo.noOfQues+'</span></div>';
-	html += '<div class="description-block incorrect"><span class="report-text">INCORRECT</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="incorrect-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label">'+(this.quizInfo.noOfQues - correctCount)+'/'+this.quizInfo.noOfQues+'</span></div>';
-	html += '<div class="description-block accuracy"><span class="report-text">ACCURACY</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="accuracy-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label">'+(correctCount/this.quizInfo.noOfQues)*100+'%</span></div>';
-	
+	var html = "<div class='description-div'>";
+	html += '<div class="description-block correct"><span class="report-text">CORRECT</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="correct-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label"> ('+correctCount+'/'+this.quizInfo.noOfQues+')</span></div>';
+	html += '<div class="description-block incorrect"><span class="report-text">INCORRECT</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="incorrect-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label"> ('+(this.quizInfo.noOfQues - correctCount)+'/'+this.quizInfo.noOfQues+')</span></div>';
+	html += '<div class="description-block accuracy"><span class="report-text">ACCURACY</span><div class="svgholder"><svg viewBox="0 0 36 36"><path d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#E4E4E4" stroke-width="2" stroke-dasharray="100, 100"></path></svg><svg class="progress-loader" viewBox="0 0 36 36"><path class="accuracy-per" d="M18 6 a 12 12 0 0 1 0 24 a 12 12 0 0 1 0 -24" fill="none" stroke="#30B8E2" stroke-width="2" stroke-dasharray="100, 100"></path></svg></div><span class="label"> ('+(correctCount/this.quizInfo.noOfQues)*100+'%)</span></div>';
+	html += '</div>';
 	
 	html += "<div class='quiz-report-btn'><button type='button' class='button button-primary btnReviewQuiz'>Review Quiz</button></div>";
 	$('.quiz-content').find('.quiz-report').html(html);
+	var radius = 12;
+	var cf = (2*22*radius) / 7;
 	var correctPer = (correctCount*100)/this.quizInfo.noOfQues;
+	correctPer = (correctPer/100) * cf;
 	var incorrectPer = ((this.quizInfo.noOfQues - correctCount)*100)/this.quizInfo.noOfQues;
+	incorrectPer = (incorrectPer/100) * cf;
 	$('.correct-per').attr('stroke-dasharray', ''+correctPer+', 100');
 	$('.incorrect-per').attr('stroke-dasharray', ''+incorrectPer+', 100');
 	$('.accuracy-per').attr('stroke-dasharray', ''+correctPer+', 100');

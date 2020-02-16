@@ -14,10 +14,10 @@ test2bsureController.getObj = function()
 test2bsureController.prototype.GetHeader = function(dom, callback){
 	//should make it custom , as per the need on different pages
 	var html = '<div class="header container-fluid">'+		
-					'<div class="brand-logo col-xs-8 col-sm-8 col-md-3 col-lg-3">'+
+					'<div class="brand-logo col-xs-8 col-sm-8 col-md-2 col-lg-2">'+
 						'<a class="brand" href="home.html"><img src="../../Images/Test2bSure_Logo.jpg" alt="TEST-2B-SURE"></a>'+
 					'</div>'+
-					'<div class="menu-items col-md-7 col-lg-7">'+
+					'<div class="menu-items col-md-8 col-lg-8">'+
 						'<ul class="test2bsure-menu">'+
 							'<li class="menu-item active"><a href="home.html" class="link"><span class="test-color glyphicon glyphicon-home"></span>&nbsp;Home</a></li>'+
 							'<li class="menu-item exam-menu-li"><a class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Exams&nbsp;<span class="glyphicon glyphicon-chevron-down"></span>'+
@@ -32,6 +32,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 								'</div>'+
 							'</li>'+
 							'<li class="menu-item"><a href="quiz.html" class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Quizzes</a></li>'+
+							'<li class="menu-item"><a href="asknanswer.html" class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Ask & Answer</a></li>'+
 							'<li class="menu-item"><a href="aboutus.html" class="link"><span class="test-color glyphicon glyphicon-info-sign"></span>&nbsp;About Us</a></li>'+
 							'<li class="menu-item"><a href="contactus.html" class="link"><span class="test-color glyphicon glyphicon-earphone"></span>&nbsp;Contact Us</a></li>'+
 						'</ul>'+

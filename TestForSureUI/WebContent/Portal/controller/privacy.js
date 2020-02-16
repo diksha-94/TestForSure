@@ -10,5 +10,6 @@ privacyController.prototype.Init = function()
 };
 $(document).ready(function () {
 	new privacyController();
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 });
 

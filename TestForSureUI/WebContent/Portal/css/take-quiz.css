@@ -258,6 +258,9 @@
 	padding: 10px;
 	background-color: #e4e4e4;
 }
+.quiz-report{
+	margin-top: 80px;
+}
 /* Quiz report CSS ends */
 .brand-logo-quiz img {
 	width: 170px;
@@ -346,6 +349,14 @@
 		bottom: 60px;
 		text-align: center;
 	}
+}
+.description-div{
+	display: flex;
+	width: 50%;
+	margin-left: 25%;
+}
+.description-div span.label{
+	color: black;
 }
 .description-block {
     height: 100px;

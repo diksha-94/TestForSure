@@ -1,0 +1,112 @@
+.asknanswer-content{
+	margin-top: 50px;
+	padding: 0px 5%;
+}
+.asknanswer-content .left.filters{
+	border: solid 1px red;
+	min-height: 100px;
+	width: 20%;
+}
+.asknanswer-content .right.discussion{
+	border: solid 1px green;
+	width: 70%;
+	padding: 0px;
+}
+.asknanswer-content .discussion .ask-post{
+	border: solid 1px black;
+	padding: 10px;
+}
+.asknanswer-content .discussion .ask-post .head{
+	text-align: center;
+}
+.asknanswer-content .discussion .ask-post .head h3{
+	padding: 0;
+	margin: 0;
+}
+.ask-post textarea, .ask-post select {
+    width: 80%;
+    margin-top: 15px;
+    height: 34px;
+    padding: 8px;
+    border: solid 1px #E4E4E4;
+    margin-left: 10%;
+}
+.ask-post textarea{
+	resize: none;
+	overflow: hidden;
+	height: 45px;
+}
+.ask-post .post-submit{
+	margin-top: 20px;
+	width: 20%;
+	margin-left: 40%;
+}
+.asknanswer-content .discussion .all-posts .post{
+	border: solid 1px yellow;
+	margin-top: 20px;
+	padding: 10px;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile{
+	position: relative;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .user-image{
+	width: 40px;
+	height: 40px;
+	border: solid 1px red;
+	border-radius: 100%;
+	display: inline-block;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .user-name{
+	position: absolute;
+	left: 67px;
+	top: 10px;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .exam-name{
+	background-color: #E4E4E4;
+	padding: 5px;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile div{
+	display: inline;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .exam-name{
+	position: absolute;
+	right: 10px;
+}
+.asknanswer-content .discussion .all-posts .post .post-content{
+	padding: 10px;
+}
+.asknanswer-content .discussion .all-posts .post .post-attributes .count{
+	font-size: 12px;
+	width: 84%;
+	display: flex;
+	justify-content: space-between;
+	margin-left: 3px;
+}
+.asknanswer-content .discussion .all-posts .post .post-attributes .events{
+	padding-top: 15px;
+	display: flex;
+	justify-content: space-between;
+	margin-left: 3px;
+	width: 84%;
+}
+.asknanswer-content .discussion .all-posts .post .post-attributes .events .like{
+	cursor: pointer;
+}
+.asknanswer-content .discussion .all-posts .post .write-comment{
+	padding-top: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+.asknanswer-content .discussion .all-posts .post .write-comment textarea{
+	width: 85%;
+	height: 35px;
+	resize: none;
+	overflow: hidden;
+}
+.asknanswer-content .discussion .all-posts .post .write-comment button{
+	width: 10%;
+}
+
+.asknanswer-footer{
+	display: none;
+}
