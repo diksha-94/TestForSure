@@ -3,17 +3,74 @@
 	padding: 0px 5%;
 }
 .asknanswer-content .left.filters{
-	border: solid 1px red;
 	min-height: 100px;
-	width: 20%;
-}
-.asknanswer-content .right.discussion{
-	border: solid 1px green;
-	width: 70%;
+	width: 23%;
 	padding: 0px;
 }
+.asknanswer-content .left.filters .userFilter{
+	padding: 0px;
+}
+.asknanswer-content .left.filters .userFilter .postFilter{
+	background-color: white;
+	padding: 10px;
+	margin-bottom: 10px;
+	font-size: 17px;
+	color: #337ab7;
+	border: solid 1px #337ab7;
+	cursor: pointer;
+}
+.asknanswer-content .left.filters .userFilter .postFilter.active{
+	background-color: #337ab7;
+	color: white;
+	cursor: default;
+	position: relative;
+}
+.asknanswer-content .left.filters .userFilter .postFilter.active::after {
+    content: '';
+    width: 10px;
+    background-color: 
+    #337ab7;
+    height: 10px;
+    display: block;
+    position: absolute;
+    right: -5px;
+    top: 18px;
+    transform: rotate(50deg);
+}
+.examFilter{
+	padding: 0px;
+	margin-top: 40px;
+	background-color: #E4E4E4;
+}
+.examFilter .head{
+	text-align: center;
+	padding-top: 10px;
+}
+.examFilter .exams{
+	padding: 5px 10px;
+}
+.examFilter .exams .check-box{
+	margin-top: 5px;
+}
+.examFilter .exams .check-box span{
+	margin-left: 10px;
+}
+.examFilter .buttons{
+	display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding: 5px 5px 10px 5px;
+}
+.examFilter .buttons button{
+	width: 40%;
+}
+.asknanswer-content .right.discussion{
+	width: 70%;
+	padding: 0px;
+	margin-left: 5%;
+}
 .asknanswer-content .discussion .ask-post{
-	border: solid 1px black;
+	border: solid 1px #E4E4E4;
 	padding: 10px;
 }
 .asknanswer-content .discussion .ask-post .head{
@@ -41,10 +98,13 @@
 	width: 20%;
 	margin-left: 40%;
 }
+.asknanswer-content .discussion .all-posts{
+	margin-top: 30px;
+}
 .asknanswer-content .discussion .all-posts .post{
-	border: solid 1px yellow;
+	border: solid 1px #E4E4E4;
 	margin-top: 20px;
-	padding: 10px;
+	padding: 15px;
 }
 .asknanswer-content .discussion .all-posts .post .user-profile{
 	position: relative;
@@ -52,32 +112,64 @@
 .asknanswer-content .discussion .all-posts .post .user-profile .user-image{
 	width: 40px;
 	height: 40px;
-	border: solid 1px red;
+	border: solid 1px #2E6DA4;
 	border-radius: 100%;
 	display: inline-block;
+	background-color: #2E6DA4;
+	padding: 0px 9px;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .user-image span{
+	font-size: 28px;
+	color: #FFF;
 }
 .asknanswer-content .discussion .all-posts .post .user-profile .user-name{
 	position: absolute;
-	left: 67px;
+	left: 60px;
 	top: 10px;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .user-name span{
+	margin-left: 20px;
+}
+span.approved{
+	color: green;
+}
+span.not-approved{
+	color: red;
 }
 .asknanswer-content .discussion .all-posts .post .user-profile .exam-name{
 	background-color: #E4E4E4;
-	padding: 5px;
+	padding: 5px 10px;
+	position: absolute;
+	right: -15px;
+	top: -15px;
+	font-weight: bold;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .perform-actions{
+	position: absolute;
+	right: 0px;
+	top: 25px;
+	cursor: pointer;
+}
+.asknanswer-content .discussion .all-posts .post .user-profile .perform-actions div{
+	width: 5px;
+	height: 5px;
+	background-color: #000;
+	margin-bottom: 3px;
+	display: block;
 }
 .asknanswer-content .discussion .all-posts .post .user-profile div{
 	display: inline;
 }
-.asknanswer-content .discussion .all-posts .post .user-profile .exam-name{
-	position: absolute;
-	right: 10px;
-}
 .asknanswer-content .discussion .all-posts .post .post-content{
 	padding: 10px;
 }
+.asknanswer-content .discussion .all-posts .post .post-content .post-title{
+	font-weight: bold;
+	font-size: 15px;
+}
 .asknanswer-content .discussion .all-posts .post .post-attributes .count{
 	font-size: 12px;
-	width: 84%;
+	width: 30%;
 	display: flex;
 	justify-content: space-between;
 	margin-left: 3px;
@@ -99,14 +191,22 @@
 }
 .asknanswer-content .discussion .all-posts .post .write-comment textarea{
 	width: 85%;
-	height: 35px;
+	height: 45px;
 	resize: none;
 	overflow: hidden;
+	border: solid 1px #E4E4E4;
+	padding: 8px;
 }
 .asknanswer-content .discussion .all-posts .post .write-comment button{
 	width: 10%;
 }
-
+.asknanswer-content .discussion .all-posts .post .comment-section{
+	padding: 12px 0px;
+	border-bottom: solid 1px #E4E4E4;
+}
+.asknanswer-content .discussion .all-posts .post .comment-section .comment-content{
+	margin-top: 10px;
+}
 .asknanswer-footer{
 	display: none;
 }

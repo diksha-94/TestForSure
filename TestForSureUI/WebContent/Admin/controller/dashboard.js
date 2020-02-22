@@ -4,8 +4,8 @@ var dashboardController = function(){
 };
 dashboardController.prototype.Init = function()
 {
-	$('.page-header').load('header.html', function(){
-		$('.admin-menu').load('menu.html', function(){
+	//$('.page-header').load('header.html', function(){
+		//$('.admin-menu').load('menu.html', function(){
 			this.BindEvents();
 			new menuController($('.admin-menu'));
 			this.userId = getCookie('test2bsure_admin');
@@ -20,8 +20,8 @@ dashboardController.prototype.Init = function()
 				$('.page-header').find('.admin-profile').css('display', 'none');
 				$('.after-login').css('display', 'none');
 			}
-		}.bind(this));
-	}.bind(this));
+		//}.bind(this));
+	//}.bind(this));
 };
 dashboardController.prototype.BindEvents = function()
 {
