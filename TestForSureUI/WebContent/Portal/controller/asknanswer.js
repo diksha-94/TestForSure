@@ -1,5 +1,5 @@
 var asknanswerController = function(){
-	this.connect = "http://localhost:8086/asknanswer/post/";
+	this.connect = "http://3.6.58.203:8086/asknanswer/post/";
 	this.posts = {};
 	this.state = 0;
 	this.exams = [];
