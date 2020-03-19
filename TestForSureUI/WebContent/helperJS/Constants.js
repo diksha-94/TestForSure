@@ -1,5 +1,5 @@
 var QuestionType = {
-     'MCQ': 0
+     'MCQ': 1
 };
 var ItemType = {
 	'TEST': 0,

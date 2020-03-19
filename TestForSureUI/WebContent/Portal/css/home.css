@@ -157,3 +157,6 @@
 .home-content .banner{
 	padding: 0px;
 }
+#myCarousel a.carousel-control.left, #myCarousel a.carousel-control.right{
+	display: none;
+}

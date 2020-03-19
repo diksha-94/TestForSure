@@ -176,6 +176,9 @@ headerController.prototype.Init = function()
 		$('#forgotPassModal').find('#errorOuterForgot').removeClass('show').addClass('hide');
 		userController.getObj().ForgetPassword(email);
 	});
+	$('#userProfile').find('#btnLogout').unbind().bind('click', function(){
+		userController.getObj().Logout();
+	});
 };
 headerController.prototype.LoadExams = function(){
 	fetch(remoteServer+'/test2bsure/header')

@@ -1,5 +1,5 @@
 var obj = null;
-var remoteServer = "http://3.6.58.203:8083";
+var remoteServer = "http://localhost:8083";
 var test2bsureController = function(){
 	this.userData = null;
 };
@@ -16,10 +16,10 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 					'<div class="brand-logo col-xs-8 col-sm-8 col-md-2 col-lg-2">'+
 						'<a class="brand" href="home.html"><img src="../../Images/Test2bSure_Logo.jpg" alt="TEST-2B-SURE"></a>'+
 					'</div>'+
-					'<div class="menu-items col-md-8 col-lg-8">'+
+					'<div class="menu-items col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
 						'<ul class="test2bsure-menu">'+
-							'<li class="menu-item active"><a href="home.html" class="link"><span class="test-color glyphicon glyphicon-home"></span>&nbsp;Home</a></li>'+
-							'<li class="menu-item exam-menu-li"><a class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Exams&nbsp;<span class="glyphicon glyphicon-chevron-down"></span>'+
+							'<li class="menu-item active"><a href="home.html" class="link">Home</a></li>'+
+							'<li class="menu-item exam-menu-li"><a class="link">Exams&nbsp;<span class="glyphicon glyphicon-chevron-down"></span>'+
 								'</a>'+
 								'<div class="exam-menu-div">'+
 									'<div class="col-md-4 col-lg-4 exam-tabs">'+
@@ -30,22 +30,20 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 									'</div>'+
 								'</div>'+
 							'</li>'+
-							'<li class="menu-item"><a href="quiz.html" class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Quizzes</a></li>'+
-							'<li class="menu-item"><a href="asknanswer.html" class="link"><span class="test-color glyphicon glyphicon-edit"></span>&nbsp;Ask & Answer</a></li>'+
-							'<li class="menu-item"><a href="aboutus.html" class="link"><span class="test-color glyphicon glyphicon-info-sign"></span>&nbsp;About Us</a></li>'+
-							'<li class="menu-item"><a href="contactus.html" class="link"><span class="test-color glyphicon glyphicon-earphone"></span>&nbsp;Contact Us</a></li>'+
+							'<li class="menu-item"><a href="quiz.html" class="link">Quizzes</a></li>'+
+							'<li class="menu-item"><a href="asknanswer.html" class="link">Ask & Answer</a></li>'+
+							'<li class="menu-item"><a href="aboutus.html" class="link">About Us</a></li>'+
+							'<li class="menu-item"><a href="contactus.html" class="link">Contact Us</a></li>'+
 						'</ul>'+
 					'</div>'+
 					'<div class="login-register-items col-xs-4 col-sm-4 col-md-2 col-lg-2">'+
 						'<ul class="test2bsure-options">'+
 							'<li id="menuLogin" class="show"><button type="button" class="button button-default" id="btnLogin">'+
-								'<span class="test-color glyphicon glyphicon-user"></span>&nbsp;Login/Register</button>'+
+								'Login/Register</button>'+
 							'</li>'+
-							'<li id="userProfile" class="hide"><a href="#">Hi<span id="loggedInUSer"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down"></span></a>'+
-								'<ul class="nav navbar-nav" id="subMenu">'+
-									'<li id="profile"><a href="profile.html">Profile</a></li>'+
-									'<li id="menuLogout" class="hide"><a href="#" id="linkLogout">Logout</a></li>'+
-								'</ul>'+
+							'<li id="userProfile" class="hide">'+
+								'<span class="greeting">Hi&nbsp;<span id="loggedInUSer"></span></span>'+
+								'<span class="logout"><a id="btnLogout">Logout</a></span>'+
 							'</li>'+
 						'</ul>'+
 					'</div>'+

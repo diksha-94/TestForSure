@@ -113,7 +113,8 @@ userController.prototype.SelfAuth = function(reload, callback)
 						window.location.reload();
 					}
 					$('#menuLogin').removeClass('show').addClass('hide');
-					$('#userProfile').removeClass('hide').addClass('show');
+					$('#userProfile').removeClass('hide');
+					$('#userProfile').css('display', 'flex');
 					$('#loggedInUSer').text(userController.getObj().userData.name)
 				}else{
 					$('#loginModal').find('#errorOuter').removeClass('hide');
@@ -166,4 +167,11 @@ userController.prototype.ForgetPassword = function(email)
 			console.log(e);
 		}
 	});
+};
+userController.prototype.Logout = function()
+{
+	//Remove Cookie
+	//alert("Logout");
+	document.cookie = "test2bsure_userLoginId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+	window.location.reload();
 };

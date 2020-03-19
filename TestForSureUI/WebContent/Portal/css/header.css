@@ -7,6 +7,10 @@
 	width: 230px;
 	margin-top: 5px;
 }
+.header .menu-items{
+	width: 61%;
+	margin-left: 5%;
+}
 .header .menu-items ul.test2bsure-menu {
 	font-size: 16px;
 	font-weight: bold;
@@ -36,6 +40,23 @@
 }
 .header .login-register-items ul.test2bsure-options li {
 	padding-top: 20px;
+}
+.header .login-register-items #userProfile{
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 27px;
+}
+.header .login-register-items #userProfile .greeting{
+	color: white;
+	font-weight: bold;
+}
+.header .login-register-items #userProfile .logout a{
+	color: white;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.header .login-register-items .test2bsure-options{
+	padding: 0px;
 }
 .exam-menu-div {
 	width: 500px;
@@ -114,6 +135,9 @@
 .exam-value-item {
     padding: 3px 0px;
     cursor: pointer;
+}
+.header .login-register-items button#btnLogin{
+	cursor: pointer;
 }
 /* Login Modal CSS */
 #loginModal .modal-footer {

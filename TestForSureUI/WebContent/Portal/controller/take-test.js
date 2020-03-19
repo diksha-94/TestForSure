@@ -72,7 +72,8 @@ testController.prototype.BindEvents = function()
 testController.prototype.PopulateTestInfo = function()
 {
 	console.log(this.testInfo);
-	var html = "<div class='col-xs-12 col-sm-12 col-md-4 col-lg-4'><h4>"+this.testInfo.title+"</h4></div>"+
+	var html = "<div class='col-xs-12 col-sm-12 col-md-4 col-lg-4 first'>"+
+			   		"<a class='btnBack'>Back</a><h4>"+this.testInfo.title+"</h4></div>"+
 			   "<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 removeInMobile'>"+
 			   		"<h5>"+this.testInfo.totalQues+" Questions / "+this.testInfo.totalMarks+" Marks</h5>"+
 			   	"</div>"+
@@ -500,7 +501,7 @@ testController.prototype.Timer = function()
 		this.totalSecs = this.totalSecs - passedSeconds;
 	}
 	if(totalSecs <= 0){
-		this.SubmitTest();
+		this.SubmitTest(1);
 		alert("Time is Over !!");
 		return;
 	}
@@ -509,7 +510,7 @@ testController.prototype.Timer = function()
 		this.totalSecs = parseInt(this.totalSecs) - 1;
 		if(totalSecs <= 0){
 			clearInterval(interval);
-			this.SubmitTest();
+			this.SubmitTest(1);
 			alert("Time is Over !!");
 		}
 		var mins =  parseInt(totalSecs / 60);
@@ -529,8 +530,14 @@ testController.prototype.Timer = function()
 		$('.test-header').find('.time-left').html(hrs + " : " + mins + " : " + secs);
 	}.bind(this), 1000);
 };
-testController.prototype.SubmitTest = function()
+testController.prototype.SubmitTest = function(timeover = 0)
 {
+	if(timeover == 1){
+		//Auto submit the test
+		this.SaveReportData();
+		return;
+	}
+	
 	$('#submitTestModal').modal('show');
 	var answered = 0;
 	var unanswered = 0;
