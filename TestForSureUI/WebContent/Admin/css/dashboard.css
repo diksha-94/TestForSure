@@ -318,3 +318,12 @@ body{
 .imagePreviewDiv{
 	padding: 0px;
 }
+.btn-primary, .btn-default{
+	border-radius:0px;
+}
+input{
+	border-radius: 0px !important;
+}
+select{
+	height:25px;
+}
