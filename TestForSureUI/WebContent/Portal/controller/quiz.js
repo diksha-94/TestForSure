@@ -33,7 +33,7 @@ quizController.prototype.SetState = function(obj)
 		this[key] = obj[key];
 	}
 	this.PopulateQuizzes();
-	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
+	$('.common-footer').css('top',parseInt($('.common-header').height() + $('.common-content').height())+30+'px');
 };
 quizController.prototype.LoadFilters = function()
 {
@@ -77,16 +77,23 @@ quizController.prototype.PopulateFilters = function()
 	var html = '<h4>Quiz Filters</h4>';
 	html += "<ul class='quiz-filters col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	for(var filter in this.filters){
-		html += "<li filter-id='"+this.filters[filter].id+"'><input class='filterItem' type='checkbox' value='"+this.filters[filter].title+"'>"+this.filters[filter].title+"</input></li>";
+		//html += "<li filter-id='"+this.filters[filter].id+"'><input class='filterItem' type='checkbox' value='"+this.filters[filter].title+"'>"+this.filters[filter].title+"</input></li>";
+		html += "<li filter-id='"+this.filters[filter].id+"'><span class='filterItem' data-value='"+this.filters[filter].title+"'>"+this.filters[filter].title+"</span></li>";
 	}
 	html += "</ul>";
 	html += "<button class='btnReset button button-primary'>Reset</button>";
 		
 	$('.quiz-listing .left').append(html);
-	$('.quiz-listing .left .quiz-filters').find('.filterItem').unbind().bind('click', function(e){
+	$('.quiz-listing .left .quiz-filters').find('li[filter-id]').unbind().bind('click', function(e){
+		if($(e.currentTarget).find('span').hasClass('selected')){
+			$(e.currentTarget).find('span').removeClass('selected');
+		}
+		else if(!$(e.currentTarget).find('span').hasClass('selected')){
+			$(e.currentTarget).find('span').addClass('selected');
+		}
 		var filterValues = "";
 		$('.quiz-listing .left .quiz-filters').find('.filterItem').each(function(key, value){
-			if($(value).prop('checked') == true){
+			if($(value).hasClass('selected')){
 				filterValues += $(value).parent('li').attr('filter-id')+',';
 			}
 		});

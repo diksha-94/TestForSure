@@ -90,7 +90,7 @@ function registerModal(){
 								'</div>'+
 								'<div class="form-group">'+
 									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-0 col-md-offset-4 col-lg-offset-4">'+
-										'<button type="button" id="btnDoRegister" class="btn btn-success btn-block">Register</button>'+
+										'<button type="button" id="btnDoRegister" class="button button-primary">Register</button>'+
 									'</div>'+
 								'</div>'+
 							'</form>'+
@@ -128,7 +128,7 @@ function forgotPassModal(){
 					'</div>'+
 					'<div class="form-group">'+
 						'<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-5 col-lg-offset-5">'+
-							'<button type="button" id="btnForgotSend" class="btn btn-success btn-block">Submit</button>'+
+							'<button type="button" id="btnForgotSend" class="button button-primary">Submit</button>'+
 						'</div>'+
 					'</div>'+
 				'</form>'+

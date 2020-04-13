@@ -2,10 +2,12 @@
 	height: 60px;
 	width: 100%;
 }
-.header .brand-logo img {
-	height: 60px;
-	width: 230px;
+.header .brand-logo {
 	margin-top: 5px;
+}
+.header .brand-logo img {
+	height: 50px;
+    width: 200px;
 }
 .header .menu-items{
 	width: 61%;
@@ -19,13 +21,14 @@
 	height: 100%;
 	margin-left: 0px;
 	padding-left: 0px;
+	margin-bottom: 0px;
 }
 .header .menu-items ul.test2bsure-menu li.menu-item {
 	margin-left: 20px;
 	padding: 0px 10px;
 }
 .header .menu-items ul.test2bsure-menu li.menu-item a.link {
-	margin-top: 25px;
+	margin-top: 20px;
 	display: block;
 	font-weight: normal;
 	font-size: 1em;
@@ -33,13 +36,13 @@
 	color: white;
 }
 .header ul.test2bsure-menu li.menu-item:hover {
-	background-color: #2E6DA4;
+	background-color: #103B6D;
 }
 .header ul.test2bsure-menu li.menu-item:hover a.link {
 	color: #E4E4E4;
 }
 .header .login-register-items ul.test2bsure-options li {
-	padding-top: 20px;
+	padding-top: 16px;
 }
 .header .login-register-items #userProfile{
 	flex-direction: row;
@@ -57,14 +60,15 @@
 }
 .header .login-register-items .test2bsure-options{
 	padding: 0px;
+    margin-bottom: 0px;
 }
 .exam-menu-div {
 	width: 500px;
-	background-color: #E4E4E4;
-	height: 400px;
-	margin-left: -10px;
-	margin-top: 16px;
-	overflow-y: auto;
+    background-color: #E4E4E4;
+    height: 400px;
+    overflow-y: auto;
+    position: absolute;
+    top: 60px;
 }
 .exam-menu-div .tab-content {
 	padding: 0px 10px;
@@ -99,7 +103,7 @@
 	float: right
 }
 .exam-menu-li{
-	width: 113px;
+	/*width: 113px;*/
 }
 .exam-tabs{
 	padding: 0px;
@@ -138,6 +142,8 @@
 }
 .header .login-register-items button#btnLogin{
 	cursor: pointer;
+	width: 80%;
+    margin-left: 10%;
 }
 /* Login Modal CSS */
 #loginModal .modal-footer {

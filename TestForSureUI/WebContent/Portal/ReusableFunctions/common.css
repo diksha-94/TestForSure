@@ -2,27 +2,32 @@
 	height: 30px;
 	width: 100%;
 }
-.button-primary:hover, .button-default:hover{
+/*.button-primary:hover, .button-default:hover{
 	transform: scale(1.02);
-}
+}*/
+
 .button-default:hover{
 	/*color: #fff;
-	background-color: #2E6DA4;
+	background-color: ##103B6D;
 	border-color: #fff;*/
+	cursor: pointer;
 }
 .button-primary{
-	background-color: #2E6DA4;
-	border: solid 1px #2E6DA4;
+	background-color: #103B6D;
+	border: solid 1px #103B6D;
 	border-radius: 0px;
 	color: white;
 	font-weight: bold;
 }
 .button-default{
-	border: solid 1px #2E6DA4;
-	border-radius: 0px;
-	color: #2E6DA4;
-	font-weight: bold;
-	background-color: #fff;
+	border: solid 1px #103B6D;
+    border-radius: 0px;
+    color: #103B6D;
+    font-weight: bold;
+    background-color: #fff;
+}
+.button-default:focus, .button-primary:focus{
+	border: solid 1px #103B6D;
 }
 .common-footer{
 	padding: 0px;
@@ -36,14 +41,14 @@
 	}
 }
 .common-header{
-	background-color: #2E6DA4;
-	position: fixed;
-	z-index: 100;
-	width: 100%;
-	height: 70px;
+	background-color: #103B6D;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 60px;
 }
 .common-content{
-	top: 70px;
+	top: 60px;
 	position: absolute;
 	padding: 0px;
 }
@@ -52,4 +57,14 @@
 }
 .modal-dialog .modal-content{
 	border-radius: 0px;
+}
+.form-control{
+	border-radius: 0px;
+}
+.alert.alert-danger{
+	border: none;
+    background-color: #fff;
+    padding: 5px;
+    color: red;
+    margin-bottom: 10px;
 }

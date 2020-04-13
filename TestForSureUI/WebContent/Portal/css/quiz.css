@@ -1,3 +1,25 @@
+.quiz-page{
+    margin-top: 20px;
+}
+.quiz-page .quiz-listing .left{
+	background-color: #e4e4e4;
+    margin-left: 3%;
+    width: 20%;
+    margin-top: 11px;
+    padding: 12px;
+}
+.quiz-page .quiz-listing .left h4{
+	text-align: center;
+}
+.quiz-page .quiz-listing .left button.btnReset{
+	width: 50%;
+    margin-left: 25%;
+    margin-top: 5px;
+}
+.quiz-page .quiz-listing .right{
+	width: 74%;
+    margin-left: 3%;
+}
 .quiz-listing .right ul {
 	list-style-type: none;
 }
@@ -135,4 +157,8 @@
 }
 .quiz-listing .left .quiz-filters{
 	list-style-type: none;
+}
+.quiz-listing .left .quiz-filters span.filterItem.selected::after{
+	content: url("../images/final/down_arrow.png");
+	margin-left:20px;
 }

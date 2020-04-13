@@ -14,12 +14,12 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 	//should make it custom , as per the need on different pages
 	var html = '<div class="header container-fluid">'+		
 					'<div class="brand-logo col-xs-8 col-sm-8 col-md-2 col-lg-2">'+
-						'<a class="brand" href="home.html"><img src="../../Images/Test2bSure_Logo.jpg" alt="TEST-2B-SURE"></a>'+
+						'<a class="brand" href="home.html"><img src="../images/final/logo_white.png" alt="TEST-2B-SURE"></a>'+
 					'</div>'+
 					'<div class="menu-items col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
 						'<ul class="test2bsure-menu">'+
 							'<li class="menu-item active"><a href="home.html" class="link">Home</a></li>'+
-							'<li class="menu-item exam-menu-li"><a class="link">Exams&nbsp;<span class="glyphicon glyphicon-chevron-down"></span>'+
+							'<li class="menu-item exam-menu-li"><a class="link">Exams&nbsp;<img src="../images/final/down_arrow.png" style="height: 8px;">'+
 								'</a>'+
 								'<div class="exam-menu-div">'+
 									'<div class="col-md-4 col-lg-4 exam-tabs">'+
@@ -67,7 +67,7 @@ test2bsureController.prototype.GetFooter = function(dom){
 	//should make it custom , as per the need on different pages
 	var html = "<div class='footer'>"+
 					"<div class='left col-xs-12 col-sm-12 col-md-7 col-lg-7'>"+
-						"<img src='../../Images/Test2bSure_Logo.jpg' class='logo-image-footer' alt='TEST-2B-SURE' />"+
+						"<img src='../images/final/logo_white.png' class='logo-image-footer' alt='TEST-2B-SURE' />"+
 						"<p class='about-us-footer'>Test2BSure.com is an online portal for "+
 						"all types of competitive exams (Technical and Non-Technical) to "+
 						"check performance/capability of a candidate before the actual exam. "+
