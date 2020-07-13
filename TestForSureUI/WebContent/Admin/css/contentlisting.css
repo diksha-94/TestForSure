@@ -122,3 +122,12 @@
 	padding: 5px 10px;
 }
 /* User View Modal CSS ends */
+
+.no-data{
+	margin: 35px 0px;
+	padding: 0px 25px;
+	text-align: center;
+}
+.menu-bar-2{
+	margin-top: 15px;
+}

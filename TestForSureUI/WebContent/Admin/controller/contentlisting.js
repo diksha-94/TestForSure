@@ -86,7 +86,6 @@ var contentlistingDef = {
 			"title": "Question",
 			"searchByName": true,
 			"searchByQuesCategory": true,
-			"searchByQuesSubcategory": true,
 			"addNewBtn": true,
 			"totalCount": true,
 			"pagination": true,
@@ -319,6 +318,7 @@ var contentlistingController = function(content){
 	this.currentPage = 1;
 	this.contentType = content;
 	this.content = contentlistingDef[this.contentType];
+	this.fromSearch = false;
 	this.Init();
 };
 contentlistingController.prototype.Init = function()
@@ -333,10 +333,6 @@ contentlistingController.prototype.Init = function()
 		removeLoader();
 	}.bind(this));
 	this.BindEvents();
-	
-	/*LoadJS(this.contentType, function(){
-		eval("new " + this.contentType + "Controller()");
-	}.bind(this));*/
 };
 contentlistingController.prototype.CreateSearchBar = function()
 {
@@ -361,6 +357,45 @@ contentlistingController.prototype.CreateSearchBar = function()
 						'</div>';
 		$(addNewBtn).appendTo(searchBar);
 	}
+	
+	var searchBar2 = $('<div class="menu-bar-2 col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>');
+	searchBar2.appendTo($('.menu-page-content'));
+	//Category Search
+	if(typeof this.content.searchByCategory != 'undefined' && this.content.searchByCategory == true){
+		var categorySearch = '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 searchbar">'+
+						 		'<span>Search by Category </span>'+
+						 		'<select id="ddSearchCategory"><option value="0">All</option></select>'+
+						 '</div>';
+		$(categorySearch).appendTo(searchBar2);
+		getCategories(function(data){
+			if(data.length > 0){
+				var html = "";
+				for(var cat in data){
+					html += "<option value='"+data[cat]['id']+"'>"+data[cat]['title']+"</option>";
+				}
+				$('#ddSearchCategory').append(html);
+			}
+		});
+	}
+	//Ques Category & Subcategory Search
+	if(typeof this.content.searchByQuesCategory != 'undefined' && this.content.searchByQuesCategory == true){
+		var categorySearch = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 searchbar">'+
+						 		'<span>Search by Question Category </span>'+
+						 		'<select id="ddSearchQuesCategory"><option value="0">All</option></select>'+
+						 		'<span style="margin-left: 40px;">Search by Question Sub Category </span>'+
+						 		'<select id="ddSearchQuesSubCategory"><option value="0">All</option></select>'+
+						 	'</div>';
+		$(categorySearch).appendTo(searchBar2);
+		getQuestionCategories(function(categories, subcategories){
+			if(categories.length > 0){
+				var html = "";
+				for(var cat in categories){
+					html += "<option value='"+categories[cat]['id']+"'>"+categories[cat]['name']+"</option>";
+				}
+				$('#ddSearchQuesCategory').append(html);
+			}
+		}.bind(this));
+	}
 };
 contentlistingController.prototype.CreateCounter = function()
 {
@@ -369,7 +404,7 @@ contentlistingController.prototype.CreateCounter = function()
 	
 	//Show total count
 	if(this.content.totalCount){
-		var totalCount = '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 itemCount">'+
+		var totalCount = '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 itemCount">'+
 							'Total ' + this.content.title + ' - <span></span>'+
 						 '</div>';
 		$(totalCount).appendTo(counterBar);
@@ -377,7 +412,7 @@ contentlistingController.prototype.CreateCounter = function()
 
 	//Pagination
 	if(this.content.pagination){
-		var pagination = '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xs-offset-5 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 paginationDiv">'+
+		var pagination = '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 paginationDiv">'+
 						 '</div>';
 		$(pagination).appendTo(counterBar);
 	}
@@ -399,26 +434,43 @@ contentlistingController.prototype.CreateExistingItems = function()
 			"</tbody>"+
 			"</table>"+
 			"</div>";
+	html += "<div class='no-data hide'></div>";
 	$(html).appendTo($('.menu-page-content'));
 };
 //Consider Search and pagination here
 contentlistingController.prototype.LoadDataFromServer = function(callback)
 {
-	var start = $('.paginationDiv').find('.pagination').find('select').find(":selected").attr('data-start');
-	if(typeof start == 'undefined'){
-		start = 0;
+	this.start = $('.paginationDiv').find('.pagination').find('select').find(":selected").attr('data-start');
+	if(typeof this.start == 'undefined' || this.fromSearch){
+		this.start = 0;
+		this.currentPage = 1;
+		this.fromSearch = false;
 	}
 	var search = "";
-	if(this.content.searchByName){
+	var category = 0;
+	var subcategory = 0;
+	if(typeof this.content.searchByName != 'undefined' && this.content.searchByName == true){
 		search = $('.txtSearchByName').val();
 	}
+	if(typeof this.content.searchByCategory != 'undefined' && this.content.searchByCategory == true){
+		category = $('#ddSearchCategory').val();
+	}
+	if(typeof this.content.searchByQuesCategory != 'undefined' && this.content.searchByQuesCategory == true){
+		category = $('#ddSearchQuesCategory').val();
+		subcategory = $('#ddSearchQuesSubCategory').val();
+	}
+	
 	var url = remoteServer + "/test2bsure/"+this.content.backend.loadData+"?count="+perPage;
 	if(search.length > 0){
 		url += "&search="+search;
-		start = 0;
-		this.currentPage = 1;
 	}
-	url += "&start="+start;
+	if(category != 0){
+		url += "&category="+category;
+	}
+	if(subcategory != 0){
+		url += "&subcategory="+subcategory;
+	}
+	url += "&start="+this.start;
 	console.log(url)
 	$.ajax({
 		url: url,
@@ -466,11 +518,15 @@ contentlistingController.prototype.LoadDataFromServer = function(callback)
 						}
 						html += "</tr>";
 					}
+					$('.existing-items').removeClass('hide').addClass('show');
+					$('.no-data').removeClass('show').addClass('hide');
 					$('.existing-items').find('table').find('tbody').html(html);
 				}
 			}
 			else{
-				$('.existing-items').html('<h3>'+response.result.message+' !!</h3>');
+				$('.existing-items').removeClass('show').addClass('hide');
+				$('.no-data').removeClass('hide').addClass('show');
+				$('.no-data').html('<h3>'+response.result.message+' !!</h3>');
 			}
 			if(typeof callback == 'function'){
 				callback(response.result.length);
@@ -506,6 +562,17 @@ contentlistingController.prototype.BindEvents = function()
 	//Search
 	if($('.btnSearchByName').length > 0){
 		$('.btnSearchByName').unbind().bind('click', function(){
+			this.fromSearch = true; 1;
+			this.LoadDataFromServer(function(len){
+				this.HandlePagination(len);
+				removeLoader();
+			}.bind(this));
+		}.bind(this))
+	}
+	//Search By Category
+	if($('#ddSearchCategory').length > 0){
+		$('#ddSearchCategory').unbind().bind('change', function(){
+			this.fromSearch = true;
 			this.LoadDataFromServer(function(len){
 				this.HandlePagination(len);
 				removeLoader();
@@ -513,6 +580,42 @@ contentlistingController.prototype.BindEvents = function()
 		}.bind(this))
 	}
 	
+	//Search by Question Category & Question Subcategory
+	if($('#ddSearchQuesCategory').length > 0){
+		$('#ddSearchQuesCategory').unbind().bind('change', function(e){
+			this.fromSearch = true;
+			var categoryId = $(e.currentTarget).val();
+			//Populate Subcategories
+			if(categoryId == 0){
+				$('#ddSearchQuesSubCategory').html("<option value='0'>All</option>");
+			}
+			else{
+				getQuestionCategories(function(cat, subcat){
+					var html = "<option value='0'>All</option>";
+					for(var cat in subcat){
+						if(subcat[cat]["categoryId"] == categoryId){
+							html += "<option value='"+subcat[cat]['id']+"'>"+subcat[cat]['name']+"</option>";
+						}
+					}
+					$('#ddSearchQuesSubCategory').html(html);
+				});
+			}
+			this.LoadDataFromServer(function(len){
+				this.HandlePagination(len);
+				removeLoader();
+			}.bind(this));
+		}.bind(this))
+	}
+	
+	if($('#ddSearchQuesSubCategory').length > 0){
+		$('#ddSearchQuesSubCategory').unbind().bind('change', function(){
+			this.fromSearch = true;
+			this.LoadDataFromServer(function(len){
+				this.HandlePagination(len);
+				removeLoader();
+			}.bind(this));
+		}.bind(this))
+	}
 	//Create New Item
 	if($('.btnAddNew').length > 0){
 		$('.btnAddNew').unbind().bind('click', function(){

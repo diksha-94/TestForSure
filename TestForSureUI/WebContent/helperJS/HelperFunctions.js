@@ -121,3 +121,27 @@ function getCategories(callback){
 		}
 	});
 }
+
+function getQuestionCategories(callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/question-category',
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.categories != null || response.subcategories != null){
+					callback(response.categories, response.subcategories);
+				}
+				else{
+					callback([], []);
+				}
+			}
+			else{
+				callback([], []);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([], []);
+		}
+	});
+}
