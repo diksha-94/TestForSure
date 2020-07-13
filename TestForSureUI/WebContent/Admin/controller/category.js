@@ -1,106 +1,33 @@
 var categoryController = function(){
-	this.Init();
+	this.id = -1;
 };
 categoryController.prototype.Init = function()
 {
-	console.log('Initiate category');
-	showLoader();
-	this.LoadView();
 };
-categoryController.prototype.BindEvents = function()
+categoryController.prototype.AddEdit = function()
 {
+	$('#categoryModal').modal('show');
+	RefreshData('categoryModal');
+	if(this.id > 0){
+		this.Edit();
+	}
+	$('#categoryModal').find('#btnCategorySave').unbind().bind('click', function(){
+		this.SaveData();
+	}.bind(this));
 	//Show image preview
 	$('#txtCategoryImageUrl').unbind().bind('keyup', function(){
 		$('#imgCategoryImagePreview').attr('src', $('#txtCategoryImageUrl').val());
 	});
-	//Search category by name/title - button
-	$('#btnSearchCategory').unbind().bind('click', function(){
-		this.SearchCategoryByName(0, function(length){
-			this.HandleRecords(length);
-		}.bind(this));
-	}.bind(this));
-	
-	//Add/Update Category
-	$('.addEditCategory').unbind().bind('click', function(e){
-		$('#categoryModal').modal('show');
-		RefreshData('categoryModal');
-		this.PopulateCategoryData(e);
-		var id = 0;
-		var update = $(e.currentTarget).hasClass('update');
-		if(update){
-			id = $(e.currentTarget).parents('tr').find('.tdCategoryId').text();
-		}
-		$('#categoryModal').find('#btnCategorySave').unbind().bind('click', function(){
-			this.SaveCategory(update, id);
-		}.bind(this));
-		$('#categoryModal').find('#btnCategoryRefresh').unbind().bind('click', function(){
-			RefreshData('categoryModal');
-		}.bind(this));
-	}.bind(this));
-	
-	$('.deleteCategory').unbind().bind('click', function(e){
-		var categoryId = $(e.currentTarget).parents('tr').find('td:first-child').text();
-		console.log(categoryId);
-		var currentCategory = $(e.currentTarget).parents('tr');
-		var title = currentCategory.find('.tdCategoryTitle').text();
-		$('#deleteCategoryModal').modal('show');
-		$('#deleteCategoryModal').find('.modal-body').find('p').find('span').text(title+" ?");
-		$('#deleteCategoryModal').find('#btnDeleteYes').unbind().bind('click', function(){
-			this.DeleteCategory(categoryId, e);
-		}.bind(this));
-	}.bind(this));
 };
-categoryController.prototype.LoadView = function()
+categoryController.prototype.Delete = function()
 {
-	$('.menu-page-content').load('category.html', function(){
-		this.LoadAllCategories(0, function(length){
-			this.HandleRecords(length);
-			removeLoader();
-		}.bind(this));
+	$('#deleteCategoryModal').modal('show');
+	$('#deleteCategoryModal').find('.modal-body').find('p').find('span').text(this.id+" ?");
+	$('#deleteCategoryModal').find('#btnDeleteYes').unbind().bind('click', function(){
+		this.DeleteItem();
 	}.bind(this));
 };
-categoryController.prototype.LoadAllCategories = function(start, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/category?count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var categories = response.data;
-					var catObj = "";
-					for(var category in categories){
-						catObj += "<tr>"+
-						"<td class='tdCategoryId'>"+categories[category]['id']+"</td>"+
-						"<td class='tdCategoryName'>"+categories[category]['name']+"</td>"+
-						"<td class='tdCategoryTitle'>"+categories[category]['title']+"</td>"+
-						"<td class='tdCategoryImageUrl'><img src='"+categories[category]['imageUrl']+"' alt='Not Available'/></td>"+
-						"<td>"+
-							"<button class='btn btn-default addEditCategory update'>Edit</button>"+
-							"<button class='btn btn-default deleteCategory'>Delete</button>"+
-						"</td>"+
-						"</tr>";
-					}
-					$('.existing-categories').find('table').find('tbody').html(catObj);
-				}
-			}
-			else{
-				$('.existing-categories').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function'){
-				callback(response.result.length);
-			}
-			this.BindEvents();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback == 'function'){
-				callback(0);
-			}
-		}
-	});
-};
-categoryController.prototype.SaveCategory = function(update, id)
+categoryController.prototype.SaveData = function()
 {
 	console.log('Saving (Add/Update) Category');
 	var name = $('#txtCategoryName').val();
@@ -119,8 +46,8 @@ categoryController.prototype.SaveCategory = function(update, id)
 			'active': 1
 	};
 	console.log(requestData);
-	if(update){
-		requestData.id = id;
+	if(this.id > -1){
+		requestData.id = this.id;
 		type = 'PUT';
 	}
 	console.log('Call to save category');
@@ -128,10 +55,7 @@ categoryController.prototype.SaveCategory = function(update, id)
 		url: url,
 		type: type,
 		contentType: "application/json",
-		
-		//contentType: 'application/json',
 		data: JSON.stringify(requestData),
-		//"Content-Type": "application/json",
 		success: function(response){
 			if(response.status == true){
 				$('#categoryModal').modal('hide');
@@ -148,13 +72,10 @@ categoryController.prototype.SaveCategory = function(update, id)
 		}
 	});
 };
-categoryController.prototype.DeleteCategory = function(categoryId, e)
+categoryController.prototype.DeleteItem = function()
 {
-	console.log('Delete Category');
-	//ajax call to delete the category
-	//in ajax success, remove the category from the page
 	$.ajax({
-		url: remoteServer+"/test2bsure/category?id="+categoryId,
+		url: remoteServer+"/test2bsure/category?id="+this.id,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -169,83 +90,25 @@ categoryController.prototype.DeleteCategory = function(categoryId, e)
 			alert(e);
 		}
 	});
-	
 };
-categoryController.prototype.PopulateCategoryData = function(e)
+categoryController.prototype.Edit = function(e)
 {
-	var name = "";
-	var title = "";
-	var imageUrl = "";
-	if($(e.currentTarget).hasClass('update')){
-		var currentCategory = $(e.currentTarget).parents('tr');
-		name = currentCategory.find('.tdCategoryName').text();
-		title = currentCategory.find('.tdCategoryTitle').text();
-		imageUrl = currentCategory.find('.tdCategoryImageUrl').find('img').attr('src');
-	}
-	$('#categoryModal').find('#txtCategoryName').val(name);
-	$('#categoryModal').find('#txtCategoryTitle').val(title);
-	$('#categoryModal').find('#txtCategoryImageUrl').val(imageUrl);
-	$('#categoryModal').find('#imgCategoryImagePreview').attr('src', imageUrl);
-};
-categoryController.prototype.SearchCategoryByName = function(start, callback)
-{
-	var search = $('#txtSearchCategory').val();
-	showLoader();
 	$.ajax({
-		url: remoteServer+'/test2bsure/category?search='+search+'&count='+perPage+'&start='+start,
+		url: remoteServer + "/test2bsure/category?id=" + this.id,
 		type: 'GET',
 		success: function(response){
-			$('.existing-categories').find('table').find('tbody').empty();
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
-					var categories = response.data;
-					var catObj = "";
-					for(var category in categories){
-						catObj += "<tr>"+
-						"<td class='tdCategoryId'>"+categories[category]['id']+"</td>"+
-						"<td class='tdCategoryName'>"+categories[category]['name']+"</td>"+
-						"<td class='tdCategoryTitle'>"+categories[category]['title']+"</td>"+
-						"<td class='tdCategoryImageUrl'><img src='"+categories[category]['imageUrl']+"' alt='Not Available'/></td>"+
-						"<td>"+
-							"<button class='btn btn-default addEditCategory update'>Edit</button>"+
-							"<button class='btn btn-default deleteCategory'>Delete</button>"+
-						"</td>"+
-						"</tr>";
-					}
-					$('.existing-categories').find('table').find('tbody').html(catObj);
-					this.BindEvents();
+					var item = response.data[0];
+					$('#categoryModal').find('#txtCategoryName').val(item.name);
+					$('#categoryModal').find('#txtCategoryTitle').val(item.title);
+					$('#categoryModal').find('#txtCategoryImageUrl').val(item.imageUrl);
+					$('#categoryModal').find('#imgCategoryImagePreview').attr('src', item.imageUrl);
 				}
 			}
-			else{
-				$('.existing-categories').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function'){
-				callback(response.result.length);
-			}
-			removeLoader();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			if(typeof callback == 'function'){
-				callback(0);
-			}
-			removeLoader();
 		}
 	});
-};
-categoryController.prototype.HandleRecords = function(len){
-	$('.counter').find('.itemCount').find('span').text(len);
-	if(len > 0){
-		$('.paginationDiv').html(pagination(len));
-		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
-			var search = $('#txtSearchCategory').val();
-			var start = $(e.currentTarget).find(":selected").attr('data-start');
-			if(search.length > 0){
-				this.SearchCategoryByName(start);
-			}
-			else{
-				this.LoadAllCategories(start);
-			}
-		}.bind(this));
-	}
 };

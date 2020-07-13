@@ -1,124 +1,44 @@
 var examController = function(){
-	this.categories = [];
-	this.exams = {};
-	this.Init();
+	this.id = -1
 };
 examController.prototype.Init = function()
 {
-	console.log('Initiate exam');
-	showLoader();
-	this.GetCategories(function(){
-		this.LoadView();
-	}.bind(this));
 };
-examController.prototype.BindEvents = function()
+examController.prototype.AddEdit = function()
 {
+	$('#examModal').modal('show');
+	summernoteController.getObj().addEditor('#txtExamDescription');
+	RefreshData('examModal');
+	getCategories(function(data){
+		if(data.length > 0){
+			var html = "";
+			for(var cat in data){
+				html += "<option value='"+data[cat]['id']+"'>"+data[cat]['title']+"</option>";
+			}
+			$('#ddCategory').append(html);
+		}
+		if(this.id > 0){
+			this.Edit();
+		}
+	}.bind(this));
+	
+	$('#examModal').find('#btnExamSave').unbind().bind('click', function(){
+		this.SaveData();
+	}.bind(this));
 	//Show image preview
 	$('#txtExamImageUrl').unbind().bind('keyup', function(){
 		$('#imgExamImagePreview').attr('src', $('#txtExamImageUrl').val());
 	});
-	if(this.categories.length > 0){
-		var catObj = "";
-		for(var category in this.categories){
-			catObj += "<option value='"+this.categories[category]['id']+"'>"+this.categories[category]['title']+"</option>";
-		}
-		$('#ddSearchCategory').append(catObj);
-	}
-	//Search exam by category
-	$('#ddSearchCategory').on('change', function(e){
-		this.SearchByCategory();
-	}.bind(this));
-	
-	//Search category by name/title - button
-	$('#btnSearchExam').unbind().bind('click', function(){
-		this.SearchByCategory();
-	}.bind(this));
 };
-examController.prototype.BindTableEvents = function()
+examController.prototype.Delete = function()
 {
-	//Add/Update Category
-	$('.addEditExam').unbind().bind('click', function(e){
-		$('#examModal').modal('show');
-		summernoteController.getObj().addEditor('#txtExamDescription');
-		RefreshData('examModal');
-		this.PopulateExamData(e);
-		var id = 0;
-		var update = $(e.currentTarget).hasClass('update');
-		if(update){
-			id = $(e.currentTarget).parents('tr').find('.tdExamId').text();
-		}
-		$('#examModal').find('#btnExamSave').unbind().bind('click', function(){
-			this.SaveExam(update, id);
-		}.bind(this));
-		$('#examModal').find('#btnExamRefresh').unbind().bind('click', function(){
-			RefreshData('examModal');
-		}.bind(this));
-	}.bind(this));
-	
-	$('.deleteExam').unbind().bind('click', function(e){
-		var examId = $(e.currentTarget).parents('tr').find('td:first-child').text();
-		console.log(examId);
-		$('#deleteExamModal').modal('show');
-		$('#deleteExamModal').find('.modal-body').find('p').find('span').text(this.exams[examId].title+" ?");
-		$('#deleteExamModal').find('#btnDeleteYes').unbind().bind('click', function(){
-			this.DeleteExam(examId, e);
-		}.bind(this));
+	$('#deleteExamModal').modal('show');
+	$('#deleteExamModal').find('.modal-body').find('p').find('span').text(this.id+" ?");
+	$('#deleteExamModal').find('#btnDeleteYes').unbind().bind('click', function(){
+		this.DeleteItem();
 	}.bind(this));
 };
-examController.prototype.LoadView = function()
-{
-	$('.menu-page-content').load('exam.html', function(){
-		this.LoadAllExams(0, function(length){
-			this.HandleRecords(length);
-			this.BindEvents();
-			this.BindTableEvents();
-			removeLoader();
-		}.bind(this));
-	}.bind(this));
-};
-examController.prototype.LoadAllExams = function(start, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/exam?count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var examObj = "";
-					var exams = response.data;
-					for(var exam in exams){
-						this.exams[exams[exam]['id']] = exams[exam];
-						examObj += "<tr>"+
-						"<td class='tdExamId'>"+exams[exam]['id']+"</td>"+
-						"<td class='tdExamName'>"+exams[exam]['name']+"</td>"+
-						"<td class='tdExamTitle'>"+exams[exam]['title']+"</td>"+
-						"<td class='tdExamImageUrl'><img src='"+exams[exam]['imageUrl']+"' alt='Not Available'/></td>"+		
-						"<td class='tdExamCategoryId'><span>"+exams[exam]['category']+"</span> - "+this.GetCategoryName(exams[exam]['category'])+"</td>"+
-						"<td>"+
-							"<button class='btn btn-default addEditExam update'>Edit</button>"+
-							"<button class='btn btn-default deleteExam'>Delete</button>"+
-						"</td>"+
-						"</tr>";
-					}
-					$('.existing-exams').find('table').find('tbody').html(examObj);
-					this.BindTableEvents();
-				}
-			}
-			else{
-				$('.existing-exams').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function'){
-				callback(response.result.length);
-			}
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback == 'function')
-				callback(0);
-		}
-	});
-};
-examController.prototype.SaveExam = function(update, id)
+examController.prototype.SaveData = function()
 {
 	console.log('Saving (Add/Update) Exam');
 	var name = $('#txtExamName').val();
@@ -141,8 +61,8 @@ examController.prototype.SaveExam = function(update, id)
 			'active': 1
 	};
 	console.log(requestData);
-	if(update){
-		requestData.id = id;
+	if(this.id > 0){
+		requestData.id = this.id;
 		type = 'PUT';
 	}
 	console.log('Call to save exam');
@@ -163,13 +83,11 @@ examController.prototype.SaveExam = function(update, id)
 		}
 	});
 };
-examController.prototype.DeleteExam = function(examId, e)
+examController.prototype.DeleteItem = function()
 {
-	console.log('Delete Exam');
-	//ajax call to delete the exam
 	//in ajax success, remove the exam from the page
 	$.ajax({
-		url: remoteServer+"/test2bsure/exam?id="+examId,
+		url: remoteServer+"/test2bsure/exam?id="+this.id,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -182,111 +100,28 @@ examController.prototype.DeleteExam = function(examId, e)
 		}
 	});
 };
-examController.prototype.GetCategories = function(callback)
+examController.prototype.Edit = function(e)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/category',
+		url: remoteServer + "/test2bsure/exam?id=" + this.id,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
-					this.categories = response.data;
+					var item = response.data[0];
+					$('#examModal').find('#txtExamName').val(item.name);
+					$('#examModal').find('#txtExamTitle').val(item.title);
+					$('#examModal').find('#txtExamImageUrl').val(item.imageUrl);
+					$('#examModal').find('#ddCategory').val(item.category);
+					summernoteController.getObj().setValue('#txtExamDescription', item.description);
+					$('#examModal').find('#imgExamImagePreview').attr('src', item.imageUrl);
 				}
 			}
-			callback();
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			callback();
 		}
 	});
-};
-examController.prototype.PopulateExamData = function(e)
-{
-	//Populate Category dropdown
-	if(this.categories.length > 0){
-		var catObj = "";
-		for(var category in this.categories){
-			catObj += "<option value='"+this.categories[category]['id']+"'>"+this.categories[category]['title']+"</option>";
-		}
-		$('#ddCategory').append(catObj);
-	}
-	var name = "";
-	var title = "";
-	var imageUrl = "";
-	var categoryId = "";
-	var desc = "";
-	if($(e.currentTarget).hasClass('update')){
-		var currentExam = $(e.currentTarget).parents('tr');
-		name = currentExam.find('.tdExamName').text();
-		title = currentExam.find('.tdExamTitle').text();
-		imageUrl = currentExam.find('.tdExamImageUrl').find('img').attr('src');
-		categoryId = currentExam.find('.tdExamCategoryId').find('span').text();
-		desc = this.exams[currentExam.find('.tdExamId').text()].description;
-	}
-	$('#examModal').find('#txtExamName').val(name);
-	$('#examModal').find('#txtExamTitle').val(title);
-	$('#examModal').find('#txtExamImageUrl').val(imageUrl);
-	$('#examModal').find('#ddCategory').val(categoryId);
-	summernoteController.getObj().setValue('#txtExamDescription', desc);
-	$('#examModal').find('#imgExamImagePreview').attr('src', imageUrl);
-	//$('#examModal').find('#txtExamDescription').val(desc);
-};
-examController.prototype.SearchExamByName = function(start, callback)
-{
-	showLoader();
-	var search = $('#txtSearchExam').val();
-	$.ajax({
-		url: remoteServer+'/test2bsure/exam?search='+search+'&count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			$('.existing-exams').find('table').find('tbody').empty();
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var examObj = "";
-					var exams = response.data;
-					for(var exam in exams){
-						this.exams[exams[exam]['id']] = exams[exam];
-						examObj += "<tr>"+
-						"<td class='tdExamId'>"+exams[exam]['id']+"</td>"+
-						"<td class='tdExamName'>"+exams[exam]['name']+"</td>"+
-						"<td class='tdExamTitle'>"+exams[exam]['title']+"</td>"+
-						"<td class='tdExamImageUrl'><img src='"+exams[exam]['imageUrl']+"' alt='Not Available'/></td>"+
-						"<td class='tdExamCategoryId'><span>"+exams[exam]['category']+"</span> - "+this.GetCategoryName(exams[exam]['category'])+"</td>"+
-						"<td>"+
-							"<button class='btn btn-default addEditExam update'>Edit</button>"+
-							"<button class='btn btn-default deleteExam'>Delete</button>"+
-						"</td>"+
-						"</tr>";
-					}
-					$('.existing-exams').find('table').find('tbody').html(examObj);
-					this.BindTableEvents();
-				}
-			}
-			else{
-				$('.existing-exams').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function')
-				callback(response.result.length);
-			removeLoader();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback == 'function')
-				callback(0);
-			removeLoader();
-		}
-	});
-};
-examController.prototype.GetCategoryName = function(id)
-{
-	if(typeof this.categories != 'undefined' && this.categories.length > 0){
-		for(var category in this.categories){
-			if(this.categories[category].id == id){
-				return this.categories[category]["title"];
-			}
-		}
-	}
 };
 examController.prototype.SearchByCategory = function()
 {
@@ -322,20 +157,4 @@ examController.prototype.SearchByCategory = function()
 			index++;
 		});
 	}.bind(this));
-};
-examController.prototype.HandleRecords = function(len){
-	$('.counter').find('.itemCount').find('span').text(len);
-	if(len > 0){
-		$('.paginationDiv').html(pagination(len));
-		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
-			var search = $('#txtSearchExam').val();
-			var start = $(e.currentTarget).find(":selected").attr('data-start');
-			if(search.length > 0){
-				this.SearchExamByName(start);
-			}
-			else{
-				this.LoadAllExams(start);
-			}
-		}.bind(this));
-	}
 };

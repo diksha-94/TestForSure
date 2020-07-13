@@ -1,85 +1,42 @@
 var testController = function(){
-	this.sectionCount = 0;
-	this.categories = {};
-	this.id = 0;
-	this.exams = {};
-	this.tests = {};
-	this.questions = {};
-	this.questionCategory = {};
-	this.questionSubcategory = {};
-	this.selectedQuestions = [];
-	this.allExams = {};
-	this.allQuesLength = 0;
-	this.Init();
+	this.id = -1;
 };
 testController.prototype.Init = function()
 {
-	showLoader();
-	this.LoadCategories();
-	this.LoadExams();
-	this.LoadQuestions(0);
-	this.GetQuestionCategories();
-	this.LoadView();
+};
+testController.prototype.AddEdit = function()
+{
+	$('#testDetailsModal').modal('show');
+	RefreshData('testDetailsModal');
+	if(this.id > 0){
+		this.Edit();
+	}
+	$('#testDetailsModal').find('#btnTestDetailsSave').unbind().bind('click', function(){
+		this.SaveData();
+	}.bind(this));
+	$('#testDetailsModal').find('#chkTestLock').unbind().bind('change', function(e){
+		var lockValue = $(e.currentTarget).prop('checked');
+		if(lockValue == true){
+			$('#txtTestLockPoints').removeClass('lockDetails');
+			$('#txtTestLockRupees').removeClass('lockDetails');
+		}
+		else if(lockValue == false){
+			$('#txtTestLockPoints').addClass('lockDetails');
+			$('#txtTestLockRupees').addClass('lockDetails');
+		}
+	});
+};
+testController.prototype.Delete = function()
+{
+	$('#deleteTestModal').modal('show');
+	$('#deleteTestModal').find('.modal-body').find('p').find('span').text(this.id+" ?");
+	$('#deleteTestModal').find('#btnDeleteYes').unbind().bind('click', function(){
+		this.DeleteItem();
+	}.bind(this));
 };
 testController.prototype.BindEvents = function()
 {
-	//Search quiz by name/title - button
-	$('#btnSearchTest').unbind().bind('click', function(){
-		this.SearchTestByName(0, function(length){
-			this.HandleRecords(length);
-		}.bind(this));
-	}.bind(this));
-	
-	//Add/Update Test$(e.currentTarget).val()
-	$('.addEditTest').unbind().bind('click', function(e){
-		$('#testDetailsModal').modal('show');
-		summernoteController.getObj().addEditor('#txtTestInstructions');
-		RefreshData('testDetailsModal');
-		this.PopulateTestData(e);
-		var id = 0;
-		var update = $(e.currentTarget).hasClass('update');
-		if(update){
-			id = $(e.currentTarget).parents('tr').find('.tdTestId').text();
-		}
-		$('#testDetailsModal').find('#btnTestDetailsSave').unbind().bind('click', function(){
-			this.SaveTestDetails(update, id);
-		}.bind(this));
-		$('#testDetailsModal').find('#btnTestRefresh').unbind().bind('click', function(){
-			RefreshData('testDetailsModal');
-		}.bind(this));
-		$('#testDetailsModal').find('#btnTestCancel').unbind().bind('click', function(){
-			$('#testDetailsModal').modal('hide');
-			$('.menu-tabs').find('li[class="active"]').find('a').click();
-		}.bind(this));
-		$('#testDetailsModal').find('.close').unbind().bind('click', function(){
-			$('#testDetailsModal').modal('hide');
-			$('.menu-tabs').find('li[class="active"]').find('a').click();
-		}.bind(this));
-		$('#testDetailsModal').find('#chkTestLock').unbind().bind('change', function(e){
-			var lockValue = $(e.currentTarget).prop('checked');
-			if(lockValue == true){
-				$('#txtTestLockPoints').removeClass('lockDetails');
-				$('#txtTestLockRupees').removeClass('lockDetails');
-			}
-			else if(lockValue == false){
-				$('#txtTestLockPoints').addClass('lockDetails');
-				$('#txtTestLockRupees').addClass('lockDetails');
-			}
-		});
-	}.bind(this));
-	
-	$('.deleteTest').unbind().bind('click', function(e){
-		var testId = $(e.currentTarget).parents('tr').find('td:first-child').text();
-		console.log(testId);
-		var currentTest = $(e.currentTarget).parents('tr');
-		var title = currentTest.find('.tdTestTitle').text();
-		$('#deleteTestModal').modal('show');
-		$('#deleteTestModal').find('.modal-body').find('p').find('span').text(title+" ?");
-		$('#deleteTestModal').find('#btnDeleteYes').unbind().bind('click', function(){
-			this.DeleteTest(testId, e);
-		}.bind(this));
-	}.bind(this));
-		
+	//TODO
 	//Publish/Unpublish Test
 	$('.testStatus').unbind().bind('click', function(e){
 		var testId = $(e.currentTarget).parents('tr').find('td:first-child').text();
@@ -94,62 +51,9 @@ testController.prototype.BindEvents = function()
 		this.AddSection();
 	}.bind(this));
 };
-testController.prototype.LoadView = function()
-{
-	$('.menu-page-content').load('test.html', function(){
-		this.LoadAllTests(0, function(length){
-			this.HandleRecords(length);
-			removeLoader();
-		}.bind(this));
-	}.bind(this));
-};
-testController.prototype.LoadAllTests = function(start, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/test?count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var tests = response.data;
-					var testObj = "";
-					for(var test in tests){
-						this.tests[tests[test]['id']] = tests[test];
-						var testStatus = tests[test]['publish'];
-						var btnText = testStatus == 1 ? 'Unpublish' : 'Publish';
-						var btnCss = testStatus == 1 ? "background-color:red;color:white;font-weight:bold;" : "background-color:green;color:white;font-weight:bold;";
-						testObj += "<tr>"+
-										"<td class='tdTestId'>"+tests[test]['id']+"</td>"+
-										"<td class='tdTestName'>"+tests[test]['name']+"</td>"+
-										"<td class='tdTestTitle'>"+tests[test]['title']+"</td>"+
-										"<td class='tdTestQuestions'>"+tests[test]['totalQues']+"</td>"+
-										"<td class='tdTestMarks'>"+tests[test]['totalMarks']+"</td>"+
-										"<td class='tdTestTime'>"+tests[test]['totalTime']+"</td>"+
-										"<td>"+
-											"<button class='btn btn-default addEditTest update'>Edit</button>"+
-											"<button class='btn btn-default deleteTest'>Delete</button>"+
-											"<button class='btn btn-default testStatus' test-status='"+testStatus+"' style='"+btnCss+"'>"+btnText+"</button>"+
-										"</td>"+
-									"</tr>";
-					}
-					$('.existing-tests').find('table').find('tbody').html(testObj);
-				}
-			}
-			else{
-				$('.existing-tests').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function')
-				callback(response.result.length);
-			this.BindEvents();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback == 'function')
-				callback(0);
-		}
-	});
-};
-testController.prototype.SaveTestDetails = function(update, id, navigate)
+
+
+testController.prototype.SaveData = function(navigate)
 {
 	if(typeof navigate == 'undefined'){
 		navigate = true;
@@ -237,11 +141,7 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 			'suggestedTests' : suggestedTests,
 			'instructions' : instructions
 		};
-	if(update){
-		requestData.id = id;
-		type = 'PUT';
-	}
-	else if(parseInt(this.id) > 0){
+	if(this.id > 0){
 		requestData.id = this.id;
 		type = 'PUT';
 	}
@@ -293,11 +193,10 @@ testController.prototype.SaveTestDetails = function(update, id, navigate)
 	});
 };
 
-testController.prototype.DeleteTest = function(testId, e)
+testController.prototype.DeleteItem = function()
 {
-	console.log('Delete Test');
 	$.ajax({
-		url: remoteServer+"/test2bsure/test?id="+testId,
+		url: remoteServer+"/test2bsure/test?id="+this.id,
 		type: 'DELETE',
 		
 		success: function(response){
@@ -311,7 +210,7 @@ testController.prototype.DeleteTest = function(testId, e)
 		}
 	});
 };
-testController.prototype.PopulateTestData = function(e)
+testController.prototype.Edit = function()
 {
 	var name = "";
 	var title = "";
@@ -429,59 +328,6 @@ testController.prototype.PopulateTestData = function(e)
 	}
 	$('#testDetailsModal').find('#chkShuffleOptions').prop('checked', shuffleOptionsStatus);
 	summernoteController.getObj().setValue('#txtTestInstructions', instructions);
-};
-testController.prototype.SearchTestByName = function(start, callback)
-{
-	showLoader();
-	var search = $('#txtSearchTest').val();
-	$.ajax({
-		url: remoteServer+'/test2bsure/test?search='+search+'&count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			$('.existing-tests').find('table').find('tbody').empty();
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var tests = response.data;
-					var testObj = "";
-					for(var test in tests){
-						this.tests[tests[test]['id']] = tests[test];
-						var testStatus = tests[test]['publish'];
-						var btnText = testStatus == 1 ? 'Unpublish' : 'Publish';
-						var btnCss = testStatus == 1 ? "background-color:red;color:white;font-weight:bold;" : "background-color:green;color:white;font-weight:bold;";
-						testObj += "<tr>"+
-										"<td class='tdTestId'>"+tests[test]['id']+"</td>"+
-										"<td class='tdTestName'>"+tests[test]['name']+"</td>"+
-										"<td class='tdTestTitle'>"+tests[test]['title']+"</td>"+
-										"<td class='tdTestQuestions'>"+tests[test]['totalQues']+"</td>"+
-										"<td class='tdTestMarks'>"+tests[test]['totalMarks']+"</td>"+
-										"<td class='tdTestTime'>"+tests[test]['totalTime']+"</td>"+
-										"<td>"+
-											"<button class='btn btn-default addEditTest update'>Edit</button>"+
-											"<button class='btn btn-default deleteTest'>Delete</button>"+
-											"<button class='btn btn-default testStatus' test-status='"+testStatus+"' style='"+btnCss+"'>"+btnText+"</button>"+
-										"</td>"+
-									"</tr>";
-					}
-					$('.existing-tests').find('table').find('tbody').html(testObj);
-					this.BindEvents();
-				}
-			}
-			else{
-				$('.existing-tests').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function'){
-				callback(response.result.length);
-			}
-			removeLoader();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback == 'function'){
-				callback(0);
-			}
-			removeLoader();
-		}
-	});
 };
 testController.prototype.AddSection = function()
 {
@@ -958,28 +804,3 @@ testController.prototype.PopulateQuestionSubcategory = function(categoryId)
 	}
 	return html;
 };
-testController.prototype.HandleRecords = function(len){
-	$('.counter').find('.itemCount').find('span').text(len);
-	if(len > 0){
-		$('.paginationDiv').html(pagination(len));
-		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
-			var search = $('#txtSearchTest').val();
-			var start = $(e.currentTarget).find(":selected").attr('data-start');
-			if(search.length > 0){
-				this.SearchTestByName(start);
-			}
-			else{
-				this.LoadAllTests(start);
-			}
-		}.bind(this));
-	}
-};
-/*testController.prototype.HandleAllQuestionsLen = function(){
-	if(this.allQuesLength > 0){
-		$('.all-questions').find('.paginationDiv').html(pagination(this.allQuesLength));
-		$('.all-questions').find('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
-			var start = $(e.currentTarget).find(":selected").attr('data-start');
-			this.LoadQuestions(start);
-		}.bind(this));
-	}
-};*/

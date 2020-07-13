@@ -1,85 +1,42 @@
 var quizController = function(){
-	this.categories = {};
-	this.exams = {};
-	this.filters = {};
-	this.questions = {};
-	this.questionCategory = {};
-	this.questionSubcategory = {};
-	this.allExams = {};
-	this.quiz = {};
-	this.quizId = 0;
-	this.selectedQuestions = [];
-	this.Init();
+	this.id = -1;
 };
 quizController.prototype.Init = function()
 {
-	console.log('Initiate Quiz');
-	showLoader();
-	this.LoadCategories();
-	this.LoadExams();
-	this.LoadQuestions();
-	this.GetQuestionCategories();
-	this.LoadView();
+};
+quizController.prototype.AddEdit = function()
+{
+	$('#quizModal').modal('show');
+	RefreshData('quizModal');
+	if(this.id > 0){
+		this.Edit();
+	}
+	$('#quizModal').find('#btnQuizSave').unbind().bind('click', function(){
+		this.SaveData();
+	}.bind(this));
+	$('#quizModal').find('#chkQuizLock').unbind().bind('change', function(e){
+		var lockValue = $(e.currentTarget).prop('checked');
+		if(lockValue == true){
+			$('#txtQuizLockPoints').removeClass('lockDetails');
+			$('#txtQuizLockRupees').removeClass('lockDetails');
+		}
+		else if(lockValue == false){
+			$('#txtQuizLockPoints').addClass('lockDetails');
+			$('#txtQuizLockRupees').addClass('lockDetails');
+		}
+	});
+};
+quizController.prototype.Delete = function()
+{
+	$('#deleteQuizModal').modal('show');
+	$('#deleteQuizModal').find('.modal-body').find('p').find('span').text(this.id+" ?");
+	$('#deleteQuizModal').find('#btnDeleteYes').unbind().bind('click', function(){
+		this.DeleteItem();
+	}.bind(this));
 };
 quizController.prototype.BindEvents = function()
 {
-	//Search quiz by name/title - button
-	$('#btnSearchQuiz').unbind().bind('click', function(){
-		this.SearchQuizByName(0, function(length){
-			this.HandleRecords(length);
-		}.bind(this));
-	}.bind(this));
-	
-	//Add/Update Quiz
-	$('.addEditQuiz').unbind().bind('click', function(e){
-		this.quizId = 0;
-		$('#quizModal').modal('show');
-		RefreshData('quizModal');
 		
-		this.PopulateQuizData(e);
-		var id = 0;
-		var update = $(e.currentTarget).hasClass('update');
-		if(update){
-			id = $(e.currentTarget).parents('tr').find('.tdQuizId').text();
-		}
-		$('#quizModal').find('#btnQuizSave').unbind().bind('click', function(){
-			this.SaveQuizDetails(update, id);
-		}.bind(this));
-		$('#quizModal').find('#btnQuizRefresh').unbind().bind('click', function(){
-			RefreshData('quizModal');
-		}.bind(this));
-		$('#quizModal').find('#btnQuizCancel').unbind().bind('click', function(){
-			$('#quizModal').modal('hide');
-			$('.menu-tabs').find('li[class="active"]').find('a').click();
-		}.bind(this));
-		$('#quizModal').find('.close').unbind().bind('click', function(){
-			$('#quizModal').modal('hide');
-			$('.menu-tabs').find('li[class="active"]').find('a').click();
-		}.bind(this));
-		$('#quizModal').find('#chkQuizLock').unbind().bind('change', function(e){
-			var lockValue = $(e.currentTarget).prop('checked');
-			if(lockValue == true){
-				$('#txtQuizLockPoints').removeClass('lockDetails');
-				$('#txtQuizLockRupees').removeClass('lockDetails');
-			}
-			else if(lockValue == false){
-				$('#txtQuizLockPoints').addClass('lockDetails');
-				$('#txtQuizLockRupees').addClass('lockDetails');
-			}
-		});
-	}.bind(this));
-	
-	$('.deleteQuiz').unbind().bind('click', function(e){
-		var quizId = $(e.currentTarget).parents('tr').find('td:first-child').text();
-		console.log(quizId);
-		var currentQuiz = $(e.currentTarget).parents('tr');
-		var title = currentQuiz.find('.tdQuizTitle').text();
-		$('#deleteQuizModal').modal('show');
-		$('#deleteQuizModal').find('.modal-body').find('p').find('span').text(title+" ?");
-		$('#deleteQuizModal').find('#btnDeleteYes').unbind().bind('click', function(){
-			this.DeleteQuiz(quizId, e);
-		}.bind(this));
-	}.bind(this));
 	
 	//Publish/Unpublish Quiz
 	$('.quizStatus').unbind().bind('click', function(e){
@@ -88,62 +45,8 @@ quizController.prototype.BindEvents = function()
 		this.HandleQuizStatus(quizId);
 	}.bind(this));
 };
-quizController.prototype.LoadView = function()
-{
-	$('.menu-page-content').load('quiz.html', function(){
-		this.LoadAllQuiz(0, function(length){
-			this.HandleRecords(length);
-			removeLoader();
-		}.bind(this));
-	}.bind(this));
-};
-quizController.prototype.LoadAllQuiz = function(start, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/quiz?count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var quizzes = response.data;
-					var quizObj = "";
-					for(var quiz in quizzes){
-						this.quiz[quizzes[quiz]['id']] = quizzes[quiz];
-						var quizStatus = quizzes[quiz]['publish'];
-						var btnText = quizStatus == 1 ? 'Unpublish' : 'Publish';
-						var btnCss = quizStatus == 1 ? "background-color:red;color:white;font-weight:bold;" : "background-color:green;color:white;font-weight:bold;";
-						quizObj += "<tr>"+
-						"<td class='tdQuizId'>"+quizzes[quiz]['id']+"</td>"+
-						"<td class='tdQuizName'>"+quizzes[quiz]['name']+"</td>"+
-						"<td class='tdQuizTitle'>"+quizzes[quiz]['title']+"</td>"+
-						"<td class='tdQuizQuestions'>"+quizzes[quiz]['noOfQues']+"</td>"+
-						//"<td class='tdQuizMarks'>"+quizzes[quiz]['marksPerQues']+"</td>"+
-						"<td>"+
-							"<button class='btn btn-default addEditQuiz update'>Edit</button>"+
-							"<button class='btn btn-default deleteQuiz'>Delete</button>"+
-							"<button class='btn btn-default quizStatus' quiz-status='"+quizStatus+"' style='"+btnCss+"'>"+btnText+"</button>"+
-						"</td>"+
-						"</tr>";
-					}
-					$('.existing-quizzes').find('table').find('tbody').html(quizObj);
-				}
-			}
-			else{
-				$('.existing-quizzes').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function')
-				callback(response.result.length);
-			this.BindEvents();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			$('.existing-quizzes').html("<h4>No Quizzes available !!</h4>");
-			if(typeof callback == 'function')
-				callback();
-		}
-	});
-};
-quizController.prototype.SaveQuizDetails = function(update, id, navigate)
+
+quizController.prototype.SaveData = function(navigate)
 {
 	if(typeof navigate == 'undefined'){
 		navigate = true;
@@ -190,15 +93,10 @@ quizController.prototype.SaveQuizDetails = function(update, id, navigate)
 		'filters': filters
 	};
 	console.log(requestData);
-	if(update){
-		requestData.id = id;
+	if(this.id > 0){
+		requestData.id = this.id;
 		type = 'PUT';
 	}
-	else if(parseInt(this.quizId) > 0){
-		requestData.id = this.quizId;
-		type = 'PUT';
-	}
-	console.log('Call to save quiz');
 	$.ajax({
 		url: url,
 		type: type,
@@ -245,11 +143,10 @@ quizController.prototype.SaveQuizDetails = function(update, id, navigate)
 	});
 };
 
-quizController.prototype.DeleteQuiz = function(quizId, e)
+quizController.prototype.DeleteItem = function()
 {
-	console.log('Delete Quiz');
 	$.ajax({
-		url: remoteServer+"/test2bsure/quiz?id="+quizId,
+		url: remoteServer+"/test2bsure/quiz?id="+this.id,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -265,8 +162,9 @@ quizController.prototype.DeleteQuiz = function(quizId, e)
 		}
 	});
 };
-quizController.prototype.PopulateQuizData = function(e)
+quizController.prototype.Edit = function(e)
 {
+	//TODO
 	var name = "";
 	var title = "";
 	var ques = "";
@@ -338,55 +236,6 @@ quizController.prototype.PopulateQuizData = function(e)
 		$('#txtQuizLockRupees').addClass('lockDetails');
 	}
 	$('#quizModal').find('#chkQuizLock').prop('checked', lockStatus);
-};
-quizController.prototype.SearchQuizByName = function(start, callback)
-{
-	showLoader();
-	var search = $('#txtSearchQuiz').val();
-	$.ajax({
-		url: remoteServer+'/test2bsure/quiz?search='+search+'&count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			$('.existing-quizzes').find('table').find('tbody').empty();
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var quizzes = response.data;
-					var quizObj = "";
-					for(var quiz in quizzes){
-						var quizStatus = quizzes[quiz]['publish'];
-						var btnText = quizStatus == 1 ? 'Unpublish' : 'Publish';
-						var btnCss = quizStatus == 1 ? "background-color:red;color:white;font-weight:bold;" : "background-color:green;color:white;font-weight:bold;";
-						quizObj += "<tr>"+
-						"<td class='tdQuizId'>"+quizzes[quiz]['id']+"</td>"+
-						"<td class='tdQuizName'>"+quizzes[quiz]['name']+"</td>"+
-						"<td class='tdQuizTitle'>"+quizzes[quiz]['title']+"</td>"+
-						"<td class='tdQuizQuestions'>"+quizzes[quiz]['noOfQues']+"</td>"+
-						//"<td class='tdQuizMarks'>"+quizzes[quiz]['marksPerQues']+"</td>"+
-						"<td>"+
-							"<button class='btn btn-default addEditQuiz update'>Edit</button>"+
-							"<button class='btn btn-default deleteQuiz'>Delete</button>"+
-							"<button class='btn btn-default quizStatus' quiz-status='"+quizStatus+"' style='"+btnCss+"'>"+btnText+"</button>"+
-						"</td>"+
-						"</tr>";
-					}
-					$('.existing-quizzes').find('table').find('tbody').html(quizObj);
-					this.BindEvents();
-				}
-			}
-			else{
-				$('.existing-quizzes').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function')
-				callback(response.result.length);
-			removeLoader();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback == 'function')
-				callback(0);
-			removeLoader();
-		}
-	});
 };
 quizController.prototype.LoadCategories = function()
 {
@@ -789,22 +638,7 @@ quizController.prototype.PopulateQuestionSubcategory = function(categoryId)
 	}
 	return html;
 };
-quizController.prototype.HandleRecords = function(len){
-	$('.counter').find('.itemCount').find('span').text(len);
-	if(len > 0){
-		$('.paginationDiv').html(pagination(len));
-		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
-			var search = $('#txtSearchQuiz').val();
-			var start = $(e.currentTarget).find(":selected").attr('data-start');
-			if(search.length > 0){
-				this.SearchQuizByName(start);
-			}
-			else{
-				this.LoadAllQuiz(start);
-			}
-		}.bind(this));
-	}
-};
+
 quizController.prototype.ViewQuestion = function(quesId)
 {
 	$('#viewQuestionModal').modal('show');

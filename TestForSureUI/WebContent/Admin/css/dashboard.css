@@ -4,7 +4,7 @@ body{
 .admin-profile-box {
 	display: none;
 	padding: 20px;
-	border: solid 1px #2E6DA2;
+	border: solid 1px #103B6D;
 	position: absolute;
 	top: 70px;
 	right: 80px;
@@ -12,7 +12,7 @@ body{
 }
 
 .admin-profile-box div:first-child {
-	border-bottom: solid 1px #2E6DA2;
+	border-bottom: solid 1px #103B6D;
 }
 
 .admin-menu {
@@ -20,8 +20,8 @@ body{
 	left: 0px;
 	top: 70px;
 	text-align: center;
-	border-right: solid 1px #2E6DA2;
-	color: #2E6DA2;
+	border-right: solid 1px #103B6D;
+	color: #103B6D;
 	height: auto;
 	min-height: 89%;
 	padding: 0px;
@@ -34,7 +34,7 @@ body{
 
 .admin-menu ul li {
 	padding: 10px 0;
-	border-bottom: solid 1px #2E6DA2;
+	border-bottom: solid 1px #103B6D;
 	cursor: pointer;
 }
 
@@ -44,7 +44,7 @@ body{
 }
 
 .admin-menu ul li.active {
-	background-color: #2E6DA2;
+	background-color: #103B6D;
 	color: white;
 	pointer-events: none;
 }
@@ -67,17 +67,13 @@ body{
 }
 
 .menu-tabs li.active {
-	background-color: #2E6DA2;
+	background-color: #103B6D;
 	pointer-events: none;
 }
 
 .menu-tabs li.active a {
 	/*color:white;*/
 	
-}
-
-.dashboard-content .menu-page-content {
-	padding: 30px;
 }
 
 .dashboard-content .menu-tabs {
@@ -182,7 +178,7 @@ body{
 
 /* Delete Modal CSS ends */
 .table-header {
-	background-color: #2E6DA2;
+	background-color: #103B6D;
 	color: white;
 	height: 30px;
 }
@@ -248,14 +244,14 @@ body{
 	position:absolute;
 	top:30%;
 	left:34%;
-	border:solid 1px #2E6DA2;
+	border:solid 1px #103B6D;
 	text-align:center;
 }
 .login-box .heading{
-	
 	color:white;
-	background-color:#2E6DA2;
+	background-color:#103B6D;
 	padding:10px;
+	font-weight: bold;
 }
 .login-box .content{
 	padding:10px;
@@ -279,33 +275,7 @@ body{
 }
 /* Login CSS ends */
 
-/* Counter CSS starts */
-.counter{
-	margin: 20px 0px;
-}
-/* Counter CSS ends */
-/* Pagination CSS Starts */
-.paginationDiv{
-	display: flex;
-}
-.paginationDiv .pagination{
-	display: flex;
-	margin: 0px 20px;
-}
-.paginationDiv .pagination select{
-	width: 80px;
-}
-.paginationDiv .pagination div:hover, .paginationDiv .pagination div.active{
-	background-color: #2E6DA2;
-	cursor: pointer;
-	color: white;
-}
-.paginationDiv .pagination div.previous, .paginationDiv .pagination div.next{
-	padding: 4px 10px;
-	width: auto;
-	display: none;
-}
-/* Pagination CSS ends */
+
 .loader{
 	position: absolute;
 	top: 50%;
@@ -326,4 +296,12 @@ input{
 }
 select{
 	height:25px;
+}
+.btn-primary{
+	background-color: #103B6D;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #103B6D;
+    border-color: #103B6D;
 }

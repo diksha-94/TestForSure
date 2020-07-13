@@ -1,6 +1,6 @@
 .page-header{
     width: 100%;
-    border-bottom: solid 2px #2E6DA2;
+    border-bottom: solid 2px #103B6D;
     position: absolute;
     top: 0;
     left: 0;
@@ -10,6 +10,9 @@
 .page-header .brand-logo{
 	padding: 10px 30px;
 	width:50%;
+}
+.page-header .admin-profile #btnLogout{
+	margin-left: 20px;
 }
 .page-header .brand-logo img{
 	height: 50px;

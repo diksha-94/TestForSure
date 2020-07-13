@@ -1,217 +1,1047 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Admin Dashboard</title>
-<link href='../../helperCSS/bootstrap.min.css' rel='stylesheet' />
-<link href='../css/editor.css' rel='stylesheet' />
-<link href='../../Summernote/summernote.css' rel="stylesheet">
-
-</head>
-<body>
-	<div class='page-header' id='page-header'></div>
-	<div class='login-box'>
-		<div class='heading'>
-			<span>Login</span>
-		</div>
-		<div class='content'>
-			<div class='input-box'><input id='txtEmail' type='text' placeholder='Email'/></div>
-			<div class='input-box'><input id='passPassword' type='password' placeholder='Password'/></div>
-			<div class='button-box'><input id='btnLogin' class='btn btn-primary' type='button' value='Login'/></div>
-			<div class='error-message'></div>
-		</div>
-	</div>
-	<div class='after-login'>
-		<div class='admin-menu col-xs-3 col-sm-3 col-md-2 col-lg-2'>
-		</div>
-		<div class='dashboard-content col-xs-9 col-sm-9 col-md-10 col-lg-10'>
-			<ul class="nav nav-tabs menu-tabs">
-			</ul>
-			<div class="tab-content menu-page-content">
-				
+	<head>
+		<title>Admin Dashboard</title>
+		<link href='../../helperCSS/bootstrap.min.css' rel='stylesheet' />
+		<link href='../css/editor.css' rel='stylesheet' />
+		<link href='../../Summernote/summernote.css' rel="stylesheet">
+		<link href='../css/header.css' rel='stylesheet' />
+		<link href='../css/dashboard.css' rel='stylesheet' />
+	</head>
+	<body>
+		<div class='page-header' id='page-header'></div>
+		<div class='login-box'>
+			<div class='heading'>
+				<span>Login</span>
+			</div>
+			<div class='content'>
+				<div class='input-box'><input id='txtEmail' type='text' placeholder='Email'/></div>
+				<div class='input-box'><input id='passPassword' type='password' placeholder='Password'/></div>
+				<div class='button-box'><input id='btnLogin' class='btn btn-primary' type='button' value='Login'/></div>
+				<div class='error-message'></div>
 			</div>
 		</div>
-		<div class="loader">
-			<img src="../images/loader.gif" alt="loader">
+		<div class='after-login'>
+			<div class='admin-menu left col-xs-3 col-sm-3 col-md-2 col-lg-2'>
+			</div>
+			<div class='dashboard-content right col-xs-9 col-sm-9 col-md-10 col-lg-10'>
+				<ul class="nav nav-tabs menu-tabs">
+				</ul>
+				<div class="tab-content menu-page-content">
+					
+				</div>
+			</div>
+			<div class="loader">
+				<img src="../images/loader.gif" alt="loader">
+			</div>
 		</div>
-	</div>
+		
+		
+		<!-- Add/Update Category Modal -->
+		<div class="modal" id="categoryModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Category</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtCategoryName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Title <span class='red'>*</span></span> <input
+								id='txtCategoryTitle' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Image Url
+								<span class='red'>*</span></span> <input id='txtCategoryImageUrl' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 imagePreviewDiv'>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Image Preview</span>
+							<img src='' id='imgCategoryImagePreview' alt='Image Not Available'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnCategorySave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnCategoryCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Delete Category Modal -->
+		<div class="modal deleteModal" id="deleteCategoryModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Category</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete category <span></span></p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+			        	 col-lg-offset-4 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Exam Modal -->
+		<div class="modal" id="examModal" style='padding-right:0px !important;'>
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Exam</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtExamName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Title <span class='red'>*</span></span> <input
+								id='txtExamTitle' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Image Url
+								<span class='red'>*</span></span> <input id='txtExamImageUrl' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 imagePreviewDiv'>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Image Preview</span>
+							<img src='' id='imgExamImagePreview' alt='Image Not Available'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Select Category
+								<span class='red'>*</span></span>
+							<select id='ddCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+								<option value=''>Select</option>
+							</select>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Exam Description
+								<span class='red'>*</span></span> <div id='txtExamDescription' 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' ></div>
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnExamSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnExamCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Delete Exam Modal -->
+		
+		<div class="modal deleteModal" id="deleteExamModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Exam</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to want to delete exam <span></span></p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3
+			        	 col-lg-offset-3 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Quiz Modal -->
+		<div class="modal" id="quizModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Quiz</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtQuizName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Title <span class='red'>*</span></span> <input
+								id='txtQuizTitle' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Number of Questions
+								<span class='red'>*</span></span> <input id='txtQuizQuestions' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Marks per Question
+								<span class='red'>*</span></span> <input id='txtQuizMarks' type='number' value='1'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Number of Attempts
+								<span class='red'>*</span></span> <input id='txtQuizAttempts' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Publish
+								</span> <input id='chkQuizPublish' type='checkbox'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Select Exam
+								</span>
+							<input type='text' id='ddQuizExam' placeholder='Search Exams here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div></br></br>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Select Filter
+								</span>
+							<input type='text' id='ddQuizFilter' placeholder='Search Filter here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div></br></br>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Lock
+								<span class='red'>*</span></span> <input id='chkQuizLock' type='checkbox'
+								class='col-xs-1 col-sm-1 col-md-1 col-lg-1' />
+								<input type='number' id='txtQuizLockPoints'
+								class='col-xs-1 col-sm-1 col-md-1 col-lg-1 lockDetails' placeholder='Lock Points'/>
+								<input type='number' id='txtQuizLockRupees'
+								class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 lockDetails' placeholder='Lock Rupees'/>
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnQuizSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save and Next</button>
+							<button id='btnQuizCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Delete Quiz Modal -->
+		<div class="modal deleteModal" id="deleteQuizModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Quiz</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete quiz <span></span> ?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3
+			        	 col-lg-offset-3 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Delete Question Modal -->
+		<div class="modal deleteModal" id="deleteQuestionModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Question</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to want to delete question <span></span></p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3
+			        	 col-lg-offset-3 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+		<!-- Add Quiz Questions Modal -->
+		<div class="modal" id="quizQuestionsModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add Quiz Questions</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div class='divCountQues'>Number of Questions added: <span class='noOfQues'>0</span></div>
+						<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+							<div>
+								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question Category <b class='red'>*</b></span>
+								<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+									<option value=''>All</option>
+								</select>
+							</div>
+							<div style='clear:both;'>
+								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question SubCategory <b class='red'>*</b></span>
+								<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+									<option value=''>All</option>
+								</select>
+								<button class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
+								col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' id='btnSearchQues'>Search</button>
+								<div class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
+								col-xs-2 col-sm-2 col-md-2 col-lg-2'></>Select Page: <select id='ddPages'></select>
+							</div>
+						</div>
+						<div class='added-questions col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+							<table>
+								<thead>
+									<tr class='table-header'>
+										<th class='col-md-1'>id</th>
+										<th class='col-md-9'>Question</th>
+										<th class='col-md-2'>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+						<div class='all-questions col-xs-8 col-sm-8 col-md-8 col-lg-8'>
+							<table width='100%' style='table-layout:fixed;'>
+								<thead>
+									<tr class='table-header'>
+										<th class='col-md-1'>id</th>
+										<th class='col-md-9'>Question</th>
+										<th class='col-md-2'>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnQuizBack' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' 
+			        	 data-dismiss="modal">Back</button>
+							<button id='btnQuizFinish' type='button'
+								class='col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>
+								Finish</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<!-- Question Update Modal -->
+		<div class="modal updateQuizQuesModal" id="updateQuizQuesModal" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Please confirm</h4>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Number of questions entered and added are not same, updating the total number of questions as per the added number of questions.
+								Do you want to continue?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnUpdateYes' type='button'
+								class='btn btn-primary'>Yes</button>
+							<button id='btnUpdateNo' type="button"
+								class="btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Add/Update Question Modal -->
+		<div class="modal" id="questionModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Question</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Category <b class='red'>*</b></span>
+							<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+								<option value=''>Select</option>
+								<option class='newCategoryOption' value='0'>+ Add New category</option>
+							</select>
+							<button class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveCategory'>Remove Category</button>
+						</div>
+						<div class='addQuesCategory' style='display:none;'>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>
+							</span> <input id='txtQuesCategory' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+							<button id='btnAddQuesCategory' class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Add</button>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question SubCategory <b class='red'>*</b></span>
+							<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+								<option value=''>Select</option>
+								<option class='newSubcategoryOption' value='0'>+ Add New sub category</option>
+							</select>
+							<button class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveSubcategory'>Remove Subcategory</button>
+						</div>
+						<div class='addQuesSubCategory' style='display:none;'>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>
+							</span> <input id='txtQuesSubCategory' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+							<button id='btnAddQuesSubCategory' class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Add</button>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Type <b class='red'>*</b></span>
+							<select id='ddQuestionType' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+							</select>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph Based <b class='red'>*</b></span>
+							<input type='checkbox' id='chkParagraph' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph
+							<b class='red'>*</b></span> <div id='txtParagraphText' 
+							class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question
+							<b class='red'>*</b></span> <div id='txtQuestionText' 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
+						</div>
+						<div class='divOptions'>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-1 col-sm-1 col-md-1 col-lg-1'>Options
+							<b class='red'>*</b></span> 
+							<input type='checkbox' class='chkCorrectOption
+							 col-xs-1 col-sm-1 col-md-1 col-lg-1'/>
+							 <div 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4 txtOptions'></div>
+						</div>
+						<div>
+							<button type='button' id='btnAddOption' class='col-xs-offset-7 col-sm-offset-7 
+							col-md-offset-7 col-lg-offset-7
+							 col-xs-2 col-sm-2 col-md-2 col-lg-2'> + Add Option</button>
+						</div>
+						<div class='divSolution'>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Solution
+							</span> <div id='txtSolution' 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnQuestionSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnQuestionCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- View Question Modal -->
+		<div class="modal" id="viewQuestionModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" style='display: inline;'>Question Details</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Test Details Modal -->
+		<div class="modal" id="testDetailsModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Test Details</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtTestName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Title <span class='red'>*</span></span> <input
+								id='txtTestTitle' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Number of Questions
+								<span class='red'>*</span></span> <input id='txtTestQuestions' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Total time(in mins)
+								<span class='red'>*</span></span> <input id='txtTestTime' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Total Marks
+								<span class='red'>*</span></span> <input id='txtTestMarks' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Negative Percentage
+								<span class='red'>*</span></span> <input id='txtTestNegative' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' value='0'/>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Pass Percentage
+								<span class='red'>*</span></span> <input id='txtPassPer' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' value='0'/>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Allowed attempts
+								<span class='red'>*</span></span> <input id='txtTestAttempts' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Shuffle Questions
+								</span> <input id='chkShuffleQues' type='checkbox'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Shuffle Options
+								</span> <input id='chkShuffleOptions' type='checkbox'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Publish
+								<span class='red'>*</span></span> <input id='chkTestPublish' type='checkbox'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Lock
+								</span> <input id='chkTestLock' type='checkbox'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+								<input type='number' id='txtTestLockPoints'
+								class='col-xs-1 col-sm-1 col-md-1 col-lg-1 lockDetails' placeholder='Lock Points'/>
+								<input type='number' id='txtTestLockRupees'
+								class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 lockDetails' placeholder='Lock Rupees'/>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Select Exam
+								</span>
+							<input type='text' id='ddTestExam' placeholder='Search Exams here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div></br></br>
+						<!-- <div>
+							<button id='btnAddSection' class='btn btn-primary col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>+ Add Section</button>
+							<span style='font-size:12px;' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'><span class='red'>*</span>
+								Note: Add section if number of sections is more than 1.
+								By default, it takes number of section as 1
+							</span>
+						</div> -->
+						<div class='sectionDetails'>
+						</div>
+						</br></br>
+						<div class='test-instructions'>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Test instructions
+								</span> <div id='txtTestInstructions' 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' ></div>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Suggested Tests
+								</span>
+							<input type='text' id='ddRelatedTests' placeholder='Search Tests here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div></br></br>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnTestDetailsSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save and Next</button>
+							<button id='btnTestCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Section Details Modal -->
+		<div class="modal" id="sectionDetailsModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Section Details</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<button id='btnAddSection' class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>+ Add Section</button>
+							<a href='#' id='linkSkipSection'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3'>Skip
+							</a>
+						</div>
+						<div class='sectionDetails'>
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnSectionDetailsBack' type='button'
+									class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+				        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default' data-dismiss='modal'>Back</button>
+							<button id='btnSectionDetailsSave' type='button'
+								class='col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save and Next</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Test Questions Modal -->
+		<div class="modal" id="testQuesModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add Test Questions</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div class='divCountQuesTest'>Number of Questions added: <span class='noOfQues'>0</span></div>
+						<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+							<div>
+								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question Category <b class='red'>*</b></span>
+								<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+									<option value=''>All</option>
+								</select>
+							</div>
+							<div style='clear:both;'>
+								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question SubCategory <b class='red'>*</b></span>
+								<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+									<option value=''>All</option>
+								</select>
+								<button class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
+								col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' id='btnSearchQues'>Search</button>
+								<div class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
+								col-xs-2 col-sm-2 col-md-2 col-lg-2'></>Select Page: <select id='ddPages'></select>
+							</div>
+						</div>
+						<div class='added-questions col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+							<!-- <div class='paginationDiv'>
+							</div> -->
+							<table>
+								<thead>
+									<tr class='table-header'>
+										<th class='col-md-1'>id</th>
+										<th class='col-md-9'>Question</th>
+										<th class='col-md-2'>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+						<div class='all-questions col-xs-8 col-sm-8 col-md-8 col-lg-8'>
+							<!-- <div class='paginationDiv'>
+							</div> -->
+							<table width='100%' style='table-layout:fixed;'>
+								<thead>
+									<tr class='table-header'>
+										<th class='col-md-1'>id</th>
+										<th class='col-md-9'>Question</th>
+										<th class='col-md-2'>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnTestBack' type='button'
+							    	class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        			 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' 
+			        	 		data-dismiss="modal">Back</button>
+							<button id='btnTestFinish' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+					        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Finish</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		
+		<!-- Delete Test Modal -->
+		<div class="modal deleteModal" id="deleteTestModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Test</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete test <span></span> ?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3
+			        	 col-lg-offset-3 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Question Update Modal -->
+		<div class="modal updateQuesModal" id="updateQuesModal" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Please confirm</h4>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Number of questions entered and added are not same, updating the total number of questions as per the added number of questions.
+								Do you want to continue?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnUpdateYes' type='button'
+								class='btn btn-primary'>Yes</button>
+							<button id='btnUpdateNo' type="button"
+								class="btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Add/Update Filter Modal -->
+		<div class="modal" id="filterModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Filter</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtFilterName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnFilterSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnFilterCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Delete Filter Modal -->
+		<div class="modal deleteModal" id="deleteFilterModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Filter</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete filter <span></span> Deleting this filter will remove it from all the items.</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+			        	 col-lg-offset-4 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- User Details Modal -->
+		<div class="modal" id="userModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+		
+					<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">User Details</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+		
+				<!-- Modal body -->
+					<div class="modal-body">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+		<!-- Admin Change Password Modal -->
+		<div class="modal" id="changePasswordModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title" style='display: inline;'>Change Password</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body" style='height: 150px;'>
+						<div>
+							<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Enter new Password
+							<b class='red'>*</b></span> <input type='password' id='passNew' 
+							class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div>
+						<div style='margin-top: 55px;'>
+							<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Re-enter new Password
+							<b class='red'>*</b></span> <input type='password' id='passNewReenter' 
+							class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div>
+						<div class='password-error' style='color: red; margin-top: 100px;'></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id='btnChangePassword'>Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	
-<!-- Add/Update Question Modal -->
-<div class="modal" id="questionModal">
-	<div class="modal-dialog test2bsure-dialog">
-		<div class="modal-content test2bsure-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h4 class="modal-title">Add/Update Question</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body test2bsure-body">
-				<div>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Category <b class='red'>*</b></span>
-					<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-						<option value=''>Select</option>
-						<option class='newCategoryOption' value='0'>+ Add New category</option>
-					</select>
-					<button class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveCategory'>Remove Category</button>
-				</div>
-				<div class='addQuesCategory' style='display:none;'>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>
-					</span> <input id='txtQuesCategory' type='text'
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
-					<button id='btnAddQuesCategory' class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Add</button>
-				</div>
-				<div>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question SubCategory <b class='red'>*</b></span>
-					<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-						<option value=''>Select</option>
-						<option class='newSubcategoryOption' value='0'>+ Add New sub category</option>
-					</select>
-					<button class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveSubcategory'>Remove Subcategory</button>
-				</div>
-				<div class='addQuesSubCategory' style='display:none;'>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>
-					</span> <input id='txtQuesSubCategory' type='text'
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
-					<button id='btnAddQuesSubCategory' class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Add</button>
-				</div>
-				<div>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Type <b class='red'>*</b></span>
-					<select id='ddQuestionType' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-					</select>
-				</div>
-				<div>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph Based <b class='red'>*</b></span>
-					<input type='checkbox' id='chkParagraph' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
-				</div>
-				<div>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph
-					<b class='red'>*</b></span> <div id='txtParagraphText' 
-					class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
-				</div>
-				<div>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question
-					<b class='red'>*</b></span> <div id='txtQuestionText' 
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
-				</div>
-				<div class='divOptions'>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-1 col-sm-1 col-md-1 col-lg-1'>Options
-					<b class='red'>*</b></span> 
-					<input type='checkbox' class='chkCorrectOption
-					 col-xs-1 col-sm-1 col-md-1 col-lg-1'/>
-					 <div 
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4 txtOptions'></div>
-				</div>
-				<div>
-					<button type='button' id='btnAddOption' class='col-xs-offset-7 col-sm-offset-7 
-					col-md-offset-7 col-lg-offset-7
-					 col-xs-2 col-sm-2 col-md-2 col-lg-2'> + Add Option</button>
-				</div>
-				<div class='divSolution'>
-					<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-					col-xs-2 col-sm-2 col-md-2 col-lg-2'>Solution
-					</span> <div id='txtSolution' 
-						class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
-				</div>
-			</div>
-			<div class="modal-footer test2bsure-footer">
-				<div>
-					<button id='btnQuestionSave' type='button'
-						class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
-	        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
-					<button id='btnQuestionCancel' type="button"
-						class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
-	        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-danger"
-						data-dismiss="modal">Cancel</button>
-					<button id='btnQuestionRefresh' type="button"
-					class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
-        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary">
-					Clear Data</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- View Question Modal -->
-<div class="modal" id="viewQuestionModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h4 class="modal-title" style='display: inline;'>Question Details</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body">
-				
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Admin Change Password Modal -->
-<div class="modal" id="changePasswordModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h4 class="modal-title" style='display: inline;'>Change Password</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body" style='height: 150px;'>
-				<div>
-					<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Enter new Password
-					<b class='red'>*</b></span> <input type='password' id='passNew' 
-					class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
-				</div>
-				<div style='margin-top: 55px;'>
-					<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Re-enter new Password
-					<b class='red'>*</b></span> <input type='password' id='passNewReenter' 
-					class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
-				</div>
-				<div class='password-error' style='color: red; margin-top: 100px;'></div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id='btnChangePassword'>Save</button>
-			</div>
-		</div>
-	</div>
-</div>
-	<link href='../css/header.css' rel='stylesheet' />
-	<link href='../css/dashboard.css' rel='stylesheet' />
-
-	<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
-	<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-	<script src="../../Summernote/summernote-defined.js"></script>
-	<link href="../../Summernote/katex.min.css" rel="stylesheet"/>
-    <script src="../../Summernote/katex.min.js"></script>
-	<script src="../../Summernote/summernote-math.js"></script>
-	<script src="../../Summernote/summernote.js"></script>
-	<script type='text/javascript' src='../../helperJS/HelperFunctions.js'></script>
-	<script type='text/javascript' src='../../helperJS/AutoComplete.js'></script>
-	<script type='text/javascript' src='../../helperJS/Constants.js'></script>
-	<script type='text/javascript' src='../controller/dashboard.js'></script>
-	<script type='text/javascript' src='../controller/menu.js'></script>
-	<script>
-		new dashboardController();
-	</script>
-</body>
+		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
+		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
+		<script src="../../Summernote/summernote-defined.js"></script>
+		<link href="../../Summernote/katex.min.css" rel="stylesheet"/>
+	    <script src="../../Summernote/katex.min.js"></script>
+		<script src="../../Summernote/summernote-math.js"></script>
+		<script src="../../Summernote/summernote.js"></script>
+		<script type='text/javascript' src='../../helperJS/HelperFunctions.js'></script>
+		<script type='text/javascript' src='../../helperJS/AutoComplete.js'></script>
+		<script type='text/javascript' src='../../helperJS/Constants.js'></script>
+		<script type='text/javascript' src='../controller/dashboard.js'></script>
+		<script type='text/javascript' src='../controller/menu.js'></script>
+		<script>
+			new dashboardController();
+		</script>
+	</body>
 </html>

@@ -5,30 +5,31 @@ var dashboardController = function(){
 dashboardController.prototype.Init = function()
 {
 	$('.page-header').html(this.LoadHeader());
-	$('.admin-menu').html(this.LoadMenu());
-	this.BindEvents();
-	new menuController($('.admin-menu'));
+	
 	this.userId = getCookie('test2bsure_admin');
 	if(this.userId){
 		//Already login
 		$('.login-box').css('display', 'none');
 		$('.page-header').find('.admin-profile').css('display', 'block');
 		$('.after-login').css('display', 'block');
+		$('.admin-menu').html(this.LoadMenu());
+		new menuController($('.admin-menu'));
 	}
 	else{
 		$('.login-box').css('display', 'block');
 		$('.page-header').find('.admin-profile').css('display', 'none');
 		$('.after-login').css('display', 'none');
 	}
+	this.BindEvents();
 };
 dashboardController.prototype.LoadHeader = function()
 {
 	var html = "<div class='brand-logo'>"+
-					"<img src = '../../Images/Test2bSure_Logo.jpg' alt='TEST2BSURE'/>"+
+					"<img src = '../../Images/logo_blue.png' alt='TEST2BSURE'/>"+
 			   "</div>"+
 			   "<div class='admin-profile'>"+
-					"<button class='btn btn-default adminChangePassword'>Change Password</button>"+
-					"<button id='btnLogout' class='btn btn-primary'>Logout</button>"+
+					"<button class='btn btn-primary adminChangePassword'>Change Password</button>"+
+					"<button id='btnLogout' class='btn btn-default'>Logout</button>"+
 			   "</div>";
 	return html;
 };
@@ -36,33 +37,33 @@ dashboardController.prototype.LoadMenu = function()
 {
 	var html = "<ul>"+
 					"<li id='menuDashboard' data-action='menu_dashoard' data-title='Dashboard' data-controller='backenddashboard'>"+
-					"<span>Dashboard</span>"+
-				"</li>"+
-				"<li id='menuCategory' data-action='menu_category' data-title='Category' data-controller='category'>"+
-					"<span>Category</span>"+
-				"</li>"+
-				"<li id='menuExam' data-action='menu_exam' data-title='Exam' data-controller='exam'>"+
-					"<span>Exam</span>"+
-				"</li>"+
-				"<li id='menuQuestionBank' data-action='menu_question_bank' data-title='Question Bank' data-controller='questionbank'>"+
-					"<span>Question Bank</span>"+
-				"</li>"+
-				"<li id='menuTest' data-action='menu_test' data-title='Test' data-controller='test'>"+
-					"<span>Test</span>"+
-				"</li>"+
-				"<li id='menuQuiz' data-action='menu_quiz' data-title='Quiz' data-controller='quiz'>"+
-					"<span>Quiz</span>"+
-				"</li>"+
-				"<li id='menuUser' data-action='menu_user' data-title='User Tracking' data-controller='usertracking'>"+
-					"<span>User Tracking</span>"+
-				"</li>"+
-				"<li id='menuFilter' data-action='menu_filter' data-title='Filter' data-controller='filter'>"+
-					"<span>Filter</span>"+
-				"</li>"+
-				"<li id='menuAskNAnswer' data-action='menu_asknanswer' data-title='Ask & Answer' data-controller='asknanswer'>"+
-					"<span>Ask & Answer</span>"+
-				"</li>"+
-			"</ul>";
+						"<span>Dashboard</span>"+
+					"</li>"+
+					"<li id='menuCategory' data-action='menu_category' data-title='Category' data-controller='contentlisting' data-content='category'>"+
+						"<span>Category</span>"+
+					"</li>"+
+					"<li id='menuExam' data-action='menu_exam' data-title='Exam' data-controller='contentlisting' data-content='exam'>"+
+						"<span>Exam</span>"+
+					"</li>"+
+					"<li id='menuQuestionBank' data-action='menu_question_bank' data-title='Question Bank' data-controller='contentlisting' data-content='questionbank'>"+
+						"<span>Question Bank</span>"+
+					"</li>"+
+					"<li id='menuTest' data-action='menu_test' data-title='Test' data-controller='contentlisting' data-content='test'>"+
+						"<span>Test</span>"+
+					"</li>"+
+					"<li id='menuQuiz' data-action='menu_quiz' data-title='Quiz' data-controller='contentlisting' data-content='quiz'>"+
+						"<span>Quiz</span>"+
+					"</li>"+
+					"<li id='menuUser' data-action='menu_user' data-title='User Tracking' data-controller='contentlisting' data-content='usertracking'>"+
+						"<span>User Tracking</span>"+
+					"</li>"+
+					"<li id='menuFilter' data-action='menu_filter' data-title='Filter' data-controller='contentlisting' data-content='filter'>"+
+						"<span>Filter</span>"+
+					"</li>"+
+					"<li id='menuAskNAnswer' data-action='menu_asknanswer' data-title='Ask & Answer' data-controller='contentlisting' data-content='asknanswer'>"+
+						"<span>Ask & Answer</span>"+
+					"</li>"+
+			   "</ul>";
 	return html;
 };
 dashboardController.prototype.BindEvents = function()

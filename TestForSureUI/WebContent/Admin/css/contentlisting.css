@@ -1,0 +1,124 @@
+.menu-bar .addNew .btnAddNew{
+	height: 28px;
+	width: 180px;
+}
+.menu-bar .addNew{
+	text-align:right;
+}
+.menu-bar .searchbar span{
+	font-size: 15px;
+}
+.menu-bar .searchbar .btnSearchByName{
+	height:28px;
+	width:100px;
+	margin-left:20px;
+}
+.menu-bar .searchbar input{
+	height: 28px;
+    border: solid 1px #103B6D;
+    border-radius: 5px;
+    width:180px;
+}
+.menu-bar button{
+	padding:0px;
+}
+.counter{
+	margin: 20px 0px;
+	font-size: 15px;
+}
+.existing-items{
+	margin:35px 0px;
+	padding: 0px 25px;
+}
+.existing-items h3{
+	text-align: center;
+}
+.existing-items table{
+	border:solid 1px #103B6D;
+	width:100%;
+	table-layout: auto;
+}
+.existing-items table tr th,td{
+	text-align: center;
+	padding: 5px 2px;
+}
+.existing-items table tr th, .existing-items table tr td img{
+	width: 80px;
+}
+.existing-items table tr{
+	border-bottom:solid 1px #103B6D;
+}
+.existing-items table tr th, .existing-items table tr td {
+	border-right:solid 1px #103B6D;
+    width: 1%;
+}
+.existing-items table tr th,td button{
+	margin: 0 10px;
+}
+
+/* Pagination CSS Starts */
+.paginationDiv{
+	display: flex;
+	justify-content: flex-end;
+}
+.paginationDiv .pagination{
+	display: flex;
+	margin: 0px 0px 0px 20px;
+}
+.paginationDiv .pagination select{
+	width: 80px;
+}
+.paginationDiv .pagination div:hover, .paginationDiv .pagination div.active{
+	background-color: #103B6D;
+	cursor: pointer;
+	color: white;
+}
+.paginationDiv .pagination div.previous, .paginationDiv .pagination div.next{
+	padding: 4px 10px;
+	width: auto;
+	display: none;
+}
+/* Pagination CSS ends */
+
+/* Modal CSS starts*/
+.modal-dialog .modal-content .modal-header{
+	padding:20px;
+	text-align: center;
+}
+.modal-dialog .modal-content .modal-header h4{
+	display:inline;
+}
+.modal-dialog .modal-content .modal-body{
+	height: auto;
+	margin-top:20px;
+	padding:0px;
+}
+#imgCategoryImagePreview{
+	width: 80px;
+}
+/* Modal CSS ends */
+
+/* User View Modal CSS starts */
+#userModal .modal-dialog .modal-content .modal-header{
+	padding:10px;
+}
+#userModal .modal-dialog .modal-content .modal-header h4{
+	display:inline;
+}
+#userModal .modal-dialog .modal-content .modal-body{
+	height:200px;
+	padding:0px;
+}
+#userModal .modal-dialog .modal-content .modal-body table{
+	margin-left: 25%;
+	margin-top: 15px;
+	border: solid 1px #103B6D;
+}
+#userModal .modal-dialog .modal-content .modal-body table tr{
+	border-bottom: solid 1px #103B6D;
+}
+#userModal .modal-dialog .modal-content .modal-body table tr th, #userModal .modal-dialog .modal-content .modal-body table tr td{
+	border-right: solid 1px #103B6D;
+	padding: 5px 10px;
+}
+/* User View Modal CSS ends */

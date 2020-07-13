@@ -157,6 +157,11 @@
 }
 .quiz-listing .left .quiz-filters{
 	list-style-type: none;
+	padding: 10px;
+}
+.quiz-listing .left .quiz-filters li{
+	padding: 6px 0px;
+	cursor: default;
 }
 .quiz-listing .left .quiz-filters span.filterItem.selected::after{
 	content: url("../images/final/down_arrow.png");

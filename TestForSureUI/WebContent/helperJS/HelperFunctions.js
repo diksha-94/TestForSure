@@ -1,4 +1,4 @@
-var remoteServer = "http://3.6.58.203:8083";
+var remoteServer = "http://localhost:8083";
 var perPage = 15;
 function validateEmail(email){
 	 var regEx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -102,3 +102,22 @@ function LoadJS(src, callback) {
 		}
 	}
 };
+function getCategories(callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/category',
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				callback([]);
+			}
+			callback([]);
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}

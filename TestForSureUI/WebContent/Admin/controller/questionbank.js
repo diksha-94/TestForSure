@@ -1,19 +1,31 @@
 var questionbankController = function(){
-	this.questions = {};
-	this.questionCategory = {};
-	this.questionSubcategory = {};
-	this.Init();
+	this.id = -1;
 };
 questionbankController.prototype.Init = function()
 {
-	console.log('Initiate question bank');
-	showLoader();
-	this.GetQuestionCategories(function(){
-		this.LoadView();
+};
+questionbankController.prototype.AddEdit = function()
+{
+	$('#questionModal').modal('show');
+	RefreshData('questionModal');
+	if(this.id > 0){
+		this.Edit();
+	}
+	$('#questionModal').find('#btnCategorySave').unbind().bind('click', function(){
+		this.SaveData();
+	}.bind(this));
+};
+questionbankController.prototype.Delete = function()
+{
+	$('#deleteQuestionModal').modal('show');
+	$('#deleteQuestionModal').find('.modal-body').find('p').find('span').text(this.id+" ?");
+	$('#deleteQuestionModal').find('#btnDeleteYes').unbind().bind('click', function(){
+		this.DeleteItem();
 	}.bind(this));
 };
 questionbankController.prototype.BindEvents = function()
 {
+	//TODO
 	if(this.questionCategory.length > 0){
 		var catObj = "<option value=''>All</option>";
 		for(var category in this.questionCategory){
@@ -38,71 +50,6 @@ questionbankController.prototype.BindEvents = function()
 		this.PopulateFilteredQuestions($('#ddSearchQuesCategory').val(), $('#ddSearchQuesSubCategory').val());
 	}.bind(this));
 	
-};
-questionbankController.prototype.BindTableEvents = function()
-{
-	//Add/Update Question
-	$('.addEditQuestion').unbind().bind('click', function(e){
-		this.AddQuestionModal();
-		this.PopulateQuestionData(e);
-	}.bind(this));
-	
-	$('.deleteQuestion').unbind().bind('click', function(e){
-		var questionId = $(e.currentTarget).parents('tr').find('td:first-child').text();
-		$('#deleteQuestionModal').modal('show');
-		$('#deleteQuestionModal').find('#btnDeleteYes').unbind().bind('click', function(){
-			this.DeleteQuestion(questionId, e);
-		}.bind(this));
-	}.bind(this));
-};
-questionbankController.prototype.LoadView = function()
-{
-	$('.menu-page-content').load('questionbank.html', function(){
-		this.LoadAllQuestions(0, function(length){
-			this.HandleRecords(length);
-			this.BindEvents();
-			this.BindTableEvents();
-			removeLoader();
-		}.bind(this));
-	}.bind(this));
-};
-questionbankController.prototype.LoadAllQuestions = function(start, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/question?count='+perPage+'&start='+start,
-		type: 'GET',
-		contentType: 'application/json',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data !=  null && response.data.length > 0){
-					var questions = response.data;
-					var quesObj = "";
-					for(var ques in questions){
-						this.questions[questions[ques]["id"]] = questions[ques];
-						quesObj += "<tr>"+
-							"<td class='tdQuestionId'>"+questions[ques]['id']+"</td>"+
-							"<td class='tdQuestionName'>"+questions[ques]['questionText']+"</td>"+
-							"<td>"+
-								"<button class='btn btn-default addEditQuestion update'>Edit</button>"+
-								"<button class='btn btn-default deleteQuestion'>Delete</button>"+
-							"</td>"+
-							"</tr>";
-					}
-					$('.existing-questions').find('table').find('tbody').html(quesObj);
-				}
-			}
-			else{
-				$('.existing-exams').html('<h3>'+response.result.message+' !!</h3>');
-			}
-			if(typeof callback == 'function')
-				callback(response.result.length);
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback == 'function')
-				callback();
-		}
-	});
 };
 questionbankController.prototype.AddQuestionModal = function()
 {
@@ -282,7 +229,7 @@ questionbankController.prototype.AddQuestionModal = function()
 		$('#questionModal').hide();
 	});
 };
-questionbankController.prototype.SaveQuestion = function(update, id)
+questionbankController.prototype.SaveData = function()
 {
 	console.log('Saving (Add/Update) Question');
 	var categoryId = $('#questionModal').find('#ddQuestionCategory').val();
@@ -330,11 +277,10 @@ questionbankController.prototype.SaveQuestion = function(update, id)
 	};
 	
 	console.log(requestData);
-	if(update){
-		requestData.id = id;
+	if(this.id > 0){
+		requestData.id = this.id;
 		type = 'PUT';
 	}
-	console.log('Call to save category');
 	$.ajax({
 		url: url,
 		type: type,
@@ -356,11 +302,10 @@ questionbankController.prototype.SaveQuestion = function(update, id)
 		}
 	});
 };
-questionbankController.prototype.DeleteQuestion = function(questionId, e)
+questionbankController.prototype.DeleteItem = function()
 {
-	console.log('Delete Question');
 	$.ajax({
-		url: remoteServer+"/test2bsure/question?id="+questionId,
+		url: remoteServer+"/test2bsure/question?id="+this.id,
 		type: 'DELETE',
 		success: function(response){
 			if(response.status == true){
@@ -373,7 +318,7 @@ questionbankController.prototype.DeleteQuestion = function(questionId, e)
 		}
 	});
 };
-questionbankController.prototype.PopulateQuestionData = function(e)
+questionbankController.prototype.Edit = function()
 {
 	var quesCategory = "";
 	var quesSubcategory = "";
@@ -542,16 +487,6 @@ questionbankController.prototype.PopulateFilteredQuestions = function(category, 
 	$('.existing-questions').find('table').find('tbody').empty();
 	$('.existing-questions').find('table').find('tbody').append(html);
 	this.BindTableEvents();
-};
-questionbankController.prototype.HandleRecords = function(len){
-	$('.counter').find('.itemCount').find('span').text(len);
-	if(len > 0){
-		$('.paginationDiv').html(pagination(len));
-		$('.paginationDiv').find('.pagination').find('select').unbind().bind('change', function(e){
-			var start = $(e.currentTarget).find(":selected").attr('data-start');
-			this.LoadAllQuestions(start);
-		}.bind(this));
-	}
 };
 questionbankController.prototype.DeleteCategory = function(id, callback){
 	$.ajax({

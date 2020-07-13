@@ -16,16 +16,47 @@ backenddashboardController.prototype.BindEvents = function()
 };
 backenddashboardController.prototype.LoadView = function()
 {
-	$('.menu-page-content').load('backenddashboard.html', function(){
-		this.BindEvents();
-		//Set default Dates
-		var d = new Date();
-		$('#dateEnd').val(d.getFullYear() + "-" + this.FormatNumber(d.getMonth()+1) + "-" + this.FormatNumber(d.getDate()));
-		d.setDate(d.getDate() - 6);
-		$('#dateStart').val(d.getFullYear() + "-" + this.FormatNumber(d.getMonth()+1) + "-" + this.FormatNumber(d.getDate()));
+	var html = "<div class='dashboard-div col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='top-options col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div>"+
+						"<span class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Start Date</span>"+ 
+						"<input id='dateStart' type='date' "+
+							" class='col-xs-2 col-sm-2 col-md-2 col-lg-2' />"+
+					"</div>"+
+					"<div>"+
+						"<span class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>End Date</span>"+ 
+						"<input id='dateEnd' type='date' "+
+							" class='col-xs-2 col-sm-2 col-md-2 col-lg-2' />"+
+					"</div>"+
+					"<div>"+
+						"<button id='btnDataSearch' type='button' "+
+							" class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Done</button>"+
+					"</div>"+
+				"</div>"+
+				"<div class='dashboard-data col-xs-10 col-sm-10 col-md-10 col-lg-10 col-sm-offset-1 col-xs-offset-1 col-md-offset-1 col-lg-offset-1'>"+
+					"<div class='user-details'>"+
+						"<span>Users Registered - </span>"+
+						"<span class='userCount count'></span>"+
+					"</div>"+
+					"<div class='test-details'>"+
+						"<span>Tests Taken - </span>"+
+						"<span class='testCount count'></span>"+
+					"</div>"+
+					"<div class='quiz-details'>"+
+						"<span>Quizzes Attempted - </span>"+
+						"<span class='quizCount count'></span>"+
+					"</div>"+
+				"</div>"+
+			"</div>";
+
+	$('.menu-page-content').html(html);
+	this.BindEvents();
+	var d = new Date();
+	$('#dateEnd').val(d.getFullYear() + "-" + this.FormatNumber(d.getMonth()+1) + "-" + this.FormatNumber(d.getDate()));
+	d.setDate(d.getDate() - 6);
+	$('#dateStart').val(d.getFullYear() + "-" + this.FormatNumber(d.getMonth()+1) + "-" + this.FormatNumber(d.getDate()));
 		
-		this.LoadData();
-	}.bind(this));
+	this.LoadData();
 };
 backenddashboardController.prototype.LoadData = function()
 {
