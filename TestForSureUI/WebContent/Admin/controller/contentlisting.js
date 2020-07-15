@@ -206,9 +206,9 @@ var contentlistingDef = {
 			}
 		},
 		"usertracking":{
-			"title": "Category",
+			"title": "USer",
 			"searchByName": true,
-			"addNewBtn": true,
+			"addNewBtn": false,
 			"totalCount": true,
 			"pagination": true,
 			"tableFields": [{ 
@@ -245,7 +245,7 @@ var contentlistingDef = {
 			}
 		},
 		"filter":{
-			"title": "Category",
+			"title": "Filter",
 			"searchByName": true,
 			"addNewBtn": true,
 			"totalCount": true,
@@ -588,6 +588,10 @@ contentlistingController.prototype.BindEvents = function()
 			//Populate Subcategories
 			if(categoryId == 0){
 				$('#ddSearchQuesSubCategory').html("<option value='0'>All</option>");
+				this.LoadDataFromServer(function(len){
+					this.HandlePagination(len);
+					removeLoader();
+				}.bind(this));
 			}
 			else{
 				getQuestionCategories(function(cat, subcat){
@@ -598,12 +602,12 @@ contentlistingController.prototype.BindEvents = function()
 						}
 					}
 					$('#ddSearchQuesSubCategory').html(html);
-				});
+					this.LoadDataFromServer(function(len){
+						this.HandlePagination(len);
+						removeLoader();
+					}.bind(this));
+				}.bind(this));
 			}
-			this.LoadDataFromServer(function(len){
-				this.HandlePagination(len);
-				removeLoader();
-			}.bind(this));
 		}.bind(this))
 	}
 	

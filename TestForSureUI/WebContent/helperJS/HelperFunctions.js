@@ -1,4 +1,4 @@
-var remoteServer = "http://localhost:8083";
+var remoteServer = "http://3.6.58.203:8083";
 var perPage = 15;
 function validateEmail(email){
 	 var regEx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;

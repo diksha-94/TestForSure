@@ -60,9 +60,9 @@ dashboardController.prototype.LoadMenu = function()
 					"<li id='menuFilter' data-action='menu_filter' data-title='Filter' data-controller='contentlisting' data-content='filter'>"+
 						"<span>Filter</span>"+
 					"</li>"+
-					"<li id='menuAskNAnswer' data-action='menu_asknanswer' data-title='Ask & Answer' data-controller='contentlisting' data-content='asknanswer'>"+
+					/*"<li id='menuAskNAnswer' data-action='menu_asknanswer' data-title='Ask & Answer' data-controller='contentlisting' data-content='asknanswer'>"+
 						"<span>Ask & Answer</span>"+
-					"</li>"+
+					"</li>"+*/
 			   "</ul>";
 	return html;
 };

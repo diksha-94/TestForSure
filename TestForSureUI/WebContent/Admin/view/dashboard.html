@@ -491,9 +491,9 @@
 							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Category <b class='red'>*</b></span>
 							<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
 								<option value=''>Select</option>
-								<option class='newCategoryOption' value='0'>+ Add New category</option>
+								<option class='newCategoryOption' value='-1'>+ Add New category</option>
 							</select>
-							<button class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveCategory'>Remove Category</button>
+							<button class='hide col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveCategory'>Remove Category</button>
 						</div>
 						<div class='addQuesCategory' style='display:none;'>
 							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
@@ -507,9 +507,9 @@
 							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question SubCategory <b class='red'>*</b></span>
 							<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
 								<option value=''>Select</option>
-								<option class='newSubcategoryOption' value='0'>+ Add New sub category</option>
+								<option class='newSubcategoryOption' value='-1'>+ Add New sub category</option>
 							</select>
-							<button class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveSubcategory'>Remove Subcategory</button>
+							<button class='hide col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2' id='btnRemoveSubcategory'>Remove Subcategory</button>
 						</div>
 						<div class='addQuesSubCategory' style='display:none;'>
 							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
@@ -518,18 +518,18 @@
 								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
 							<button id='btnAddQuesSubCategory' class='col-xs-2 col-sm-2 col-md-2 col-lg-2'>Add</button>
 						</div>
-						<div>
+						<div class='hide'>
 							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Type <b class='red'>*</b></span>
 							<select id='ddQuestionType' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
 							</select>
 						</div>
-						<div>
+						<div class='hide'>
 							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph Based <b class='red'>*</b></span>
 							<input type='checkbox' id='chkParagraph' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
 						</div>
-						<div>
+						<div class='hide'>
 							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
 							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Paragraph
 							<b class='red'>*</b></span> <div id='txtParagraphText' 
@@ -537,7 +537,7 @@
 						</div>
 						<div>
 							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
-							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Question Text
 							<b class='red'>*</b></span> <div id='txtQuestionText' 
 								class='col-xs-4 col-sm-4 col-md-4 col-lg-4'></div>
 						</div>
