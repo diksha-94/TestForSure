@@ -27,11 +27,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "Edit",
+								"type": "E",
 								"class": "btnEdit"
 							},
 							{
-								"type": "Delete",
+								"type": "D",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -71,11 +71,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "Edit",
+								"type": "E",
 								"class": "btnEdit"
 							},
 							{
-								"type": "Delete",
+								"type": "D",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -102,11 +102,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "Edit",
+								"type": "E",
 								"class": "btnEdit"
 							},
 							{
-								"type": "Delete",
+								"type": "D",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -148,16 +148,17 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "Edit",
+								"type": "E",
 								"class": "btnEdit"
 							},
 							{
-								"type": "Delete",
+								"type": "D",
 								"class": "btnDelete"
 							},
 							{
 								"type": "Publish",
-								"class": "testStatus"
+								"class": "testStatus",
+								"action": true
 							}],
 			"backend": {
 				"loadData": "test"
@@ -190,16 +191,17 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "Edit",
+								"type": "E",
 								"class": "btnEdit"
 							},
 							{
-								"type": "Delete",
+								"type": "D",
 								"class": "btnDelete"
 							},
 							{
 								"type": "Publish",
-								"class": "quizStatus"
+								"class": "quizStatus",
+								"action": true
 							}],
 			"backend": {
 				"loadData": "quiz"
@@ -263,11 +265,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "Edit",
+								"type": "E",
 								"class": "btnEdit"
 							},
 							{
-								"type": "Delete",
+								"type": "D",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -510,8 +512,17 @@ contentlistingController.prototype.LoadDataFromServer = function(callback)
 						if(typeof this.content.listActions != 'undefined'){
 							html += "<td>";
 							for(var action in this.content.listActions){
-								html += "<button class='btn btn-default "+this.content.listActions[action]["class"]+"'>"+
-											this.content.listActions[action]["type"]+
+								var dataAction = "";
+								var text = this.content.listActions[action]["type"];
+								if(typeof this.content.listActions[action]["action"] != 'undefined' &&
+										this.content.listActions[action]["action"] == true){
+									dataAction = "data-action="+items[item]["publish"];
+									if(items[item]["publish"] == 1){
+										text = "Unpublish";
+									}
+								}
+								html += "<button class='btn btn-default "+this.content.listActions[action]["class"]+"' " + dataAction + ">"+
+											text+
 										"</button>";
 							}
 							html += "</td>";
@@ -562,7 +573,7 @@ contentlistingController.prototype.BindEvents = function()
 	//Search
 	if($('.btnSearchByName').length > 0){
 		$('.btnSearchByName').unbind().bind('click', function(){
-			this.fromSearch = true; 1;
+			this.fromSearch = true;
 			this.LoadDataFromServer(function(len){
 				this.HandlePagination(len);
 				removeLoader();
@@ -685,7 +696,7 @@ contentlistingController.prototype.BindEvents = function()
 			LoadJS(this.contentType, function(){
 				var obj = eval("new " + this.contentType + "Controller()");
 				obj.id = id;
-				obj.HandleTestStatus();
+				obj.HandleQuizStatus();
 			}.bind(this));
 		}.bind(this));
 	}

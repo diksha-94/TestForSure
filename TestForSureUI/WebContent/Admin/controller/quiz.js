@@ -1,5 +1,7 @@
 var quizController = function(){
 	this.id = -1;
+	this.currentPage = 1;
+	this.fromSearch = false;
 };
 quizController.prototype.Init = function()
 {
@@ -7,6 +9,8 @@ quizController.prototype.Init = function()
 quizController.prototype.AddEdit = function()
 {
 	$('#quizModal').modal('show');
+	$('#quizModal').find('.ddQuizExam').remove();
+	$('#quizModal').find('.ddQuizFilter').remove();
 	RefreshData('quizModal');
 	if(this.id > 0){
 		this.Edit();
@@ -34,22 +38,10 @@ quizController.prototype.Delete = function()
 		this.DeleteItem();
 	}.bind(this));
 };
-quizController.prototype.BindEvents = function()
+quizController.prototype.SaveData = function(openNext, callback)
 {
-		
-	
-	//Publish/Unpublish Quiz
-	$('.quizStatus').unbind().bind('click', function(e){
-		var quizId = $(e.currentTarget).parents('tr').find('td:first-child').text();
-		//var quizStatus = $(e.currentTarget).attr('quiz-status');
-		this.HandleQuizStatus(quizId);
-	}.bind(this));
-};
-
-quizController.prototype.SaveData = function(navigate)
-{
-	if(typeof navigate == 'undefined'){
-		navigate = true;
+	if(typeof openNext == 'undefined'){
+		openNext = true;
 	}
 	console.log('Saving (Add/Update) Quiz');
 	var name = $('#txtQuizName').val();
@@ -104,8 +96,8 @@ quizController.prototype.SaveData = function(navigate)
 		data: JSON.stringify(requestData),
 		success: function(response){
 			if(response.status == true){
-				this.quizId = response.message;
-				if(navigate == true){
+				this.id = response.message;
+				if(openNext == true){
 					$('#quizQuestionsModal').modal('show');
 					this.BindQuestionCategoryEvents();
 					$('#quizQuestionsModal').find('#btnQuizFinish').unbind().bind('click', function(){
@@ -118,10 +110,11 @@ quizController.prototype.SaveData = function(navigate)
 							$('#updateQuizQuesModal').find('#btnUpdateYes').unbind().bind('click', function(){
 								$('#updateQuizQuesModal').modal('hide');
 								$('#quizModal').find('#txtQuizQuestions').val(added);
-								this.SaveQuizDetails(true, this.quizId, false);
-								$('#quizQuestionsModal').modal('hide');
-								$('#quizModal').modal('hide');
-								$('.menu-tabs').find('li[class="active"]').find('a').click();
+								this.SaveData(false, function(){
+									$('#quizQuestionsModal').modal('hide');
+									$('#quizModal').modal('hide');
+									$('.menu-tabs').find('li[class="active"]').find('a').click();
+								});
 							}.bind(this));
 						}
 						else{
@@ -131,6 +124,11 @@ quizController.prototype.SaveData = function(navigate)
 						}
 					}.bind(this));
 					this.HandleQuizQuestions();
+				}
+				else{
+					if(typeof callback != 'undefined'){
+						callback();
+					}
 				}
 			}
 			else{
@@ -164,177 +162,90 @@ quizController.prototype.DeleteItem = function()
 };
 quizController.prototype.Edit = function(e)
 {
-	//TODO
-	var name = "";
-	var title = "";
-	var ques = "";
-	var marks = "";
-	var attempts = "";
-	var exams = "";
-	var publish = 0;
-	var lock = 0;
-	var filters = "";
-	if($(e.currentTarget).hasClass('update')){
-		var currentId = $(e.currentTarget).parents('tr').find('.tdQuizId').text();
-		var quiz = this.quiz[currentId];
-		name = quiz["name"];
-		title = quiz["title"];
-		ques = quiz["noOfQues"];
-		marks = quiz["marksPerQues"];
-		attempts = quiz["noOfAttempts"];
-		publish = quiz["publish"];
-		lock = quiz["lockApply"];
-		if(quiz["exams"] != null && quiz["exams"].length > 0){
-			var data = [];
-			for(var exam in quiz["exams"]){
-				var obj = {};
-				obj.id = quiz["exams"][exam];
-				obj.title = this.allExams[quiz["exams"][exam]].title;
-				data.push(obj);
-			}
-			new AutoComplete('ddQuizExam', 'exams').SetSelectedValues('ddQuizExam', data);
-		}
-		else{
-			new AutoComplete('ddQuizExam', 'exams');
-		}
-		if(quiz["filters"] != null && quiz["filters"].length > 0){
-			var data = [];
-			for(var filter in quiz["filters"]){
-				var obj = {};
-				obj.id = quiz["filters"][filter]["id"];
-				obj.title = quiz["filters"][filter]["title"];//this.allExams[quiz["filters"][exam]].title;
-				data.push(obj);
-			}
-			new AutoComplete('ddQuizFilter', 'filters').SetSelectedValues('ddQuizFilter', data);
-		}
-		else{
-			new AutoComplete('ddQuizFilter', 'filters');
-		}
-	}
-	$('#quizModal').find('#txtQuizName').val(name);
-	$('#quizModal').find('#txtQuizTitle').val(title);
-	$('#quizModal').find('#txtQuizQuestions').val(ques);
-	$('#quizModal').find('#txtQuizMarks').val(marks);
-	$('#quizModal').find('#txtQuizAttempts').val(attempts);
-	$('#quizModal').find('#ddQuizExam').val('');
-	var quizStatus = false;
-	if(publish == 1){
-		quizStatus = true;
-	}
-	$('#quizModal').find('#chkQuizPublish').prop('checked', quizStatus);
-	var lockStatus = false;
-	if(lock == 1){
-		lockStatus = true;
-		$('#txtQuizLockPoints').removeClass('lockDetails');
-		$('#txtQuizLockRupees').removeClass('lockDetails');
-		$('#txtQuizLockPoints').val(quiz["lockPoints"]);
-		$('#txtQuizLockRupees').val(quiz["lockRupees"]);
-	}
-	else if(lock == 0){
-		lockStatus = false;
-		$('#txtQuizLockPoints').addClass('lockDetails');
-		$('#txtQuizLockRupees').addClass('lockDetails');
-	}
-	$('#quizModal').find('#chkQuizLock').prop('checked', lockStatus);
-};
-quizController.prototype.LoadCategories = function()
-{
 	$.ajax({
-		url: remoteServer+'/test2bsure/category',
+		url: remoteServer + "/test2bsure/quiz?id=" + this.id,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
-					var categories = response.data;
-					for(var category in categories){
-						this.categories[categories[category]["id"]] = categories[category];
+					var item = response.data[0];
+					$('#quizModal').find('#txtQuizName').val(item.name);
+					$('#quizModal').find('#txtQuizTitle').val(item.title);
+					$('#quizModal').find('#txtQuizQuestions').val(item.noOfQues);
+					$('#quizModal').find('#txtQuizMarks').val(item.marksPerQues);
+					$('#quizModal').find('#txtQuizAttempts').val(item.noOfAttempts);
+					var quizStatus = false;
+					if(item.publish == 1){
+						quizStatus = true;
 					}
-				}
-			}
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-		}
-	});
-};
-quizController.prototype.SearchExams = function(value, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/exam?search='+value,
-		type: 'GET',
-		success: function(response){
-			this.exams = {};
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var exams = response.data;
-					for(var exam in exams){
-						this.exams[exams[exam]["id"]] = exams[exam];
-					}
-				}
-			}
-			if(typeof callback != 'undefined')
-				callback();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback != 'undefined')
-				callback();
-		}
-	});
-};
-quizController.prototype.LoadExams = function()
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/exam',
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var exams = response.data;
-					for(var exam in exams){
-						this.allExams[exams[exam]["id"]] = exams[exam];
-					}
-				}
-			}
-			if(typeof callback != 'undefined')
-				callback();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback != 'undefined')
-				callback();
-		}
-	});
-};
-quizController.prototype.LoadQuestions = function(callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/question',
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var questions = response.data;
-					for(var ques in questions){
-						this.questions[questions[ques]["id"]] = questions[ques];
-					}
+					$('#quizModal').find('#chkQuizPublish').prop('checked', quizStatus);
 					
+					$('#quizModal').find('#ddQuizExam').val('');
+					if(item.exams != null && item.exams.length > 0){
+						var data = {};
+						for(var exam in item.exams){
+							data[item.exams[exam]] = item.exams[exam];
+						}
+						getExamTitle(Object.keys(data), function(response){
+							console.log(response);
+							for(var r in response){
+								data[response[r]["id"]] = {
+										"id": response[r]["id"],
+										"title": response[r]["title"]
+								};
+							}
+							new AutoComplete('ddQuizExam', 'exams').SetSelectedValues('ddQuizExam', data);
+						});
+					}
+					else{
+						new AutoComplete('ddQuizExam', 'exams');
+					}
+					if(item.filters != null && item.filters.length > 0){
+						var data1 = {};
+						for(var filter in item.filters){
+							data1[item.filters[filter].id] = item.filters[filter].id;
+						}
+						getFilterTitle(Object.keys(data1), function(response){
+							console.log(response);
+							for(var r in response){
+								data1[response[r]["id"]] = {
+										"id": response[r]["id"],
+										"title": response[r]["title"]
+								};
+							}
+							new AutoComplete('ddQuizFilter', 'filters').SetSelectedValues('ddQuizFilter', data1);
+						});
+					}
+					else{
+						new AutoComplete('ddQuizFilter', 'filters');
+					}
+					var lockStatus = false;
+					if(item.lockApply == 1){
+						lockStatus = true;
+						$('#txtQuizLockPoints').removeClass('lockDetails');
+						$('#txtQuizLockRupees').removeClass('lockDetails');
+						$('#txtQuizLockPoints').val(item.lockPoints);
+						$('#txtQuizLockRupees').val(item.lockRupees);
+					}
+					else if(item.lockApply == 0){
+						lockStatus = false;
+						$('#txtQuizLockPoints').addClass('lockDetails');
+						$('#txtQuizLockRupees').addClass('lockDetails');
+					}
+					$('#quizModal').find('#chkQuizLock').prop('checked', lockStatus);
 				}
 			}
-			if(typeof callback != 'undefined')
-				callback();
+			
 		}.bind(this),
 		error: function(e){
 			console.log(e);
-			if(typeof callback != 'undefined')
-				callback();
 		}
 	});
 };
-quizController.prototype.HandleQuizStatus = function(id)
+quizController.prototype.HandleQuizStatus = function()
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/quizstatus?id='+id,
+		url: remoteServer+'/test2bsure/quizstatus?id='+this.id,
 		type: 'PUT',
 		success: function(response){
 			console.log(response);
@@ -354,38 +265,33 @@ quizController.prototype.HandleQuizQuestions = function()
 {
 	$('#quizQuestionsModal').find('.all-questions').find('tbody').html('');
 	$('#quizQuestionsModal').find('.added-questions').find('tbody').html('');
-	this.selectedQuestions = [];
-	this.PopulateQuizQuestions(function(){
-		this.PopulateFilteredQuestions();
-		//View Question on click
-		$('#quizQuestionsModal').find('.addedQuesText').unbind().bind('click', function(e){
-			this.ViewQuestion($(e.currentTarget).parents('tr').find('.addedQuesId').text());
-		}.bind(this));
-	}.bind(this));
+	this.PopulateQuestions();
+	this.PopulateQuizQuestions();
 };
 quizController.prototype.PopulateQuizQuestions = function(callback)
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/quizquestion?quizid='+this.quizId,
+		url: remoteServer+'/test2bsure/quizquestion?quizid='+this.id,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
 					$('.divCountQues').find('.noOfQues').text(response.data.length);
+					var items = response.data;
 					var html = "";
-					var questions = response.data;
-					for(var ques in questions){
-						var quesId = questions[ques];
-						this.selectedQuestions.push(quesId);
-						html += "<tr>"+
-									"<td class='addedQuesId'>"+this.questions[quesId]["id"]+"</td>"+
-									"<td class='addedQuesText'>"+this.questions[quesId]["questionText"]+"</td>"+
-									"<td><button class='btn btn-primary removeQues'>X</button>"+
+					for(var item in items){
+						html += "<tr data-id = '" + items[item]["id"] + "'>"+
+									"<td class='addedQuesId'>"+items[item]["id"]+"</td>"+
+									"<td class='addedQuesText'>"+items[item]["questionText"]+"</td>"+
+									"<td><button class='btn btn-primary removeQues'>X</button></td>"+
 								"</tr>";
 					}
 					$('#quizQuestionsModal').find('.added-questions').find('tbody').html(html);
 					$('#quizQuestionsModal').find('.added-questions').find('.removeQues').unbind().bind('click', function(e){
 						this.DeleteQuizQuestion($(e.currentTarget).parents('tr').find('.addedQuesId').text());
+					}.bind(this));
+					$('#quizQuestionsModal').find('.addedQuesText').unbind().bind('click', function(e){
+						this.ViewQuestion($(e.currentTarget).parents('tr').find('.addedQuesId').text());
 					}.bind(this));
 				}
 			}
@@ -399,27 +305,6 @@ quizController.prototype.PopulateQuizQuestions = function(callback)
 		}
 	});
 };
-quizController.prototype.PopulateAllQuestions = function()
-{
-	var html = "";
-	for(var ques in this.questions){
-		if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1){
-			html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-						"<button class='btn btn-primary viewQues'>View</button></td>"+
-					"</tr>";
-		}
-	}
-	$('#quizQuestionsModal').find('.all-questions').find('tbody').html(html);
-	$('#quizQuestionsModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
-		this.AddQuizQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
-	$('#quizQuestionsModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
-		this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
-};
 quizController.prototype.AddQuizQuestion = function(quesId)
 {
 	$.ajax({
@@ -428,7 +313,7 @@ quizController.prototype.AddQuizQuestion = function(quesId)
 		contentType: 'application/json',
 		data: JSON.stringify({
 			"questionId": quesId,
-			"quizId": this.quizId
+			"quizId": this.id
 		}),
 		success: function(response){
 			if(response.status == true){
@@ -448,7 +333,7 @@ quizController.prototype.DeleteQuizQuestion = function(quesId)
 		contentType: 'application/json',
 		data: JSON.stringify({
 			"questionId": quesId,
-			"quizId": this.quizId
+			"quizId": this.id
 		}),
 		success: function(response){
 			if(response.status == true){
@@ -462,227 +347,160 @@ quizController.prototype.DeleteQuizQuestion = function(quesId)
 };
 quizController.prototype.BindQuestionCategoryEvents = function()
 {
-	if(this.questionCategory.length > 0){
-		var catObj = "<option value=''>All</option>";
-		for(var category in this.questionCategory){
-			catObj += "<option value='"+this.questionCategory[category]['id']+"'>"+this.questionCategory[category]['name']+"</option>";
-		}
-		$('#quizQuestionsModal').find('#ddQuestionCategory').html(catObj);
-	}
-	if(this.questionSubcategory.length > 0){
-		var subcatObj = "<option value=''>All</option>";
-		for(var subcategory in this.questionSubcategory){
-			subcatObj += "<option value='"+this.questionSubcategory[subcategory]['id']+"'>"+this.questionSubcategory[subcategory]['name']+"</option>";
-		}
-		$('#quizQuestionsModal').find('#ddQuestionSubCategory').html(subcatObj);
-	}
-	$('#quizQuestionsModal').find('#ddQuestionCategory').on('change', function(e){
-		console.log($(e.currentTarget).val());
-		var html = "<option value=''>All</option>";
-		html += this.PopulateQuestionSubcategory($(e.currentTarget).val());
-		$('#quizQuestionsModal').find('#ddQuestionSubCategory').html(html);
-	}.bind(this));
-	$('#quizQuestionsModal').find("#btnSearchQues").unbind().bind('click', function(e){
-		this.PopulateFilteredQuestions();
-	}.bind(this));
-};
-quizController.prototype.PopulateFilteredQuestions = function(start = 1, repopulate = true)
-{
-	var category = $('#quizQuestionsModal').find('#ddQuestionCategory').val();
-	var subcategory = $('#quizQuestionsModal').find('#ddQuestionSubCategory').val();
-	var html = "";
-	if(repopulate == true){
-		var totalQues = Object.keys(this.questions).length - this.selectedQuestions.length;
-		var pages = parseInt(totalQues/50);
-		if(pages*50 < totalQues){
-			pages++;
-		}
-		var elem = "";
-		for(var j=1; j<=pages; j++){
-			elem += "<option value='"+j+"'>"+j+"</option>";
-		}
-		$('#quizQuestionsModal').find('#ddPages').html(elem);
-		$('#quizQuestionsModal').find('#ddPages').unbind().bind('change', function(e){
-			var pageNo = $(e.currentTarget).find(":selected").attr('value');
-			var startNo = ((pageNo - 1) * 50) + 1;
-			this.PopulateFilteredQuestions(startNo, false);
-		}.bind(this));
-	}
-	var count = 1;
-	for(var ques in this.questions){
-		if(category.length == 0){
-			//All category selected
-			if(subcategory.length == 0){
-				//All category and all subcategory selected
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1){
-					if(count < start){
-						count++;
-						continue;
-					}
-					else if(count < (start+50)){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-						"<button class='btn btn-primary viewQues'>View</button></td>"+
-					"</tr>";
-					count++;
-					}
-				}
+	getQuestionCategories(function(categories, subcategories){
+		if(categories.length > 0){
+			var html = "";
+			for(var cat in categories){
+				html += "<option value='"+categories[cat]['id']+"'>"+categories[cat]['name']+"</option>";
 			}
-			else{
-				//All category selected but not all subcategory
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionSubcategory"] == subcategory){
-					if(count < start){
-						count++;
-						continue;
-					}
-					else if(count < (start+50)){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-						"<button class='btn btn-primary viewQues'>View</button></td>"+
-					"</tr>";
-					count++;
-					}
-				}
-			}
+			$('#quizQuestionsModal').find('#ddQuestionCategory').append(html);
+		}
+	}.bind(this));
+	$('#quizQuestionsModal').find('#ddQuestionCategory').unbind().bind('change', function(e){
+		var categoryId = $(e.currentTarget).val();
+		//Populate Subcategories
+		if(categoryId == 0){
+			$('#quizQuestionsModal').find('#ddQuestionSubCategory').html("<option value='0'>All</option>");
 		}
 		else{
-			//All category not selected
-			if(subcategory.length == 0){
-				//All category not selected but all subcategory selected
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category){
-					if(count < start){
-						count++;
-						continue;
+			getQuestionCategories(function(cat, subcat){
+				var html = "<option value='0'>All</option>";
+				for(var cat in subcat){
+					if(subcat[cat]["categoryId"] == categoryId){
+						html += "<option value='"+subcat[cat]['id']+"'>"+subcat[cat]['name']+"</option>";
 					}
-					else if(count < (start+50)){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-						"<button class='btn btn-primary viewQues'>View</button></td>"+
-					"</tr>";
-					count++;
+				}
+				$('#quizQuestionsModal').find('#ddQuestionSubCategory').html(html);
+			}.bind(this));
+		}
+	}.bind(this))
+	$('#quizQuestionsModal').find("#btnSearchQues").unbind().bind('click', function(e){
+		this.fromSearch = true;
+		this.PopulateQuestions();
+	}.bind(this));
+};
+quizController.prototype.PopulateQuestions = function(start = 1, repopulate = true)
+{
+	this.start = $($('.insidePagination').find('.pagination').find('select').find(":selected")[1]).attr('data-start');
+	if(typeof this.start == 'undefined' || this.fromSearch){
+		this.start = 0;
+		this.currentPage = 1;
+		this.fromSearch = false;
+	}
+	//TODO: Name Search
+	var perPage = 15;
+	var category = $('#quizQuestionsModal').find('#ddQuestionCategory').val();
+	var subcategory = $('#quizQuestionsModal').find('#ddQuestionSubCategory').val();
+	
+	var url = remoteServer + "/test2bsure/question"+"?count="+perPage;
+	
+	if(category != 0){
+		url += "&category="+category;
+	}
+	if(subcategory != 0){
+		url += "&subcategory="+subcategory;
+	}
+	url += "&start="+this.start;
+	url += "&itemId="+this.id+"&type=quiz";
+	console.log(url)
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(response){
+			$('#quizQuestionsModal').find('.all-questions').find('tbody').empty();
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					var items = response.data;
+					var html = "";
+					for(var item in items){
+						html += "<tr data-id = '" + items[item]["id"] + "'>"+
+									"<td class='addQuesId'>"+items[item]["id"]+"</td>"+
+									"<td class='addQuesText'>"+items[item]["questionText"]+"</td>"+
+									"<td><button class='btn btn-primary selectQues'>Add</button>"+
+									"<button class='btn btn-primary viewQues'>View</button></td>"+
+								"</tr>";
 					}
+					$('#quizQuestionsModal').find('.all-questions').find('tbody').html(html);
+
+					$('#quizQuestionsModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
+						this.AddQuizQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
+					}.bind(this));
+					$('#quizQuestionsModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
+						this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
+					}.bind(this));
+					this.HandlePagination(response.result.length);
+					removeLoader();
 				}
 			}
 			else{
-				//All category not selected and all subcategory not selected
-				if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category && this.questions[ques]["questionSubcategory"] == subcategory){
-					if(count < start){
-						count++;
-						continue;
-					}
-					else if(count < (start+50)){
-					html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-						"<button class='btn btn-primary viewQues'>View</button></td>"+
-					"</tr>";
-					count++;
-					}
-
-				}
+				this.HandlePagination(0);
 			}
-		}
-	}
-	$('#quizQuestionsModal').find('.all-questions').find('tbody').html(html);
-	$('#quizQuestionsModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
-		this.AddQuizQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
-	$('#quizQuestionsModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
-		this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
-};
-quizController.prototype.GetQuestionCategories = function()
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/question-category',
-		type: 'GET',
-		success: function(response){
-			console.log(response);
-			if(response.result.status == true){
-				if(response.categories != null && response.categories.length > 0){
-					this.questionCategory = response.categories;
-				}
-				if(response.subcategories != null && response.subcategories.length > 0){
-					this.questionSubcategory = response.subcategories;
-				}
+			if(typeof callback == 'function'){
+				callback(response.result.length);
 			}
 		}.bind(this),
 		error: function(e){
 			console.log(e);
+			if(typeof callback == 'function'){
+				callback(0);
+			}
 		}
 	});
 };
-quizController.prototype.PopulateQuestionSubcategory = function(categoryId)
-{
-	if(categoryId.length != 0 && categoryId == 0){
-		this.BindEvents();
-		return false;
-	}
-	var html = "";
-	if(this.questionSubcategory.length > 0){
-		for(var obj in this.questionSubcategory){
-			if(categoryId == ''){
-				html += "<option value='"+this.questionSubcategory[obj]['id']+"'>"+this.questionSubcategory[obj]['name']+"</option>";
-			}
-			else if(this.questionSubcategory[obj]["categoryId"] == categoryId){
-				html += "<option value='"+this.questionSubcategory[obj]['id']+"'>"+this.questionSubcategory[obj]['name']+"</option>";
-			}
-		}
-	}
-	return html;
-};
-
 quizController.prototype.ViewQuestion = function(quesId)
 {
-	$('#viewQuestionModal').modal('show');
-	var category = this.questions[quesId].questionCategory;
-	var subcategory = this.questions[quesId].questionSubcategory;
-	for(var cat in this.questionCategory){
-		if(this.questionCategory[cat].id == category){
-			category = this.questionCategory[cat]["name"];
+	getQuestion(quesId, function(data){
+		if(data == null){
+			alert("Can't View Question data");
 		}
-	}
-	for(var subcat in this.questionSubcategory){
-		if(this.questionSubcategory[subcat].id == subcategory){
-			subcategory = this.questionSubcategory[subcat]["name"];
+		else{
+			$('#viewQuestionModal').modal('show');
+			var html = "<div>";
+			html += "<div><span><b>Question Id:  </b>"+quesId+"</span></div>";
+			html += "<div><span><b>Question Category:  </b>"+data.questionCategory+"</span></div>";
+			html += "<div><span><b>Question Subcategory:  </b>"+data.questionSubcategory+"</span></div>";
+			html += "</br><div><span><b>Question: </b>"+data.questionText+"</span></div>";
+			var options = data.options;
+			if(options.startsWith('"')){
+				options = options.substring(1);
+			}
+			if(options.endsWith('"')){
+				options = options.substring(0, options.length-1);
+			}
+			var index = 97;
+			var correctOption = JSON.parse(data.correctOption).indexOf(true);
+			var i = 0;
+			$.each($(options).find('option'), function(key, value){
+				console.log(key);
+				console.log(value);
+				html += "<div class='option'>";
+				html += "<span style='display:inline;'><b>"+String.fromCharCode(index)+".   </b></span>"+$(value).html()+"";
+				html += "</div>";
+				if(correctOption == i){
+					correctOption = index;
+				}
+				index++;
+				i++;
+			});
+			html += "</br><div><span><b>Correct Option:  </b>"+String.fromCharCode(correctOption)+"</span></div>";
+			if(data.solution.length > 0){
+				html += "</br><div><span><b>Solution:  </b>"+data.solution+"</span></div>";
+			}
+			html += "</div>";
+			$('#viewQuestionModal').find('.modal-body').empty();
+			$('#viewQuestionModal').find('.modal-body').html(html);
 		}
-	}
-	var html = "<div>";
-	html += "<div><span><b>Question Id:  </b>"+quesId+"</span></div>";
-	html += "<div><span><b>Question Category:  </b>"+category+"</span></div>";
-	html += "<div><span><b>Question Subcategory:  </b>"+subcategory+"</span></div>";
-	if(this.questions[quesId].paragraph == "true"){
-		html += "</br><div><span><b>Paragraph Text: "+this.questions[quesId].paragraphText+"</b></span></div>";
-	}
-	html += "</br><div><span><b>Question: </b>"+this.questions[quesId].questionText+"</span></div>";
-	var options = this.questions[quesId].options;
-	var index = 97;
-	var correctOption = JSON.parse(this.questions[quesId].correctOption).indexOf(true);
-	var i = 0;
-	$.each($(options).find('option'), function(key, value){
-		console.log(key);
-		console.log(value);
-		html += "<div class='option'>";
-		html += "<span style='display:inline;'><b>"+String.fromCharCode(index)+".   </b></span>"+$(value).html()+"";
-		html += "</div>";
-		if(correctOption == i){
-			correctOption = index;
-		}
-		index++;
-		i++;
 	});
-	html += "</br><div><span><b>Correct Option:  </b>"+String.fromCharCode(correctOption)+"</span></div>";
-	if(this.questions[quesId].solution.length > 0){
-		html += "</br><div><span><b>Solution:  </b>"+this.questions[quesId].solution+"</span></div>";
+};
+quizController.prototype.HandlePagination = function(len){
+	$('.insidePagination').html('');
+	if(len > 0){
+		$('.insidePagination').html(pagination(len));
+		$('.insidePagination').find('.pagination').find('select').val(this.currentPage);
+		$('.insidePagination').find('.pagination').find('select').unbind().bind('change', function(e){
+			this.currentPage = $(e.currentTarget).val();
+			showLoader();
+			this.PopulateQuestions();
+		}.bind(this));
 	}
-	html += "</div>";
-	$('#viewQuestionModal').find('.modal-body').empty();
-	$('#viewQuestionModal').find('.modal-body').html(html);
 };

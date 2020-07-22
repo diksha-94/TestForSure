@@ -1,5 +1,7 @@
 var testController = function(){
 	this.id = -1;
+	this.currentPage = 1;
+	this.fromSearch = false;
 };
 testController.prototype.Init = function()
 {
@@ -7,6 +9,9 @@ testController.prototype.Init = function()
 testController.prototype.AddEdit = function()
 {
 	$('#testDetailsModal').modal('show');
+	$('#testDetailsModal').find('.ddTestExam').remove();
+	$('#testDetailsModal').find('.ddRelatedTests').remove();
+	summernoteController.getObj().addEditor('#txtTestInstructions');
 	RefreshData('testDetailsModal');
 	if(this.id > 0){
 		this.Edit();
@@ -34,29 +39,10 @@ testController.prototype.Delete = function()
 		this.DeleteItem();
 	}.bind(this));
 };
-testController.prototype.BindEvents = function()
+testController.prototype.SaveData = function(openNext, callback)
 {
-	//TODO
-	//Publish/Unpublish Test
-	$('.testStatus').unbind().bind('click', function(e){
-		var testId = $(e.currentTarget).parents('tr').find('td:first-child').text();
-		//var testStatus = $(e.currentTarget).attr('test-status');
-		this.HandleTestStatus(testId);
-	}.bind(this));
-	
-	//Add section
-	$('#testDetailsModal').find('#btnAddSection').unbind().bind('click', function(){
-		console.log("Add section");
-		this.sectionCount++;
-		this.AddSection();
-	}.bind(this));
-};
-
-
-testController.prototype.SaveData = function(navigate)
-{
-	if(typeof navigate == 'undefined'){
-		navigate = true;
+	if(typeof openNext == 'undefined'){
+		openNext = true;
 	}
 	console.log('Saving (Add/Update) Test');
 	var name = $('#txtTestName').val();
@@ -154,9 +140,8 @@ testController.prototype.SaveData = function(navigate)
 		success: function(response){
 			if(response.status == true){
 				this.id = response.message;
-				if(navigate == true){
+				if(openNext == true){
 					$('#testQuesModal').modal('show');
-					//this.HandleAllQuestionsLen();
 					this.BindQuestionCategoryEvents();
 					$('#testQuesModal').find('#btnTestFinish').unbind().bind('click', function(){
 						//Check the no. of ques added and entered are same or not
@@ -168,10 +153,11 @@ testController.prototype.SaveData = function(navigate)
 							$('#updateQuesModal').find('#btnUpdateYes').unbind().bind('click', function(){
 								$('#updateQuesModal').modal('hide');
 								$('#testDetailsModal').find('#txtTestQuestions').val(added);
-								this.SaveTestDetails(true, this.id, false);
-								$('#testQuesModal').modal('hide');
-								$('#testDetailsModal').modal('hide');
-								$('.menu-tabs').find('li[class="active"]').find('a').click();
+								this.SaveData(false, function(){
+									$('#testQuesModal').modal('hide');
+									$('#testDetailsModal').modal('hide');
+									$('.menu-tabs').find('li[class="active"]').find('a').click();
+								});
 							}.bind(this));
 						}
 						else{
@@ -181,6 +167,11 @@ testController.prototype.SaveData = function(navigate)
 						}
 					}.bind(this));
 					this.HandleTestQuestions();
+				}
+				else{
+					if(typeof callback != 'undefined'){
+						callback();
+					}
 				}
 			}
 			else{
@@ -210,125 +201,106 @@ testController.prototype.DeleteItem = function()
 		}
 	});
 };
-testController.prototype.Edit = function()
+testController.prototype.Edit = function(e)
 {
-	var name = "";
-	var title = "";
-	var ques = "";
-	var time = "";
-	var marks = "";
-	var attempts = "";
-	var exams = "";
-	var publish = 0;
-	var lock = 0;
-	var negativeMarks = 0;
-	var passPercent = 0;
-	var shuffleQues = 0;
-	var shuffleOptions = 0;
-	var sectionDetails = {};
-	var instructions = "";
-	if($(e.currentTarget).hasClass('update')){
-		var currentId = $(e.currentTarget).parents('tr').find('.tdTestId').text();
-		var test = this.tests[currentId];
-		name = test["name"];
-		title = test["title"];
-		ques = test["totalQues"];
-		time = test["totalTime"];
-		marks = test["totalMarks"];
-		negativeMarks = test["negativeMarks"];
-		passPercent = test["passPercent"];
-		shuffleQues = test["shuffleQues"];
-		shuffleOptions = test["shuffleOptions"];
-		attempts = test["noOfAttempts"];
-		publish = test["publish"];
-		lock = test["lockApply"];
-		sectionDetails = test["sectionDetails"];
-		if(test["exams"] != null && test["exams"].length > 0){
-			var data = [];
-			for(var exam in test["exams"]){
-				var obj = {};
-				obj.id = test["exams"][exam];
-				obj.title = this.allExams[test["exams"][exam]].title;
-				data.push(obj);
+	$.ajax({
+		url: remoteServer + "/test2bsure/test?id=" + this.id,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					var item = response.data[0];
+					$('#testDetailsModal').find('#txtTestName').val(item.name);
+					$('#testDetailsModal').find('#txtTestTitle').val(item.title);
+					$('#testDetailsModal').find('#txtTestQuestions').val(item.totalQues);
+					$('#testDetailsModal').find('#txtTestTime').val(item.totalTime);
+					$('#testDetailsModal').find('#txtTestMarks').val(item.totalMarks);
+					$('#testDetailsModal').find('#txtTestNegative').val(item.negativeMarks);
+					$('#testDetailsModal').find('#txtPassPer').val(item.passPercent);
+					$('#testDetailsModal').find('#txtTestAttempts').val(item.noOfAttempts);
+					var shuffleQuesStatus = false;
+					if(item.shuffleQues == 1){
+						shuffleQuesStatus = true;
+					}
+					$('#testDetailsModal').find('#chkShuffleQues').prop('checked', shuffleQuesStatus);
+					
+					var shuffleOptionsStatus = false;
+					if(item.shuffleOptions == 1){
+						shuffleOptionsStatus = true;
+					}
+					$('#testDetailsModal').find('#chkShuffleOptions').prop('checked', shuffleOptionsStatus);
+					
+					var testStatus = false;
+					if(item.publish == 1){
+						testStatus = true;
+					}
+					$('#testDetailsModal').find('#chkTestPublish').prop('checked', testStatus);
+					
+					var lockStatus = false;
+					if(item.lockApply == 1){
+						lockStatus = true;
+						$('#txtTestLockPoints').removeClass('lockDetails');
+						$('#txtTestLockRupees').removeClass('lockDetails');
+						$('#txtTestLockPoints').val(item.lockPoints);
+						$('#txtTestLockRupees').val(item.lockRupees);
+					}
+					else if(item.lockApply == 0){
+						lockStatus = false;
+						$('#txtTestLockPoints').addClass('lockDetails');
+						$('#txtTestLockRupees').addClass('lockDetails');
+					}
+					$('#testDetailsModal').find('#chkTestLock').prop('checked', lockStatus);
+					$('#testDetailsModal').find('#ddTestExam').val('');
+					if(item.exams != null && item.exams.length > 0){
+						var data = {};
+						for(var exam in item.exams){
+							data[item.exams[exam]] = item.exams[exam];
+							//data[item.exams[exam]].id = item.exams[exam];
+						}
+						getExamTitle(Object.keys(data), function(response){
+							console.log(response);
+							for(var r in response){
+								data[response[r]["id"]] = {
+										"id": response[r]["id"],
+										"title": response[r]["title"]
+								};
+							}
+							new AutoComplete('ddTestExam', 'exams').SetSelectedValues('ddTestExam', data);
+						});
+					}
+					else{
+						new AutoComplete('ddTestExam', 'exams');
+					}
+					summernoteController.getObj().setValue('#txtTestInstructions', item.instructions);
+					if(item.suggestedTests != null && item.suggestedTests.length > 0){
+						var data = {};
+						for(var test in item.suggestedTests){
+							data[item.suggestedTests[test]] = item.suggestedTests[test];
+						}
+						getTestTitle(Object.keys(data), function(response){
+							console.log(response);
+							for(var r in response){
+								data[response[r]["id"]] = {
+										"id": response[r]["id"],
+										"title": response[r]["title"]
+								};
+							}
+							new AutoComplete('ddRelatedTests', 'tests').SetSelectedValues('ddRelatedTests', data);
+						});
+					}
+					else{
+						new AutoComplete('ddRelatedTests', 'tests');
+					}
+				}
 			}
-			new AutoComplete('ddTestExam', 'exams').SetSelectedValues('ddTestExam', data);
+			
+		}.bind(this),
+		error: function(e){
+			console.log(e);
 		}
-		else{
-			new AutoComplete('ddTestExam', 'exams');
-		}
-		
-		if((sectionDetails != null && sectionDetails != "null") && JSON.parse(sectionDetails).length > 0){
-			for(var i = 0; i < JSON.parse(sectionDetails).length; i++){
-				var section = JSON.parse(sectionDetails)[i];
-				$('#testDetailsModal').find('#btnAddSection').click();
-				$('#testDetailsModal').find('.section').find('.txtSectionName-'+(i+1)).val(section.name);
-				$
-				('#testDetailsModal').find('.section').find('.txtSectionQues-'+(i+1)).val(section.questions);
-				$('#testDetailsModal').find('.section').find('.txtSectionTime-'+(i+1)).val(section.time);
-			}
-		}
-		if(test["suggestedTests"] != null && test["suggestedTests"].length > 0){
-			var data = [];
-			for(var t in test["suggestedTests"]){
-				var obj = {};
-				obj.id = test["suggestedTests"][t]["id"];
-				obj.title = test["suggestedTests"][t]["title"];//this.allExams[test["suggestedTests"][t]].title;
-				data.push(obj);
-			}
-			new AutoComplete('ddRelatedTests', 'tests').SetSelectedValues('ddRelatedTests', data);
-		}
-		else{
-			new AutoComplete('ddRelatedTests', 'tests');
-		}
-		
-		instructions = test["instructions"];
-	}
-	else{
-		new AutoComplete('ddTestExam', 'exams');
-		new AutoComplete('ddRelatedTests', 'tests');
-	}
-	$('#testDetailsModal').find('#txtTestName').val(name);
-	$('#testDetailsModal').find('#txtTestTitle').val(title);
-	$('#testDetailsModal').find('#txtTestQuestions').val(ques);
-	$('#testDetailsModal').find('#txtTestTime').val(time);
-	$('#testDetailsModal').find('#txtTestMarks').val(marks);
-	$('#testDetailsModal').find('#txtTestNegative').val(negativeMarks);
-	$('#testDetailsModal').find('#txtPassPer').val(passPercent);
-	$('#testDetailsModal').find('#txtTestAttempts').val(attempts);
-	$('#testDetailsModal').find('#ddTestExam').val('');
-	var testStatus = false;
-	if(publish == 1){
-		testStatus = true;
-	}
-	$('#testDetailsModal').find('#chkTestPublish').prop('checked', testStatus);
-	var lockStatus = false;
-	if(lock == 1){
-		lockStatus = true;
-		$('#txtTestLockPoints').removeClass('lockDetails');
-		$('#txtTestLockRupees').removeClass('lockDetails');
-		$('#txtTestLockPoints').val(test["lockPoints"]);
-		$('#txtTestLockRupees').val(test["lockRupees"]);
-	}
-	else if(lock == 0){
-		lockStatus = false;
-		$('#txtTestLockPoints').addClass('lockDetails');
-		$('#txtTestLockRupees').addClass('lockDetails');
-	}
-	$('#testDetailsModal').find('#chkTestLock').prop('checked', lockStatus);
-	
-	var shuffleQuesStatus = false;
-	if(shuffleQues == 1){
-		shuffleQuesStatus = true;
-	}
-	$('#testDetailsModal').find('#chkShuffleQues').prop('checked', shuffleQuesStatus);
-	
-	var shuffleOptionsStatus = false;
-	if(shuffleOptions == 1){
-		shuffleOptionsStatus = true;
-	}
-	$('#testDetailsModal').find('#chkShuffleOptions').prop('checked', shuffleOptionsStatus);
-	summernoteController.getObj().setValue('#txtTestInstructions', instructions);
+	});
 };
+//Not Used
 testController.prototype.AddSection = function()
 {
 	var html = '<div class="section" section-id="'+this.sectionCount+'" style="height:auto;border:solid 1px white;">'+
@@ -358,104 +330,10 @@ testController.prototype.AddSection = function()
 		$('#testDetailsModal').find('.sectionDetails').find('.section[section-id='+sectionId+']').remove();
 	});
 };
-testController.prototype.LoadCategories = function()
+testController.prototype.HandleTestStatus = function()
 {
 	$.ajax({
-		url: remoteServer+'/test2bsure/category',
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var categories = response.data;
-					for(var category in categories){
-						this.categories[categories[category]["id"]] = categories[category];
-					}
-				}
-			}
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-		}
-	});
-};
-testController.prototype.LoadExams = function()
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/exam',
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var exams = response.data;
-					for(var exam in exams){
-						this.allExams[exams[exam]["id"]] = exams[exam];
-					}
-				}
-			}
-			if(typeof callback != 'undefined')
-				callback();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback != 'undefined')
-				callback();
-		}
-	});
-};
-testController.prototype.SearchExams = function(value, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/exam?search='+value,
-		type: 'GET',
-		success: function(response){
-			this.exams = {};
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var exams = response.data;
-					for(var exam in exams){
-						this.exams[exams[exam]["id"]] = exams[exam];
-					}
-				}
-			}
-			if(typeof callback != 'undefined')
-				callback();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback != 'undefined')
-				callback();
-		}
-	});
-};
-testController.prototype.LoadQuestions = function(start, callback)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/question',//?count='+perPage+'&start='+start,
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					var questions = response.data;
-					for(var ques in questions){
-						this.questions[questions[ques]["id"]] = questions[ques];
-					}
-				}
-				this.allQuesLength = response.result.length;
-			}
-			if(typeof callback != 'undefined')
-				callback();
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-			if(typeof callback != 'undefined')
-				callback();
-		}
-	});
-};
-testController.prototype.HandleTestStatus = function(id)
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/teststatus?id='+id,
+		url: remoteServer+'/test2bsure/teststatus?id='+this.id,
 		type: 'PUT',
 		success: function(response){
 			console.log(response);
@@ -475,10 +353,8 @@ testController.prototype.HandleTestQuestions = function()
 {
 	$('#testQuesModal').find('.all-questions').find('tbody').html('');
 	$('#testQuesModal').find('.added-questions').find('tbody').html('');
-	this.selectedQuestions = [];
-	this.PopulateTestQuestions(function(){
-		this.PopulateFilteredQuestions();
-	}.bind(this));
+	this.PopulateQuestions();
+	this.PopulateTestQuestions();
 };
 testController.prototype.PopulateTestQuestions = function(callback)
 {
@@ -489,20 +365,21 @@ testController.prototype.PopulateTestQuestions = function(callback)
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
 					$('.divCountQuesTest').find('.noOfQues').text(response.data.length);
+					var items = response.data;
 					var html = "";
-					var questions = response.data;
-					for(var ques in questions){
-						var quesId = questions[ques];
-						this.selectedQuestions.push(quesId);
-						html += "<tr>"+
-									"<td class='addedQuesId'>"+this.questions[quesId]["id"]+"</td>"+
-									"<td class='addedQuesText'>"+this.questions[quesId]["questionText"]+"</td>"+
-									"<td><button class='btn btn-primary removeQues'>X</button>"+
+					for(var item in items){
+						html += "<tr data-id = '" + items[item]["id"] + "'>"+
+									"<td class='addedQuesId'>"+items[item]["id"]+"</td>"+
+									"<td class='addedQuesText'>"+items[item]["questionText"]+"</td>"+
+									"<td><button class='btn btn-primary removeQues'>X</button></td>"+
 								"</tr>";
 					}
 					$('#testQuesModal').find('.added-questions').find('tbody').html(html);
 					$('#testQuesModal').find('.added-questions').find('.removeQues').unbind().bind('click', function(e){
 						this.DeleteTestQuestion($(e.currentTarget).parents('tr').find('.addedQuesId').text());
+					}.bind(this));
+					$('#testQuesModal').find('.addedQuesText').unbind().bind('click', function(e){
+						this.ViewQuestion($(e.currentTarget).parents('tr').find('.addedQuesId').text());
 					}.bind(this));
 				}
 			}
@@ -515,27 +392,6 @@ testController.prototype.PopulateTestQuestions = function(callback)
 				callback();
 		}
 	});
-};
-testController.prototype.PopulateAllQuestions = function()
-{
-	var html = "";
-	for(var ques in this.questions){
-		if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1){
-			html += "<tr>"+
-						"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-						"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-						"<td><button class='btn btn-primary selectQues'>Add</button>"+
-						"<button class='btn btn-primary viewQues'>View</button></td>"+
-					"</tr>";
-		}
-	}
-	$('#testQuesModal').find('.all-questions').find('tbody').html(html);
-	$('#testQuesModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
-		this.AddTestQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
-	$('#testQuesModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
-		this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
 };
 testController.prototype.AddTestQuestion = function(quesId)
 {
@@ -626,181 +482,115 @@ testController.prototype.DeleteTestQuestion = function(quesId)
 };
 testController.prototype.BindQuestionCategoryEvents = function()
 {
-	if(this.questionCategory.length > 0){
-		var catObj = "<option value=''>All</option>";
-		for(var category in this.questionCategory){
-			catObj += "<option value='"+this.questionCategory[category]['id']+"'>"+this.questionCategory[category]['name']+"</option>";
+	getQuestionCategories(function(categories, subcategories){
+		if(categories.length > 0){
+			var html = "";
+			for(var cat in categories){
+				html += "<option value='"+categories[cat]['id']+"'>"+categories[cat]['name']+"</option>";
+			}
+			$('#testQuesModal').find('#ddQuestionCategory').append(html);
 		}
-		$('#testQuesModal').find('#ddQuestionCategory').html(catObj);
-	}
-	if(this.questionSubcategory.length > 0){
-		var subcatObj = "<option value=''>All</option>";
-		for(var subcategory in this.questionSubcategory){
-			subcatObj += "<option value='"+this.questionSubcategory[subcategory]['id']+"'>"+this.questionSubcategory[subcategory]['name']+"</option>";
-		}
-		$('#testQuesModal').find('#ddQuestionSubCategory').html(subcatObj);
-	}
-	$('#testQuesModal').find('#ddQuestionCategory').on('change', function(e){
-		console.log($(e.currentTarget).val());
-		var html = "<option value=''>All</option>";
-		html += this.PopulateQuestionSubcategory($(e.currentTarget).val());
-		$('#testQuesModal').find('#ddQuestionSubCategory').html(html);
 	}.bind(this));
-	$('#testQuesModal').find("#btnSearchQues").unbind().bind('click', function(e){
-		this.PopulateFilteredQuestions();
-	}.bind(this));
-};
-testController.prototype.PopulateFilteredQuestions = function(start = 1, repopulate = true)
-{
-	var category = $('#testQuesModal').find('#ddQuestionCategory').val();
-	var subcategory = $('#testQuesModal').find('#ddQuestionSubCategory').val();
-	var html = "";
-	if(repopulate == true){
-		var totalQues = Object.keys(this.questions).length - this.selectedQuestions.length;
-		var pages = parseInt(totalQues/50);
-		if(pages*50 < totalQues){
-			pages++;
+	$('#testQuesModal').find('#ddQuestionCategory').unbind().bind('change', function(e){
+		var categoryId = $(e.currentTarget).val();
+		//Populate Subcategories
+		if(categoryId == 0){
+			$('#testQuesModal').find('#ddQuestionSubCategory').html("<option value='0'>All</option>");
 		}
-		var elem = "";
-		for(var j=1; j<=pages; j++){
-			elem += "<option value='"+j+"'>"+j+"</option>";
-		}
-		$('#testQuesModal').find('#ddPages').html(elem);
-		$('#testQuesModal').find('#ddPages').unbind().bind('change', function(e){
-			var pageNo = $(e.currentTarget).find(":selected").attr('value');
-			var startNo = ((pageNo - 1) * 50) + 1;
-			this.PopulateFilteredQuestions(startNo, false);
-		}.bind(this));
-	}
-	var count = 1;
-	for(var ques in this.questions){
-		
-			if(category.length == 0){
-				//All category selected
-				if(subcategory.length == 0){
-					//All category and all subcategory selected
-					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1){
-						if(count < start){
-							count++;
-							continue;
-						}
-						else if(count < (start+50)){
-						html += "<tr>"+
-							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-							"<td><button class='btn btn-primary selectQues'>Add</button>"+
-							"<button class='btn btn-primary viewQues'>View</button></td>"+
-						"</tr>";
-						count++;
-						}
+		else{
+			getQuestionCategories(function(cat, subcat){
+				var html = "<option value='0'>All</option>";
+				for(var cat in subcat){
+					if(subcat[cat]["categoryId"] == categoryId){
+						html += "<option value='"+subcat[cat]['id']+"'>"+subcat[cat]['name']+"</option>";
 					}
 				}
-				else{
-					//All category selected but not all subcategory
-					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionSubcategory"] == subcategory){
-						if(count < start){
-							count++;
-							continue;
-						}
-						else if(count < (start+50)){
-						html += "<tr>"+
-							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-							"<td><button class='btn btn-primary selectQues'>Add</button>"+
-							"<button class='btn btn-primary viewQues'>View</button></td>"+
-						"</tr>";
-						count++;
-						}
+				$('#testQuesModal').find('#ddQuestionSubCategory').html(html);
+			}.bind(this));
+		}
+	}.bind(this))
+	$('#testQuesModal').find("#btnSearchQues").unbind().bind('click', function(e){
+		this.fromSearch = true;
+		this.PopulateQuestions();
+	}.bind(this));
+};
+testController.prototype.PopulateQuestions = function(start = 1, repopulate = true)
+{
+	this.start = $($('.insidePagination').find('.pagination').find('select').find(":selected")[1]).attr('data-start');
+	if(typeof this.start == 'undefined' || this.fromSearch){
+		this.start = 0;
+		this.currentPage = 1;
+		this.fromSearch = false;
+	}
+	//TODO: Name Search
+	var perPage = 15;
+	var category = $('#testQuesModal').find('#ddQuestionCategory').val();
+	var subcategory = $('#testQuesModal').find('#ddQuestionSubCategory').val();
+	
+	var url = remoteServer + "/test2bsure/question"+"?count="+perPage;
+	
+	if(category != 0){
+		url += "&category="+category;
+	}
+	if(subcategory != 0){
+		url += "&subcategory="+subcategory;
+	}
+	url += "&start="+this.start;
+	url += "&itemId="+this.id+"&type=test";
+	console.log(url)
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(response){
+			$('#testQuesModal').find('.all-questions').find('tbody').empty();
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					var items = response.data;
+					var html = "";
+					for(var item in items){
+						html += "<tr data-id = '" + items[item]["id"] + "'>"+
+									"<td class='addQuesId'>"+items[item]["id"]+"</td>"+
+									"<td class='addQuesText'>"+items[item]["questionText"]+"</td>"+
+									"<td><button class='btn btn-primary selectQues'>Add</button>"+
+									"<button class='btn btn-primary viewQues'>View</button></td>"+
+								"</tr>";
 					}
+					$('#testQuesModal').find('.all-questions').find('tbody').html(html);
+
+					$('#testQuesModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
+						this.AddTestQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
+					}.bind(this));
+					$('#testQuesModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
+						this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
+					}.bind(this));
+					this.HandlePagination(response.result.length);
+					removeLoader();
 				}
 			}
 			else{
-				//All category not selected
-				if(subcategory.length == 0){
-					//All category not selected but all subcategory selected
-					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category){
-						if(count < start){
-							count++;
-							continue;
-						}
-						else if(count < (start+50)){
-						html += "<tr>"+
-							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-							"<td><button class='btn btn-primary selectQues'>Add</button>"+
-							"<button class='btn btn-primary viewQues'>View</button></td>"+
-						"</tr>";
-						count++;
-						}
-					}
-				}
-				else{
-					//All category not selected and all subcategory not selected
-					if(this.selectedQuestions.indexOf(this.questions[ques]["id"]) == -1 && this.questions[ques]["questionCategory"] == category && this.questions[ques]["questionSubcategory"] == subcategory){
-						if(count < start){
-							count++;
-							continue;
-						}
-						else if(count < (start+50)){
-						html += "<tr>"+
-							"<td class='addQuesId'>"+this.questions[ques]["id"]+"</td>"+
-							"<td class='addQuesText'>"+this.questions[ques]["questionText"]+"</td>"+
-							"<td><button class='btn btn-primary selectQues'>Add</button>"+
-							"<button class='btn btn-primary viewQues'>View</button></td>"+
-						"</tr>";
-						count++;
-						}
-	
-					}
-				}
+				this.HandlePagination(0);
 			}
-		
-	}
-	$('#testQuesModal').find('.all-questions').find('tbody').html(html);
-	$('#testQuesModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
-		this.AddTestQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
-	$('#testQuesModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
-		this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
-	}.bind(this));
-};
-testController.prototype.GetQuestionCategories = function()
-{
-	$.ajax({
-		url: remoteServer+'/test2bsure/question-category',
-		type: 'GET',
-		success: function(response){
-			console.log(response);
-			if(response.result.status == true){
-				if(response.categories != null && response.categories.length > 0){
-					this.questionCategory = response.categories;
-				}
-				if(response.subcategories != null && response.subcategories.length > 0){
-					this.questionSubcategory = response.subcategories;
-				}
+			if(typeof callback == 'function'){
+				callback(response.result.length);
 			}
 		}.bind(this),
 		error: function(e){
 			console.log(e);
+			if(typeof callback == 'function'){
+				callback(0);
+			}
 		}
 	});
 };
-testController.prototype.PopulateQuestionSubcategory = function(categoryId)
-{
-	if(categoryId.length != 0 && categoryId == 0){
-		this.BindEvents();
-		return false;
+testController.prototype.HandlePagination = function(len){
+	$('.insidePagination').html('');
+	if(len > 0){
+		$('.insidePagination').html(pagination(len));
+		$('.insidePagination').find('.pagination').find('select').val(this.currentPage);
+		$('.insidePagination').find('.pagination').find('select').unbind().bind('change', function(e){
+			this.currentPage = $(e.currentTarget).val();
+			showLoader();
+			this.PopulateQuestions();
+		}.bind(this));
 	}
-	var html = "";
-	if(this.questionSubcategory.length > 0){
-		for(var obj in this.questionSubcategory){
-			if(categoryId == ''){
-				html += "<option value='"+this.questionSubcategory[obj]['id']+"'>"+this.questionSubcategory[obj]['name']+"</option>";
-			}
-			else if(this.questionSubcategory[obj]["categoryId"] == categoryId){
-				html += "<option value='"+this.questionSubcategory[obj]['id']+"'>"+this.questionSubcategory[obj]['name']+"</option>";
-			}
-		}
-	}
-	return html;
 };

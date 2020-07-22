@@ -1,4 +1,5 @@
-var remoteServer = "http://3.6.58.203:8083";
+//var remoteServer = "http://3.6.58.203:8083";
+var remoteServer = "http://localhost:8083";
 var perPage = 15;
 function validateEmail(email){
 	 var regEx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -111,9 +112,13 @@ function getCategories(callback){
 				if(response.data != null && response.data.length > 0){
 					callback(response.data);
 				}
+				else{
+					callback([]);
+				}
+			}
+			else{
 				callback([]);
 			}
-			callback([]);
 		}.bind(this),
 		error: function(e){
 			console.log(e);
@@ -142,6 +147,100 @@ function getQuestionCategories(callback){
 		error: function(e){
 			console.log(e);
 			callback([], []);
+		}
+	});
+}
+
+function getExamTitle(examIds, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/examtitle?exams='+examIds,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				else{
+					callback([]);
+				}
+			}
+			else{
+				callback([]);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}
+function getTestTitle(testIds, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/testtitle?tests='+testIds,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				else{
+					callback([]);
+				}
+			}
+			else{
+				callback([]);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}
+function getFilterTitle(filterIds, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/filtertitle?filters='+filterIds,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				else{
+					callback([]);
+				}
+			}
+			else{
+				callback([]);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}
+function getQuestion(id, callback){
+	$.ajax({
+		url: remoteServer + "/test2bsure/question?id=" + id,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					var item = response.data[0];
+					callback(item);
+				}
+				else{
+					callback(null);
+				}
+			}
+			else{
+				callback(null);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback(null);
 		}
 	});
 }
