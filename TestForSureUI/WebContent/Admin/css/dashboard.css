@@ -122,7 +122,7 @@ body{
 /* Common CSS for input */
 .modal-body.test2bsure-body input, .modal-body.test2bsure-body select{
 	border: solid 1px #d3d3d3;
-	height: 25px;
+	height: 34px;
 	padding: 5px;
 	margin-bottom: 20px;
 }
@@ -295,7 +295,7 @@ input{
 	border-radius: 0px !important;
 }
 select{
-	height:25px;
+	height:34px;
 }
 .btn-primary{
 	background-color: #103B6D;
@@ -304,4 +304,22 @@ select{
     color: #fff;
     background-color: #103B6D;
     border-color: #103B6D;
+}
+#changePasswordModal .modal-header{
+	text-align: center;
+}
+#changePasswordModal .modal-title{
+	display: inline;
+}
+#changePasswordModal .modal-body{
+	height: 150px;
+	margin-bottom: 0px;
+	padding: 0px;
+}
+#changePasswordModal .modal-body div{
+	margin-top: 20px;
+}
+#changePasswordModal .modal-body .password-error{
+	color: red;
+	text-align: center;
 }

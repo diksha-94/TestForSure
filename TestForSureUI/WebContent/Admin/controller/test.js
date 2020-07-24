@@ -522,13 +522,16 @@ testController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 		this.currentPage = 1;
 		this.fromSearch = false;
 	}
-	//TODO: Name Search
+	
 	var perPage = 15;
+	var nameSearch = $('#testQuesModal').find('.txtSearchByName').val();
 	var category = $('#testQuesModal').find('#ddQuestionCategory').val();
 	var subcategory = $('#testQuesModal').find('#ddQuestionSubCategory').val();
 	
 	var url = remoteServer + "/test2bsure/question"+"?count="+perPage;
-	
+	if(nameSearch.length > 0){
+		url += "&search="+nameSearch;
+	}
 	if(category != 0){
 		url += "&category="+category;
 	}
@@ -551,7 +554,7 @@ testController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 						html += "<tr data-id = '" + items[item]["id"] + "'>"+
 									"<td class='addQuesId'>"+items[item]["id"]+"</td>"+
 									"<td class='addQuesText'>"+items[item]["questionText"]+"</td>"+
-									"<td><button class='btn btn-primary selectQues'>Add</button>"+
+									"<td><button class='btn btn-primary selectQues'>+</button>"+
 									"<button class='btn btn-primary viewQues'>View</button></td>"+
 								"</tr>";
 					}

@@ -27,11 +27,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "E",
+								"type": "Edit",
 								"class": "btnEdit"
 							},
 							{
-								"type": "D",
+								"type": "Delete",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -71,11 +71,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "E",
+								"type": "Edit",
 								"class": "btnEdit"
 							},
 							{
-								"type": "D",
+								"type": "Delete",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -102,11 +102,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "E",
+								"type": "Edit",
 								"class": "btnEdit"
 							},
 							{
-								"type": "D",
+								"type": "Delete",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -148,11 +148,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "E",
+								"type": "Edit",
 								"class": "btnEdit"
 							},
 							{
-								"type": "D",
+								"type": "Delete",
 								"class": "btnDelete"
 							},
 							{
@@ -191,11 +191,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "E",
+								"type": "Edit",
 								"class": "btnEdit"
 							},
 							{
-								"type": "D",
+								"type": "Delete",
 								"class": "btnDelete"
 							},
 							{
@@ -265,11 +265,11 @@ var contentlistingDef = {
 								"backend": undefined
 							}],
 			"listActions": [{
-								"type": "E",
+								"type": "Edit",
 								"class": "btnEdit"
 							},
 							{
-								"type": "D",
+								"type": "Delete",
 								"class": "btnDelete"
 							}],
 			"backend": {
@@ -364,7 +364,7 @@ contentlistingController.prototype.CreateSearchBar = function()
 	searchBar2.appendTo($('.menu-page-content'));
 	//Category Search
 	if(typeof this.content.searchByCategory != 'undefined' && this.content.searchByCategory == true){
-		var categorySearch = '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 searchbar">'+
+		var categorySearch = '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 searchbar">'+
 						 		'<span>Search by Category </span>'+
 						 		'<select id="ddSearchCategory"><option value="0">All</option></select>'+
 						 '</div>';
@@ -514,6 +514,9 @@ contentlistingController.prototype.LoadDataFromServer = function(callback)
 							for(var action in this.content.listActions){
 								var dataAction = "";
 								var text = this.content.listActions[action]["type"];
+								if(text == 'Edit' || text == 'Delete'){
+									text = "<img src='../../Images/"+text+".svg' alt = '"+text+"'/>";
+								}
 								if(typeof this.content.listActions[action]["action"] != 'undefined' &&
 										this.content.listActions[action]["action"] == true){
 									dataAction = "data-action="+items[item]["publish"];

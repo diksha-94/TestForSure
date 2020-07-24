@@ -384,22 +384,23 @@
 					<div class="modal-body test2bsure-body">
 						<div class='divCountQues'>Number of Questions added: <span class='noOfQues'>0</span></div>
 						<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<div>
-								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question Category <b class='red'>*</b></span>
-								<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+							<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 searchCategory'>
+								<span class='col-xs-2 col-sm-2 col-md-2 col-lg-2 category'>Question Category</span>
+								<select id='ddQuestionCategory' class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>
+									<option value=''>All</option>
+								</select>
+								<span class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2 subcategory'>Question SubCategory</span>
+								<select id='ddQuestionSubCategory' class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>
 									<option value=''>All</option>
 								</select>
 							</div>
-							<div style='clear:both;'>
-								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question SubCategory <b class='red'>*</b></span>
-								<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-									<option value=''>All</option>
-								</select>
-								<button class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
-								col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' id='btnSearchQues'>Search</button>
-								<div class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
-									col-xs-2 col-sm-2 col-md-2 col-lg-2 insidePagination'></div>
+							<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+								<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 searchbar">
+									<span>Search By &nbsp; </span>
+									<input type="text" placeholder="Name/Title" class="txtSearchByName">
+									<button class='btn btn-primary' id='btnSearchQues'>Search</button>
 								</div>
+								<div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 insidePagination'></div>
 							</div>
 						<div class='added-questions col-xs-4 col-sm-4 col-md-4 col-lg-4'>
 							<table>
@@ -783,22 +784,24 @@
 					<div class="modal-body test2bsure-body">
 						<div class='divCountQuesTest'>Number of Questions added: <span class='noOfQues'>0</span></div>
 						<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<div>
-								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question Category <b class='red'>*</b></span>
-								<select id='ddQuestionCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
+							<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 searchCategory'>
+								<span class='col-xs-2 col-sm-2 col-md-2 col-lg-2 category'>Question Category</span>
+								<select id='ddQuestionCategory' class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>
+									<option value=''>All</option>
+								</select>
+								<span class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2 subcategory'>Question SubCategory</span>
+								<select id='ddQuestionSubCategory' class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>
 									<option value=''>All</option>
 								</select>
 							</div>
-							<div style='clear:both;'>
-								<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>Question SubCategory <b class='red'>*</b></span>
-								<select id='ddQuestionSubCategory' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>
-									<option value=''>All</option>
-								</select>
-								<button class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
-								col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary' id='btnSearchQues'>Search</button>
-								<div class='col-xs-offset-1 cl-sm-offset-1 col-md-offset-1 col-lg-offset-1 
-								col-xs-2 col-sm-2 col-md-2 col-lg-2 insidePagination'></div>
-						</div>
+							<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+								<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 searchbar">
+									<span>Search By &nbsp; </span>
+									<input type="text" placeholder="Name/Title" class="txtSearchByName">
+									<button class='btn btn-primary' id='btnSearchQues'>Search</button>
+								</div>
+								<div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 insidePagination'></div>
+							</div>
 						<div class='added-questions col-xs-4 col-sm-4 col-md-4 col-lg-4'>
 							<!-- <div class='paginationDiv'>
 							</div> -->
@@ -1002,23 +1005,23 @@
 		
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title" style='display: inline;'>Change Password</h4>
+						<h4 class="modal-title">Change Password</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 		
 					<!-- Modal body -->
-					<div class="modal-body" style='height: 150px;'>
+					<div class="modal-body test2bsure-body">
 						<div>
 							<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Enter new Password
 							<b class='red'>*</b></span> <input type='password' id='passNew' 
 							class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
 						</div>
-						<div style='margin-top: 55px;'>
+						<div>
 							<span class='col-xs-4 col-sm-4 col-md-4 col-lg-4'>Re-enter new Password
 							<b class='red'>*</b></span> <input type='password' id='passNewReenter' 
 							class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
 						</div>
-						<div class='password-error' style='color: red; margin-top: 100px;'></div>
+						<div class='password-error'></div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id='btnChangePassword'>Save</button>

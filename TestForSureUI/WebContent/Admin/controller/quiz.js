@@ -381,19 +381,21 @@ quizController.prototype.BindQuestionCategoryEvents = function()
 };
 quizController.prototype.PopulateQuestions = function(start = 1, repopulate = true)
 {
-	this.start = $($('.insidePagination').find('.pagination').find('select').find(":selected")[1]).attr('data-start');
+	this.start = $($('.insidePagination').find('.pagination').find('select').find(":selected")[0]).attr('data-start');
 	if(typeof this.start == 'undefined' || this.fromSearch){
 		this.start = 0;
 		this.currentPage = 1;
 		this.fromSearch = false;
 	}
-	//TODO: Name Search
 	var perPage = 15;
+	var nameSearch = $('#quizQuestionsModal').find('.txtSearchByName').val();
 	var category = $('#quizQuestionsModal').find('#ddQuestionCategory').val();
 	var subcategory = $('#quizQuestionsModal').find('#ddQuestionSubCategory').val();
 	
 	var url = remoteServer + "/test2bsure/question"+"?count="+perPage;
-	
+	if(nameSearch.length > 0){
+		url += "&search="+nameSearch;
+	}
 	if(category != 0){
 		url += "&category="+category;
 	}
@@ -416,7 +418,7 @@ quizController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 						html += "<tr data-id = '" + items[item]["id"] + "'>"+
 									"<td class='addQuesId'>"+items[item]["id"]+"</td>"+
 									"<td class='addQuesText'>"+items[item]["questionText"]+"</td>"+
-									"<td><button class='btn btn-primary selectQues'>Add</button>"+
+									"<td><button class='btn btn-primary selectQues'>+</button>"+
 									"<button class='btn btn-primary viewQues'>View</button></td>"+
 								"</tr>";
 					}
