@@ -104,11 +104,11 @@ var contentlistingDef = {
 			"listActions": [{
 								"type": "Edit",
 								"class": "btnEdit"
-							},
+							}/*,
 							{
 								"type": "Delete",
 								"class": "btnDelete"
-							}],
+							}*/],
 			"backend": {
 				"loadData": "question"
 			}
@@ -150,11 +150,11 @@ var contentlistingDef = {
 			"listActions": [{
 								"type": "Edit",
 								"class": "btnEdit"
-							},
+							}/*,
 							{
 								"type": "Delete",
 								"class": "btnDelete"
-							},
+							}*/,
 							{
 								"type": "Publish",
 								"class": "testStatus",
@@ -193,11 +193,11 @@ var contentlistingDef = {
 			"listActions": [{
 								"type": "Edit",
 								"class": "btnEdit"
-							},
+							}/*,
 							{
 								"type": "Delete",
 								"class": "btnDelete"
-							},
+							}*/,
 							{
 								"type": "Publish",
 								"class": "quizStatus",

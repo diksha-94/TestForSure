@@ -415,50 +415,48 @@ testController.prototype.AddTestQuestion = function(quesId)
 };
 testController.prototype.ViewQuestion = function(quesId)
 {
-	$('#viewQuestionModal').modal('show');
-	var category = this.questions[quesId].questionCategory;
-	var subcategory = this.questions[quesId].questionSubcategory;
-	for(var cat in this.questionCategory){
-		if(this.questionCategory[cat].id == category){
-			category = this.questionCategory[cat]["name"];
+	getQuestion(quesId, function(data){
+		if(data == null){
+			alert("Can't View Question data");
 		}
-	}
-	for(var subcat in this.questionSubcategory){
-		if(this.questionSubcategory[subcat].id == subcategory){
-			subcategory = this.questionSubcategory[subcat]["name"];
+		else{
+			$('#viewQuestionModal').modal('show');
+			var html = "<div>";
+			html += "<div><span><b>Question Id:  </b>"+quesId+"</span></div>";
+			html += "<div><span><b>Question Category:  </b>"+data.questionCategory+"</span></div>";
+			html += "<div><span><b>Question Subcategory:  </b>"+data.questionSubcategory+"</span></div>";
+			html += "</br><div><span><b>Question: </b>"+data.questionText+"</span></div>";
+			var options = data.options;
+			if(options.startsWith('"')){
+				options = options.substring(1);
+			}
+			if(options.endsWith('"')){
+				options = options.substring(0, options.length-1);
+			}
+			var index = 97;
+			var correctOption = JSON.parse(data.correctOption).indexOf(true);
+			var i = 0;
+			$.each($(options).find('option'), function(key, value){
+				console.log(key);
+				console.log(value);
+				html += "<div class='option'>";
+				html += "<span style='display:inline;'><b>"+String.fromCharCode(index)+".   </b></span>"+$(value).html()+"";
+				html += "</div>";
+				if(correctOption == i){
+					correctOption = index;
+				}
+				index++;
+				i++;
+			});
+			html += "</br><div><span><b>Correct Option:  </b>"+String.fromCharCode(correctOption)+"</span></div>";
+			if(data.solution.length > 0){
+				html += "</br><div><span><b>Solution:  </b>"+data.solution+"</span></div>";
+			}
+			html += "</div>";
+			$('#viewQuestionModal').find('.modal-body').empty();
+			$('#viewQuestionModal').find('.modal-body').html(html);
 		}
-	}
-	var html = "<div>";
-	html += "<div><span><b>Question Id:  </b>"+quesId+"</span></div>";
-	html += "<div><span><b>Question Category:  </b>"+category+"</span></div>";
-	html += "<div><span><b>Question Subcategory:  </b>"+subcategory+"</span></div>";
-	if(this.questions[quesId].paragraph == "true"){
-		html += "</br><div><span><b>Paragraph Text: "+this.questions[quesId].paragraphText+"</b></span></div>";
-	}
-	html += "</br><div><span><b>Question: </b>"+this.questions[quesId].questionText+"</span></div>";
-	var options = this.questions[quesId].options;
-	var index = 97;
-	var correctOption = JSON.parse(this.questions[quesId].correctOption).indexOf(true);
-	var i = 0;
-	$.each($(options).find('option'), function(key, value){
-		console.log(key);
-		console.log(value);
-		html += "<div class='option'>";
-		html += "<span style='display:inline;'><b>"+String.fromCharCode(index)+".   </b></span>"+$(value).html()+"";
-		html += "</div>";
-		if(correctOption == i){
-			correctOption = index;
-		}
-		index++;
-		i++;
 	});
-	html += "</br><div><span><b>Correct Option:  </b>"+String.fromCharCode(correctOption)+"</span></div>";
-	if(this.questions[quesId].solution.length > 0){
-		html += "</br><div><span><b>Solution:  </b>"+this.questions[quesId].solution+"</span></div>";
-	}
-	html += "</div>";
-	$('#viewQuestionModal').find('.modal-body').empty();
-	$('#viewQuestionModal').find('.modal-body').html(html);
 };
 testController.prototype.DeleteTestQuestion = function(quesId)
 {

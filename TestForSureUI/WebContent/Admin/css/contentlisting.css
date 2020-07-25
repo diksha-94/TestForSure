@@ -182,3 +182,7 @@
 #testQuesModal .searchbar button, #quizQuestionsModal .searchbar button{
 	margin-left: 40px;
 }
+.deleteModal .modal-dialog .modal-content .modal-body {
+    padding-bottom: 0px;
+    text-align: center;
+}
