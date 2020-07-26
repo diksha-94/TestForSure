@@ -196,25 +196,24 @@ test2bsureController.prototype.TestCard = function(test)
 };
 test2bsureController.prototype.ExamCard = function(exam, testCount, quizCount)
 {
-	var html = "<div class='top-div'></div>"+
-			   "<img src='"+exam.imageUrl+"' alt='"+exam.title+"'>"+
-			   "<div class='bottom-div'>"+
-			   "<h5>"+exam.title+"</h5>"+
-			   "<div class='exam-data'>";
+	var html = "<div class='main-div'>"+
+			   	"<img src='"+exam.imageUrl+"' alt='"+exam.title+"'>"+
+			   	"<div class='bottom-div'>"+
+			   	"<h5>"+exam.title+"</h5>"+
+			   	"<div class='exam-data'>";
 	for(var test in testCount){
 		if(testCount[test].examId == exam.id && testCount[test].testCount > 0){
-			html += "<div class='test-count item-count'>Number of Tests<span>"+ testCount[test].testCount+"</span></div>";
+			html += "<div class='test-count item-count'><span>Number of Tests</span><span>"+ testCount[test].testCount+"</span></div>";
 			break;
 		}
 	}
 	for(var quiz in quizCount){
 		if(quizCount[quiz].examId == exam.id && quizCount[quiz].quizCount > 0){
-			html += "<div class='test-count item-count'>Number of Quizzes<span>"+ quizCount[quiz].quizCount+"</span></div>";
+			html += "<div class='test-count item-count'><span>Number of Quizzes</span><span>"+ quizCount[quiz].quizCount+"</span></div>";
 			break;
 		}
 	}
 	html += "</div>";
-	html += "<div class='exam-explore'><button class='button button-primary btnExplore'>Explore Exam</button></div>";
 	html += "</div>";
 	return html;
 };

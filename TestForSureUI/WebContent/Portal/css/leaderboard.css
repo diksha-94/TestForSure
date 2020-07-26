@@ -20,16 +20,16 @@
 .leaderboard-heading span{
 	font-size: 1em;
 	font-weight: bold;
-	color: #2e6da4;
+	color: #fd6d15;
 }
 .table1{
 	min-width: 100%;
 }
 .table1 tr th {
     text-align: center;
-    background: #2e6da4;
+    background: #103B6D;
     padding: 12px 20px;
-    font-size: 11px;
+    font-size: 0.75em;
     color: #fff;
     text-transform: uppercase;
     font-weight: 500;

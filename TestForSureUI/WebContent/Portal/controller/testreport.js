@@ -394,7 +394,14 @@ testReportController.prototype.DisplayQuestion = function()
 		correct = correctAnswer;
 		incorrect = markedAnswer;
 	}
-	$(question.options).find('option').each(function(key, value){
+	var options = question.options;
+	if(options.startsWith('"')){
+		options = options.substring(1);
+	}
+	if(options.endsWith('"')){
+		options = options.substring(0, options.length-1);
+	}
+	$(options).find('option').each(function(key, value){
 		var addClass = 'option';
 		if(key == correct){
 			html += "<div class='"+addClass+"' data-option='"+key+"' selected='selected' style='border-color:#5CB85C'>"+

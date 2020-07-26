@@ -89,4 +89,8 @@ homeController.prototype.PopulateAllExams = function(id)
 		var examId = $(e.currentTarget).parents('li[exam-id]').attr('exam-id');
 		window.location.href = 'exam.html?id='+examId;
 	});
+	$('.exam-listing').find('li[exam-id]').unbind().bind('click', function(e){
+		var examId = $(e.currentTarget).attr('exam-id');
+		window.location.href = 'exam.html?id='+examId;
+	});
 };

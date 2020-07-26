@@ -186,3 +186,28 @@
     padding-bottom: 0px;
     text-align: center;
 }
+.added-questions table{
+	width: 100%;
+	table-layout: fixed;
+}
+button.testStatus, button.quizStatus {
+    color: #FFF;
+}
+button.testStatus:hover, button.quizStatus:hover {
+    color: #FFF;
+}
+button.testStatus[data-action='1'], button.quizStatus[data-action='1'] {
+    background-color: #D9534F;
+	border: solid 1px #D9534F;
+}
+button.testStatus[data-action='0'], button.quizStatus[data-action='0'] {
+	background-color: #5CB85C;
+	border: solid 1px #5CB85C;
+}
+.existing-items table tbody tr td:last-child{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	width: 100%;
+	border-right: none;
+}

@@ -44,7 +44,8 @@ examController.prototype.PopulateExamDetails = function()
 	html += this.exam.description;
 	$('.exam-details').find('.exam-info').html(html);
 	$('.exam-info-detail').html(html);
-	$('.exam-banner').html('<h4>'+this.exam.title+'</h4>');
+	$('.exam-banner').find('h4').html(this.exam.title);
+	$('.exam-banner').find('div').html(this.exam.description);
 };
 examController.prototype.PopulateTests = function()
 {

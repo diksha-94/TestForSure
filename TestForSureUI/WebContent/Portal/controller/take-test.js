@@ -154,14 +154,21 @@ testController.prototype.DisplayQuestion = function()
 	if(question.markedOption != 'null' && question.markedOption != null && question.markedOption != '[]'){
 		markedAnswer = (JSON.parse(question.markedOption)).indexOf(true);
 	}
-	$(question.options).find('option').each(function(key, value){
+	var options = question.options;
+	if(options.startsWith('"')){
+		options = options.substring(1);
+	}
+	if(options.endsWith('"')){
+		options = options.substring(0, options.length-1);
+	}
+	$(options).find('option').each(function(key, value){
 		var addClass = 'option';
 		if(key == markedAnswer){
 			html += "<div class='"+addClass+" col-xs-12 col-sm-12 col-md-12 col-lg-12' data-option='"+key+"' selected='selected' style='border-color:rgb(46, 109, 164)'>"+
-						"<div class='col-xs-1 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
+						"<div class='col-xs-2 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
 							"<span class='option-count' style='background-color: rgb(46, 109, 164); border-color: rgb(46, 109, 164); color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
 						"</div>"+
-						"<div class='col-xs-11 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
+						"<div class='col-xs-10 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
 							"<span class='option-value'>"+$(value).html()+"</span>"+
 						"</div>"+
 						"<span class='answer-status'></span>"+
@@ -169,10 +176,10 @@ testController.prototype.DisplayQuestion = function()
 		}
 		else{
 			html += "<div class='"+addClass+" col-xs-12 col-sm-12 col-md-12 col-lg-12' data-option='"+key+"'>"+
-						"<div class='col-xs-1 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
+						"<div class='col-xs-2 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
 							"<span class='option-count'>"+optionValues[key]+"</span>"+
 						"</div>"+
-						"<div class='col-xs-11 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
+						"<div class='col-xs-10 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
 							"<span class='option-value'>"+$(value).html()+"</span>"+
 						"</div>"+
 						"<span class='answer-status'></span>"+
