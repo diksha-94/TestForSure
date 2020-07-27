@@ -197,6 +197,7 @@
 	max-height: 150px;
 	overflow-y: auto;
 	overflow-x: hidden;
+	font-weight: bold;
 }
 .exam-outer {
     padding: 0px;

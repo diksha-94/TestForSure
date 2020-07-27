@@ -196,22 +196,36 @@ test2bsureController.prototype.TestCard = function(test)
 };
 test2bsureController.prototype.ExamCard = function(exam, testCount, quizCount)
 {
+	var imageUrl = "../images/final/default_exam2.png";
+	if(exam.imageUrl.length > 5){
+		imageUrl = exam.imageUrl;
+	}
 	var html = "<div class='main-div'>"+
-			   	"<img src='"+exam.imageUrl+"' alt='"+exam.title+"'>"+
+			   	"<img src='"+imageUrl+"' alt='"+exam.title+"'>"+
 			   	"<div class='bottom-div'>"+
 			   	"<h5>"+exam.title+"</h5>"+
 			   	"<div class='exam-data'>";
+	var found = false;
 	for(var test in testCount){
-		if(testCount[test].examId == exam.id && testCount[test].testCount > 0){
+		if(testCount[test].examId == exam.id){// && testCount[test].testCount > 0){
+			found = true;
 			html += "<div class='test-count item-count'><span>Number of Tests</span><span>"+ testCount[test].testCount+"</span></div>";
 			break;
 		}
 	}
+	if(!found){
+		html += "<div class='test-count item-count'><span>Number of Tests</span><span>0</span></div>";
+	}
+	found = false;
 	for(var quiz in quizCount){
-		if(quizCount[quiz].examId == exam.id && quizCount[quiz].quizCount > 0){
+		if(quizCount[quiz].examId == exam.id){// && quizCount[quiz].quizCount > 0){
+			found = true;
 			html += "<div class='test-count item-count'><span>Number of Quizzes</span><span>"+ quizCount[quiz].quizCount+"</span></div>";
 			break;
 		}
+	}
+	if(!found){
+		html += "<div class='test-count item-count'><span>Number of Quizzes</span><span>0</span></div>";
 	}
 	html += "</div>";
 	html += "</div>";

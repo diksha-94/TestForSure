@@ -127,13 +127,61 @@ testController.prototype.PopulateTestQuestionStatus = function()
 	}
 	$('.test-ques-status').find('.ques-status').html(html);
 	$('.test-ques-status').find('.ques-status').find('div[ques-id]').unbind().bind('click', function(e){
+		this.SaveLastQues(this.sessionId, this.currentQues);
+		var questionId = this.questionsData[this.currentQues-1].id;
+		var questionFlag = this.questionsData[this.currentQues-1].marked;
+		//Save question
+		var flag = false;
+		var selectedOption = -1;
+		$('.question').find('.options').find('.option').each(function(key, value){
+			if($(value).attr('selected') == 'selected'){
+				flag = true;
+				selectedOption = key;
+			}
+		});
+		var answer = null;
+		if(questionFlag == 'true'){
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked-answered').addClass('marked');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked marked-answered').addClass('unanswered');
+		}
+		if(flag == true){
+			if(questionFlag == 'true'){
+				$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
+			}
+			else{
+				$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited unanswered marked marked-answered').addClass('answered');
+			}
+			answer = '[';
+			for(var i=0;i<=selectedOption;i++){
+				if(i == selectedOption){
+					answer += 'true]';
+				}
+				else{
+					answer += 'false,';
+				}
+			}
+		}
+		this.questionsData[this.currentQues-1].markedOption = answer;
+		var requestData = {
+				'sessionId': this.sessionId,
+				'quesId': questionId,
+				'answer': answer,
+				'corectAnswer': null,
+				'timeSpent': (this.startSecs - this.totalSecs),
+				'markedForReview': 'false'
+		};
+		this.UpdateTestSessionData(requestData);
 		this.currentQues = parseInt($(e.currentTarget).attr('ques-no'));
+		
 		if($('.link-pallete').css('display') == 'block'){
 			$('.test-ques-status').css('display', 'none');
 			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
 			$('.link-pallete').css('right', '0px');
 		}
 		this.DisplayQuestion();
+		this.ManageControls();
 	}.bind(this));
 };
 testController.prototype.DisplayQuestion = function()
@@ -215,7 +263,7 @@ testController.prototype.DisplayQuestion = function()
 				'quesId': questionId,
 				'answer': answer,
 				'corectAnswer': null,
-				'timeSpent': 10,
+				'timeSpent': (this.startSecs - this.totalSecs),
 				'markedForReview': 'false'
 		};
 		this.SaveLastQues(this.sessionId, this.currentQues);
@@ -361,7 +409,7 @@ testController.prototype.PopulateAttemptControls = function()
 				'quesId': questionId,
 				'answer': "null",
 				'corectAnswer': null,
-				'timeSpent': 10,
+				'timeSpent': (this.startSecs - this.totalSecs),
 				'markedForReview': 'false'
 		};
 		this.UpdateTestSessionData(requestData);
@@ -383,7 +431,7 @@ testController.prototype.PopulateAttemptControls = function()
 				'quesId': questionId,
 				'answer': this.questionsData[this.currentQues-1].markedOption,
 				'corectAnswer': null,
-				'timeSpent': 10,
+				'timeSpent': (this.startSecs - this.totalSecs),
 				'markedForReview': 'true'
 		};
 		this.UpdateTestSessionData(requestData);
@@ -404,7 +452,7 @@ testController.prototype.PopulateAttemptControls = function()
 				'quesId': questionId,
 				'answer': this.questionsData[this.currentQues-1].markedOption,
 				'corectAnswer': null,
-				'timeSpent': 10,
+				'timeSpent': (this.startSecs - this.totalSecs),
 				'markedForReview': 'false'
 		};
 		this.UpdateTestSessionData(requestData);
@@ -455,6 +503,7 @@ testController.prototype.SaveLastQues = function(sessionId, lastQues)
 //Update the test session data
 testController.prototype.UpdateTestSessionData = function(obj)
 {
+	this.startSecs = this.totalSecs;
 	$.ajax({
 		url: remoteServer+'/test2bsure/updatetestsessiondata',
 		type: 'PUT',
@@ -539,6 +588,55 @@ testController.prototype.Timer = function()
 };
 testController.prototype.SubmitTest = function(timeover = 0)
 {
+	//Save the last question
+	this.SaveLastQues(this.sessionId, this.currentQues);
+	var questionId = this.questionsData[this.currentQues-1].id;
+	var questionFlag = this.questionsData[this.currentQues-1].marked;
+	//Save question
+	var flag = false;
+	var selectedOption = -1;
+	$('.question').find('.options').find('.option').each(function(key, value){
+		if($(value).attr('selected') == 'selected'){
+			flag = true;
+			selectedOption = key;
+		}
+	});
+	var answer = null;
+	if(questionFlag == 'true'){
+		$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked-answered').addClass('marked');
+	}
+	else{
+		$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked marked-answered').addClass('unanswered');
+	}
+	if(flag == true){
+		if(questionFlag == 'true'){
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
+		}
+		else{
+			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited unanswered marked marked-answered').addClass('answered');
+		}
+		answer = '[';
+		for(var i=0;i<=selectedOption;i++){
+			if(i == selectedOption){
+				answer += 'true]';
+			}
+			else{
+				answer += 'false,';
+			}
+		}
+	}
+	this.questionsData[this.currentQues-1].markedOption = answer;
+	this.currentQues = this.currentQues + 1;
+	var requestData = {
+			'sessionId': this.sessionId,
+			'quesId': questionId,
+			'answer': answer,
+			'corectAnswer': null,
+			'timeSpent': (this.startSecs - this.totalSecs),
+			'markedForReview': 'false'
+	};
+	this.UpdateTestSessionData(requestData);
+	
 	if(timeover == 1){
 		//Auto submit the test
 		this.SaveReportData();

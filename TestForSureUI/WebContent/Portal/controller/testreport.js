@@ -135,7 +135,7 @@ testReportController.prototype.PopulateBasicReport = function()
 				"</div>"+
 				"<div class='item time col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<img src='../images/time.png' alt='Time'/><div class='values'><span>Time Taken</span><span class='detail'>"+
-					(parseInt(this.reportData.timeTaken/60))+" mins</span></div>"+
+					(this.reportData.timeTaken/60).toFixed(2)+" mins</span></div>"+
 				"</div>"+
 				"<div class='item accuracy col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<img src='../images/accuracy.png' alt='Accuracy'/><div class='values'><span>Accuracy</span><span class='detail'>"+
@@ -153,7 +153,7 @@ testReportController.prototype.PopulateTopperAverage = function()
 {
 	$('.report-section').find('.report-advanced').find('.topper-average').empty();
 	var topperScore = this.reportData.leaderboard[0].marksScored;
-	var topperTime = parseInt(this.reportData.leaderboard[0].timeTaken/60);
+	var topperTime = (this.reportData.leaderboard[0].timeTaken/60).toFixed(2);
 	var averageScore = 0;
 	var averageTime = 0;
 	var totalScore = 0;
@@ -162,8 +162,8 @@ testReportController.prototype.PopulateTopperAverage = function()
 		totalScore += this.reportData.leaderboard[data]["marksScored"];
 		totalTime += this.reportData.leaderboard[data]["timeTaken"];
 	}
-	averageScore = totalScore;
-	averageTime = parseInt(totalTime/60);
+	averageScore = (totalScore/this.reportData.leaderboard.length).toFixed(2);
+	averageTime = ((totalTime/60)/this.reportData.leaderboard.length).toFixed(2);
 	var html = "<div class='topper'>"+
 					"<span>Topper's Score: "+topperScore+"</span>"+
 					"<span>Topper's Time: "+topperTime+" mins</span>"+
