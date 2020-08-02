@@ -6,7 +6,7 @@
 	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
 	height: 70px;
 	z-index: 1;
-	background-color: #2e6da4;
+	background-color: #103B6D;
 }
 
 .quiz-header span {
@@ -15,25 +15,23 @@
 }
 
 .quiz-content {
-	position: absolute;
-	top: 70px;
-	padding: 0px;
-	height: calc(100% - 70px);
-	background-color: #e5f6fb;
-	padding-top: 30px;
+	padding: 30px 5% 30px 5%;
+	min-height: 100%;
+	background-color: #E4E4E4;
+	height: auto;
+	margin-top: 70px;
 }
 
 .quiz-content .quiz-main {
-	background-color: white;
+	background-color: #fff;
 	box-shadow: 0px 0px 15px #E4E4E4;
-	width: 90%;
-	margin-left: 5%;
+	width: 100%;
+	margin: 0px;
 	padding: 0px;
-	height: 95%;
 }
 
 .quiz-content .quiz-main .quiz-info-value {
-	padding: 15px;
+	padding: 10px 15px;
 	display: flex;
 }
 
@@ -41,7 +39,7 @@
 	display: inline;
 	margin: 0px;
 	font-size: 19px;
-	margin-top: 17px;
+	margin-top: 9px;
 	width: 300px;
 }
 
@@ -50,12 +48,12 @@
 	height: 2px;
 	border: solid 1px #e4e4e4;
 	margin: 14px;
-	margin-top: 28px;
+	margin-top: 19px;
 }
 
 .quiz-content .quiz-main .quiz-info-value img {
-	height: 60px;
-	width: 60px;
+	height: 40px;
+	width: 40px;
 }
 
 .quiz-content .quiz-main .quiz-info-value .quiz-title-value {
@@ -63,21 +61,22 @@
 }
 
 .quiz-content .quiz-questions {
-	max-height: 65%;
+	max-height: 60%;
 	border: solid 2px #e4e4e4;
 	padding: 0px;
-	margin: 0px 50px;
+	margin: 0px 1.5%;
+	width: 97%;
 }
 
 .quiz-content .quiz-questions .quiz-question {
-	height: 65%;
+	height: 60%;
 	padding: 15px;
 	overflow-y: scroll;
 }
 
 .quiz-content .quiz-questions .quiz-options {
 	background-color: #DEE1FB;
-	height: 65%;
+	height: 60%;
 	padding: 15px;
 	overflow-y: scroll;
 }
@@ -116,9 +115,8 @@
 .quiz-main .quiz-status{
 	height: 80px;
 	background-color: #DEE1FB;
-	margin-top: 7px;
-	width: 90%;
-	margin-left: 5%;
+	margin: 7px 1.5% 10px 1.5%;
+	width: 97%;
 	padding: 0px 10px;
 }
 .quiz-main .quiz-questions .quiz-options .options .option .option-value p {
@@ -209,9 +207,9 @@
 	margin-top: 12%;
 }
 .quiz-main .quiz-status .question-status span.notvisited {
-	border: solid 1px #2E6DA2;
-	background-color: white;
-	color: #2E6DA2;
+	border: solid 1px #103B6D;
+	background-color: #FFF;
+	color: #103B6D;
 }
 
 .quiz-main .quiz-status .question-status span.skipped {
@@ -259,11 +257,16 @@
 	background-color: #e4e4e4;
 }
 .quiz-report{
-	margin-top: 80px;
+	margin-top: 20px;
+}
+.quiz-report .report-head{
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
 }
 /* Quiz report CSS ends */
 .brand-logo-quiz img {
-	width: 170px;
+	width: 200px;
 	padding: 8px;
 }
 
@@ -305,18 +308,45 @@
 	.quiz-header .brand-logo-quiz {
 		display: none;
 	}
+	.quiz-header{
+		height: 50px;
+	}
 	.quiz-title {
 		padding: 0px;
 	}
 	.quiz-title h4 {
-		margin: 5px;
+		font-size: 1em;
+		padding: 0px;
+		margin: 5px 0px 0px;
 	}
 	.quiz-info {
 		padding-top: 0px;
 		text-align: center;
 	}
-	.quiz-header span {
-		margin-top: 5px;
+	.quiz-info span{
+		font-size: 0.8em;
+		margin-top: 0px;
+		font-weight: normal;
+	}
+	.quiz-content{
+		margin-top: 50px;
+		padding: 0px;
+		height: 100%;
+	}
+	.quiz-content .quiz-main{
+		height: 100%;
+	}
+	.quiz-content .quiz-main .quiz-info-value{
+		display: none;
+	}
+	.quiz-content .quiz-questions{
+		width: 100%;
+		margin: 0px;
+		max-height: unset;
+		height: auto;
+	}
+	.quiz-content .quiz-questions .quiz-question, .quiz-content .quiz-questions .quiz-options{
+		height: auto;
 	}
 	.quiz-div {
 		padding: 0px;
@@ -337,13 +367,43 @@
 	.quiz {
 		height: 100%;
 	}
-	.quiz .quiz-status {
-		position: absolute;
-		bottom: 0px;
-		border: solid 3px #2e6ad4;
-		z-index: 1000000;
-		background-color: #e4e4e4;
+	.quiz-main .quiz-status {
+		display: flex;
+		flex-direction: column-reverse;
+		width: 100%;
+		margin: 0px;
+		height: auto;
+		background-color: #fff;
 	}
+	.quiz-main .quiz-status .question-status{
+		width: 100%;
+		margin-top: 10px;
+	}
+	.quiz-main .quiz-status .attempt-controls{
+		width: 100%;
+	}
+	.quiz-main .quiz-status .question-status h4{
+		font-size: 1em;
+		font-weight: bold;
+	}
+	.quiz-main .quiz-status .attempt-controls .btnNext,
+	.quiz-main .quiz-status .attempt-controls .btnSubmit,
+    .quiz-main .quiz-status .attempt-controls .btnPrev,
+    .quiz-main .quiz-status .attempt-controls .btnFinish{
+	    margin-top: 10px;
+	}
+	.quiz-report-btn{
+		width: 50%;
+		margin-left: 25%;
+	}
+	.description-div{
+		flex-direction: column;
+		width: 60%;
+		margin-left: 20%;
+	}
+	.description-block.correct, .description-block.incorrect{
+		margin-bottom: 15px;
+	} 
 	.quiz-footer {
 		position: absolute;
 		bottom: 60px;
@@ -354,6 +414,7 @@
 	display: flex;
 	width: 50%;
 	margin-left: 25%;
+	margin-top: 15px;
 }
 .description-div span.label{
 	color: black;
