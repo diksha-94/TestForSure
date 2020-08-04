@@ -12,6 +12,28 @@ questionbankController.prototype.AddEdit = function()
 	summernote.addEditor('.txtOptions');
 	summernote.addEditor('#txtSolution');
 	RefreshData('questionModal');
+	//Add options
+	$('#questionModal').find('#btnAddOption').unbind().bind('click', function(){
+		var summernote = summernoteController.getObj();
+		var html = "<div class='divOptions added-options'>"+
+						"<span class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "+
+							"col-xs-2 col-sm-2 col-md-2 col-lg-2'>"+
+							"</span> " +
+							"<button type='button' "+
+								"class='col-sm-1 col-md-1 col-xs-1 col-lg-1 btnRemoveOption'>"+
+								"Remove</button>"+
+							"<input type='checkbox' class='chkCorrectOption "+
+							"col-xs-1 col-sm-1 col-md-1 col-lg-1'/>"+
+							"<div "+
+								"class='col-xs-4 col-sm-4 col-md-4 col-lg-4 txtOptions'></div>"+
+								
+					"</div>";
+		$(html).insertBefore( "#btnAddOption" );
+		summernote.addEditor('.txtOptions');
+		$('.btnRemoveOption').unbind().bind('click', function(e){
+			$(e.currentTarget).parents('.divOptions').remove();
+		});
+	});
 	this.LoadQuestionCategories(function(){
 		if(this.id > 0){
 			this.Edit();
@@ -44,6 +66,7 @@ questionbankController.prototype.SaveData = function()
 	var correctOptionDom = $('#questionModal').find('.chkCorrectOption');
 	var options = "<options>";
 	var correctOptions = [];
+	var markedAnswerCount = 0;
 	for (var i=0;i<allOptions.length;i++){
 		var val = summernoteController.getObj().getValue($(allOptions[i]));
 		if(val.length == 0){
@@ -51,9 +74,16 @@ questionbankController.prototype.SaveData = function()
 			return;
 		}
 		options += "<option>"+val+"</option>";
+		if($(correctOptionDom[i]).prop('checked') == true){
+			markedAnswerCount++;
+		}
 		correctOptions.push($(correctOptionDom[i]).prop('checked'));
 	}
 	options += "</options>";
+	if(markedAnswerCount == 0){
+		alert("Please select atleast one correct answer in options");
+		return;
+	}
 	var url = remoteServer+'/test2bsure/question';
 	var type = 'POST';
 	var requestData = {
@@ -114,29 +144,7 @@ questionbankController.prototype.DeleteItem = function()
 questionbankController.prototype.Edit = function()
 {
 	$('#questionModal').find('.added-options').remove();
-	
-	//Add options
-	$('#questionModal').find('#btnAddOption').unbind().bind('click', function(){
-		var summernote = summernoteController.getObj();
-		var html = "<div class='divOptions added-options'>"+
-						"<span class='col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 "+
-							"col-xs-2 col-sm-2 col-md-2 col-lg-2'>"+
-							"</span> " +
-							"<button type='button' "+
-								"class='col-sm-1 col-md-1 col-xs-1 col-lg-1 btnRemoveOption'>"+
-								"Remove</button>"+
-							"<input type='checkbox' class='chkCorrectOption "+
-							"col-xs-1 col-sm-1 col-md-1 col-lg-1'/>"+
-							"<div "+
-								"class='col-xs-4 col-sm-4 col-md-4 col-lg-4 txtOptions'></div>"+
-								
-					"</div>";
-		$(html).insertBefore( "#btnAddOption" );
-		summernote.addEditor('.txtOptions');
-		$('.btnRemoveOption').unbind().bind('click', function(e){
-			$(e.currentTarget).parents('.divOptions').remove();
-		});
-	});
+
 	$.ajax({
 		url: remoteServer + "/test2bsure/question?id=" + this.id,
 		type: 'GET',
@@ -162,7 +170,7 @@ questionbankController.prototype.Edit = function()
 						optionsCount++;
 					});
 					
-					for (var i = 0; i < optionsCount - 1 ; i++){
+					for (var i = 0; i < optionsCount - 2 ; i++){
 						$('#btnAddOption').click();
 					}
 					var allOptions = $('#questionModal').find('.txtOptions');

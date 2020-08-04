@@ -16,6 +16,10 @@ testController.prototype.AddEdit = function()
 	if(this.id > 0){
 		this.Edit();
 	}
+	else{
+		new AutoComplete('ddTestExam', 'exams');
+		new AutoComplete('ddRelatedTests', 'tests');
+	}
 	$('#testDetailsModal').find('#btnTestDetailsSave').unbind().bind('click', function(){
 		this.SaveData();
 	}.bind(this));
@@ -49,7 +53,7 @@ testController.prototype.SaveData = function(openNext, callback)
 	var title = $('#txtTestTitle').val();
 	var questions = $('#txtTestQuestions').val();
 	var time = $('#txtTestTime').val();
-	var marks = $('#txtTestMarks').val();
+	var marks = parseFloat($('#txtTestMarks').val()) * parseInt(questions);
 	var allowedAttempts = $('#txtTestAttempts').val();
 	var publish = $('#chkTestPublish').prop('checked') == true ? 1 : 0;
 	var exams = GetSelectedValues('ddTestExam');
@@ -214,7 +218,7 @@ testController.prototype.Edit = function(e)
 					$('#testDetailsModal').find('#txtTestTitle').val(item.title);
 					$('#testDetailsModal').find('#txtTestQuestions').val(item.totalQues);
 					$('#testDetailsModal').find('#txtTestTime').val(item.totalTime);
-					$('#testDetailsModal').find('#txtTestMarks').val(item.totalMarks);
+					$('#testDetailsModal').find('#txtTestMarks').val(item.totalMarks/item.totalQues);
 					$('#testDetailsModal').find('#txtTestNegative').val(item.negativeMarks);
 					$('#testDetailsModal').find('#txtPassPer').val(item.passPercent);
 					$('#testDetailsModal').find('#txtTestAttempts').val(item.noOfAttempts);
@@ -273,20 +277,7 @@ testController.prototype.Edit = function(e)
 					}
 					summernoteController.getObj().setValue('#txtTestInstructions', item.instructions);
 					if(item.suggestedTests != null && item.suggestedTests.length > 0){
-						var data = {};
-						for(var test in item.suggestedTests){
-							data[item.suggestedTests[test]] = item.suggestedTests[test];
-						}
-						getTestTitle(Object.keys(data), function(response){
-							console.log(response);
-							for(var r in response){
-								data[response[r]["id"]] = {
-										"id": response[r]["id"],
-										"title": response[r]["title"]
-								};
-							}
-							new AutoComplete('ddRelatedTests', 'tests').SetSelectedValues('ddRelatedTests', data);
-						});
+						new AutoComplete('ddRelatedTests', 'tests').SetSelectedValues('ddRelatedTests', item.suggestedTests);
 					}
 					else{
 						new AutoComplete('ddRelatedTests', 'tests');
@@ -365,6 +356,7 @@ testController.prototype.PopulateTestQuestions = function(callback)
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
 					$('.divCountQuesTest').find('.noOfQues').text(response.data.length);
+					$('.divCountQuesTest').find('.totalQues').text($('#testDetailsModal').find('#txtTestQuestions').val());
 					var items = response.data;
 					var html = "";
 					for(var item in items){
@@ -559,6 +551,12 @@ testController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 					$('#testQuesModal').find('.all-questions').find('tbody').html(html);
 
 					$('#testQuesModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
+						var entered = $('#testDetailsModal').find('#txtTestQuestions').val();
+						var added = $('#testQuesModal').find('.divCountQuesTest').find('span.noOfQues').text();
+						if(entered <= added){
+							alert("Can't add more questions");
+							return;
+						}
 						this.AddTestQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
 					}.bind(this));
 					$('#testQuesModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){

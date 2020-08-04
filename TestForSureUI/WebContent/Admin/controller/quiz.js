@@ -277,6 +277,7 @@ quizController.prototype.PopulateQuizQuestions = function(callback)
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
 					$('.divCountQues').find('.noOfQues').text(response.data.length);
+					$('.divCountQues').find('.totalQues').text($('#quizModal').find('#txtQuizQuestions').val());
 					var items = response.data;
 					var html = "";
 					for(var item in items){
@@ -425,6 +426,12 @@ quizController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 					$('#quizQuestionsModal').find('.all-questions').find('tbody').html(html);
 
 					$('#quizQuestionsModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
+						var entered = $('#quizModal').find('#txtQuizQuestions').val();
+						var added = $('#quizQuestionsModal').find('.divCountQues').find('span.noOfQues').text();
+						if(entered <= added){
+							alert("Can't add more questions");
+							return;
+						}
 						this.AddQuizQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
 					}.bind(this));
 					$('#quizQuestionsModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){

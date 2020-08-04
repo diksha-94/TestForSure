@@ -19,7 +19,7 @@ AutoComplete.prototype.Init = function()
 	$(html).insertAfter($(this.typeId));
 	
 	$(this.typeId).siblings('.autocomplete-div').hide();
-	$(this.typeId).unbind().bind('keyup', function(evt){
+	$(this.typeId).unbind().bind('keyup focus', function(evt){
 		this.Search();
 	}.bind(this));
 };
