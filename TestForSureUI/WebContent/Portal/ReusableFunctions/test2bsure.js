@@ -32,7 +32,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 								'</div>'+
 							'</li>'+
 							'<li class="menu-item"><a href="quiz.html" class="link">Quizzes</a></li>'+
-							'<li class="menu-item"><a href="asknanswer.html" class="link">Ask & Answer</a></li>'+
+							//'<li class="menu-item"><a href="asknanswer.html" class="link">Ask & Answer</a></li>'+
 							'<li class="menu-item"><a href="aboutus.html" class="link">About Us</a></li>'+
 							'<li class="menu-item"><a href="contactus.html" class="link">Contact Us</a></li>'+
 						'</ul>'+

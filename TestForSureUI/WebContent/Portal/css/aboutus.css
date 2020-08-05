@@ -1,22 +1,27 @@
 .about-us{
 	width:100%;
-	background-color:white;
-	/*margin-top:100px;*/
-	height:40%;
-	max-height:100%;
+	background-color:#ffffff;
+}
+.aboutus-html{
+	width: 50%;
+	margin-left: 25%;
+	padding-top: 40px;
 }
 .heading{
-	padding:0px 0px 0px 350px;
 	color:grey;
+	padding: 15px 0px;
 }
 .heading h4{
 	font-size:22px;
 }
 .content{
-	padding:30px 350px 0px 350px;
 	font-size:20px;
 }
 .content p{
 	font-size:16px;
 	line-height:23px;
+}
+.aboutus-footer{
+	position: absolute;
+	bottom: 0px;
 }
