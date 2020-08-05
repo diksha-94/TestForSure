@@ -74,7 +74,7 @@ examController.prototype.PopulateTests = function()
 			return false;
 		}
 		var testId = $(e.currentTarget).parents('li[test-id]').attr('test-id');
-		window.location.href = 'take-test.html?id='+testId;
+		window.open('take-test.html?id='+testId, '_blank');
 	});
 	$('.test-listing').find('.btnReportTest').unbind().bind('click', function(e){
 		var userId = -1;
