@@ -101,6 +101,7 @@ quizController.prototype.PopulateFilters = function()
 		this.LoadData(filterValues);
 	}.bind(this));
 	$('.quiz-listing .left').find('.btnReset').unbind().bind('click', function(e){
+		$('.quiz-listing .left .quiz-filters').find('li[filter-id]').find('span').removeClass('selected');
 		this.LoadData();
 	}.bind(this));
 };

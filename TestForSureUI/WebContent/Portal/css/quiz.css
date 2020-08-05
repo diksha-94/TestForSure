@@ -161,9 +161,14 @@
 }
 .quiz-listing .left .quiz-filters li{
 	padding: 6px 0px;
-	cursor: default;
+	cursor: pointer;
 }
 .quiz-listing .left .quiz-filters span.filterItem.selected::after{
-	content: url("../images/final/down_arrow.png");
-	margin-left:20px;
+	background-image: url("../images/final/tick-quiz-filter.png");
+	margin-left: 20px;
+	width: 17px;
+	display: inline-block;
+	height: 12px;
+	background-size: 17px 12px;
+	content: "";
 }
