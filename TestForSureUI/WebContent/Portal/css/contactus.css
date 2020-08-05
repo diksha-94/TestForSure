@@ -5,16 +5,24 @@
 	width:70%;
 	margin-left:15%;
 	text-align:center;
-	margin-top:50px;
+	margin-top:40px;
 	margin-bottom:50px;
 }
 .head{
 	color:grey;
-	margin-bottom:50px;
+	margin-bottom:35px;
+	margin-top: 15px;
 }
 .red{
 	color:red;
 }
 .margin-bottom{
 	margin-bottom:30px;
+}
+#btnSubmitQuery{
+	background-color: #103B6D;
+	border-radius: 0px;
+}
+#btnSubmitQuery:hover{
+	background-color: #103B6D;
 }

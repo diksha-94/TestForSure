@@ -1,10 +1,10 @@
 .about-us{
 	width:100%;
 	background-color:#ffffff;
+	min-height:49.5%;
+	height: auto;
 }
 .aboutus-html{
-	width: 50%;
-	margin-left: 25%;
 	padding-top: 40px;
 }
 .heading{
@@ -20,8 +20,4 @@
 .content p{
 	font-size:16px;
 	line-height:23px;
-}
-.aboutus-footer{
-	position: absolute;
-	bottom: 0px;
 }

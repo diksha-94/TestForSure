@@ -8,7 +8,7 @@ contactusController.prototype.Init = function()
 	this.BindEvents();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".contactus-footer");
-	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+ 80 + 'px');
 };
 contactusController.prototype.BindEvents = function()
 {
@@ -41,7 +41,7 @@ contactusController.prototype.BindEvents = function()
             type: 'POST',
 			data: JSON.stringify(requestData),
 			contentType: 'application/json',
-			//dataType: 'json',
+			dataType: 'json',
             success: function (result) {
                 if (result.status) {
 					//Status true means query is submitted successfully.

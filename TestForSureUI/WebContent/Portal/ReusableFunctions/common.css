@@ -37,7 +37,7 @@
 @media only screen and (max-width: 767px) {
 	.common-footer{
 		min-height: 250px;
-		height: auto;
+		height: 560px;
 	}
 }
 .common-header{

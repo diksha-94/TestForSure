@@ -6,8 +6,6 @@
 }
 .category-exam-listing .exam-listing{
 	padding: 0px;
-	display: flex;
-	flex-direction: column;
 }
 .category-exam-listing .exam-listing div[category-id]{
 	margin: 0px 9.3%;
