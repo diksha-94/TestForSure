@@ -6,6 +6,8 @@
 }
 .category-exam-listing .exam-listing{
 	padding: 0px;
+	display: flex;
+	flex-direction: column;
 }
 .category-exam-listing .exam-listing div[category-id]{
 	margin: 0px 9.3%;
@@ -73,10 +75,11 @@
 	list-style-type: none;
 	display: flex;
 	flex-wrap: wrap;
+	margin: 0px;
 }
 .category-exam-listing .exam-listing ul li{
 	box-shadow: -1px 1px 4px 0 rgba(117,138,172,.12);
-	margin: 0px 5% 40px 0px;
+	margin: 0px 5% 30px 0px;
 	height: auto;
 	min-height: 230px;
 	padding: 0px;
