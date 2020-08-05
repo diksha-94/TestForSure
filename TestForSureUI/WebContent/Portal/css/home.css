@@ -6,6 +6,8 @@
 }
 .category-exam-listing .exam-listing{
 	padding: 0px;
+	display: flex;
+	flex-direction: column;
 }
 .category-exam-listing .exam-listing div[category-id]{
 	margin: 0px 9.3%;
@@ -147,9 +149,6 @@
     background-image: linear-gradient(rgba(116, 21, 255, 0.25) 0%, rgba(241, 244, 246, 0.54) 30%, rgb(241, 244, 246) 100%);
 }
 @media only screen and (max-width: 767px) {
-	.category-exam-listing .exam-listing ul {
-	    display: block;
-	}
 	.category-exam-listing .exam-listing ul li{
 		width: 100%;
 	}
