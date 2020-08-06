@@ -206,9 +206,8 @@ headerController.prototype.PopulateData = function(){
 			html += '<li class="active exam-menu-item">';
 			onceTab = true;
 		}
-		html += '<img src="'+this.category[cat].imageUrl+'" alt="'+this.category[cat].title+'"/>'+
-					'<a data-toggle="tab" href="#'+catName+'">'+this.category[cat].title+'</a>'+
-					'<span>></span>'+
+		html += '<a href="#'+catName+'">'+this.category[cat].title+'</a>'+
+				'<span>></span>'+
 				'</li>';
 		if(onceContent == true){
 			htmlContent += '<div id="'+catName+'" class="tab-pane fade in"><ul class="exams-list">';
@@ -234,6 +233,13 @@ headerController.prototype.PopulateData = function(){
 		}
 		var examId = $(e.currentTarget).attr('exam-id');
 		window.location.href = 'exam.html?id=' + examId;
+	});
+	$('.exam-menu-item').unbind().bind('mouseover', function(e){
+		var href = $(e.currentTarget).find('a').attr('href');
+		$('.exam-menu-item').removeClass('active');
+		$(e.currentTarget).addClass('active');
+		$('.exam-content').find('.tab-pane').removeClass('active in');
+		$('.exam-content').find(href).addClass('active in');
 	});
 };
 $(document).ready(function(){

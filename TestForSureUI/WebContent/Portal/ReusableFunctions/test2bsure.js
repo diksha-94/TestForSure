@@ -50,6 +50,12 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 					'</div>'+
 				'</div>';
 	$(dom).append(html);
+	$('.exam-menu-li').unbind().bind('mouseover', function(){
+		$('.exam-menu-div').css('display', 'block');
+	});
+	$('.exam-menu-li').bind('mouseout', function(){
+		$('.exam-menu-div').css('display', 'none');
+	});
 	//Load CSS, JS
 	LoadCSS('header');
 	LoadJS('../controller/user', function(){
