@@ -75,7 +75,3 @@ contactusController.prototype.BindEvents = function()
         });
 	});
 };
-$(document).ready(function () {
-	new contactusController();
-});
-

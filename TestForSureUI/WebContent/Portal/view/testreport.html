@@ -7,8 +7,6 @@
 		<link rel="icon" href="../images/final/favicon.png" type="image/png" sizes="16x16">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link href='../ReusableFunctions/common.css' rel='stylesheet' />
-		<link href='../css/testreport.css' rel='stylesheet' />
 	</head>
 	<body>
 		<div class='report-header col-xs-12 col-sm-12 col-md-12 col-lg-12'>
@@ -79,13 +77,17 @@
 		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-		<script type='text/javascript' src='../controller/testreport.js'></script>
 		<script src = "https://code.highcharts.com/highcharts.js"></script>  
 		<script src = "https://code.highcharts.com/highcharts-3d.js"></script>
 		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
-		<script type='text/javascript' src='../ReusableFunctions/modal-struct.js'></script>
 		<script type='text/javascript'>
-			new testReportController();
+			LoadCSS('../ReusableFunctions/common');
+			LoadCSS('../css/testreport');
+			LoadJS('../controller/testreport', function(){
+				LoadJS('../ReusableFunctions/modal-struct', function(){
+					new testReportController();
+				});
+			});
 		</script>
 	</body>
 </html>

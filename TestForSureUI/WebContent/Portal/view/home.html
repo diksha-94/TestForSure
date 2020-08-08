@@ -6,9 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="icon" href="../images/final/favicon.png" type="image/png" sizes="16x16">
 		<link rel="stylesheet" href="../../helperCSS/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link href='../ReusableFunctions/common.css' rel='stylesheet' />
-		<link href='../css/home.css' rel='stylesheet' />
+		<link rel="stylesheet" href="../../helperCSS/font-awesome.min.css">
 	</head>
 	<body>
 		<div class='home-header common-header'>
@@ -66,10 +64,13 @@
 		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-		<script type='text/javascript' src='../controller/home.js'></script>
 		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
 		<script type='text/javascript'>
-			new homeController();
+			LoadCSS('../ReusableFunctions/common');
+			LoadCSS('../css/home');
+			LoadJS('../controller/home', function(){
+				new homeController();			
+			});
 		</script>
 	</body>
 </html>

@@ -7,8 +7,6 @@
 		<link rel="icon" href="../images/final/favicon.png" type="image/png" sizes="16x16">
 		<link rel="stylesheet" href="../../helperCSS/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link href='../ReusableFunctions/common.css' rel='stylesheet' />
-		<link href='../css/leaderboard.css' rel='stylesheet' />
 	</head>
 	<body>
 		<div class='leaderboard-header common-header'>
@@ -38,8 +36,15 @@
 		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-		<script type='text/javascript' src='../controller/leaderboard.js'></script>
 		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
-		<script type='text/javascript' src='../ReusableFunctions/modal-struct.js'></script>
+		<script type='text/javascript'>
+			LoadCSS('../ReusableFunctions/common');
+			LoadCSS('../css/leaderboard');
+			LoadJS('../controller/leaderboard', function(){
+				LoadJS('../ReusableFunctions/modal-struct', function(){
+					new leaderboardController();
+				});
+			});
+		</script>
 	</body>
 </html>

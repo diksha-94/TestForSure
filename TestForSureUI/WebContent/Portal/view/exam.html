@@ -7,8 +7,6 @@
 		<link rel="icon" href="../images/final/favicon.png" type="image/png" sizes="16x16">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link href='../ReusableFunctions/common.css' rel='stylesheet' />
-		<link href='../css/exam.css' rel='stylesheet' />
 	</head>
 	<body>
 		<div class='exam-header common-header'>
@@ -39,12 +37,17 @@
 		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-		<script type='text/javascript' src='../controller/exam.js'></script>
-		<script type='text/javascript' src='../controller/user.js'></script>
 		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
-		<script type='text/javascript' src='../ReusableFunctions/modal-struct.js'></script>
 		<script type='text/javascript'>
-			new examController();
+			LoadCSS('../ReusableFunctions/common');
+			LoadCSS('../css/exam');
+			LoadJS('../controller/exam', function(){
+				LoadJS('../controller/user', function(){
+					LoadJS('../ReusableFunctions/modal-struct', function(){
+						new examController();
+					});
+				});
+			});
 		</script>
 	</body>
 </html>

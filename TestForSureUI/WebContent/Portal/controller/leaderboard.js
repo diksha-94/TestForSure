@@ -51,6 +51,3 @@ leaderboardController.prototype.PopulateLeaderboard = function()
 	}
 	$('.table1').find('tbody').html(html);
 };
-$(document).ready(function () {
-	new leaderboardController();
-});

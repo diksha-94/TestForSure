@@ -1,3 +1,6 @@
+var jsVersion = 1;
+var cssVersion = 1;
+
 var obj = null;
 //var remoteServer = "http://3.6.58.203:8083";
 var remoteServer = "http://localhost:8083";
@@ -100,7 +103,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 		$('.sandwichbtn').click();
 	})
 	//Load CSS, JS
-	LoadCSS('header');
+	LoadCSS('../css/header');
 	LoadJS('../controller/user', function(){
 		LoadJS('../ReusableFunctions/modal-struct', function(){
 			LoadJS('../controller/header', function(){
@@ -151,7 +154,7 @@ test2bsureController.prototype.GetFooter = function(dom){
 					"</div>"+
 				"</div>";
 	$(dom).append(html);
-	LoadCSS('footer');
+	LoadCSS('../css/footer');
 	LoadJS('../controller/footer');
 }
 test2bsureController.prototype.QueryString = function(url, key){
@@ -356,7 +359,7 @@ function LoadCSS(filename) {
 		link.id = id;
 		link.type = 'text/css';
 		link.rel = 'stylesheet';
-		link.href = "../css/" + filename + ".css";
+		link.href = filename + ".css?v="+cssVersion;
 		document.head.appendChild(link);
 	}
 };
@@ -366,7 +369,7 @@ function LoadJS(src, callback) {
 	if (!document.getElementById(id)) {
 		var s = document.createElement('script');
 		s.id = id;
-		s.src =  src + ".js";
+		s.src =  src + ".js?v="+jsVersion;
 		s.async = true;
 		s.onreadystatechange = s.onload = function() {
 			if ( typeof this.callback != 'undefined') {

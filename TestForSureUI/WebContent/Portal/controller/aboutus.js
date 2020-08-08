@@ -9,6 +9,3 @@ aboutusController.prototype.Init = function()
 	test2bsureController.getObj().GetFooter(".aboutus-footer");
 	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height() + 20 +'px');
 };
-$(document).ready(function () {
-	new aboutusController();
-});
