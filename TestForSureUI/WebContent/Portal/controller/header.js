@@ -19,7 +19,7 @@ headerController.prototype.Init = function()
 	if($('#verificationModal').length == 0){
 		$('body').append(verificationModal());
 	}
-	$('#btnLogin').unbind().bind('click', function(e){
+	$('.btnLogin').unbind().bind('click', function(e){
 		if($('#loginModal').length == 0){
 			$('body').append(loginModal());
 		}
@@ -195,6 +195,7 @@ headerController.prototype.SetState = function(obj)
 headerController.prototype.PopulateData = function(){
 	var html = "";
 	var htmlContent = "";
+	var mobileHtml = "";
 	var onceTab = false;
 	var onceContent = false;
 	for(var cat in this.category){
@@ -207,8 +208,11 @@ headerController.prototype.PopulateData = function(){
 			onceTab = true;
 		}
 		html += '<a href="#'+catName+'">'+this.category[cat].title+'</a>'+
-				'<span>></span>'+
+				'<span><img src="../images/final/left_arrow.png" class="expand-exams"/></span>'+
 				'</li>';
+		mobileHtml += '<div class="outer"><div class="outer-1" data-toggle="collapse" href="#cat'+cat+'"><span>'+this.category[cat].title+'</span>'+
+					  '<img src="../images/final/down_arrow.png" class="closed"/></div>'+
+					  '<div id="cat'+cat+'" class="collapse"><ul>';
 		if(onceContent == true){
 			htmlContent += '<div id="'+catName+'" class="tab-pane fade in"><ul class="exams-list">';
 		}
@@ -220,13 +224,28 @@ headerController.prototype.PopulateData = function(){
 			if(this.exam[exam].category == this.category[cat].id){
 				htmlContent += "<li class='exam-value-item' exam-id='"+this.exam[exam].id+"'>"+this.exam[exam].title+"";
 				htmlContent +=	"</li>";
+				
+				mobileHtml += "<li class='exam-value-item' exam-id='"+this.exam[exam].id+"'>"+this.exam[exam].title+"";
+				mobileHtml +=	"</li>";
 			}
 		}
+	  	mobileHtml += '</ul></div></div>';
 	  	htmlContent += "</ul></div>";
 	}
 	$('.exam-menu').html(html);
 	$('.exam-content').html(htmlContent);
-	$('.exam-content').find('.exam-value-item').unbind().bind('click', function(e){
+	$('.mobileView.exams').append(mobileHtml);
+	$('.mobileView.exams').find('.outer-1').unbind().bind('click', function(e){
+		if($(e.currentTarget).find('img').hasClass('closed')){
+			$(e.currentTarget).find('img').css('transform', "rotate(180deg)");
+			$(e.currentTarget).find('img').removeClass('closed');
+		}
+		else{
+			$(e.currentTarget).find('img').css('transform', "rotate(0deg)");
+			$(e.currentTarget).find('img').addClass('closed');
+		}
+	});
+	$('.exam-value-item').unbind().bind('click', function(e){
 		var userId = -1;
 		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 			userId = userController.getObj().userData.id;

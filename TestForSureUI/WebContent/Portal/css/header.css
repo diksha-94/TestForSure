@@ -1,3 +1,7 @@
+html body.nobodyscroll {
+    margin-right: 5px;
+    overflow: hidden;
+}
 .header {
 	height: 60px;
 	width: 100%;
@@ -93,16 +97,16 @@
 	font-weight: normal;
 	font-size: 0.95em;
 	cursor: pointer;
-}
-
-.header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item a {
 	padding: 0px;
 	display: inline;
 	margin-left: 3px;
 }
 .header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item img {
-	width: 20px;
-	height: 20px;
+	transform: rotate(180deg);
+	width: 15px;
+	height: 13px;
+	margin-top: 5px;
+	margin-right: 10px;
 }
 .header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item span {
 	float: right
@@ -159,4 +163,144 @@
 /* Login Modal CSS */
 #loginModal .modal-footer {
 	margin-top: 35px;
+}
+
+/* Header in mobile View */
+.mobileView{
+	display: none;
+}
+.mobileView.overlay{
+	height: 0px;
+	position: fixed;
+	width: 100%;
+	background-color: rgba(0,0,0,.7);
+	z-index: 100;
+	left: 0;
+	top: 60px;
+}
+.sandwichbtn{
+	padding: 18px 0 9px 7px;
+	margin-left: -7px;
+	margin-right: 5px;
+}
+.sandwichbtn div {
+    width: 19px;
+    height: 3px;
+    background-color: #FFF;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+@media only screen and (max-width: 767px) {
+	.header .brand-logo{
+		margin-top: 10px;
+	}
+	.header .brand-logo img {
+	    height: 40px;
+	    width: 120px;
+	}
+	.desktopView{
+		display: none;
+	}
+	.mobileView{
+		display: block;
+	}
+	.menu-items, .exams.mobileView{
+		height: 100%;
+		background-color: #103B6D;
+		position: fixed;
+		top: 60px;
+		left: 0;
+		display: none;
+		padding: 0px;
+		margin: 0px !important;
+		z-index: 105;
+	}
+	.header .menu-items ul.test2bsure-menu{
+		flex-direction: column;
+	}
+	.header .menu-items ul.test2bsure-menu li.menu-item a.link{
+		color: #fff;
+	}
+	.header .menu-items ul.test2bsure-menu li.menu-item{
+		margin: 0px 10px;
+		padding: 15px 10px;
+		border-bottom: solid 1px gray;
+	}
+	.header .menu-items ul.test2bsure-menu li.menu-item a.link{
+		display: unset;
+	}
+	.header ul.test2bsure-menu li.menu-item:hover{
+		background-color: unset;
+	}
+	.header .login-register-items button#btnLogin{
+		width: 100%;
+	}
+	.sandwichbtn.closebtn div.second {
+	    display: none;
+	}
+	.sandwichbtn.closebtn div.first {
+	    transform: rotate(-45deg) translate(-4px, 0px);
+	    margin: 6px 0;
+	    width: 23px;
+	}
+	.sandwichbtn.closebtn div.third {
+	    transform: rotate(45deg) translate(-6px, -2px);
+	    margin: 6px 0;
+	    width: 23px;
+	}
+	.sandwichbtn.closebtn{
+		padding-top: 20px;
+	}
+	.mobileView.btnLogin{
+		margin-top: 100px;
+		width: 66%;
+		margin-left: 17%;
+		font-size: 14px;
+	}
+	.header .login-register-items #userProfile{
+		justify-content: right;
+		padding-top: 20px;
+	}
+	.header .login-register-items #userProfile .greeting{
+		display: none;
+	}
+	.exams.mobileView span.exam-head{
+		color: white;
+		font-size: 1.2em;
+		padding: 7px 0px;
+		border-bottom: solid 1px gray;
+		width: 84%;
+		display: block;
+		margin-left: 8%;
+		cursor: pointer;
+	}
+	.exams.mobileView span.exam-head img{
+		transform: rotate(90deg);
+		width: 15px;
+		height: 10px;
+		margin-right: 14px;
+	}
+	.exams.mobileView div.outer span{
+		color: #fff;
+	}
+	.exams.mobileView div.outer .outer-1{
+		display: flex;
+		padding: 15px 20px;
+		justify-content: space-between;
+	}
+	.exams.mobileView div.outer .outer-1 img{
+		width: 15px;
+		height: 10px;
+		margin-top: 4px;
+	}
+	.exams.mobileView div.outer div.collapse{
+		background-color: #fff;
+	}
+	.exams.mobileView div.outer div.collapse ul{
+		list-style-type: none;
+	}
+	a:focus, a:hover {
+ 	   text-decoration: underline;
+	}	
 }

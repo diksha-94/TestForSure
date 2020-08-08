@@ -113,6 +113,7 @@ userController.prototype.SelfAuth = function(reload, callback)
 						window.location.reload();
 					}
 					$('#menuLogin').removeClass('show').addClass('hide');
+					$('.mobileView.btnLogin').addClass('hide');
 					$('#userProfile').removeClass('hide');
 					$('#userProfile').css('display', 'flex');
 					$('#loggedInUSer').text(userController.getObj().userData.name)

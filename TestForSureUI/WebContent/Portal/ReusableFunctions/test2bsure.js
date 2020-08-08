@@ -13,11 +13,16 @@ test2bsureController.getObj = function()
 };
 test2bsureController.prototype.GetHeader = function(dom, callback){
 	//should make it custom , as per the need on different pages
-	var html = '<div class="header container-fluid">'+		
-					'<div class="brand-logo col-xs-8 col-sm-8 col-md-2 col-lg-2">'+
+	var html = '<div class="header container-fluid">'+
+					'<div class="col-xs-1 col-sm-1 sandwichbtn mobileView">'+
+					 	'<div class="first"></div>'+
+					 	'<div class="second"></div>'+
+					 	'<div class="third"></div>'+
+					 '</div>'+
+					'<div class="brand-logo col-xs-5 col-sm-5 col-md-2 col-lg-2">'+
 						'<a class="brand" href="home.html"><img src="../images/final/logo_white.png" alt="TEST-2B-SURE"></a>'+
 					'</div>'+
-					'<div class="menu-items col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
+					'<div class="menu-items col-xs-8 col-md-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
 						'<ul class="test2bsure-menu">'+
 							'<li class="menu-item active"><a href="home.html" class="link">Home</a></li>'+
 							'<li class="menu-item exam-menu-li"><a class="link">Exams&nbsp;<img src="../images/final/down_arrow.png" style="height: 8px;">'+
@@ -35,11 +40,16 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 							//'<li class="menu-item"><a href="asknanswer.html" class="link">Ask & Answer</a></li>'+
 							'<li class="menu-item"><a href="aboutus.html" class="link">About Us</a></li>'+
 							'<li class="menu-item"><a href="contactus.html" class="link">Contact Us</a></li>'+
+							'<button type="button" class="btnLogin mobileView button button-default" id="btnLogin1">Login/Register</button>'+
 						'</ul>'+
 					'</div>'+
-					'<div class="login-register-items col-xs-4 col-sm-4 col-md-2 col-lg-2">'+
+					'<div class="exams mobileView col-xs-8 col-md-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
+						'<span class="exam-head"><img src="../images/final/down_arrow.png" class="closed"/>Exams</span>'+
+					'</div>'+
+					'<div class="mobileView overlay"></div>'+
+					'<div class="login-register-items col-xs-6 col-sm-6 col-md-2 col-lg-2">'+
 						'<ul class="test2bsure-options">'+
-							'<li id="menuLogin" class="show"><button type="button" class="button button-default" id="btnLogin">'+
+							'<li id="menuLogin" class="show"><button type="button" class="btnLogin button button-default" id="btnLogin">'+
 								'Login/Register</button>'+
 							'</li>'+
 							'<li id="userProfile" class="hide">'+
@@ -50,12 +60,45 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 					'</div>'+
 				'</div>';
 	$(dom).append(html);
-	$('.exam-menu-li').unbind().bind('mouseover', function(){
-		$('.exam-menu-div').css('display', 'block');
+	if ($(window).width() < 768) {
+		//mobile view
+		$('.exam-menu-li').unbind().bind('click', function(){
+			$('.menu-items').css('display', 'none');
+			$('.exams.mobileView').css('display', 'block');
+		});
+		$('.exams.mobileView').find('span.exam-head').unbind().bind('click', function(){
+			$('.exams.mobileView').css('display', 'none');
+			$('.menu-items').css('display', 'block');
+		});
+	   
+	}
+	else {
+		$('.exam-menu-li').unbind().bind('mouseover', function(){
+			$('.exam-menu-div').css('display', 'block');
+		});
+		$('.exam-menu-li').bind('mouseout', function(){
+			$('.exam-menu-div').css('display', 'none');
+		});
+	}
+	
+	$('.sandwichbtn').unbind().bind('click', function(e){
+		if($(e.currentTarget).hasClass('closebtn')){
+			$(e.currentTarget).removeClass('closebtn');
+			$('.menu-items').css('display', 'none');
+			$('.exams.mobileView').css('display', 'none');
+			$('.overlay').css('height', '0px');
+			$("body").removeClass("nobodyscroll");
+		}
+		else{
+			$(e.currentTarget).addClass('closebtn');
+			$('.menu-items').css('display', 'block');
+			$('.overlay').css('height', '100%');
+			$("body").addClass("nobodyscroll");
+		}
 	});
-	$('.exam-menu-li').bind('mouseout', function(){
-		$('.exam-menu-div').css('display', 'none');
-	});
+	$('.overlay').unbind().bind('click', function(){
+		$('.sandwichbtn').click();
+	})
 	//Load CSS, JS
 	LoadCSS('header');
 	LoadJS('../controller/user', function(){
