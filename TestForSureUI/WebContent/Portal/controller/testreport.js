@@ -135,7 +135,7 @@ testReportController.prototype.PopulateBasicReport = function()
 				"</div>"+
 				"<div class='item time col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<img src='../images/time.png' alt='Time'/><div class='values'><span>Time Taken</span><span class='detail'>"+
-					(this.reportData.timeTaken/60).toFixed(2)+" mins</span></div>"+
+					test2bsureController.getObj().getTimeFormat(this.reportData.timeTaken)+"</span></div>"+
 				"</div>"+
 				"<div class='item accuracy col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
 					"<img src='../images/accuracy.png' alt='Accuracy'/><div class='values'><span>Accuracy</span><span class='detail'>"+
@@ -153,7 +153,7 @@ testReportController.prototype.PopulateTopperAverage = function()
 {
 	$('.report-section').find('.report-advanced').find('.topper-average').empty();
 	var topperScore = this.reportData.leaderboard[0].marksScored;
-	var topperTime = (this.reportData.leaderboard[0].timeTaken/60).toFixed(2);
+	var topperTime = test2bsureController.getObj().getTimeFormat(this.reportData.leaderboard[0].timeTaken);
 	var averageScore = 0;
 	var averageTime = 0;
 	var totalScore = 0;
@@ -163,14 +163,14 @@ testReportController.prototype.PopulateTopperAverage = function()
 		totalTime += this.reportData.leaderboard[data]["timeTaken"];
 	}
 	averageScore = (totalScore/this.reportData.leaderboard.length).toFixed(2);
-	averageTime = ((totalTime/60)/this.reportData.leaderboard.length).toFixed(2);
+	averageTime = test2bsureController.getObj().getTimeFormat((totalTime/60)/this.reportData.leaderboard.length);
 	var html = "<div class='topper'>"+
 					"<span>Topper's Score: "+topperScore+"</span>"+
-					"<span>Topper's Time: "+topperTime+" mins</span>"+
+					"<span>Topper's Time: "+topperTime+"</span>"+
 			   "</div>"+
 			   "<div class='average'>"+
 					"<span>Average Score: "+averageScore+"</span>"+
-					"<span>Average Time: "+averageTime+" mins</span>"+
+					"<span>Average Time: "+averageTime+"</span>"+
 			   "</div>";
 	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
 };
@@ -290,10 +290,10 @@ testReportController.prototype.DisplayCharts = function()
 	params = {id: 'timePieChart', title: 'TIME SPENT', key: 'secs', colors: colors, series: series};
 	test2bsureController.getObj().PieChart(params);
 	//Populate charts summary
-	$('.chartsSummary').find('div.correct').find('span.value').text(quesObject["Correct"] + " QUES, "+timeObject["Correct"]+ " SECS");
-	$('.chartsSummary').find('div.incorrect').find('span.value').text(quesObject["Incorrect"] + " QUES, "+timeObject["Incorrect"]+ " SECS");
-	$('.chartsSummary').find('div.unattempted').find('span.value').text(quesObject["Unattempted"] + " QUES, "+timeObject["Unattempted"]+ " SECS");
-	$('.chartsSummary').find('div.unvisited').find('span.value').text(quesObject["Unvisited"] + " QUES, "+timeObject["Unvisited"]+ " SECS");
+	$('.chartsSummary').find('div.correct').find('span.value').text(quesObject["Correct"] + " QUES, "+test2bsureController.getObj().getTimeFormat(timeObject["Correct"]));
+	$('.chartsSummary').find('div.incorrect').find('span.value').text(quesObject["Incorrect"] + " QUES, "+test2bsureController.getObj().getTimeFormat(timeObject["Incorrect"]));
+	$('.chartsSummary').find('div.unattempted').find('span.value').text(quesObject["Unattempted"] + " QUES, "+test2bsureController.getObj().getTimeFormat(timeObject["Unattempted"]));
+	$('.chartsSummary').find('div.unvisited').find('span.value').text(quesObject["Unvisited"] + " QUES, "+test2bsureController.getObj().getTimeFormat(timeObject["Unvisited"]));
 };
 
 
@@ -366,7 +366,7 @@ testReportController.prototype.DisplayQuestion = function()
 	var color = $('.ques-status').find('div[ques-no='+this.currentQues+']').css('color');
 	console.log(quesStatus);
 	html +=	"<span class='ques-status'>"+quesStatus+"</span>"+
-				"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+question.timeSpent+" SECS</span></span>"+
+				"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
 			"</div>"+
 			"<div class='ques-detail'>";
 	if(question.paragraph == "true"){

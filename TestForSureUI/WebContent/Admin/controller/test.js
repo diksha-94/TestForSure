@@ -153,6 +153,8 @@ testController.prototype.SaveData = function(openNext, callback)
 						var entered = $('#testDetailsModal').find('#txtTestQuestions').val();
 						var added = $('#testQuesModal').find('.divCountQuesTest').find('span.noOfQues').text();
 						if(entered != added){
+							alert("Please add all the questions and finish.");
+							return;
 							$('#updateQuesModal').modal('show');
 							$('#updateQuesModal').find('#btnUpdateYes').unbind().bind('click', function(){
 								$('#updateQuesModal').modal('hide');
@@ -349,6 +351,8 @@ testController.prototype.HandleTestQuestions = function()
 };
 testController.prototype.PopulateTestQuestions = function(callback)
 {
+	$('.divCountQuesTest').find('.totalQues').text($('#testDetailsModal').find('#txtTestQuestions').val());
+	$('.divCountQuesTest').find('.noOfQues').text(0);
 	$.ajax({
 		url: remoteServer+'/test2bsure/testquestion?testid='+this.id,
 		type: 'GET',
@@ -356,7 +360,6 @@ testController.prototype.PopulateTestQuestions = function(callback)
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
 					$('.divCountQuesTest').find('.noOfQues').text(response.data.length);
-					$('.divCountQuesTest').find('.totalQues').text($('#testDetailsModal').find('#txtTestQuestions').val());
 					var items = response.data;
 					var html = "";
 					for(var item in items){

@@ -107,6 +107,10 @@
 .test-listing ul li h4 {
 	font-weight: bold;
 	word-wrap: break-word;
+	height: 40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 1.2em;
 }
 .test-listing ul li .controls {
 	padding:20px 0px;

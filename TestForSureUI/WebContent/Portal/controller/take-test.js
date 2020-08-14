@@ -72,15 +72,24 @@ testController.prototype.BindEvents = function()
 testController.prototype.PopulateTestInfo = function()
 {
 	console.log(this.testInfo);
-	var html = "<div class='col-xs-12 col-sm-12 col-md-4 col-lg-4 first'>"+
-			   		"<a class='btnBack'>Back</a><h4>"+this.testInfo.title+"</h4></div>"+
-			   "<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 removeInMobile'>"+
-			   		"<h5>"+this.testInfo.totalQues+" Questions / "+this.testInfo.totalMarks+" Marks</h5>"+
+	var html = "<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 first'>"+
+			   		"<h4>"+this.testInfo.title+"</h4></div>"+
+			   "<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 quesMark-info removeInMobile'>"+
+			   		"<div class='info'>"+
+			   			"<h5>"+this.testInfo.totalQues+" Questions / "+this.testInfo.totalMarks+" Marks</h5>"+
+			   		"</div>"+
+			   		"<div class='detail'>"+
+			   			"<span class='correct'>+"+(this.testInfo.totalMarks/this.testInfo.totalQues)+" Mark</span>";
+	if(this.testInfo.negativeMarks > 0){
+		html += "<span class='incorrect'>-"+this.testInfo.negativeMarks+" Mark</span>";
+	}
+	html += "</div>"+
 			   	"</div>"+
-			   	"<div class='col-xs-0 col-sm-0 col-md-2 col-lg-2 removeInMobile'>"+
+			   	"<div class='col-xs-0 col-sm-0 col-md-2 col-lg-2 removeInMobile timeLimit'>"+
 			   		"<h5>Time Limit: "+this.testInfo.totalTime+" mins</h5>"+
 			   "</div>"+
-			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divTimer' style='text-align:right;'>"+
+			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divTimer'>"+
+			   		"<img src='../images/circular-clock.png' alt='Test Time' class='test-timer-img'>"+
 			   		"<h4 class='time-left'>00 : 00 : 00</h4>"+
 			   	"</div>"+
 			   	"<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+

@@ -453,3 +453,20 @@ test2bsureController.prototype.PieChart = function(params)
 	    }]
 	});
 };
+test2bsureController.prototype.getTimeFormat = function(seconds){
+	var secs = 0;
+	var mins = 0;
+	var hrs = 0;
+	if(seconds >= 60){
+		mins = parseInt(seconds / 60);
+		secs = parseInt(seconds % 60);
+		if(mins >= 60){
+			hrs = parseInt(mins / 60);
+			mins = parseInt(mins % 60);
+		}
+	}
+	var result = (hrs > 0)?(hrs+" hrs "):"";
+	result += mins+" mins ";
+	result += (secs > 0)?(secs+" secs "):"";
+	return result;
+}

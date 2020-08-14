@@ -1,10 +1,41 @@
 .test-header {
 	min-height: 50px;
 	height: auto;
-	background-color: #2E6DA4;
+	background-color: #103B6D;
 	padding: 7px;
 	color: white;
 	font-weight: bold;
+}
+.test-header .divTimer{
+	display: flex;
+}
+.test-header .divTimer img{
+    width: 25px;
+    margin-right: 12px;
+    height: 25px;
+    margin-top: 7px;
+}
+.test-header .timeLimit{
+	text-align: right;
+	width: 13%;
+}
+.test-header .quesMark-info{
+	display: flex;
+	justify-content: space-between;
+	width: 28%;
+}
+.test-header .quesMark-info .detail{
+	padding: 8px;
+	font-weight: normal
+}
+.test-header .quesMark-info .detail span{
+	padding: 10px;
+}
+.test-header .quesMark-info .detail span.correct{
+	color: #5CB85C
+}
+.test-header .quesMark-info .detail span.incorrect{
+	color: #D9534F;
 }
 .test-header div.first{
 	display: flex;
@@ -261,7 +292,7 @@
 		justify-content: center;
 	}
 	.removeInMobile {
-		display: none;
+		display: none !important;
 	}
 	.divPrevious, .divNext {
 		margin-top: 10px;
