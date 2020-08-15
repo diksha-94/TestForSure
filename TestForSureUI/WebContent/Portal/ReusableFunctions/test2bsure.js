@@ -441,7 +441,7 @@ test2bsureController.prototype.PieChart = function(params)
 			formatter: function () {
 				var percent = Math.round(this.percentage * 100) / 100;
 				var y = Math.round(this.y * 100) / 100;
-				return this.key +": <b>"+ percent +"% </b> <br/> <b> " + y + "</b> " + params.key ;
+				return this.key +": <b>"+ percent +"% </b> <br/> <b> " + test2bsureController.getObj().getTimeFormat(y) + "</b> ";
         	}
 		},
 		credits: {

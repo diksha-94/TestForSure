@@ -121,27 +121,27 @@ testReportController.prototype.PopulateBasicReport = function()
 				"<h4>Congrats "+ userController.getObj().userData.name + " !!</h4>"+
 			"</div>"+
 			"<div class='report-detail col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
-				"<div class='item rank col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+				"<div class='item rank col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
 					"<img src='../images/rank.png' alt='Rank'/><div class='values'><span>Rank</span><span class='detail'>"+
 					this.reportData.rank+" / "+this.reportData.totalCandidate+"</span></div>"+
 				"</div>"+
-				"<div class='item score col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+				"<div class='item score col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
 					"<img src='../images/score.png' alt='Score'/><div class='values'><span>Score</span><span class='detail'>"+
 					this.reportData.markesScored+" / "+this.testInfo.totalMarks+"</span></div>"+
 				"</div>"+
-				"<div class='item ques col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+				"<div class='item ques col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
 					"<img src='../images/attempts.png' alt='Attempts'/><div class='values'><span>Qs Attempt</span><span class='detail'>"+
 					this.reportData.quesAttempted+" / "+this.testInfo.totalQues+"</span></div>"+
 				"</div>"+
-				"<div class='item time col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+				"<div class='item time col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
 					"<img src='../images/time.png' alt='Time'/><div class='values'><span>Time Taken</span><span class='detail'>"+
 					test2bsureController.getObj().getTimeFormat(this.reportData.timeTaken)+"</span></div>"+
 				"</div>"+
-				"<div class='item accuracy col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+				"<div class='item accuracy col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
 					"<img src='../images/accuracy.png' alt='Accuracy'/><div class='values'><span>Accuracy</span><span class='detail'>"+
 					accuracy+"%</span></div>"+
 				"</div>"+
-				"<div class='item percentile col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+				"<div class='item percentile col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
 					"<img src='../images/percentile.png' alt='Percentile'/><div class='values'><span>Percentile</span><span class='detail'>"+
 					percentile+"</span></div>"+
 				"</div>"+
@@ -279,6 +279,11 @@ testReportController.prototype.DisplayCharts = function()
 	var params = {id: 'questionsPieChart', title: 'ANSWER DISTRIBUTION', key: 'Questions', colors: colors, series: series};
 	test2bsureController.getObj().PieChart(params);
 	
+	var totalTime = this.testInfo.totalTime * 60;
+	timeObject["Correct"] = timeObject["Correct"] > totalTime ? totalTime : timeObject["Correct"];
+	timeObject["Incorrect"] = timeObject["Incorrect"] > totalTime ? totalTime : timeObject["Incorrect"];
+	timeObject["Unvisited"] = timeObject["Unvisited"] > totalTime ? totalTime : timeObject["Unvisited"];
+	timeObject["Unattempted"] = timeObject["Unattempted"] > totalTime ? totalTime : timeObject["Unattempted"];
 	//Time Pie Chart
 	colors 	= ['#54A1EF', '#FF8383', '#FABA20', '#DD8EFF'];
 	series = [
@@ -290,6 +295,7 @@ testReportController.prototype.DisplayCharts = function()
 	params = {id: 'timePieChart', title: 'TIME SPENT', key: 'secs', colors: colors, series: series};
 	test2bsureController.getObj().PieChart(params);
 	//Populate charts summary
+	
 	$('.chartsSummary').find('div.correct').find('span.value').text(quesObject["Correct"] + " QUES, "+test2bsureController.getObj().getTimeFormat(timeObject["Correct"]));
 	$('.chartsSummary').find('div.incorrect').find('span.value').text(quesObject["Incorrect"] + " QUES, "+test2bsureController.getObj().getTimeFormat(timeObject["Incorrect"]));
 	$('.chartsSummary').find('div.unattempted').find('span.value').text(quesObject["Unattempted"] + " QUES, "+test2bsureController.getObj().getTimeFormat(timeObject["Unattempted"]));

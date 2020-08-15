@@ -1,5 +1,5 @@
-.quiz-page{
-    margin-top: 20px;
+.quiz-page .quiz-listing{
+	margin-top: 10px;
 }
 .quiz-page .quiz-listing .left{
 	background-color: #e4e4e4;
@@ -9,7 +9,9 @@
     padding: 12px;
 }
 .quiz-page .quiz-listing .left h4{
-	text-align: center;
+	display: flex;
+	justify-content: space-between;
+	padding: 0px 10px;
 }
 .quiz-page .quiz-listing .left button.btnReset{
 	width: 50%;
@@ -171,4 +173,59 @@
 	height: 12px;
 	background-size: 17px 12px;
 	content: "";
+}
+.mobileViewQuiz.quizOverlay{
+	height: 0px;
+	position: fixed;
+	width: 100%;
+	background-color: rgba(0,0,0,.7);
+	z-index: 105;
+	left: 0;
+	top: 0px;
+}
+@media only screen and (max-width: 767px) {
+	.quiz-page .quiz-listing .right{
+		width: 100%;
+		margin-left: 0;
+	}
+	.quiz-listing .right ul{
+		width: 75%;
+		margin-left: 12.5%;
+	}
+	.quiz-listing .right h4{
+		margin-left: 16%;
+	}
+	.mobileFilter{
+		display: block !important;
+		text-align: right;
+		cursor: pointer;
+		padding: 20px;
+	}
+	.mobileFilter .filter-quiz{
+		text-decoration: underline;
+	}
+	.filterClose{
+		display: inline-block !important;
+	}
+	.quiz-listing .left{
+		display: none;
+	}
+	.quiz-listing .left.mobile{
+		display: block;
+		position: absolute;
+		width: 82%;
+		margin: 0px;
+		z-index: 110;
+		top: -60px;
+		right: 0px;
+	}
+	.quiz-page .quiz-listing .left button.btnReset{
+		position: absolute;
+		bottom: 25px;
+		left: 0;
+	}
+	.quiz-listing .left .quiz-filters{
+		height: 80%;
+		overflow: auto;
+	}
 }

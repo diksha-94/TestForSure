@@ -206,7 +206,7 @@ html body.nobodyscroll {
 		display: block;
 	}
 	.menu-items, .exams.mobileView{
-		height: 100%;
+		height: calc(100% - 60px);
 		background-color: #103B6D;
 		position: fixed;
 		top: 60px;
@@ -215,6 +215,7 @@ html body.nobodyscroll {
 		padding: 0px;
 		margin: 0px !important;
 		z-index: 105;
+		overflow: auto;
 	}
 	.header .menu-items ul.test2bsure-menu{
 		flex-direction: column;

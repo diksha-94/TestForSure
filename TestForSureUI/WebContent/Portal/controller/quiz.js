@@ -10,8 +10,30 @@ quizController.prototype.Init = function()
 	test2bsureController.getObj().GetHeader(".quiz-header");
 	this.LoadData();
 	this.LoadFilters();
+	this.BindEvents();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".quiz-footer");
+};
+quizController.prototype.BindEvents = function()
+{
+	$('.filter-quiz').unbind().bind('click', function(){
+		$('.quiz-listing').find('.left').addClass('mobile');
+		$('.quiz-listing').find('.left').css('height', (screen.height) + 'px');
+		$('.quizOverlay').css('height', '100%');
+		$("body").addClass("nobodyscroll");
+		$('.quiz-listing').find('.left').find('.filterClose').unbind().bind('click', function(){
+			$('.quiz-listing').find('.left').removeClass('mobile');
+			$('.quizOverlay').css('height', '0px');
+			$("body").removeClass("nobodyscroll");
+		});
+	});
+	
+	$('.quizOverlay').unbind().bind('click', function(){
+		$('.quiz-listing').find('.left').removeClass('mobile');
+		$('.quizOverlay').css('height', '0px');
+		$("body").removeClass("nobodyscroll");
+	})
+	
 };
 quizController.prototype.LoadData = function(filterValues)
 {
@@ -74,7 +96,7 @@ quizController.prototype.PopulateQuizzes = function()
 };
 quizController.prototype.PopulateFilters = function()
 {
-	var html = '<h4>Quiz Filters</h4>';
+	var html = '<h4>Quiz Filters<span class="hide filterClose">X</span></h4>';
 	html += "<ul class='quiz-filters col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	for(var filter in this.filters){
 		//html += "<li filter-id='"+this.filters[filter].id+"'><input class='filterItem' type='checkbox' value='"+this.filters[filter].title+"'>"+this.filters[filter].title+"</input></li>";
@@ -103,5 +125,8 @@ quizController.prototype.PopulateFilters = function()
 	$('.quiz-listing .left').find('.btnReset').unbind().bind('click', function(e){
 		$('.quiz-listing .left .quiz-filters').find('li[filter-id]').find('span').removeClass('selected');
 		this.LoadData();
+		$('.quiz-listing').find('.left').removeClass('mobile');
+		$('.quizOverlay').css('height', '0px');
+		$("body").removeClass("nobodyscroll");
 	}.bind(this));
 };

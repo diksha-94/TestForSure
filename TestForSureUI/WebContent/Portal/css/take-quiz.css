@@ -129,6 +129,7 @@
 .quiz-main .quiz-status .attempt-controls {
 	width: 30%;
 	display: flex;
+	justify-content: end;
 }
 
 .quiz .quiz-questions .question .options .option .option-count {
