@@ -87,14 +87,14 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 	$('.sandwichbtn').unbind().bind('click', function(e){
 		if($(e.currentTarget).hasClass('closebtn')){
 			$(e.currentTarget).removeClass('closebtn');
-			$('.menu-items').css('display', 'none');
+			$('.menu-items').removeClass('expand');
 			$('.exams.mobileView').css('display', 'none');
 			$('.overlay').css('height', '0px');
 			$("body").removeClass("nobodyscroll");
 		}
 		else{
 			$(e.currentTarget).addClass('closebtn');
-			$('.menu-items').css('display', 'block');
+			$('.menu-items').addClass('expand');
 			$('.overlay').css('height', '100%');
 			$("body").addClass("nobodyscroll");
 		}

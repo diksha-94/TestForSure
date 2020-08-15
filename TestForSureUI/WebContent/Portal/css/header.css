@@ -217,6 +217,14 @@ html body.nobodyscroll {
 		z-index: 105;
 		overflow: auto;
 	}
+	.menu-items{
+		display: block;
+		width: 0px !important;
+		transition: 0.2s;
+	}
+	.menu-items.expand{
+		width: 61% !important;
+	}
 	.header .menu-items ul.test2bsure-menu{
 		flex-direction: column;
 	}
