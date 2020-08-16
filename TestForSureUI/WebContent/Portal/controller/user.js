@@ -173,6 +173,25 @@ userController.prototype.Logout = function()
 {
 	//Remove Cookie
 	//alert("Logout");
+	var value = test2bsureController.getObj().getCookie('test2bsure_userLoginId');
 	document.cookie = "test2bsure_userLoginId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-	window.location.reload();
+	var url = remoteServer+'/test2bsure/logout';
+	var type = 'POST';
+	var requestData = {
+		"userLoginId": value,
+	};
+	$.ajax({
+		url: url,
+		type: type,
+		contentType: "application/json",
+		data: JSON.stringify(requestData),
+		context: this,
+		success: function(response){
+			window.location.reload();
+		},
+		error: function(e){
+			console.log(e);
+			window.location.reload();
+		}
+	});
 };
