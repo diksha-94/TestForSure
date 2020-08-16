@@ -34,7 +34,9 @@
 			LoadCSS('../ReusableFunctions/common');
 			LoadCSS('../css/quiz');
 			LoadJS('../controller/quiz', function(){
-				new quizController();
+				LoadJS('../controller/user', function(){
+					new quizController();
+				});
 			});
 		</script>
 	</body>

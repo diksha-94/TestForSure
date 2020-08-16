@@ -7,12 +7,13 @@ var quizController = function(){
 quizController.prototype.Init = function()
 {
 	//Load header
-	test2bsureController.getObj().GetHeader(".quiz-header");
-	this.LoadData();
-	this.LoadFilters();
-	this.BindEvents();
-	//Load footer
-	test2bsureController.getObj().GetFooter(".quiz-footer");
+	test2bsureController.getObj().GetHeader(".quiz-header", function(){
+		this.LoadData();
+		this.LoadFilters();
+		this.BindEvents();
+		//Load footer
+		test2bsureController.getObj().GetFooter(".quiz-footer");
+	}.bind(this));
 };
 quizController.prototype.BindEvents = function()
 {
@@ -38,7 +39,9 @@ quizController.prototype.BindEvents = function()
 quizController.prototype.LoadData = function(filterValues)
 {
 	var userId = -1;
-	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' 
+		&& (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) 
+		&& typeof userController.getObj().userData.id != 'undefined'){
 		userId = userController.getObj().userData.id;
 	}
 	var url = remoteServer+'/test2bsure/quizzes?userId='+userId;
