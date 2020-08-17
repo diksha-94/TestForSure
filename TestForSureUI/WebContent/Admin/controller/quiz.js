@@ -46,6 +46,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 	console.log('Saving (Add/Update) Quiz');
 	var name = $('#txtQuizName').val();
 	var title = $('#txtQuizTitle').val();
+	var displayIndex = $('#txtQuizIndex').val();
 	var questions = $('#txtQuizQuestions').val();
 	var marks = $('#txtQuizMarks').val();
 	var attempts = $('#txtQuizAttempts').val();
@@ -73,6 +74,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 	var requestData = {
 		'name': name,
 		'title': title,
+		'displayIndex': displayIndex,
 		'noOfQues': questions,
 		'marksPerQues': marks,
 		'noOfAttempts': attempts,
@@ -173,6 +175,7 @@ quizController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#quizModal').find('#txtQuizName').val(item.name);
 					$('#quizModal').find('#txtQuizTitle').val(item.title);
+					$('#quizModal').find('#txtQuizIndex').val(item.displayIndex);
 					$('#quizModal').find('#txtQuizQuestions').val(item.noOfQues);
 					$('#quizModal').find('#txtQuizMarks').val(item.marksPerQues);
 					$('#quizModal').find('#txtQuizAttempts').val(item.noOfAttempts);

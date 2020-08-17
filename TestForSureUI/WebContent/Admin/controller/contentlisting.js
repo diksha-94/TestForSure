@@ -23,6 +23,10 @@ var contentlistingDef = {
 								"type": "image"
 							},
 							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
+							},
+							{
 								"frontend": "Action",
 								"backend": undefined
 							}],
@@ -65,6 +69,10 @@ var contentlistingDef = {
 							{
 								"frontend": "Category",
 								"backend": "category"
+							},
+							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
 							},
 							{
 								"frontend": "Action",
@@ -144,6 +152,10 @@ var contentlistingDef = {
 								"backend": "totalTime"
 							},
 							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
+							},
+							{
 								"frontend": "Action",
 								"backend": undefined
 							}],
@@ -185,6 +197,10 @@ var contentlistingDef = {
 							{
 								"frontend": "Questions",
 								"backend": "noOfQues"
+							},
+							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
 							},
 							{
 								"frontend": "Action",

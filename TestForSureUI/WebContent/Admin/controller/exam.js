@@ -43,6 +43,7 @@ examController.prototype.SaveData = function()
 	console.log('Saving (Add/Update) Exam');
 	var name = $('#txtExamName').val();
 	var title = $('#txtExamTitle').val();
+	var displayIndex = $('#txtExamIndex').val();
 	var imageUrl = $('#txtExamImageUrl').val();
 	var categoryId = $('#ddCategory').val();
 	var description = summernoteController.getObj().getValue('#txtExamDescription');
@@ -55,6 +56,7 @@ examController.prototype.SaveData = function()
 	var requestData = {
 			'name': name,
 			'title': title,
+			'displayIndex': displayIndex,
 			'imageUrl': imageUrl,
 			'category': categoryId,
 			'description': description,
@@ -111,6 +113,7 @@ examController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#examModal').find('#txtExamName').val(item.name);
 					$('#examModal').find('#txtExamTitle').val(item.title);
+					$('#examModal').find('#txtExamIndex').val(item.displayIndex);
 					$('#examModal').find('#txtExamImageUrl').val(item.imageUrl);
 					$('#examModal').find('#ddCategory').val(item.category);
 					summernoteController.getObj().setValue('#txtExamDescription', item.description);

@@ -32,6 +32,7 @@ categoryController.prototype.SaveData = function()
 	console.log('Saving (Add/Update) Category');
 	var name = $('#txtCategoryName').val();
 	var title = $('#txtCategoryTitle').val();
+	var displayIndex = $('#txtCategoryIndex').val();
 	var imageUrl = $('#txtCategoryImageUrl').val();
 	if(name.length == 0 || title.length == 0 || imageUrl.length == 0){
 		alert('Please enter all the mandatory fields');
@@ -42,6 +43,7 @@ categoryController.prototype.SaveData = function()
 	var requestData = {
 			'name': name,
 			'title': title,
+			'displayIndex': displayIndex,
 			'imageUrl': imageUrl,
 			'active': 1
 	};
@@ -102,6 +104,7 @@ categoryController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#categoryModal').find('#txtCategoryName').val(item.name);
 					$('#categoryModal').find('#txtCategoryTitle').val(item.title);
+					$('#categoryModal').find('#txtCategoryIndex').val(item.displayIndex);
 					$('#categoryModal').find('#txtCategoryImageUrl').val(item.imageUrl);
 					$('#categoryModal').find('#imgCategoryImagePreview').attr('src', item.imageUrl);
 				}

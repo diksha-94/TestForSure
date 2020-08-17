@@ -51,6 +51,7 @@ testController.prototype.SaveData = function(openNext, callback)
 	console.log('Saving (Add/Update) Test');
 	var name = $('#txtTestName').val();
 	var title = $('#txtTestTitle').val();
+	var displayIndex = $('#txtTestIndex').val();
 	var questions = $('#txtTestQuestions').val();
 	var time = $('#txtTestTime').val();
 	var marks = parseFloat($('#txtTestMarks').val()) * parseInt(questions);
@@ -112,6 +113,7 @@ testController.prototype.SaveData = function(openNext, callback)
 	var requestData = {
 			'name': name,
 			'title': title,
+			'displayIndex': displayIndex,
 			'noOfSections': sectionDetails.length,
 			'sectionDetails': JSON.stringify(sectionDetails),
 			'totalQues': questions,
@@ -218,6 +220,7 @@ testController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#testDetailsModal').find('#txtTestName').val(item.name);
 					$('#testDetailsModal').find('#txtTestTitle').val(item.title);
+					$('#testDetailsModal').find('#txtTestIndex').val(item.displayIndex);
 					$('#testDetailsModal').find('#txtTestQuestions').val(item.totalQues);
 					$('#testDetailsModal').find('#txtTestTime').val(item.totalTime);
 					$('#testDetailsModal').find('#txtTestMarks').val(item.totalMarks/item.totalQues);
