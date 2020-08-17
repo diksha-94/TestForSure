@@ -154,7 +154,7 @@ testController.prototype.SaveData = function(openNext, callback)
 						//if not same, update the total no. of questions in details as per the no. of questions added
 						var entered = $('#testDetailsModal').find('#txtTestQuestions').val();
 						var added = $('#testQuesModal').find('.divCountQuesTest').find('span.noOfQues').text();
-						if(entered != added){
+						if(parseInt(entered) != parseInt(added)){
 							alert("Please add all the questions and finish.");
 							return;
 							$('#updateQuesModal').modal('show');
@@ -559,7 +559,7 @@ testController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 					$('#testQuesModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
 						var entered = $('#testDetailsModal').find('#txtTestQuestions').val();
 						var added = $('#testQuesModal').find('.divCountQuesTest').find('span.noOfQues').text();
-						if(entered <= added){
+						if(parseInt(entered) <= parseInt(added)){
 							alert("Can't add more questions");
 							return;
 						}

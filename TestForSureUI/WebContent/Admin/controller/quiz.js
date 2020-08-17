@@ -107,7 +107,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 						//if not same, update the total no. of questions in details as per the npo. of questions added
 						var entered = $('#quizModal').find('#txtQuizQuestions').val();
 						var added = $('#quizQuestionsModal').find('.divCountQues').find('span.noOfQues').text();
-						if(entered != added){
+						if(parseInt(entered) != parseInt(added)){
 							alert("Please add all the questions and finish.");
 							return;
 							$('#updateQuizQuesModal').modal('show');
@@ -434,7 +434,7 @@ quizController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 					$('#quizQuestionsModal').find('.all-questions').find('.selectQues').unbind().bind('click', function(e){
 						var entered = $('#quizModal').find('#txtQuizQuestions').val();
 						var added = $('#quizQuestionsModal').find('.divCountQues').find('span.noOfQues').text();
-						if(entered <= added){
+						if(parseInt(entered) <= parseInt(added)){
 							alert("Can't add more questions");
 							return;
 						}
