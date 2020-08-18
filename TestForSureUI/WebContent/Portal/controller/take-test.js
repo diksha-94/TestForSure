@@ -201,7 +201,7 @@ testController.prototype.DisplayQuestion = function()
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
 					"<div class='question-desc'>"+
 						"<span class='question-number'>"+(this.currentQues)+"</span>";
-	if(question.paragraph == "true"){
+	if(question.paragraph == "true" || question.paragraph == "1"){
 		html += "<span class='para-text'>"+question.paragraphText+"</span>";
 	}
 	html += "<span class='question-text'>"+question.questionText+"</span>"+

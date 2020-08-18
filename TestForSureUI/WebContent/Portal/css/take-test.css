@@ -153,8 +153,11 @@
 	font-weight: bold;
 	font-size: 15px;
 }
-.test .test-questions .question .question-text{
+.test .test-questions .question .question-text, .test .test-questions .question .para-text{
 	margin-left: 20px;
+}
+.test .test-questions .question .para-text{
+	font-weight: bold;
 }
 .test .test-questions .question .options{
 	padding: 20px 40px;

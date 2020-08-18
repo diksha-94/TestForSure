@@ -192,6 +192,8 @@
 }
 .solution-section .solution-questions .question .question-text{
 	margin-left: 10px;
+	margin-top: 10px;
+	display: block;
 }
 .solution-section .solution-questions .question .options{
 	padding: 20px 40px;

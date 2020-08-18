@@ -198,6 +198,7 @@
 	overflow-x: hidden;
 	font-weight: bold;
 	text-align: center;
+	transform: translateY(-50%);
 }
 .exam-outer {
     padding: 0px;
@@ -228,5 +229,6 @@
 		left: 10%;
 		width: 80%;
 		text-align: center;
+		transform: translateY(0%);
 	}
 }

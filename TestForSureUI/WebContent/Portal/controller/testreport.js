@@ -375,7 +375,7 @@ testReportController.prototype.DisplayQuestion = function()
 				"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
 			"</div>"+
 			"<div class='ques-detail'>";
-	if(question.paragraph == "true"){
+	if(question.paragraph == "true" || question.paragraph == "1"){
 		html += "<span class='para-text'>"+question.paragraphText+"</span>";
 	}
 	html += "<span class='question-text'>"+question.questionText+"</span>"+

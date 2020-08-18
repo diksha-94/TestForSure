@@ -15,6 +15,10 @@ quizController.prototype.AddEdit = function()
 	if(this.id > 0){
 		this.Edit();
 	}
+	else{
+		new AutoComplete('ddQuizExam', 'exams');
+		new AutoComplete('ddQuizFilter', 'filters');
+	}
 	$('#quizModal').find('#btnQuizSave').unbind().bind('click', function(){
 		this.SaveData();
 	}.bind(this));

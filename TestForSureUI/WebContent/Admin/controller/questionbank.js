@@ -8,10 +8,20 @@ questionbankController.prototype.AddEdit = function()
 {
 	$('#questionModal').modal('show');
 	var summernote = summernoteController.getObj();
+	summernote.addEditor('#txtParagraphText');
 	summernote.addEditor('#txtQuestionText');
 	summernote.addEditor('.txtOptions');
 	summernote.addEditor('#txtSolution');
 	RefreshData('questionModal');
+	//TODO: paragraph based, if para is checked, entering text is mandatory
+	$('#chkParagraph').unbind().on('change', function(e){
+		if($(e.currentTarget).prop('checked')){
+			$('#txtParagraphText').parents('div.para').removeClass('hide').addClass('show');
+		}
+		else{
+			$('#txtParagraphText').parents('div.para').removeClass('show').addClass('hide');
+		}
+	});
 	//Add options
 	$('#questionModal').find('#btnAddOption').unbind().bind('click', function(){
 		var summernote = summernoteController.getObj();
@@ -62,6 +72,16 @@ questionbankController.prototype.SaveData = function()
 		alert('Please enter all the mandatory fields');
 		return;
 	}
+	//Paragraph
+	var paraBased = 0;
+	var paraText = "";
+	if($('#chkParagraph').prop('checked')){
+		paraBased = 1;
+		paraText = summernoteController.getObj().getValue('#txtParagraphText');
+		if(paraText.length == 0){
+			alert("Please enter Paragraph Text");
+		}
+	}
 	var allOptions = $('#questionModal').find('.txtOptions');
 	var correctOptionDom = $('#questionModal').find('.chkCorrectOption');
 	var options = "<options>";
@@ -90,8 +110,8 @@ questionbankController.prototype.SaveData = function()
 			'questionCategory': categoryId,
 			'questionSubcategory': subcategoryId,
 			'questionType': 0,
-			'paragraph': 0,
-			'paragraphText': '',
+			'paragraph': paraBased,
+			'paragraphText': paraText,
 			'questionText': quesText,
 			'options': JSON.stringify(options),
 			'correctOption': JSON.stringify(correctOptions),
@@ -156,6 +176,15 @@ questionbankController.prototype.Edit = function()
 					this.subcategory = item.questionSubcategory;
 					$('#questionModal').find('#ddQuestionCategory').change();
 					summernoteController.getObj().setValue('#txtQuestionText', item.questionText);
+					if(item.paragraph == 1){
+						$('#chkParagraph').prop('checked', true);
+						$('#txtParagraphText').parents('div.para').removeClass('hide').addClass('show');
+						summernoteController.getObj().setValue('#txtParagraphText', item.paragraphText);
+					}
+					else{
+						$('#chkParagraph').prop('checked', false);
+						$('#txtParagraphText').parents('div.para').removeClass('show').addClass('hide');
+					}
 					summernoteController.getObj().setValue('#txtSolution', item.solution);
 					var options = item.options;
 					var optionsCount = 0;

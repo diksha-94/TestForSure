@@ -74,7 +74,7 @@ quizController.prototype.PopulateQuestion = function(solution)
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
 					"<div class='question-desc'>"+
 						"<div class='question-number'>Question No. "+(this.currentQues+1)+"</div>";
-	if(question.paragraph == "true"){
+	if(question.paragraph == "true" || question.paragraph == "1"){
 		html += "<span class='para-text'>"+question.paragraphText+"</span>";
 	}
 	html += "<span class='question-text'>"+question.questionText+"</span>"+
