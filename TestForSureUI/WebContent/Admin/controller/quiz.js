@@ -414,7 +414,7 @@ quizController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 		url += "&subcategory="+subcategory;
 	}
 	url += "&start="+this.start;
-	url += "&itemId="+this.id+"&type=quiz";
+	url += "&itemId="+this.id+"&type=quiz&intersect=1";
 	console.log(url)
 	$.ajax({
 		url: url,

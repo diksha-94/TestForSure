@@ -1,9 +1,9 @@
-var jsVersion = 2;
-var cssVersion = 2;
+var jsVersion = 3;
+var cssVersion = 3;
 
 var obj = null;
-//var remoteServer = "http://3.6.58.203:8083";
-var remoteServer = "http://localhost:8083";
+var remoteServer = "http://3.6.58.203:8083";
+//var remoteServer = "http://localhost:8083";
 var test2bsureController = function(){
 	this.userData = null;
 };
