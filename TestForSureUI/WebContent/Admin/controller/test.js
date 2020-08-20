@@ -423,7 +423,11 @@ testController.prototype.ViewQuestion = function(quesId)
 			html += "<div><span><b>Question Id:  </b>"+quesId+"</span></div>";
 			html += "<div><span><b>Question Category:  </b>"+data.questionCategory+"</span></div>";
 			html += "<div><span><b>Question Subcategory:  </b>"+data.questionSubcategory+"</span></div>";
+			if(data.paragraph == 1 || data.paragraph == "true"){
+				html += "</br><div><span><b>Paragraph: </b>"+data.paragraphText+"</span></div>";
+			}
 			html += "</br><div><span><b>Question: </b>"+data.questionText+"</span></div>";
+			
 			var options = data.options;
 			if(options.startsWith('"')){
 				options = options.substring(1);

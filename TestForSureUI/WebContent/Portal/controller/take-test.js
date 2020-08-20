@@ -204,7 +204,7 @@ testController.prototype.DisplayQuestion = function()
 	if(question.paragraph == "true" || question.paragraph == "1"){
 		html += "<span class='para-text'>"+question.paragraphText+"</span>";
 	}
-	html += "<span class='question-text'>"+question.questionText+"</span>"+
+	html += "<br/><br/><span class='question-text'>"+question.questionText+"</span>"+
 			"</div>"+
 			"<div class='options'>";
 	var markedAnswer = -1;

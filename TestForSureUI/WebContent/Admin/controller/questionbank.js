@@ -13,7 +13,6 @@ questionbankController.prototype.AddEdit = function()
 	summernote.addEditor('.txtOptions');
 	summernote.addEditor('#txtSolution');
 	RefreshData('questionModal');
-	//TODO: paragraph based, if para is checked, entering text is mandatory
 	$('#chkParagraph').unbind().on('change', function(e){
 		if($(e.currentTarget).prop('checked')){
 			$('#txtParagraphText').parents('div.para').removeClass('hide').addClass('show');
@@ -176,7 +175,7 @@ questionbankController.prototype.Edit = function()
 					this.subcategory = item.questionSubcategory;
 					$('#questionModal').find('#ddQuestionCategory').change();
 					summernoteController.getObj().setValue('#txtQuestionText', item.questionText);
-					if(item.paragraph == 1){
+					if(item.paragraph == 1 || item.paragraph == "true"){
 						$('#chkParagraph').prop('checked', true);
 						$('#txtParagraphText').parents('div.para').removeClass('hide').addClass('show');
 						summernoteController.getObj().setValue('#txtParagraphText', item.paragraphText);

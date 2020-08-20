@@ -156,6 +156,9 @@
 .test .test-questions .question .question-text, .test .test-questions .question .para-text{
 	margin-left: 20px;
 }
+.test .test-questions .question .question-text{
+	display: block;
+}
 .test .test-questions .question .para-text{
 	font-weight: bold;
 }
