@@ -2,8 +2,8 @@ var jsVersion = 4;
 var cssVersion = 4;
 
 var obj = null;
-var remoteServer = "http://3.6.58.203:8083";
-//var remoteServer = "http://localhost:8083";
+//var remoteServer = "http://3.6.58.203:8083";
+var remoteServer = "http://localhost:8083";
 var test2bsureController = function(){
 	this.userData = null;
 };
@@ -465,8 +465,11 @@ test2bsureController.prototype.getTimeFormat = function(seconds){
 			mins = parseInt(mins % 60);
 		}
 	}
+	else{
+		secs = seconds;
+	}
 	var result = (hrs > 0)?(hrs+" hrs "):"";
-	result += mins+" mins ";
-	result += (secs > 0)?(secs+" secs "):"";
+	result += (mins > 0)?(mins+" mins "):"";
+	result += (secs+" secs ");
 	return result;
 }

@@ -7,14 +7,65 @@ var testController = function(){
 	this.attemptInfo = null;
 	this.totalSecs = 0;
 	this.startSecs = 0;
+	this.start = -1; //start=1 means start the test, else show the instructions
 	this.Init();
 };
 testController.prototype.Init = function()
 {
 	//Read id from query string
 	this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
+	this.start = test2bsureController.getObj().QueryString(window.location.href, 'start');
+	this.start = typeof this.start == 'undefined' ? -1 : this.start;
 	test2bsureController.getObj().SelfAuth(function(){
-		this.LoadData();
+		if(this.start == 1){
+			$('.testStart').removeClass('hide');
+			this.LoadData();
+		}
+		else{
+			$('.testInstruction').removeClass('hide');
+			this.LoadInstructions();
+		}
+	}.bind(this));
+};
+testController.prototype.LoadInstructions = function()
+{
+	var id = this.id;
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	//TODO: write a service to fetch only required data
+	fetch(remoteServer+'/test2bsure/testdata?testId='+id+'&userId='+userId)
+	  .then(response => response.json())
+	  .then(data => this.SetInstructionState({ testInfo: data.testInfo }));
+}
+testController.prototype.SetInstructionState = function(obj)
+{
+	for(var key in obj){
+		this[key] = obj[key];
+	}
+	this.PopulateInstructions();
+	this.BindInstructionEvents();
+};
+testController.prototype.PopulateInstructions = function()
+{
+	$('.testInstruction .instruction-header').find('h4').html(this.testInfo.title);
+	$('.testInstruction .instruction-data').find('.right .username').text(userController.getObj().userData.name);
+};
+testController.prototype.BindInstructionEvents = function()
+{
+	$('.instruction-acceptance').unbind().on('change', function(e){
+		if($(e.currentTarget).prop('checked')){
+			$('.btnStartTestIns').attr('disabled', false);
+			$('.instruction-footer').find('span.red').hide();
+		}
+		else{
+			$('.btnStartTestIns').attr('disabled', true);
+			$('.instruction-footer').find('span.red').show();
+		}
+	});
+	$('.btnStartTestIns').unbind().bind('click', function(){
+		window.location.href = 'take-test.html?id='+this.id+'&start=1';
 	}.bind(this));
 };
 testController.prototype.LoadData = function()

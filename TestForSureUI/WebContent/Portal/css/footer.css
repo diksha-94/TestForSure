@@ -29,7 +29,7 @@
 .social-media-links{
 	background-color:#6C98BF;
 	border-radius:50%;
-	padding:12px;
+	padding:11px;
 	float:left;
 	width:40px;
 	max-height:240px;
@@ -40,6 +40,9 @@
 .social-media-links a{
 	text-decoration:none;
 	color:white;
+}
+.social-media-links a i{
+	font-size: 18px;
 }
 .list-inline{
 	list-style:none;

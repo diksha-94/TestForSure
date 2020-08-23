@@ -245,11 +245,11 @@ var contentlistingDef = {
 								"frontend": "Created On",
 								"backend": "lastUpdatedOn"
 							},
-							{
+							/*{
 								"frontend": "Make Admin",
 								"backend": "isAdmin",
 								"type": "checkbox"
-							},
+							},*/
 							{
 								"frontend": "Action",
 								"backend": undefined

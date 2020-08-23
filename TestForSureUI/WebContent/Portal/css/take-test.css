@@ -1,10 +1,14 @@
-.test-header {
+.test-header, .instruction-header {
 	min-height: 50px;
 	height: auto;
 	background-color: #103B6D;
 	padding: 7px;
 	color: white;
 	font-weight: bold;
+}
+.instruction-header {
+	text-align: center;
+	height: 55px;
 }
 .test-header .divTimer{
 	display: flex;
@@ -321,4 +325,122 @@
 	.link-pallete img {
 		height: 25px;
 	}
+	.instruction-data .right{
+		display: none;
+	}
+	.instruction-content{
+		padding: 0px 5px 80px 5px;
+	}
+	.instruction-content ol{
+		padding-left: 18px;
+	}
+	.instruction-content ul{
+		padding-left: 0px;
+	}
+	.instruction-data .left .instruction-footer{
+		width: 100% !important;
+		text-align: center !important;
+		height: 80px !important;
+	}
+	.instruction-footer span.red{
+		display: block;
+	}
+}
+/* Test Instruction CSS */
+.testInstruction{
+	height: 100%;
+	overflow: hidden;
+}
+.instruction-data{
+	height: calc(100% - 55px);
+	padding: 0;
+}
+.instruction-data .left{
+	height: 100%;
+	padding: 0;
+	overflow: auto;
+}
+.instruction-data .left .instruction-footer{
+	position: fixed;
+	bottom: 0;
+	height: 50px;
+	background-color: #103B6D;
+	width: 83.33%;
+	text-align: right;
+}
+.instruction-data .left .instruction-footer button{
+	width: 100px;
+	margin: 10px;
+	cursor: pointer;
+}
+.instruction-data .left .instruction-footer button[disabled]{
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+.instruction-data .right{
+	height: 100%;
+	background-color: #E4E4E4;
+	text-align: center;
+	padding-top: 50px;
+}
+.instruction-data .right img{
+	width: 60%;
+}
+.instruction-data .right span.username{
+	font-size: 1.4em;
+	font-weight: bold;
+	display: block;
+}
+.instruction-content .ques-states .status-info {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.instruction-content .ques-states .status-info.not-visited{
+	background-color: #E4E4E4;
+	border: solid 1px #E4E4E4;
+}
+
+.instruction-content .ques-states .status-info.answered {
+    background-color: #5CB85C;
+    border: solid 1px #5CB85C;
+}
+.instruction-content .ques-states .status-info.unanswered {
+    background-color: #D9534F;
+    border: solid 1px #D9534F;
+}
+.instruction-content .ques-states .status-info.marked {
+    background-color: #9B59B6;
+    border: solid 1px #9B59B6;
+}
+.instruction-content .ques-states .status-info.marked-answered {
+    background-color: #5CB85C;
+    border: solid 3px #9B59B6;
+}
+.instruction-content{
+	padding: 0px 15px 80px 15px;
+}
+.instruction-content h5{
+	font-size: 1.1em;
+	font-weight: bold;
+	padding-top: 20px;
+}
+.instruction-content ul{
+	list-style-type: none;
+}
+.instruction-content button{
+	width: 80px;
+}
+.instruction-content span.link{
+	color: #23527c;
+}
+.instruction-content h4{
+	margin-top: 45px;
+}
+.instruction-content .instruction-acceptance{
+	margin-right: 10px;
+}
+.instruction-footer span.red{
+	color: #ff0000;
 }
