@@ -59,11 +59,16 @@ quizController.prototype.ManageQuizState = function()
 };
 quizController.prototype.PopulateQuizDetails = function()
 {
-	var html = "<div class='brand-logo-quiz col-xs-8 col-sm-8 col-md-3 col-lg-3'>"+
-					"<a class='brand' href='home.html'><img src='../images/final/logo_white.png' alt='TEST-2B-SURE'></a>"+
+	var html = "<div class='brand-logo-quiz col-xs-2 col-sm-2 col-md-3 col-lg-3'>"+
+					"<a class='brand' href='home.html'>"+
+						"<img src='../images/final/logo_white.png' alt='TEST-2B-SURE'>"+
+						"<i class='fa fa-home'></i>"+
+					"</a>"+
 				"</div>"+
-				"<div class='quiz-title col-xs-12 col-sm-12 col-md-6 col-lg-6'><h4>"+this.quizInfo.title+"</h4></div>"+
-			   "<div class='quiz-info col-xs-12 col-sm-12 col-md-3 col-lg-3'><span>"+this.quizInfo.noOfQues+" QUES / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" MARKS</span></div>";
+				"<div class='quiz-details col-xs-8 col-sm-8 col-md-9 col-lg-9'>"+
+					"<div class='quiz-title col-xs-12 col-sm-12 col-md-8 col-lg-8'><h4>"+this.quizInfo.title+"</h4></div>"+
+					"<div class='quiz-info col-xs-12 col-sm-12 col-md-4 col-lg-4'><span>"+this.quizInfo.noOfQues+" QUES / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" MARKS</span></div>"+
+				"</div>";
 	$('.quiz-header').html(html);
 };
 quizController.prototype.PopulateQuestion = function(solution)

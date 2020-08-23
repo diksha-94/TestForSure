@@ -270,7 +270,15 @@
 	width: 200px;
 	padding: 8px;
 }
-
+.brand-logo-quiz i{
+ 	font-size: 24px;
+ 	margin-top: 12px;
+ 	margin-left: -16px;
+ 	color: white;
+}
+.quiz-header .brand-logo-quiz i{
+	display: none;
+}
 .quiz-title {
 	text-align: center;
 	padding-top: 14px;
@@ -306,8 +314,11 @@
 }
 
 @media only screen and (max-width: 767px) {
-	.quiz-header .brand-logo-quiz {
+	.quiz-header .brand-logo-quiz img{
 		display: none;
+	}
+	.quiz-header .brand-logo-quiz i{
+		display: block;
 	}
 	.quiz-header{
 		height: 50px;
