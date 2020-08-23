@@ -444,3 +444,12 @@
 .instruction-footer span.red{
 	color: #ff0000;
 }
+.instruction-content li p span{
+	font-weight: bold;
+}
+.instruction-content li p span.correctMark{
+	color: #5CB85C; 
+}
+.instruction-content li p span.incorrectMark{
+	color: #D9534F;
+}

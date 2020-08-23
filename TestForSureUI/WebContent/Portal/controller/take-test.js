@@ -34,10 +34,9 @@ testController.prototype.LoadInstructions = function()
 	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 		userId = userController.getObj().userData.id;
 	}
-	//TODO: write a service to fetch only required data
-	fetch(remoteServer+'/test2bsure/testdata?testId='+id+'&userId='+userId)
+	fetch(remoteServer+'/test2bsure/test?id='+id)
 	  .then(response => response.json())
-	  .then(data => this.SetInstructionState({ testInfo: data.testInfo }));
+	  .then(data => this.SetInstructionState({ testInfo: data.data[0] }));
 }
 testController.prototype.SetInstructionState = function(obj)
 {
@@ -51,6 +50,10 @@ testController.prototype.PopulateInstructions = function()
 {
 	$('.testInstruction .instruction-header').find('h4').html(this.testInfo.title);
 	$('.testInstruction .instruction-data').find('.right .username').text(userController.getObj().userData.name);
+	$('.instruction-content').find('.totalQues').text(this.testInfo.totalQues);
+	$('.instruction-content').find('.correctMark').text(parseInt(this.testInfo.totalMarks) / parseInt(this.testInfo.totalQues) + ' mark(s)');
+	$('.instruction-content').find('.incorrectMark').text(this.testInfo.negativeMarks + ' mark(s)');
+	$('.instruction-content').find('.totalTime').text(this.testInfo.totalTime);
 };
 testController.prototype.BindInstructionEvents = function()
 {
