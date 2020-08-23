@@ -442,6 +442,7 @@ test2bsureController.prototype.PieChart = function(params)
 				var percent = Math.round(this.percentage * 100) / 100;
 				var y = Math.round(this.y * 100) / 100;
 				var str = this.key +": <b>"+ percent +"% </b> <br/> <b> ";
+				//secs represent time, so format it and show. Else show the value with the key
 				if(params.key == 'secs'){
 					str += test2bsureController.getObj().getTimeFormat(y) + "</b> ";
 				}
