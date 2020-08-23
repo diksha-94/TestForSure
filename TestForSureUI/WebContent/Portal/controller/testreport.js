@@ -163,7 +163,7 @@ testReportController.prototype.PopulateTopperAverage = function()
 		totalTime += this.reportData.leaderboard[data]["timeTaken"];
 	}
 	averageScore = (totalScore/this.reportData.leaderboard.length).toFixed(2);
-	averageTime = test2bsureController.getObj().getTimeFormat((totalTime/60)/this.reportData.leaderboard.length);
+	averageTime = test2bsureController.getObj().getTimeFormat((totalTime)/this.reportData.leaderboard.length);
 	var html = "<div class='topper'>"+
 					"<span>Topper's Score: "+topperScore+"</span>"+
 					"<span>Topper's Time: "+topperTime+"</span>"+

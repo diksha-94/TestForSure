@@ -466,7 +466,7 @@ test2bsureController.prototype.getTimeFormat = function(seconds){
 		}
 	}
 	else{
-		secs = seconds;
+		secs = parseInt(seconds);
 	}
 	var result = (hrs > 0)?(hrs+" hrs "):"";
 	result += (mins > 0)?(mins+" mins "):"";
