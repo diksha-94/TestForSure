@@ -243,7 +243,8 @@ var contentlistingDef = {
 							},
 							{
 								"frontend": "Created On",
-								"backend": "lastUpdatedOn"
+								"backend": "lastUpdatedOn",
+								"type": "timestamp"
 							},
 							/*{
 								"frontend": "Make Admin",
@@ -515,6 +516,14 @@ contentlistingController.prototype.LoadDataFromServer = function(callback)
 									else if(this.content.tableFields[field]["type"] == 'image'){
 										html += "<td class='td"+this.contentType+this.content.tableFields[field]["backend"]+"'>"+
 													"<img src = '"+items[item][this.content.tableFields[field]["backend"]]+"' alt = 'Not Available'>"+
+												"</td>";
+									}
+									else if(this.content.tableFields[field]["type"] == 'timestamp'){
+										var timeStamp = items[item][this.content.tableFields[field]["backend"]];
+										var dt = new Date(timeStamp);
+										var datetime = dt.getFullYear()+"-"+dt.getMonth()+"-"+dt.getDate()+" "+dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds()
+										html += "<td class='td"+this.contentType+this.content.tableFields[field]["backend"]+"'>"+
+													datetime+
 												"</td>";
 									}
 								}
