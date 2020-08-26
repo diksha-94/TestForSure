@@ -71,8 +71,8 @@ AutoComplete.prototype.onSelect =function()
 		var html = "<span class='outerSpan' title='"+$(e.currentTarget).find("span").text()+"'><span data-id='"+$(e.currentTarget).find("span").attr("data-id")+"'>"+
 						$(e.currentTarget).find("span").text()+"</span>"+
 						"<span class='btnRemove'>x</span></span>";
-					
-		$(this.typeId).siblings('.autocomplete-selecteddiv').append(html);
+		$(e.currentTarget).parents('.autocomplete-div').siblings('.autocomplete-selecteddiv').append(html);
+		//$(this.typeId).siblings('.autocomplete-selecteddiv').append(html);
 		$(e.currentTarget).remove();
 		if($('.autocomplete-div').find('div').length == 0){
 			$('.autocomplete-div').append('<span class="no-results">No Results</span>');
@@ -90,7 +90,8 @@ AutoComplete.prototype.onRemove = function(classVal)
 		if($('.autocomplete-div').find('.no-results').length > 0){
 			$('.autocomplete-div').find('.no-results').remove();
 		}
-		$('.autocomplete-div').append(html);
+		$(e.currentTarget).parents('.autocomplete-selecteddiv').siblings('.autocomplete-div').append(html);
+		//$('.autocomplete-div').append(html);
 		$(e.currentTarget).parents('span').remove();
 		this.onSelect();
 	}.bind(this));

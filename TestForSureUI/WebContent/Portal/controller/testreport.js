@@ -185,6 +185,7 @@ testReportController.prototype.PopulateSuggestedTests = function()
 						"<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3 testBtn'><a>Take Test</a></span>"+
 					"</div>";
 		}
+		$('.left-side').find('.suggested-tests').find('div[test-id]').remove();
 		$('.left-side').find('.suggested-tests').append(html);
 		$('.suggested-tests').find('.testBtn').unbind().bind('click', function(e){
 			var userId = -1;

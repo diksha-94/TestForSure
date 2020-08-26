@@ -39,10 +39,9 @@ contactusController.prototype.BindEvents = function()
 		$.ajax({
             url: remoteServer+"/test2bsure/contactus",
             type: 'POST',
+            contentType: 'application/json',
 			data: JSON.stringify(requestData),
-			contentType: 'application/json',
-			dataType: 'json',
-            success: function (result) {
+			success: function (result) {
                 if (result.status) {
 					//Status true means query is submitted successfully.
 					console.log(result.message);
