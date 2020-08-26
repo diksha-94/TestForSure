@@ -80,21 +80,16 @@ testReportController.prototype.PopulateReportHeader = function()
 };
 testReportController.prototype.SwitchReportSolution = function()
 {
+	var newUrl = window.location.pathname + "?sessionId="+this.id+"&report=";
 	if(this.report == 1){
 		this.report = 0;
-		$('.report-section').hide();
-		$('.solution-section').show();
-		$('.btnSolution').text('Analytics');
-		this.PopulateSolution();
+		newUrl += this.report;
 	}
 	else if(this.report == 0){
 		this.report = 1;
-		this.currentQues = 1;
-		$('.solution-section').hide();
-		$('.report-section').show();
-		$('.btnSolution').text('Solutions');
-		this.PopulateReport();
+		newUrl += this.report;
 	}
+	window.location.href = newUrl;
 };
 testReportController.prototype.PopulateReport = function()
 {
