@@ -465,6 +465,7 @@ test2bsureController.prototype.getTimeFormat = function(seconds){
 	var secs = 0;
 	var mins = 0;
 	var hrs = 0;
+	var onlySecs = false;
 	if(seconds >= 60){
 		mins = parseInt(seconds / 60);
 		secs = parseInt(seconds % 60);
@@ -474,10 +475,16 @@ test2bsureController.prototype.getTimeFormat = function(seconds){
 		}
 	}
 	else{
+		onlySecs = true;
 		secs = parseInt(seconds);
 	}
 	var result = (hrs > 0)?(hrs+" hrs "):"";
 	result += (mins > 0)?(mins+" mins "):"";
-	result += (secs+" secs ");
+	if(onlySecs){
+		result += (secs+" secs ");
+	}
+	else{
+		result += (secs > 0)?(secs+" secs "):"";
+	}
 	return result;
 }

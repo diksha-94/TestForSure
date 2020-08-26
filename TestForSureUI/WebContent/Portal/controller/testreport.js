@@ -111,6 +111,8 @@ testReportController.prototype.PopulateBasicReport = function()
 		percentile = ((this.reportData.totalCandidate - this.reportData.rank)*100)/this.reportData.totalCandidate;
 		percentile = Math.floor(percentile, 2);
 	}
+	var totalTestTime = this.testInfo.totalTime * 60;
+	this.reportData.timeTaken = this.reportData.timeTaken > totalTestTime ? totalTestTime : this.reportData.timeTaken;
 	html += "<div class='greeting'>"+
 				"<img src='../images/trophy.png' alt='Trophy' class='trophy'/>"+
 				"<h4>Congrats "+ userController.getObj().userData.name + " !!</h4>"+
@@ -148,7 +150,9 @@ testReportController.prototype.PopulateTopperAverage = function()
 {
 	$('.report-section').find('.report-advanced').find('.topper-average').empty();
 	var topperScore = this.reportData.leaderboard[0].marksScored;
-	var topperTime = test2bsureController.getObj().getTimeFormat(this.reportData.leaderboard[0].timeTaken);
+	var totalTestTime = this.testInfo.totalTime * 60;
+	var topperTime = this.reportData.leaderboard[0].timeTaken > totalTestTime ? totalTestTime : this.reportData.leaderboard[0].timeTaken;
+	topperTime = test2bsureController.getObj().getTimeFormat(topperTime);
 	var averageScore = 0;
 	var averageTime = 0;
 	var totalScore = 0;
@@ -158,7 +162,8 @@ testReportController.prototype.PopulateTopperAverage = function()
 		totalTime += this.reportData.leaderboard[data]["timeTaken"];
 	}
 	averageScore = (totalScore/this.reportData.leaderboard.length).toFixed(2);
-	averageTime = test2bsureController.getObj().getTimeFormat((totalTime)/this.reportData.leaderboard.length);
+	averageTime = ((totalTime)/this.reportData.leaderboard.length) > totalTestTime ? totalTestTime : ((totalTime)/this.reportData.leaderboard.length);
+	averageTime = test2bsureController.getObj().getTimeFormat(averageTime);
 	var html = "<div class='topper'>"+
 					"<span>Topper's Score: "+topperScore+"</span>"+
 					"<span>Topper's Time: "+topperTime+"</span>"+
@@ -259,11 +264,7 @@ testReportController.prototype.DisplayCharts = function()
 			}
 		}
 	}
-	timeObject["Unvisited"] = (parseInt(this.testInfo.totalTime) * 60) - timeObject["Unattempted"] - timeObject["Correct"] - timeObject["Incorrect"];
-	console.log(quesObject);
-	console.log(timeObject);
 	
-	//cosole();
 	//Question Pie Chart
 	var colors 	= ['#54A1EF', '#FF8383', '#FABA20', '#DD8EFF'];
 	var series = [
@@ -278,8 +279,9 @@ testReportController.prototype.DisplayCharts = function()
 	var totalTime = this.testInfo.totalTime * 60;
 	timeObject["Correct"] = timeObject["Correct"] > totalTime ? totalTime : timeObject["Correct"];
 	timeObject["Incorrect"] = timeObject["Incorrect"] > totalTime ? totalTime : timeObject["Incorrect"];
-	timeObject["Unvisited"] = timeObject["Unvisited"] > totalTime ? totalTime : timeObject["Unvisited"];
 	timeObject["Unattempted"] = timeObject["Unattempted"] > totalTime ? totalTime : timeObject["Unattempted"];
+	timeObject["Unvisited"] = (parseInt(this.testInfo.totalTime) * 60) - timeObject["Unattempted"] - timeObject["Correct"] - timeObject["Incorrect"];
+	timeObject["Unvisited"] = timeObject["Unvisited"] > totalTime ? totalTime : timeObject["Unvisited"];
 	//Time Pie Chart
 	colors 	= ['#54A1EF', '#FF8383', '#FABA20', '#DD8EFF'];
 	series = [
@@ -366,7 +368,8 @@ testReportController.prototype.DisplayQuestion = function()
 	var quesStatus = $('.ques-status').find('div[ques-no='+this.currentQues+']').attr('class').split(' ')[0];
 	var bgColor = $('.ques-status').find('div[ques-no='+this.currentQues+']').css('background-color');
 	var color = $('.ques-status').find('div[ques-no='+this.currentQues+']').css('color');
-	console.log(quesStatus);
+	var totalTestTime = this.testInfo.totalTime * 60;
+	question.timeSpent = question.timeSpent > totalTestTime ? totalTestTime : question.timeSpent;
 	html +=	"<span class='ques-status'>"+quesStatus+"</span>"+
 				"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
 			"</div>"+
