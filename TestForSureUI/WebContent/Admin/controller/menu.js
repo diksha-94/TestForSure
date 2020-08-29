@@ -24,9 +24,17 @@ menuController.prototype.BindMenuEvents = function()
 			this.HandleEvents(e);
 		}.bind(this));
 		$('.menu-tabs').find('li').find('a[href="#'+action+'"]').click();
+		window.location.hash = $(e.currentTarget).attr('id');
 	}.bind(this));
 	//Click Dashboard on page load
-	$(this.view).find('ul').find('li#menuDashboard').click();
+	var hash = window.location.hash;
+	if(hash == ""){
+		$(this.view).find('ul').find('li#menuDashboard').click();
+	}
+	else{
+		//$('.modal').modal('hide');
+		$(this.view).find('ul').find('li'+hash).click();
+	}
 	$('.brand-logo').find('img').unbind().bind('click', function(){
 		$(this.view).find('ul').find('li#menuDashboard').click();
 	}.bind(this));
