@@ -90,6 +90,22 @@
 .quiz-listing .right ul li img {
 	margin-top: 10px;
 }
+.quiz-listing .right ul li .quiz-image span.reward{
+	text-align: center;
+	position: relative;
+}
+.quiz-listing .right ul li .quiz-image span.reward img{
+	width: 40px;
+	height: 40px;
+}
+.quiz-listing .right ul li .quiz-image span.reward span{
+	font-weight: bold;
+	position: absolute;
+	top: 5px;
+	display: block;
+	left: 50%;
+	transform: translate(-50%);
+}
 
 .quiz-listing .right ul li h4 {
 	font-weight: bold;

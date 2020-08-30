@@ -1,5 +1,5 @@
-var remoteServer = "http://3.6.58.203:8083";
-//var remoteServer = "http://localhost:8083";
+//var remoteServer = "http://3.6.58.203:8083";
+var remoteServer = "http://localhost:8083";
 var perPage = 15;
 function validateEmail(email){
 	 var regEx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -20,6 +20,7 @@ function RefreshData(viewId){
 	if(viewId == 'quizModal'){
 		$('#'+viewId).find('#txtQuizAttempts').val(1);
 		$('#'+viewId).find('#txtQuizIndex').val(0);
+		$('#'+viewId).find('#txtRewardPoints').val(0);
 	}
 	if(viewId == 'categoryModal'){
 		$('#'+viewId).find('#txtCategoryIndex').val(0);
@@ -29,6 +30,7 @@ function RefreshData(viewId){
 	}
 	if(viewId == 'testDetailsModal'){
 		$('#'+viewId).find('#txtTestIndex').val(0);
+		$('#'+viewId).find('#txtRewardPoints').val(0);
 	}
 }
 function setCookie(cname, cvalue, exdays){

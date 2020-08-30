@@ -13,13 +13,23 @@ testReportController.prototype.Init = function()
 	//Read id from query string
 	this.id = test2bsureController.getObj().QueryString(window.location.href, 'sessionId');
 	this.report = test2bsureController.getObj().QueryString(window.location.href, 'report');
+	this.reward = test2bsureController.getObj().QueryString(window.location.href, 'reward');
 	if(this.report == undefined){
 		this.report = 1;
 	}
 	test2bsureController.getObj().SelfAuth(function(){
 		this.LoadData();
 	}.bind(this));
-}
+	setTimeout(function(){
+		if(typeof this.reward != 'undefined' && this.reward != undefined && this.reward != null){
+			if(parseInt(this.reward) > 0){
+				test2bsureController.getObj().ShowRewardPointsEarned(0, this.reward);
+			}
+			var newUrl = window.location.pathname + "?sessionId="+this.id+"&report="+this.report;
+			window.history.replaceState({}, document.title, newUrl);
+		}
+	}.bind(this), 1000);
+};
 testReportController.prototype.LoadData = function()
 {
 	var id = this.id;
