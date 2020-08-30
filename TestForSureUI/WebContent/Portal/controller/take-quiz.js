@@ -27,6 +27,8 @@ quizController.prototype.LoadData = function(showReward)
 	fetch(remoteServer+'/test2bsure/quizdata?quizId='+id+'&userId='+userId)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ quizInfo: data.quizInfo, questionsData: data.questionsData, sessionId: data.sessionId }));
+	
+	//Show reward points after 1 second on submission, if earned
 	setTimeout(function(){
 		if(showReward){
 			test2bsureController.getObj().CalculateRewardPointsEarned(1, this.sessionId, this.id, parseInt(this.quizInfo.noOfQues) * parseInt(this.quizInfo.marksPerQues), function(response){

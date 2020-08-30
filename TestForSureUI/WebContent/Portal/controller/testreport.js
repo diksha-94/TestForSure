@@ -20,6 +20,8 @@ testReportController.prototype.Init = function()
 	test2bsureController.getObj().SelfAuth(function(){
 		this.LoadData();
 	}.bind(this));
+	
+	//Show reward points after 1 second on submission, if earned
 	setTimeout(function(){
 		if(typeof this.reward != 'undefined' && this.reward != undefined && this.reward != null){
 			if(parseInt(this.reward) > 0){
