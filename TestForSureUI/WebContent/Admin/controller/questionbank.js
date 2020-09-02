@@ -51,6 +51,9 @@ questionbankController.prototype.AddEdit = function()
 	$('#questionModal').find('#btnQuestionSave').unbind().bind('click', function(){
 		this.SaveData();
 	}.bind(this));
+	$('#questionModal').find('#btnQuestionSaveAdd').unbind().bind('click', function(){
+		this.SaveData(true);
+	}.bind(this));
 };
 questionbankController.prototype.Delete = function()
 {
@@ -60,8 +63,9 @@ questionbankController.prototype.Delete = function()
 		this.DeleteItem();
 	}.bind(this));
 };
-questionbankController.prototype.SaveData = function()
+questionbankController.prototype.SaveData = function(addNext)
 {
+	addNext = (typeof addNext != 'undefined') ? addNext : false;
 	console.log('Saving (Add/Update) Question');
 	var categoryId = $('#questionModal').find('#ddQuestionCategory').val();
 	var subcategoryId = $('#questionModal').find('#ddQuestionSubCategory').val()
@@ -118,11 +122,11 @@ questionbankController.prototype.SaveData = function()
 			'active': 1
 	};
 	
-	console.log(requestData);
 	if(this.id > 0){
 		requestData.id = this.id;
 		type = 'PUT';
 	}
+	var self = this;
 	$.ajax({
 		url: url,
 		type: type,
@@ -130,10 +134,21 @@ questionbankController.prototype.SaveData = function()
 		contentType: "application/json",
 		success: function(response){
 			if(response.status == true){
-				$('#questionModal').modal('hide');
-				$('#questionModal').css('display', 'none');
 				alert(response.message);
-				$('.menu-tabs').find('li[class="active"]').find('a').click();
+				if(addNext){
+					//Save and Add next Question
+					$('#questionModal').find('input[type="text"]').val('');
+					$('#questionModal').find('input[type="number"]').val('');
+					$('#questionModal').find('input[type="checkbox"]').prop('checked', false);
+					$('#questionModal').find('.note-editor').find('.note-editable').html('');
+					$('#txtParagraphText').parents('div.para').removeClass('show').addClass('hide');
+					self.id = -1;
+				}
+				else{
+					$('#questionModal').modal('hide');
+					$('#questionModal').css('display', 'none');
+					$('.menu-tabs').find('li[class="active"]').find('a').click();
+				}
 			}
 			else{
 				alert(response.message);
