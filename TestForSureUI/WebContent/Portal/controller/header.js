@@ -24,6 +24,7 @@ headerController.prototype.Init = function()
 			$('body').append(loginModal());
 		}
 		$('#loginModal').modal('show');
+		$('#loginModal').find('#errorOuter').addClass('hide');
 	});
 	$('#linkRegister').unbind().bind('click', function(e){
 		$('#loginModal').modal('toggle');
@@ -39,8 +40,8 @@ headerController.prototype.Init = function()
 			$('body').append(forgotPassModal());
 		}
 		$('#forgotPassModal').modal('show');
-		$('#errorOuterForgot').hide();
-		$('#successOuter').hide();
+		$('#errorOuterForgot').removeClass('show').addClass('hide');
+		$('#successOuter').removeClass('show').addClass('hide');
 		$('#forgotPassForm').show();
 		$('.footer-forgot').hide();
 		$('#txtForgotEmail').val('');
@@ -160,6 +161,7 @@ headerController.prototype.Init = function()
 		//Send Forget Password Mail
 		$('#forgotPassModal').find('input').css('border-color', '#CCC');
 		$('#forgotPassModal').find('#errorOuterForgot').addClass('hide');
+		$('#forgotPassModal').find('#successOuter').removeClass('show').addClass('hide');
 		var email = $('#forgotPassModal').find('#txtForgotEmail').val();
 		$('#forgotPassModal').find('#errorOuterForgot').removeClass('hide').addClass('show');
 		$('#forgotPassModal').find('#errorMessageForgot').empty();
