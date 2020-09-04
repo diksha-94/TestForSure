@@ -180,3 +180,85 @@ function verificationModal(){
 '</div>';
 	return html;
 }
+
+function changePasswordModal(){
+	var html = '<div class="modal fade" id="changePasswordModal" role="dialog" data-backdrop="static" data-keyboard="false">'+
+				'<div class="modal-dialog changePasswordModal" role="document">'+
+					'<div class="modal-content">'+
+						'<div class="modal-header">'+
+							'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+							'<h4 class="modal-title text-center">Change Password</h4>'+
+						'</div>'+
+						'<div class="modal-body">'+
+							'<div id="errorOuter">'+
+								'<div class="text-center alert alert-danger" id="errorMessage"></div>'+
+							'</div>'+
+							'<form id="passwordForm" class="form-horizontal" role="form">'+
+								'<div class="form-group">'+
+									'<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Password</label>'+
+									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">'+
+										'<input type="password" class="form-control" id="txtPass" name="txtPassName" required="required" placeholder="Password"/>'+
+									'</div>'+
+								'</div>'+
+								'<div class="form-group">'+
+									'<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Confirm Password</label>'+
+									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">'+
+									'<input type="password"  class="form-control" id="txtConfirmPass" name="txtConfirmPassName" required="required" placeholder="Confirm Password"/>'+
+									'</div>'+
+								'</div>'+
+								'<div class="form-group">'+
+									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-0 col-md-offset-4 col-lg-offset-4">'+
+										'<button type="button" id="btnChangePass" class="button button-primary">Change Password</button>'+
+									'</div>'+
+								'</div>'+
+							'</form>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+	return html;
+}
+
+function editProfileModal(){
+	var html = '<div class="modal fade" id="editProfileModal" role="dialog" data-backdrop="static" data-keyboard="false">'+
+				'<div class="modal-dialog editProfileModal" role="document">'+
+					'<div class="modal-content">'+
+						'<div class="modal-header">'+
+							'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+							'<h4 class="modal-title text-center">Edit Profile</h4>'+
+						'</div>'+
+						'<div class="modal-body">'+
+							'<div id="errorOuter">'+
+								'<div class="text-center alert alert-danger" id="errorMessage"></div>'+
+							'</div>'+
+							'<form id="profileForm" class="form-horizontal" role="form">'+
+								'<div class="form-group">'+
+									'<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Name</label>'+
+									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">'+
+										'<input type="text" class="form-control" id="txtName" name="txtName" required="required" placeholder="Your Name"/>'+
+									'</div>'+
+								'</div>'+
+								'<div class="form-group">'+
+									'<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Email</label>'+
+									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">'+
+										'<input type="text" class="form-control" id="txtEmail" name="txtEmailName" disabled="disabled" required="required" placeholder="Your Email"/>'+
+									'</div>'+
+								'</div>'+
+								'<div class="form-group">'+
+									'<label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">Mobile Number</label>'+
+									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">'+
+									'<input type="text" class="form-control" id="txtMobile" name="txtMobileName" required="required" placeholder="Your mobile number"/>'+
+									'</div>'+
+								'</div>'+
+								'<div class="form-group">'+
+									'<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xs-offset-0 col-sm-offset-0 col-md-offset-4 col-lg-offset-4">'+
+										'<button type="button" id="btnEdit" class="button button-primary">Update</button>'+
+									'</div>'+
+								'</div>'+
+							'</form>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+	return html;
+}

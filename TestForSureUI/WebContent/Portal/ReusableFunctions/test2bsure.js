@@ -56,9 +56,18 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 								'Login/Register</button>'+
 							'</li>'+
 							'<li id="userProfile" class="hide">'+
-								'<span class="greeting">Hi&nbsp;<span id="loggedInUSer"></span></span>'+
-								'<span class="logout"><a id="btnLogout">Logout</a></span>'+
+								'<i class="fa fa-user" aria-hidden="true"></i>'+
+								'<span class="greeting"><span id="loggedInUSer"></span></span>'+
+								//'<span class="logout"><a id="btnLogout">Logout</a></span>'+
 							'</li>'+
+						'</ul>'+
+					'</div>'+
+					'<div class="desktopView overlayD"></div>'+
+					'<div class="profile-menu">'+
+						'<ul>'+
+							'<li id="myDashboard">My Dashboard</li>'+
+							'<li id="changePassword">Change Password</li>'+
+							'<li id="btnLogout">Logout</li>'+
 						'</ul>'+
 					'</div>'+
 				'</div>';
@@ -101,7 +110,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 	});
 	$('.overlay').unbind().bind('click', function(){
 		$('.sandwichbtn').click();
-	})
+	});
 	//Load CSS, JS
 	LoadCSS('../css/header');
 	LoadJS('../controller/user', function(){

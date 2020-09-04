@@ -1,0 +1,48 @@
+.dashboard-content .outerDiv{
+	padding: 50px 140px;
+}
+.dashboard-content .outerDiv .top{
+	background-color: #E4E4E4;
+	padding: 20px;
+}
+.dashboard-content .outerDiv .top .profile{
+	display: flex;
+	justify-content: space-between;
+}
+.dashboard-content .outerDiv .top .profile .user i{
+	font-size: 64px;
+}
+.dashboard-content .outerDiv .top .profile .user .username{
+	font-size: 1.4em;
+	display: inline-block;
+	margin-left: 20px;
+	margin-top: -45px;
+}
+.dashboard-content .outerDiv .top .profile .contact,
+.dashboard-content .outerDiv .top .profile .action{ 
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+.btnEditProfile{
+	margin-bottom: 5px;
+}
+.dashboard-content .outerDiv .top .rewards{
+	display: flex;
+	flex-direction: column;
+	padding: 0px 30px 0px 125px;
+}
+.dashboard-content .outerDiv .top .rewards .earned-points{
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.3em;
+	margin-bottom: 5px;
+}
+.dashboard-content .outerDiv .top .rewards .earned-points img{
+	width: 30px;
+	margin-right: 10px;
+}
+.dashboard-content .outerDiv .top .rewards .earned-points span{
+	margin-top: 2px;
+	display: inline-block;
+}

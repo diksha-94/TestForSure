@@ -169,7 +169,7 @@ userController.prototype.ForgetPassword = function(email)
 		}
 	});
 };
-userController.prototype.Logout = function()
+userController.prototype.Logout = function(callback)
 {
 	//Remove Cookie
 	//alert("Logout");
@@ -187,7 +187,9 @@ userController.prototype.Logout = function()
 		data: JSON.stringify(requestData),
 		context: this,
 		success: function(response){
-			window.location.reload();
+			if(typeof callback == 'function'){
+				callback();
+			}
 		},
 		error: function(e){
 			console.log(e);

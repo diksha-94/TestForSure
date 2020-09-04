@@ -176,9 +176,96 @@ headerController.prototype.Init = function()
 		$('#forgotPassModal').find('#errorOuterForgot').removeClass('show').addClass('hide');
 		userController.getObj().ForgetPassword(email);
 	});
-	$('#userProfile').find('#btnLogout').unbind().bind('click', function(){
-		userController.getObj().Logout();
+	$('#userProfile').unbind().bind('click', function(e){
+		if($(e.currentTarget).hasClass('open')){
+			//means already open, close it
+			$(e.currentTarget).removeClass('open');
+			$('.header .profile-menu').css('height', '0px');
+			$('.header .profile-menu').css('visibility', 'hidden');
+			$('.header .profile-menu ul li').css('border-bottom', 'none');
+			$('.overlayD').css('height', '0px');
+			$("body").removeClass("nobodyscroll");
+		}
+		else{
+			$(e.currentTarget).addClass('open');
+			$('.header .profile-menu').css('height', '130px');
+			$('.header .profile-menu').css('visibility', 'visible');
+			$('.header .profile-menu ul li').css('border-bottom', 'solid 1px #E4E4E4');
+			$('.overlayD').css('height', '100%');
+			$("body").addClass("nobodyscroll");
+		}
 	});
+	$('.overlayD').unbind().bind('click', function(){
+		$('#userProfile').click();
+	});
+	$('.profile-menu').find('#myDashboard').unbind().bind('click', function(){
+		window.location.href = "dashboard.html";
+	});
+	$('.profile-menu').find('#changePassword').unbind().bind('click', function(){
+		$('#userProfile').click();
+		if($('#changePasswordModal').length == 0){
+			$('body').append(changePasswordModal());
+		}
+		$('#changePasswordModal').modal('show');
+		$('#changePasswordModal').find('#errorMessage').html("");
+		$('#changePasswordModal').find('#txtPass').val('');
+		$('#changePasswordModal').find('#txtConfirmPass').val('');
+		$('#changePasswordModal').find('#btnChangePass').unbind().bind('click', function(){
+			var newPassword = $('#changePasswordModal').find('#txtPass').val();
+			var newReenterPassword = $('#changePasswordModal').find('#txtConfirmPass').val();
+			if(newPassword.length == 0 || newReenterPassword.length == 0){
+				$('#changePasswordModal').find('#errorMessage').html("Please enter all the fields.");
+				return;
+			}
+			if(newPassword.length < 6){
+				$('#changePasswordModal').find('#errorMessage').html("Password should contain atleast 6 characters.");
+				return;
+			}
+			if(newPassword != newReenterPassword){
+				$('#changePasswordModal').find('#errorMessage').html("Please re-enter the same password.");
+				return;
+			}
+			$('#changePasswordModal').find('#errorMessage').html("");
+			var url = remoteServer+'/test2bsure/changepassword'
+			var type = 'PUT';
+			var userId = -1;
+			if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+				userId = userController.getObj().userData.id;
+			}
+			if(userId == -1){
+				alert("You are not logged in");
+			}
+			var requestData = {
+				"emailId": userId,
+				"newPassword": newPassword,
+			};
+			$.ajax({
+				url: url,
+				type: type,
+				contentType: "application/json",
+				data: JSON.stringify(requestData),
+				success: function(response){
+					if(response.status == true){
+						alert("Password updated successfully");
+						$('#changePasswordModal').modal('hide');
+					}
+					else{
+						$('#changePasswordModal').find('#errorMessage').html(response.message);
+					}
+					
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+		});
+	});
+	$('.profile-menu').find('#btnLogout').unbind().bind('click', function(){
+		userController.getObj().Logout(function(){
+			window.location.href = "home.html";
+		});
+	});
+	
 };
 headerController.prototype.LoadExams = function(){
 	fetch(remoteServer+'/test2bsure/header')

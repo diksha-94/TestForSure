@@ -50,12 +50,19 @@ html body.nobodyscroll {
 }
 .header .login-register-items #userProfile{
 	flex-direction: row;
-	justify-content: space-between;
-	padding-top: 27px;
+	justify-content: flex-end;
+	padding-top: 10px;
+	color: #fff;
+	cursor: pointer;
+	z-index: 101;
+	position: relative;
+}
+.header .login-register-items #userProfile i.fa{
+	font-size: 37px;
 }
 .header .login-register-items #userProfile .greeting{
-	color: white;
 	font-weight: bold;
+	padding: 10px 15px;
 }
 .header .login-register-items #userProfile .logout a{
 	color: white;
@@ -111,6 +118,52 @@ html body.nobodyscroll {
 .header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item span {
 	float: right
 }
+/* Profile Menu CSS starts */
+.header .profile-menu{
+	width: 15%;
+	visibility: hidden;
+	height: 0px;
+	position: absolute;
+	background-color: #fff;
+	top: 60px;
+	right: 40px;
+	transition: 0.05s ease-out;
+	z-index: 101;
+}
+.header .profile-menu::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    position: absolute;
+    top: -5px;
+    left: 80%;
+    transform: rotate(45deg);
+}
+.header .profile-menu ul{
+	list-style-type: none;
+	width: 100%;
+	height: 100%;
+	padding: 0 17px;
+	margin: 0;
+}
+.header .profile-menu ul li{
+	padding: 10px 3px;
+	font-size: 1.1em;
+	font-weight: bold;
+	color: #103B6D;
+	cursor: pointer;
+	/*border-bottom: solid 1px #E4E4E4;*/
+}
+.desktopView.overlayD{
+	height: 0px;
+	position: fixed;
+	width: 100%;
+	background-color: rgba(0,0,0,.35);
+	z-index: 100;
+	left: 0;
+}
+/* Profile Menu CSS ends */
 .exam-menu-li{
 	/*width: 113px;*/
 }
