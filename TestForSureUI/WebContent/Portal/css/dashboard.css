@@ -46,3 +46,82 @@
 	margin-top: 2px;
 	display: inline-block;
 }
+.dashboard-content .outerDiv .exams{
+	margin-top: 30px;
+	/*background-color: #e4e4e4;*/
+	padding: 30px 50px;
+}
+.dashboard-content .outerDiv .exams .exam-head{
+    padding: 10px 0px;
+    border: solid 1px #fd6d15;
+    margin-bottom: 20px;
+}
+.exam-head span {
+    margin-top: 4px;
+    display: inline-block;
+}
+.exam-head .heading{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+.exam-head .buttonDiv{
+	width: 13%;
+}
+.exam-head .collapseImage img{
+	width: 17px;
+	transform: rotate(270deg);
+	margin-top: 7px;
+	margin-left: 6px;
+}
+@media only screen and (max-width: 767px) {
+	.dashboard-content .outerDiv{
+		padding: 0px;
+	}
+	.dashboard-content .outerDiv .top{
+		padding: 5px 0px;
+	}
+	.dashboard-content .outerDiv .top .profile{
+		flex-direction: column;
+	}
+	.dashboard-content .outerDiv .top .profile .action{
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.dashboard-content .outerDiv .top .profile .action button{
+		width: 45%;
+	}
+	.dashboard-content .outerDiv .top .rewards{
+		padding: 20px 25%;
+	}
+	.dashboard-content .outerDiv .top .profile .user{
+		text-align: center;
+	}
+	.dashboard-content .outerDiv .top .profile .user i{
+		display: none;
+	}
+	.dashboard-content .outerDiv .exams{
+		padding: 10px 0px;
+		margin: 0px;
+	}
+	.dashboard-content .outerDiv .exams h4{
+		text-align: center;
+	}
+	.dashboard-content .outerDiv .exams .exam-head{
+		text-align: center;
+		padding: 0px;
+	}
+	.exam-head .buttonDiv{
+		width: 100%;
+	}
+	.exam-head .buttonDiv button{
+		width: 30%;
+		margin-top: 10px;
+	}
+	.dashboard-content .outerDiv .top .profile .contact{
+		padding: 10px 0px;
+		text-align: center;
+	}
+	.dashboard-content .outerDiv .top .profile .user .username{
+		margin-top: 0px;
+	}
+}

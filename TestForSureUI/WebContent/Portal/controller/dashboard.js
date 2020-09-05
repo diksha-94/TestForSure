@@ -1,7 +1,7 @@
 var dashboardController = function(){
 	this.userProfile = {};
 	this.userRewards = {};
-	this.userAttempts = {};
+	this.userExams = {};
 	this.userId = -1;
 	this.Init();
 };
@@ -22,7 +22,7 @@ dashboardController.prototype.Init = function()
 		else{
 			this.LoadUserProfile();
 			this.LoadUserRewards();
-			this.LoadUserAttempts();
+			this.LoadUserExams();
 		}
 	}.bind(this));
 };
@@ -38,11 +38,11 @@ dashboardController.prototype.LoadUserRewards = function()
 	  .then(response => response.json())
 	  .then(data => this.SetState({ userRewards: data.rewards }, 'rewards'));
 }
-dashboardController.prototype.LoadUserAttempts = function()
+dashboardController.prototype.LoadUserExams = function()
 {
-	fetch(remoteServer+'/test2bsure/user-profile?userId='+this.userId)
+	fetch(remoteServer+'/test2bsure/user-exams?userId='+this.userId)
 	  .then(response => response.json())
-	  .then(data => this.SetState({ userAttempts: data.userAttempts }, 'attempts'));
+	  .then(data => this.SetState({ userExams: data.userAttempts }, 'attempts'));
 }
 dashboardController.prototype.SetState = function(obj, callFunc)
 {
@@ -57,7 +57,7 @@ dashboardController.prototype.SetState = function(obj, callFunc)
 			this.PopulateUserRewards();
 			break;
 		case "attempts":
-			this.PopulateUserAttempts();
+			this.PopulateUserExams();
 			test2bsureController.getObj().GetFooter(".dashboard-footer");
 			$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 			break;
@@ -205,7 +205,65 @@ dashboardController.prototype.PopulateUserRewards = function()
 			   "</div>";
 	$('.rewards').html(html);
 };
-dashboardController.prototype.PopulateUserAttempts = function()
+dashboardController.prototype.PopulateUserExams = function()
 {
-	console.log("Populating User Attempts");
+	var html = "<h4>My Attempts</h4>";
+	$('.dashboard-content').find('.outerDiv .exams').append(html);
+	
+	for(var exam in this.userExams){
+		console.log(exam);
+		if(exam == 0){
+			//Populate Others at the end
+			continue;
+		}
+		this.DBExamCard(this.userExams[exam]);
+		
+	}
+	if(typeof this.userExams[0] != 'undefined'){
+		var otherData = this.userExams[0];
+		this.DBExamCard(otherData);
+	}
+};
+dashboardController.prototype.DBExamCard = function(data)
+{
+	var html = "";
+	html += '<div class="collapsed exam-head col-xs-12 col-sm-12 col-md-12 col-lg-12" data-toggle="collapse" data-examid="'+data.id+'" data-target="#exam_collapse_'+data.id+'" aria-expanded="false">'+
+				'<div class="heading col-xs-12 col-sm-12 col-md-4 col-lg-4"><span>'+data.title+'</span></div>';
+	if(data.id != 0){
+		html += '<div class="count col-xs-12 col-sm-12 col-md-6 col-lg-6">'+
+					'<div class="test col-xs-12 col-sm-12 col-md-6 col-lg-6">'+
+						'<span>Total Test - '+data.totalTestCount+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+						'<span>Attempted - '+data.attemptedTestCount+'</span>'+
+					'</div>'+
+					'<div class="quiz col-xs-12 col-sm-12 col-md-6 col-lg-6">'+
+						'<span>Total Quiz - '+data.totalQuizCount+'</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+						'<span>Attempted - '+data.attemptedQuizCount+'</span>'+
+					'</div>'+
+				'</div>'+
+				'<div class="buttonDiv col-xs-12 col-sm-12 col-md-2 co2-lg-2">'+
+					'<button class="button button-primary btnExplore">Explore</button>'+
+				'</div>';
+	}
+	html += '<div class="collapseImage">'+
+				'<img src="../images/final/left_arrow.png">'+
+			'</div>';
+	html += '</div>';
+	html += '<div id="exam_collapse_'+data.id+'" class="collapse exam-data" aria-expanded="false">ljhg'+
+			'</div>';
+	$('.dashboard-content').find('.outerDiv .exams').append(html);
+	$('.btnExplore').unbind().bind('click', function(e){
+		e.stopPropagation();
+		var examId = $(e.currentTarget).parents('.exam-head').attr('data-examid');
+		window.location.href = "exam.html?id="+examId;
+	});
+	$('.exam-head').unbind().bind('click', function(e){
+		if($(e.currentTarget).hasClass('collapsed')){
+			//alert("Expanded");
+			$(e.currentTarget).find('.collapseImage img').css('transform', 'rotate(90deg)');
+		}
+		else{
+			//alert("Collapsed");
+			$(e.currentTarget).find('.collapseImage img').css('transform', 'rotate(270deg)');
+		}
+	})
 };
