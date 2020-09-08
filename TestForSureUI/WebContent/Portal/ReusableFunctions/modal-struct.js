@@ -262,3 +262,33 @@ function editProfileModal(){
 			'</div>';
 	return html;
 }
+function rewardHistoryModal(){
+	var html = '<div class="modal fade" id="rewardHistoryModal" role="dialog" data-backdrop="static" data-keyboard="false">'+
+				'<div class="modal-dialog rewardHistoryModal" role="document">'+
+					'<div class="modal-content">'+
+						'<div class="modal-header">'+
+							'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+							'<h4 class="modal-title text-center">Reward Points History</h4>'+
+						'</div>'+
+						'<div class="modal-body">'+
+							'<div class="reward-history table-responsive">'+
+								'<table class="table1">'+
+					        		'<thead>'+
+					            		'<tr>'+
+										  '<th>Test/Quiz Id</th>'+
+										  '<th class="title">Title</th>'+
+										  '<th class="type">Test/Quiz</th>'+
+										  '<th class="points">Points Earned</th>'+
+										  '<th class="createdon">Earned On</th>'+
+										'</tr>'+
+									'</thead>'+
+									'<tbody>'+
+									'</tbody>'+
+								'</table>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+	return html;
+}

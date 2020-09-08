@@ -56,8 +56,9 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 								'Login/Register</button>'+
 							'</li>'+
 							'<li id="userProfile" class="hide">'+
-								'<i class="fa fa-user" aria-hidden="true"></i>'+
+								'<i class="fa fa-user hide" aria-hidden="true"></i>'+
 								'<span class="greeting"><span id="loggedInUSer"></span></span>'+
+								'<img src="../images/final/down_arrow.png">'+
 								//'<span class="logout"><a id="btnLogout">Logout</a></span>'+
 							'</li>'+
 						'</ul>'+

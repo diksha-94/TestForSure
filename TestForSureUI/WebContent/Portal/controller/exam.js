@@ -35,7 +35,6 @@ examController.prototype.SetState = function(obj)
 	this.PopulateExamDetails();
 	this.PopulateTests();
 	this.PopulateQuizzes();
-	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 };
 examController.prototype.PopulateExamDetails = function()
 {

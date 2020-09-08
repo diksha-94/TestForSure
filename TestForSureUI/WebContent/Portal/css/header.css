@@ -64,6 +64,10 @@ html body.nobodyscroll {
 	font-weight: bold;
 	padding: 10px 15px;
 }
+.header .login-register-items #userProfile img{
+	height: 8px;
+	margin-top: 17px;
+}
 .header .login-register-items #userProfile .logout a{
 	color: white;
 	text-decoration: underline;
@@ -324,8 +328,14 @@ html body.nobodyscroll {
 		justify-content: right;
 		padding-top: 20px;
 	}
-	.header .login-register-items #userProfile .greeting{
+	.header .login-register-items #userProfile .greeting,
+	.header .login-register-items #userProfile img{
 		display: none;
+	}
+	.header .login-register-items #userProfile i.fa-user{
+		display: block !important;
+		margin-top: -6px;
+		font-size: 33px;
 	}
 	.exams.mobileView span.exam-head{
 		color: white;

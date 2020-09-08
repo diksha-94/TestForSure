@@ -177,22 +177,28 @@ headerController.prototype.Init = function()
 		userController.getObj().ForgetPassword(email);
 	});
 	$('#userProfile').unbind().bind('click', function(e){
-		if($(e.currentTarget).hasClass('open')){
-			//means already open, close it
-			$(e.currentTarget).removeClass('open');
-			$('.header .profile-menu').css('height', '0px');
-			$('.header .profile-menu').css('visibility', 'hidden');
-			$('.header .profile-menu ul li').css('border-bottom', 'none');
-			$('.overlayD').css('height', '0px');
-			$("body").removeClass("nobodyscroll");
+		if ($(window).width() < 767){
+			//Mobile View
+			window.location.href = "dashboard.html";
 		}
 		else{
-			$(e.currentTarget).addClass('open');
-			$('.header .profile-menu').css('height', '130px');
-			$('.header .profile-menu').css('visibility', 'visible');
-			$('.header .profile-menu ul li').css('border-bottom', 'solid 1px #E4E4E4');
-			$('.overlayD').css('height', '100%');
-			$("body").addClass("nobodyscroll");
+			if($(e.currentTarget).hasClass('open')){
+				//means already open, close it
+				$(e.currentTarget).removeClass('open');
+				$('.header .profile-menu').css('height', '0px');
+				$('.header .profile-menu').css('visibility', 'hidden');
+				$('.header .profile-menu ul li').css('border-bottom', 'none');
+				$('.overlayD').css('height', '0px');
+				$("body").removeClass("nobodyscroll");
+			}
+			else{
+				$(e.currentTarget).addClass('open');
+				$('.header .profile-menu').css('height', '130px');
+				$('.header .profile-menu').css('visibility', 'visible');
+				$('.header .profile-menu ul li').css('border-bottom', 'solid 1px #E4E4E4');
+				$('.overlayD').css('height', '100%');
+				$("body").addClass("nobodyscroll");
+			}
 		}
 	});
 	$('.overlayD').unbind().bind('click', function(){

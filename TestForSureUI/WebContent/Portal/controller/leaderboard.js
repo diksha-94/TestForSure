@@ -27,7 +27,6 @@ leaderboardController.prototype.SetState = function(obj)
 		this[key] = obj[key];
 	}
 	this.PopulateLeaderboard();
-	$('.common-footer').css('top', ($('.common-header').height() + $('.common-content').height()+ 140) + 'px');
 };
 leaderboardController.prototype.PopulateLeaderboard = function()
 {
