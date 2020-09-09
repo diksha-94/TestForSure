@@ -32,7 +32,7 @@ userController.prototype.Register = function(name, email, contact, password)
 		success: function(response){
 			if(response.result.status == true){
 				this.Login(email, password);
-				$('#registerModal').find('#errorOuterReg').removeClass("hide");
+				/*$('#registerModal').find('#errorOuterReg').removeClass("hide");
 				$('#registerModal').find('#errorMessageReg').removeClass('alert-danger');
 				$('#registerModal').find('#errorMessageReg').addClass('alert-success');
 				$('#registerModal').find('#errorMessageReg').html("An email verification link has been sent to your email id. Verify your email address and then log in");
@@ -42,7 +42,7 @@ userController.prototype.Register = function(name, email, contact, password)
 				$('#registerModal').find('#txtEmailReg').val('');
 				$('#registerModal').find('#txtContactReg').val('');
 				$('#registerModal').find('#txtPasswordReg').val('');
-				$('#registerModal').find('#txtConfirmPassword').val('');
+				$('#registerModal').find('#txtConfirmPassword').val('');*/
 			}
 			else{
 				$('#registerModal').find('#errorOuterReg').removeClass('hide');

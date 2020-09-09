@@ -96,3 +96,12 @@
 	font-weight: bold;
 }
 /* Reward Point modal CSS ends */
+
+.alert.alert-success {
+    border: none;
+    background-color: #fff;
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+

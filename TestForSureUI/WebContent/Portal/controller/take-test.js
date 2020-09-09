@@ -12,6 +12,7 @@ var testController = function(){
 };
 testController.prototype.Init = function()
 {
+	document.addEventListener('contextmenu', event => event.preventDefault());
 	//Read id from query string
 	this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
 	this.start = test2bsureController.getObj().QueryString(window.location.href, 'start');

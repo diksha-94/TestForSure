@@ -9,6 +9,7 @@ passwordResetController.prototype.Init = function()
 	this.BindEvents();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".password-footer");
+	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 	userController.getObj().SelfAuth();
 };
 passwordResetController.prototype.BindEvents = function()
@@ -17,19 +18,16 @@ passwordResetController.prototype.BindEvents = function()
 	var password = "";
 	
 	$('#btnUpdatePassword').unbind().bind('click', function(){
-		$('#updatePasswordError').removeClass('show').addClass('hide');
 		var url = remoteServer+"/test2bsure/update-password";
 		var type = "POST";
         var passwordVal = $('#txtPasswordReg').val();
 		var confirmPasswordVal = $('#txtConfirmPassword').val();
 		if(passwordVal.length < 6){
-			$('#updatePasswordError').removeClass('hide').addClass('show');
-			$('#updatePassErrorMessage').html('Password should be of atleast 6 characters.');
+			alert('Password should be of atleast 6 characters.');
 			return false;
 		}
 		if(passwordVal != confirmPasswordVal){
-			$('#updatePasswordError').removeClass('hide').addClass('show');
-			$('#updatePassErrorMessage').html('Password does not match in Confirm Password.');
+			alert('Password does not match in Confirm Password.');
 			return false;
 		}
 		var requestData = {};
@@ -44,13 +42,11 @@ passwordResetController.prototype.BindEvents = function()
 			context: this,
 			success: function(result){
 				if (result.status) {
-					window.location.href = "home.html";
 					alert("Password changed successfully !!");
+					window.location.href = "home.html";
 				}
                 else if (!result.status) {
-                    console.log(result.message)
-					$('#updatePasswordError').removeClass("hide").addClass('show').removeClass("alert-success").addClass("alert-danger");
-					$('#updatePassErrorMessage').html(result.message);
+                    alert(result.message);
 				}
                 //Empty password and confirm password
 				$('#txtPasswordReg').val('');
