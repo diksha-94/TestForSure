@@ -26,7 +26,6 @@ homeController.prototype.SetState = function(obj)
 	}
 	this.PopulateAllCategories();
 	this.PopulateAllExams();
-	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 };
 homeController.prototype.PopulateAllCategories = function()
 {

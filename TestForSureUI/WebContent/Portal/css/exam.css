@@ -39,7 +39,22 @@
 .quiz-listing ul li .quiz-image {
 	margin-bottom: 12px;
 }
-
+.quiz-listing ul li .quiz-image span.reward{
+	text-align: center;
+	position: relative;
+}
+.quiz-listing ul li .quiz-image span.reward img{
+	width: 40px;
+	height: 40px;
+}
+.quiz-listing ul li .quiz-image span.reward span{
+	font-weight: bold;
+	position: absolute;
+	top: 5px;
+	display: block;
+	left: 50%;
+	transform: translate(-50%);
+}
 .quiz-listing ul li .quiz-ques, .quiz-listing ul li .quiz-marks
 	{
 	margin-bottom: 5px;
@@ -104,6 +119,11 @@
 	box-shadow: 0px 0px 10px #E4E4E4;
 	transition: 0.2s ease-out;
 }
+.test-listing ul li .test-head{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
 .test-listing ul li h4 {
 	font-weight: bold;
 	word-wrap: break-word;
@@ -111,6 +131,24 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 1.2em;
+	margin-left: 0;
+	margin-right: 0;
+}
+.test-listing ul li .test-head span.reward{
+	text-align: center;
+	position: relative;
+}
+.test-listing ul li .test-head span.reward img{
+	width: 40px;
+	height: 40px;
+}
+.test-listing ul li .test-head span.reward span{
+	font-weight: bold;
+	position: absolute;
+	top: 10px;
+	display: block;
+	left: 50%;
+	transform: translate(-50%);
 }
 .test-listing ul li .controls {
 	padding:20px 0px;
@@ -156,7 +194,7 @@
 .exam-info-detail {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #E4E4E4;
+    background-color: #F2F2F2;
     text-align: center;
 }
 .testlisting-head, .quizlisting-head{
@@ -206,9 +244,6 @@
 .exam-page{
 	margin-top: 30px;
 	padding: 0px;
-}
-.exam-footer{
-	top: 370px;
 }
 
 @media only screen and (max-width: 767px) {

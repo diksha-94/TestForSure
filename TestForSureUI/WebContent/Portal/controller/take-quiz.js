@@ -1,3 +1,4 @@
+
 var quizController = function(){
 	this.id = 0;
 	this.quizInfo = {};
@@ -15,8 +16,9 @@ quizController.prototype.Init = function()
 		this.LoadData();
 	}.bind(this));
 };
-quizController.prototype.LoadData = function()
+quizController.prototype.LoadData = function(showReward)
 {
+	showReward = typeof showReward != 'undefined' ? showReward : false;
 	var id = this.id;
 	var userId = -1;
 	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
@@ -25,6 +27,16 @@ quizController.prototype.LoadData = function()
 	fetch(remoteServer+'/test2bsure/quizdata?quizId='+id+'&userId='+userId)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ quizInfo: data.quizInfo, questionsData: data.questionsData, sessionId: data.sessionId }));
+	
+	//Show reward points after 1 second on submission, if earned
+	setTimeout(function(){
+		if(showReward){
+			test2bsureController.getObj().CalculateRewardPointsEarned(1, this.sessionId, this.id, parseInt(this.quizInfo.noOfQues) * parseInt(this.quizInfo.marksPerQues), function(response){
+				if(response.earnedRewardPoints > 0)
+					test2bsureController.getObj().ShowRewardPointsEarned(1, response.earnedRewardPoints);
+			});
+		}
+	}.bind(this), 1000);
 }
 quizController.prototype.SetState = function(obj)
 {
@@ -234,7 +246,8 @@ quizController.prototype.ManageControls = function(){
 	}.bind(this));
 	$('.btnSubmit').unbind().bind('click', function(){
 		alert('Quiz submitted !!');
-		this.LoadData();
+		//Calculate reward points here
+		this.LoadData(true);
 	}.bind(this));
 }
 quizController.prototype.DisplayReport = function()

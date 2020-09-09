@@ -57,6 +57,7 @@ testController.prototype.SaveData = function(openNext, callback)
 	var marks = parseFloat($('#txtTestMarks').val()) * parseInt(questions);
 	var allowedAttempts = $('#txtTestAttempts').val();
 	var publish = $('#chkTestPublish').prop('checked') == true ? 1 : 0;
+	var maxRewardPoints = $('#testDetailsModal').find('#txtRewardPoints').val();
 	var exams = GetSelectedValues('ddTestExam');
 	var lock = ($('#chkTestLock').prop('checked') == true) ? 1 : 0;
 	var lockPoints = (typeof $('#txtTestLockPoints').val() != 'undefined') ? $('#txtTestLockPoints').val() : 0;
@@ -123,6 +124,7 @@ testController.prototype.SaveData = function(openNext, callback)
 			'exams': exams,
 			'active': 1,
 			'publish': publish,
+			'maxRewardPoints': maxRewardPoints,
 			'lockApply': lock,
 			'lockPoints': lockPoints,
 			'lockRupees': lockRupees,
@@ -244,7 +246,7 @@ testController.prototype.Edit = function(e)
 						testStatus = true;
 					}
 					$('#testDetailsModal').find('#chkTestPublish').prop('checked', testStatus);
-					
+					$('#testDetailsModal').find('#txtRewardPoints').val(item.maxRewardPoints);
 					var lockStatus = false;
 					if(item.lockApply == 1){
 						lockStatus = true;

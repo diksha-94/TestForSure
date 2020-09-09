@@ -20,6 +20,7 @@ function RefreshData(viewId){
 	if(viewId == 'quizModal'){
 		$('#'+viewId).find('#txtQuizAttempts').val(1);
 		$('#'+viewId).find('#txtQuizIndex').val(0);
+		$('#'+viewId).find('#txtRewardPoints').val(0);
 	}
 	if(viewId == 'categoryModal'){
 		$('#'+viewId).find('#txtCategoryIndex').val(0);
@@ -29,6 +30,7 @@ function RefreshData(viewId){
 	}
 	if(viewId == 'testDetailsModal'){
 		$('#'+viewId).find('#txtTestIndex').val(0);
+		$('#'+viewId).find('#txtRewardPoints').val(0);
 	}
 }
 function setCookie(cname, cvalue, exdays){

@@ -32,6 +32,7 @@
 .common-footer{
 	padding: 0px;
 	height: 250px;
+	margin-top: 60px;
 	/*top: 120px;*/
 }
 @media only screen and (max-width: 767px) {
@@ -49,7 +50,7 @@
 }
 .common-content{
 	top: 60px;
-	position: absolute;
+	/*position: absolute;*/
 	padding: 0px;
 }
 .highcharts-credits {
@@ -68,6 +69,34 @@
     color: red;
     margin-bottom: 10px;
 }
+
+/* Reward Point modal CSS starts */
+#rewardPointModal {
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+#rewardPointModal .modal-header, #rewardPointModal .modal-footer, #rewardPointModal .modal-body{
+	text-align: center;
+}
+#rewardPointModal .modal-dialog{
+	width: 500px;
+}
+#rewardPointModal .modal-content{
+	border-radius: 5px;
+}
+#rewardPointModal .modal-header .modal-title{
+	display: inline;
+}
+#rewardPointModal .modal-body img{
+	width: 40px;
+	height: 40px;
+}
+#rewardPointModal .modal-body span.rewards{
+	color: rgb(92, 184, 92);
+	font-weight: bold;
+}
+/* Reward Point modal CSS ends */
+
 .alert.alert-success {
     border: none;
     background-color: #fff;
@@ -75,3 +104,4 @@
     margin-bottom: 10px;
     text-align: center;
 }
+

@@ -778,5 +778,9 @@ testController.prototype.HandleTestSubmit = function()
 testController.prototype.OpenTestReport = function()
 {
 	//report=1 means show report, report=0 means show solution
-	window.location.href = 'testreport.html?sessionId='+this.sessionId+'&report=1';
+	//Calculate reward points here
+	test2bsureController.getObj().CalculateRewardPointsEarned(0, this.sessionId, this.id, parseInt(this.testInfo.totalMarks), function(response){
+		window.location.href = 'testreport.html?sessionId='+this.sessionId+'&report=1&reward='+response.earnedRewardPoints;
+	}.bind(this));
+	
 }

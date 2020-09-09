@@ -58,7 +58,6 @@ quizController.prototype.SetState = function(obj)
 		this[key] = obj[key];
 	}
 	this.PopulateQuizzes();
-	$('.common-footer').css('top',parseInt($('.common-header').height() + $('.common-content').height())+30+'px');
 };
 quizController.prototype.LoadFilters = function()
 {

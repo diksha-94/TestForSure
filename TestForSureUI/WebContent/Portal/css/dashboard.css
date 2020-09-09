@@ -1,0 +1,240 @@
+.dashboard-content{
+	background-color: #F2F2F2;
+}
+.dashboard-content .outerDiv{
+	padding: 20px 10%;
+}
+.dashboard-content .outerDiv .top{
+	padding: 20px;
+	background: #fff;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+	border-radius: 6px;
+}
+.dashboard-content .outerDiv .top .profile{
+	display: flex;
+	justify-content: space-between;
+}
+.dashboard-content .outerDiv .top .profile .user i{
+	font-size: 64px;
+}
+.dashboard-content .outerDiv .top .profile .user .username{
+	font-size: 1.4em;
+	display: inline-block;
+	margin-left: 20px;
+	margin-top: -45px;
+}
+.dashboard-content .outerDiv .top .profile .contact,
+.dashboard-content .outerDiv .top .profile .action{ 
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+.btnEditProfile{
+	margin-bottom: 5px;
+}
+.dashboard-content .outerDiv .top .rewards{
+	display: flex;
+	flex-direction: column;
+	padding: 0px 30px 0px 125px;
+}
+.dashboard-content .outerDiv .top .rewards .earned-points{
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.3em;
+	margin-bottom: 5px;
+}
+.dashboard-content .outerDiv .top .rewards .earned-points img{
+	width: 30px;
+	margin-right: 10px;
+}
+.dashboard-content .outerDiv .top .rewards .earned-points span{
+	margin-top: 2px;
+	display: inline-block;
+}
+.dashboard-content .outerDiv .exams{
+	margin-top: 20px;
+	background: #fff;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+	border-radius: 6px;
+	padding: 30px 50px;
+}
+.dashboard-content .outerDiv .exams .collapse-outer{
+	border: solid 1px #E4E4E4;
+	padding: 0;
+	margin-bottom: 20px;
+}
+.dashboard-content .outerDiv .exams .exam-head{
+    padding: 10px 0px;
+}
+.dashboard-content .outerDiv .exams .exam-head[data-examid='0']{
+	display: flex;
+	justify-content: space-between;
+}
+.dashboard-content .outerDiv .exams .exam-head[data-examid='0'] .collapseImage{
+	margin-right: 15px;
+}
+.exam-head[aria-expanded="true"] {
+    background-color: #103B6D;
+    color: #fff;
+}
+.exam-head span {
+    margin-top: 4px;
+    display: inline-block;
+}
+.exam-head .count span{
+	margin-top:5px;
+}
+.exam-head .heading{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+.exam-head .buttonDiv{
+	width: 13%;
+}
+.exam-head .collapseImage img{
+	width: 17px;
+	transform: rotate(270deg);
+	margin-top: 7px;
+	margin-left: 6px;
+}
+.exam-data .details{
+	padding: 20px 0px;
+}
+.exam-data .details .test-card, .exam-data .details .quiz-card{
+	display: flex;
+	justify-content: space-between;
+	background-color: #F2F2F2;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.exam-data .details .test-card span, .exam-data .details .quiz-card span{
+	padding: 4px;
+	font-size: 1em;
+	font-weight: bold;
+}
+.exam-data .details h5{
+	font-size: 1em;
+	font-weight: bold;
+}
+.exam-data .details .test-card .actions{
+	display: flex;
+}
+.exam-data .details .test-card .actions button{
+	margin-left: 5px;
+}
+/* Reward Point History CSS starts */
+#rewardHistoryModal{
+	padding-right: 0px !important;
+}
+#rewardHistoryModal .modal-dialog{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+#rewardHistoryModal .modal-content{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: auto;
+}
+#rewardHistoryModal .modal-body{
+	overflow: auto;
+}
+.reward-history.table-responsive {
+    width: 80%;
+    overflow-y: hidden;
+    overflow-x: visible;
+    border: 0;
+    margin-bottom: 0;
+    margin-left: 10%;
+}
+.reward-history .table1 {
+    min-width: 100%;
+}
+.reward-history .table1 tr th {
+    text-align: center;
+    background: #103B6D;
+    padding: 12px 20px;
+    font-size: 0.75em;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.reward-history .table1 tr td {
+    font-size: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    position: relative;
+    color: #424242;
+    border-bottom: 1px dashed #dadada;
+}
+/* Reward Point History CSS ends */
+@media only screen and (max-width: 767px) {
+	.dashboard-content .outerDiv{
+		padding: 0px;
+	}
+	.dashboard-content .outerDiv .top{
+		padding: 5px 0px;
+		border-radius: 0;
+	}
+	.dashboard-content .outerDiv .top .profile{
+		flex-direction: column;
+		padding: 0px 12px;
+	}
+	.dashboard-content .outerDiv .top .profile .action{
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.dashboard-content .outerDiv .top .profile .action button{
+		width: 49%;
+	}
+	.dashboard-content .outerDiv .top .rewards{
+		padding: 20px 20%;
+	}
+	.dashboard-content .outerDiv .top .profile .user{
+		text-align: center;
+	}
+	.dashboard-content .outerDiv .top .profile .user i{
+		display: none;
+	}
+	.dashboard-content .outerDiv .exams{
+		padding: 10px 0px;
+		margin: 0px;
+		border-radius: 0;
+	}
+	.dashboard-content .outerDiv .exams h4{
+		text-align: center;
+	}
+	.dashboard-content .outerDiv .exams .exam-head{
+		text-align: center;
+		padding: 0px 0px 10px 0px;
+	}
+	.exam-head .buttonDiv{
+		width: 100%;
+	}
+	.exam-head .buttonDiv button{
+		width: 30%;
+		margin-top: 10px;
+	}
+	.dashboard-content .outerDiv .top .profile .contact{
+		padding: 10px 0px;
+		text-align: center;
+	}
+	.dashboard-content .outerDiv .top .profile .user .username{
+		margin-top: 0px;
+	}
+	.dashboard-content .outerDiv .exams .collapse-outer{
+		margin-bottom: 5px;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+	}
+	.dashboard-content .outerDiv .exams .exam-head[data-examid="0"] .collapseImage{
+		margin-top: 6px;
+	}
+	.dashboard-content .outerDiv .logout{
+		display:block !important;
+		padding: 0px 0 20px;
+	}
+}

@@ -55,6 +55,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 	var marks = $('#txtQuizMarks').val();
 	var attempts = $('#txtQuizAttempts').val();
 	var publish = $('#chkQuizPublish').prop('checked') == true ? 1 : 0;
+	var maxRewardPoints = $('#quizModal').find('#txtRewardPoints').val();
 	var exams = [];
 	var lock = ($('#chkQuizLock').prop('checked') == true) ? 1 : 0;
 	var lockPoints = (typeof $('#txtQuizLockPoints').val() != 'undefined') ? $('#txtQuizLockPoints').val() : 0;
@@ -85,6 +86,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 		'exams': exams,
 		'active': 1,
 		'publish': publish,
+		'maxRewardPoints': maxRewardPoints, 
 		'lockApply': lock,
 		'lockPoints': lockPoints,
 		'lockRupees': lockRupees,
@@ -188,7 +190,7 @@ quizController.prototype.Edit = function(e)
 						quizStatus = true;
 					}
 					$('#quizModal').find('#chkQuizPublish').prop('checked', quizStatus);
-					
+					$('#quizModal').find('#txtRewardPoints').val(item.maxRewardPoints);
 					$('#quizModal').find('#ddQuizExam').val('');
 					if(item.exams != null && item.exams.length > 0){
 						var data = {};

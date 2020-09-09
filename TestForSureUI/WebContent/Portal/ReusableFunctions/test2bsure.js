@@ -2,8 +2,8 @@ var jsVersion = 7;
 var cssVersion = 7;
 
 var obj = null;
-var remoteServer = "http://3.6.58.203:8083";
-//var remoteServer = "http://localhost:8083";
+//var remoteServer = "http://3.6.58.203:8083";
+var remoteServer = "http://localhost:8083";
 var test2bsureController = function(){
 	this.userData = null;
 };
@@ -56,9 +56,19 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 								'Login/Register</button>'+
 							'</li>'+
 							'<li id="userProfile" class="hide">'+
-								'<span class="greeting">Hi&nbsp;<span id="loggedInUSer"></span></span>'+
-								'<span class="logout"><a id="btnLogout">Logout</a></span>'+
+								'<i class="fa fa-user hide" aria-hidden="true"></i>'+
+								'<span class="greeting"><span id="loggedInUSer"></span></span>'+
+								'<img src="../images/final/down_arrow.png">'+
+								//'<span class="logout"><a id="btnLogout">Logout</a></span>'+
 							'</li>'+
+						'</ul>'+
+					'</div>'+
+					'<div class="desktopView overlayD"></div>'+
+					'<div class="profile-menu">'+
+						'<ul>'+
+							'<li id="myDashboard">My Dashboard</li>'+
+							'<li id="changePassword">Change Password</li>'+
+							'<li id="btnLogout">Logout</li>'+
 						'</ul>'+
 					'</div>'+
 				'</div>';
@@ -101,7 +111,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 	});
 	$('.overlay').unbind().bind('click', function(){
 		$('.sandwichbtn').click();
-	})
+	});
 	//Load CSS, JS
 	LoadCSS('../css/header');
 	LoadJS('../controller/user', function(){
@@ -176,10 +186,16 @@ test2bsureController.prototype.ValidateEmail = function(email){
 };
 test2bsureController.prototype.QuizCard = function(quiz)
 {
-	console.log(quiz);
 	var html = "<div class='quiz-title' title='"+quiz.title+"'>"+quiz.title+"</div>"+
 			   "<div class='quiz-border'></div>"+
-			   "<div class='quiz-image'><img src='../images/quiz-icon.png' alt='Quiz'/></div>"+
+			   "<div class='quiz-image'>";
+	if(quiz.maxRewardPoints > 0){
+		html += "<span class='reward'><img src='../images/final/coin.png'/><span>+"+quiz.maxRewardPoints+"</span></span>";
+	}
+	else{
+		html += "<img src='../images/quiz-icon.png' alt='Quiz'/>";
+	}
+	html +=    "</div>"+
 			   "<div class='quiz-ques'>No. of Questions: "+quiz.noOfQues+"</div>"+
 			   "<div class='quiz-marks'>Total Marks: "+(quiz.noOfQues * quiz.marksPerQues)+"</div>"+
 			   "<div class='quiz-attempts'>Attempted "+(quiz.candidateCount)+" times</div>"+
@@ -203,7 +219,12 @@ test2bsureController.prototype.QuizCard = function(quiz)
 };
 test2bsureController.prototype.TestCard = function(test)
 {
-	var html = "<h4>"+test.title+"</h4>"+
+	var html = "<div class='test-head'>"+
+			   		"<h4>"+test.title+"</h4>";
+	if(test.maxRewardPoints > 0){
+		html += "<span class='reward'><img src='../images/final/coin.png'/><span>+"+test.maxRewardPoints+"</span></span>";
+	}
+	html += "</div>"+
 			"<div class='test-detail'>"+
 				"<div class='ques'>"+test.totalQues+" Questions</div>"+
 				"<div class='marks'>"+test.totalMarks+" Marks</div>"+
@@ -487,4 +508,53 @@ test2bsureController.prototype.getTimeFormat = function(seconds){
 		result += (secs > 0)?(secs+" secs "):"";
 	}
 	return result;
+}
+
+test2bsureController.prototype.CalculateRewardPointsEarned = function(itemType, sessionId, itemId, totalMarks, callback)
+{
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	//userId, itemType, itemId, sessionId, totalMarks
+	$.ajax({
+		url: remoteServer + "/test2bsure/reward-calculation?userId="+userId+"&itemType="+itemType+"&itemId="+itemId+"&sessionId="+sessionId+"&totalMarks="+totalMarks,
+		type: 'POST',
+		success: function(response){
+			callback(response);
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
+};
+//Show Rewards after Test/Quiz Completion
+test2bsureController.prototype.ShowRewardPointsEarned = function(itemType, earnedPoints)
+{
+	var modal = '<div class="modal" id="rewardPointModal">'+
+					'<div class="modal-dialog">'+
+						'<div class="modal-content">'+
+							'<div class="modal-header">'+
+								'<h4 class="modal-title">Congratulations !!</h4>'+
+								'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+							'</div>'+
+		
+							'<div class="modal-body">'+
+								
+							'</div>'+
+							/*'<div class="modal-footer">'+
+								'<button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>'+
+							'</div>'+*/
+						'</div>'+
+					'</div>'+
+				'</div>';
+	if($('#rewardPointModal').length == 0){
+		$('body').append(modal);
+	}
+	var type = itemType == 0 ? "Test" : "Quiz";
+	var html = "<h5>You have earned <span class='rewards'> "+earnedPoints+" reward points </span> based on your performance in the "+type+"</h5>"+
+			   "<img src='../images/final/smile.png'/>"+
+			   "<h4>Attempt More Tests/Quizzes and Earn More Points !!</h4>";
+	$('#rewardPointModal .modal-body').html(html);
+	$('#rewardPointModal').modal('show');
 }

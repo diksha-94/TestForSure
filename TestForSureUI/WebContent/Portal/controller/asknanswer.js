@@ -154,7 +154,6 @@ asknanswerController.prototype.SetState = function(obj)
 		this[key] = obj[key];
 	}
 	this.PopulatePosts();
-	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 };
 asknanswerController.prototype.PopulatePosts = function()
 {
