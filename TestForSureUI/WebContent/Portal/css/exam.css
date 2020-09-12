@@ -42,6 +42,10 @@
 .quiz-listing ul li .quiz-image span.reward{
 	text-align: center;
 	position: relative;
+	cursor: pointer;
+}
+.quiz-listing ul li .quiz-image span.reward:hover img {
+    transform: scale(1.1);
 }
 .quiz-listing ul li .quiz-image span.reward img{
 	width: 40px;
@@ -137,6 +141,10 @@
 .test-listing ul li .test-head span.reward{
 	text-align: center;
 	position: relative;
+	cursor: pointer;
+}
+.test-listing ul li .test-head span.reward:hover img {
+    transform: scale(1.1);
 }
 .test-listing ul li .test-head span.reward img{
 	width: 40px;
@@ -260,10 +268,12 @@
 		overflow: hidden;
 	}
 	.exam-banner div{
-		top: 10%;
+		top: 0%;
 		left: 10%;
 		width: 80%;
 		text-align: center;
 		transform: translateY(0%);
+		max-height: 200px;
+		font-size: 0.8em;
 	}
 }

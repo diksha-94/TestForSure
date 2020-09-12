@@ -93,6 +93,10 @@
 .quiz-listing .right ul li .quiz-image span.reward{
 	text-align: center;
 	position: relative;
+	cursor: pointer;
+}
+.quiz-listing .right ul li .quiz-image span.reward:hover img {
+    transform: scale(1.1);
 }
 .quiz-listing .right ul li .quiz-image span.reward img{
 	width: 40px;

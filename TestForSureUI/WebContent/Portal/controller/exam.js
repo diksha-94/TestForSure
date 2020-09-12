@@ -103,6 +103,9 @@ examController.prototype.PopulateTests = function()
 			}
 		});
 	});
+	$('.test-listing').find('span.reward').unbind().bind('click', function(){
+		test2bsureController.getObj().ShowRewardInstructions();
+	});
 };
 examController.prototype.PopulateQuizzes = function(exam)
 {
@@ -132,5 +135,8 @@ examController.prototype.PopulateQuizzes = function(exam)
 		}
 		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
 		window.location.href = 'take-quiz.html?id='+quizId;
+	});
+	$('.quiz-listing').find('span.reward').unbind().bind('click', function(){
+		test2bsureController.getObj().ShowRewardInstructions();
 	});
 };

@@ -95,6 +95,9 @@ quizController.prototype.PopulateQuizzes = function()
 		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
 		window.location.href = 'take-quiz.html?id='+quizId;
 	});
+	$('.quiz-listing').find('span.reward').unbind().bind('click', function(){
+		test2bsureController.getObj().ShowRewardInstructions();
+	});
 };
 quizController.prototype.PopulateFilters = function()
 {

@@ -486,12 +486,13 @@ testController.prototype.BindQuestionCategoryEvents = function()
 {
 	getQuestionCategories(function(categories, subcategories){
 		if(categories.length > 0){
-			var html = "";
+			var html = "<option value=''>All</option>";
 			for(var cat in categories){
 				html += "<option value='"+categories[cat]['id']+"'>"+categories[cat]['name']+"</option>";
 			}
-			$('#testQuesModal').find('#ddQuestionCategory').append(html);
+			$('#testQuesModal').find('#ddQuestionCategory').html(html);
 		}
+		$('#testQuesModal').find('#ddQuestionSubCategory').html("<option value='0'>All</option>");
 	}.bind(this));
 	$('#testQuesModal').find('#ddQuestionCategory').unbind().bind('change', function(e){
 		var categoryId = $(e.currentTarget).val();

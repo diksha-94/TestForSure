@@ -40,6 +40,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 								'</div>'+
 							'</li>'+
 							'<li class="menu-item"><a href="quiz.html" class="link">Quizzes</a></li>'+
+							//'<li class="menu-item"><a href="reward-instructions.html" class="link">Reward Points</a></li>'+
 							//'<li class="menu-item"><a href="asknanswer.html" class="link">Ask & Answer</a></li>'+
 							'<li class="menu-item"><a href="aboutus.html" class="link">About Us</a></li>'+
 							'<li class="menu-item"><a href="contactus.html" class="link">Contact Us</a></li>'+
@@ -190,7 +191,7 @@ test2bsureController.prototype.QuizCard = function(quiz)
 			   "<div class='quiz-border'></div>"+
 			   "<div class='quiz-image'>";
 	if(quiz.maxRewardPoints > 0){
-		html += "<span class='reward'><img src='../images/final/coin.png'/><span>+"+quiz.maxRewardPoints+"</span></span>";
+		html += "<span class='reward' title='Click Here'><img src='../images/final/coin.png'/><span>+"+quiz.maxRewardPoints+"</span></span>";
 	}
 	else{
 		html += "<img src='../images/quiz-icon.png' alt='Quiz'/>";
@@ -222,7 +223,7 @@ test2bsureController.prototype.TestCard = function(test)
 	var html = "<div class='test-head'>"+
 			   		"<h4>"+test.title+"</h4>";
 	if(test.maxRewardPoints > 0){
-		html += "<span class='reward'><img src='../images/final/coin.png'/><span>+"+test.maxRewardPoints+"</span></span>";
+		html += "<span class='reward' title='Click Here'><img src='../images/final/coin.png'/><span>+"+test.maxRewardPoints+"</span></span>";
 	}
 	html += "</div>"+
 			"<div class='test-detail'>"+
@@ -532,7 +533,7 @@ test2bsureController.prototype.CalculateRewardPointsEarned = function(itemType, 
 test2bsureController.prototype.ShowRewardPointsEarned = function(itemType, earnedPoints)
 {
 	var modal = '<div class="modal" id="rewardPointModal">'+
-					'<div class="modal-dialog">'+
+					'<div class="modal-dialog col-xs-11 col-sm-11 col-md-4 col-lg-4">'+
 						'<div class="modal-content">'+
 							'<div class="modal-header">'+
 								'<h4 class="modal-title">Congratulations !!</h4>'+
@@ -557,4 +558,30 @@ test2bsureController.prototype.ShowRewardPointsEarned = function(itemType, earne
 			   "<h4>Attempt More Tests/Quizzes and Earn More Points !!</h4>";
 	$('#rewardPointModal .modal-body').html(html);
 	$('#rewardPointModal').modal('show');
+}
+//Show Rewards instructions
+test2bsureController.prototype.ShowRewardInstructions = function()
+{
+	var modal = '<div class="modal" id="rewardInstructionModal">'+
+					'<div class="modal-dialog col-xs-11 col-sm-11 col-md-4 col-lg-4">'+
+						'<div class="modal-content">'+
+							'<div class="modal-header">'+
+								'<h4 class="modal-title">Attempt & Earn Reward Points</h4>'+
+								'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+							'</div>'+
+		
+							'<div class="modal-body">'+
+								'<p>On scoring <b>40% or above marks</b>, you will get reward points based on the percentage of marks scored.</br>'+
+								'You can keep track of your performance and view the reward points history in Dashboard.</p>'+
+							'</div>'+
+							/*'<div class="modal-footer">'+
+								'<button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>'+
+							'</div>'+*/
+						'</div>'+
+					'</div>'+
+				'</div>';
+	if($('#rewardInstructionModal').length == 0){
+		$('body').append(modal);
+	}
+	$('#rewardInstructionModal').modal('show');
 }

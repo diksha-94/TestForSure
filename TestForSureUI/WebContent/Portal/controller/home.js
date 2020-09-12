@@ -12,6 +12,12 @@ homeController.prototype.Init = function()
 	this.LoadCategoriesExams();
 	//Load footer
 	test2bsureController.getObj().GetFooter(".home-footer");
+	setTimeout(function(){
+		if(localStorage.getItem("test2bsure_rp") == null){
+			test2bsureController.getObj().ShowRewardInstructions();
+			localStorage.setItem("test2bsure_rp", "true");
+		}
+	}, 2000);
 };
 homeController.prototype.LoadCategoriesExams = function()
 {

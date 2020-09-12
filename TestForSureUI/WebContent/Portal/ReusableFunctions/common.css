@@ -35,12 +35,6 @@
 	margin-top: 60px;
 	/*top: 120px;*/
 }
-@media only screen and (max-width: 767px) {
-	.common-footer{
-		min-height: 250px;
-		height: 560px;
-	}
-}
 .common-header{
 	background-color: #103B6D;
     position: fixed;
@@ -79,7 +73,7 @@
 	text-align: center;
 }
 #rewardPointModal .modal-dialog{
-	width: 500px;
+	margin-left: 33%;
 }
 #rewardPointModal .modal-content{
 	border-radius: 5px;
@@ -105,3 +99,32 @@
     text-align: center;
 }
 
+/* Reward Instruction modal CSS starts */
+#rewardInstructionModal {
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+#rewardInstructionModal .modal-header{
+	text-align: center;
+}
+#rewardInstructionModal .modal-dialog{
+	margin-left: 33%;
+}
+#rewardInstructionModal .modal-content{
+	border-radius: 5px;
+}
+#rewardInstructionModal .modal-header .modal-title{
+	display: inline;
+}
+/* Reward Instruction modal CSS ends */
+
+@media only screen and (max-width: 767px) {
+	.common-footer{
+		min-height: 250px;
+		height: 560px;
+	}
+	#rewardInstructionModal .modal-dialog,
+	#rewardPointModal .modal-dialog{
+		margin-left: 0;
+	}
+}
