@@ -55,6 +55,12 @@ testController.prototype.PopulateInstructions = function()
 	$('.instruction-content').find('.correctMark').text(parseInt(this.testInfo.totalMarks) / parseInt(this.testInfo.totalQues) + ' mark(s)');
 	$('.instruction-content').find('.incorrectMark').text(this.testInfo.negativeMarks + ' mark(s)');
 	$('.instruction-content').find('.totalTime').text(this.testInfo.totalTime);
+	if(this.testInfo.instructions.length > 0){
+		//Additional Instructions
+		var html = "<h5>Additional Instructions</h5>";
+		html += this.testInfo.instructions;
+		$('.instruction-content').find('.additional-instructions').html(html);
+	}
 };
 testController.prototype.BindInstructionEvents = function()
 {

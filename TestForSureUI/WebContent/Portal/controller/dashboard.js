@@ -227,6 +227,11 @@ dashboardController.prototype.PopulateUserExams = function()
 	var html = "<h4>My Attempts</h4>";
 	$('.dashboard-content').find('.outerDiv .exams').append(html);
 	
+	if(this.userExams == null){
+		html = "<span style='color:#FF0000;'>No Attempts Yet</span>";
+		$('.dashboard-content').find('.outerDiv .exams').append(html);
+		return;
+	}
 	for(var exam in this.userExams){
 		console.log(exam);
 		if(exam == 0){

@@ -435,6 +435,9 @@
 .instruction-content ul{
 	list-style-type: none;
 }
+.instruction-content .additional-instructions ul{
+	list-style-type: unset;
+}
 .instruction-content button{
 	width: 80px;
 }

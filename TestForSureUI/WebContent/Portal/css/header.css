@@ -281,6 +281,7 @@ html body.nobodyscroll {
 	}
 	.menu-items.expand{
 		width: 61% !important;
+		display: block;
 	}
 	.header .menu-items ul.test2bsure-menu{
 		flex-direction: column;
@@ -325,7 +326,7 @@ html body.nobodyscroll {
 		font-size: 14px;
 	}
 	.header .login-register-items #userProfile{
-		justify-content: right;
+		justify-content: flex-end;
 		padding-top: 20px;
 	}
 	.header .login-register-items #userProfile .greeting,

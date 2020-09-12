@@ -1,5 +1,5 @@
-var jsVersion = 7;
-var cssVersion = 7;
+var jsVersion = 18;
+var cssVersion = 18;
 
 var obj = null;
 //var remoteServer = "http://3.6.58.203:8083";
@@ -76,12 +76,12 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 	if ($(window).width() < 768) {
 		//mobile view
 		$('.exam-menu-li').unbind().bind('click', function(){
-			$('.menu-items').css('display', 'none');
+			//$('.menu-items').css('display', 'none');
 			$('.exams.mobileView').css('display', 'block');
 		});
 		$('.exams.mobileView').find('span.exam-head').unbind().bind('click', function(){
 			$('.exams.mobileView').css('display', 'none');
-			$('.menu-items').css('display', 'block');
+			//$('.menu-items').css('display', 'block');
 		});
 	   
 	}

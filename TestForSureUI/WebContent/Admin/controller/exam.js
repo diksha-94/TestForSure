@@ -11,11 +11,11 @@ examController.prototype.AddEdit = function()
 	RefreshData('examModal');
 	getCategories(function(data){
 		if(data.length > 0){
-			var html = "";
+			var html = "<option value=''>Select</option>";
 			for(var cat in data){
 				html += "<option value='"+data[cat]['id']+"'>"+data[cat]['title']+"</option>";
 			}
-			$('#ddCategory').append(html);
+			$('#ddCategory').html(html);
 		}
 		if(this.id > 0){
 			this.Edit();
