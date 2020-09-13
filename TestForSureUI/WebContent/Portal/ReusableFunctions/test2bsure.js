@@ -1,5 +1,5 @@
-var jsVersion = 18;
-var cssVersion = 18;
+var jsVersion = 21;
+var cssVersion = 21;
 
 var obj = null;
 //var remoteServer = "http://3.6.58.203:8083";
