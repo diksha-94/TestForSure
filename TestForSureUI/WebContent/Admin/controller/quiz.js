@@ -12,13 +12,16 @@ quizController.prototype.AddEdit = function()
 	$('#quizModal').find('.ddQuizExam').remove();
 	$('#quizModal').find('.ddQuizFilter').remove();
 	RefreshData('quizModal');
-	if(this.id > 0){
-		this.Edit();
-	}
-	else{
-		new AutoComplete('ddQuizExam', 'exams');
-		new AutoComplete('ddQuizFilter', 'filters');
-	}
+	this.LoadQuizSubjects(function(){
+		if(this.id > 0){
+			this.Edit();
+		}
+		else{
+			new AutoComplete('ddQuizExam', 'exams');
+			new AutoComplete('ddQuizFilter', 'filters');
+		}
+	}.bind(this));
+	
 	$('#quizModal').find('#btnQuizSave').unbind().bind('click', function(){
 		this.SaveData();
 	}.bind(this));
@@ -69,6 +72,10 @@ quizController.prototype.SaveData = function(openNext, callback)
 		obj.title = "";
 		filters.push(obj);
 	}
+	var subject = 0;
+	if($('#ddQuizSubject').val() != ''){
+		subject = $('#ddQuizSubject').val();
+	}
 	if(name.length == 0 || title.length == 0 || questions.length == 0 || marks.length == 0 ||
 			attempts.length == 0){
 		alert('Please enter all the mandatory fields');
@@ -90,7 +97,8 @@ quizController.prototype.SaveData = function(openNext, callback)
 		'lockApply': lock,
 		'lockPoints': lockPoints,
 		'lockRupees': lockRupees,
-		'filters': filters
+		'filters': filters,
+		'subject': subject
 	};
 	console.log(requestData);
 	if(this.id > 0){
@@ -244,6 +252,9 @@ quizController.prototype.Edit = function(e)
 						$('#txtQuizLockRupees').addClass('lockDetails');
 					}
 					$('#quizModal').find('#chkQuizLock').prop('checked', lockStatus);
+					if(item.subject != 0){
+						$('#quizModal').find('#ddQuizSubject').val(item.subject);
+					}
 				}
 			}
 			
@@ -528,3 +539,29 @@ quizController.prototype.HandlePagination = function(len){
 		}.bind(this));
 	}
 };
+quizController.prototype.LoadQuizSubjects = function(callback){
+	$.ajax({
+		url: remoteServer + "/test2bsure/quizsubject",
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && Object.keys(response.data).length > 0){
+					var html = "<option value=''>Select</option>";
+					for(var qs in response.data){
+						html += "<option value='" + response.data[qs].id + "'>" + response.data[qs].name + "</option>";
+					}
+					$('#quizModal').find('#ddQuizSubject').html(html);
+				}
+			}
+			if(typeof callback == 'function'){
+				callback();
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			if(typeof callback == 'function'){
+				callback();
+			}
+		}
+	});
+}

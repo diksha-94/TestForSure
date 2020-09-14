@@ -51,14 +51,17 @@ dashboardController.prototype.LoadMenu = function()
 					"<li id='menuTest' data-action='menu_test' data-title='Test' data-controller='contentlisting' data-content='test'>"+
 						"<span>Test</span>"+
 					"</li>"+
+					"<li id='menuQuizSubject' data-action='menu_quiz_subject' data-title='Quiz Subject' data-controller='contentlisting' data-content='quizsubject'>"+
+						"<span>Quiz Subject</span>"+
+					"</li>"+
 					"<li id='menuQuiz' data-action='menu_quiz' data-title='Quiz' data-controller='contentlisting' data-content='quiz'>"+
 						"<span>Quiz</span>"+
 					"</li>"+
-					"<li id='menuUser' data-action='menu_user' data-title='User Tracking' data-controller='contentlisting' data-content='usertracking'>"+
-						"<span>User Tracking</span>"+
-					"</li>"+
 					"<li id='menuFilter' data-action='menu_filter' data-title='Filter' data-controller='contentlisting' data-content='filter'>"+
 						"<span>Filter</span>"+
+					"</li>"+
+					"<li id='menuUser' data-action='menu_user' data-title='User Tracking' data-controller='contentlisting' data-content='usertracking'>"+
+						"<span>User Tracking</span>"+
 					"</li>"+
 					/*"<li id='menuAskNAnswer' data-action='menu_asknanswer' data-title='Ask & Answer' data-controller='contentlisting' data-content='asknanswer'>"+
 						"<span>Ask & Answer</span>"+

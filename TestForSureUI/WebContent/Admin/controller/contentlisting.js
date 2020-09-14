@@ -176,6 +176,40 @@ var contentlistingDef = {
 				"loadData": "test"
 			}
 		},
+		"quizsubject":{
+			"title": "Quiz Subject",
+			"searchByName": true,
+			"addNewBtn": true,
+			"totalCount": true,
+			"pagination": true,
+			"tableFields": [{
+								"frontend": "Id",
+								"backend": "id"
+							},
+							{
+								"frontend": "Name",
+								"backend": "name"
+							},
+							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
+							},
+							{
+								"frontend": "Action",
+								"backend": undefined
+							}],
+			"listActions": [{
+								"type": "Edit",
+								"class": "btnEdit"
+							},
+							{
+								"type": "Delete",
+								"class": "btnDelete"
+							}],
+			"backend": {
+				"loadData": "quizsubject"
+			}
+		},
 		"quiz":{
 			"title": "Quiz",
 			"searchByName": true,
@@ -496,7 +530,7 @@ contentlistingController.prototype.LoadDataFromServer = function(callback)
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
+				if(response.data != null && ((Array.isArray(response.data) && response.data.length > 0) || (Object.keys(response.data).length > 0))){
 					var items = response.data;
 					var html = "";
 					for(var item in items){
