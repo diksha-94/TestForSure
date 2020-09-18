@@ -39,16 +39,25 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 									'</div>'+
 								'</div>'+
 							'</li>'+
-							'<li class="menu-item"><a href="quiz.html" class="link">Quizzes</a></li>'+
-							//'<li class="menu-item"><a href="reward-instructions.html" class="link">Reward Points</a></li>'+
-							//'<li class="menu-item"><a href="asknanswer.html" class="link">Ask & Answer</a></li>'+
+							'<li class="menu-item quiz-menu-li"><a class="link">Quizzes&nbsp;<img src="../images/final/down_arrow.png" style="height: 8px;">'+
+								'</a>'+
+								'<div class="quiz-menu-div">'+
+									'<ul class="quiz-menu">'+
+									'</ul>'+
+								'</div>'+
+							'</li>'+
 							'<li class="menu-item"><a href="aboutus.html" class="link">About Us</a></li>'+
 							'<li class="menu-item"><a href="contactus.html" class="link">Contact Us</a></li>'+
 							'<button type="button" class="btnLogin mobileView button button-default" id="btnLogin1">Login/Register</button>'+
 						'</ul>'+
 					'</div>'+
-					'<div class="exams mobileView col-xs-8 col-md-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
+					'<div class="exams mobileView col-xs-8 col-sm-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
 						'<span class="exam-head"><img src="../images/final/down_arrow.png" class="closed"/>Exams</span>'+
+					'</div>'+
+					'<div class="quizzes mobileView col-xs-8 col-sm-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
+						'<span class="quiz-head"><img src="../images/final/down_arrow.png" class="closed"/>Quizzes</span>'+
+						'<ul class="quiz-menu">'+
+						'</ul>'+
 					'</div>'+
 					'<div class="mobileView overlay"></div>'+
 					'<div class="login-register-items col-xs-6 col-sm-6 col-md-2 col-lg-2">'+
@@ -84,6 +93,14 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 			$('.exams.mobileView').css('display', 'none');
 			//$('.menu-items').css('display', 'block');
 		});
+		$('.quiz-menu-li').unbind().bind('click', function(){
+			//$('.menu-items').css('display', 'none');
+			$('.quizzes.mobileView').css('display', 'block');
+		});
+		$('.quizzes.mobileView').find('span.quiz-head').unbind().bind('click', function(){
+			$('.quizzes.mobileView').css('display', 'none');
+			//$('.menu-items').css('display', 'block');
+		});
 	   
 	}
 	else {
@@ -93,6 +110,12 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 		$('.exam-menu-li').bind('mouseout', function(){
 			$('.exam-menu-div').css('display', 'none');
 		});
+		$('.quiz-menu-li').unbind().bind('mouseover', function(){
+			$('.quiz-menu-div').css('display', 'block');
+		});
+		$('.quiz-menu-li').bind('mouseout', function(){
+			$('.quiz-menu-div').css('display', 'none');
+		});
 	}
 	
 	$('.sandwichbtn').unbind().bind('click', function(e){
@@ -100,6 +123,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 			$(e.currentTarget).removeClass('closebtn');
 			$('.menu-items').removeClass('expand');
 			$('.exams.mobileView').css('display', 'none');
+			$('.quizzes.mobileView').css('display', 'none');
 			$('.overlay').css('height', '0px');
 			$("body").removeClass("nobodyscroll");
 		}

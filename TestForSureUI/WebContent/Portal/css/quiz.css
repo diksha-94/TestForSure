@@ -89,6 +89,7 @@
 
 .quiz-listing .right ul li img {
 	margin-top: 10px;
+	height: 40px;
 }
 .quiz-listing .right ul li .quiz-image span.reward{
 	text-align: center;
