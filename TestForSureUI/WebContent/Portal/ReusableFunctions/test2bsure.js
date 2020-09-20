@@ -74,6 +74,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 						'</ul>'+
 					'</div>'+
 					'<div class="desktopView overlayD"></div>'+
+					'<div class="desktopView overlayDMenu"></div>'+
 					'<div class="profile-menu">'+
 						'<ul>'+
 							'<li id="myDashboard">My Dashboard</li>'+
@@ -106,15 +107,23 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 	else {
 		$('.exam-menu-li').unbind().bind('mouseover', function(){
 			$('.exam-menu-div').css('display', 'block');
+			$('.overlayDMenu').css('height', 'calc(100% - 60px)');
+			$("body").addClass("nobodyscroll");
 		});
 		$('.exam-menu-li').bind('mouseout', function(){
 			$('.exam-menu-div').css('display', 'none');
+			$('.overlayDMenu').css('height', '0px');
+			$("body").removeClass("nobodyscroll");
 		});
 		$('.quiz-menu-li').unbind().bind('mouseover', function(){
 			$('.quiz-menu-div').css('display', 'block');
+			$('.overlayDMenu').css('height', 'calc(100% - 60px)');
+			$("body").addClass("nobodyscroll");
 		});
 		$('.quiz-menu-li').bind('mouseout', function(){
 			$('.quiz-menu-div').css('display', 'none');
+			$('.overlayDMenu').css('height', '0px');
+			$("body").removeClass("nobodyscroll");
 		});
 	}
 	

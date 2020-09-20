@@ -204,6 +204,11 @@
 	left: 0;
 	top: 0px;
 }
+.quiz-listing .right .btnLoadMore{
+	width: 20%;
+	margin-bottom: 50px;
+	margin-left: 40%;
+}
 @media only screen and (max-width: 767px) {
 	.quiz-page .quiz-listing .right{
 		width: 100%;
@@ -248,5 +253,9 @@
 	.quiz-listing .left .quiz-filters{
 		height: 80%;
 		overflow: auto;
+	}
+	.quiz-listing .right .btnLoadMore {
+	    width: 50%;
+	    margin-left: 25%;
 	}
 }

@@ -2,11 +2,17 @@ var quizController = function(){
 	this.exam = {};
 	this.quizzes = {};
 	this.filters = {};
+	this.filterValues = "";
+	this.from = 0;
+	this.count = 8;
+	this.needCount = 1;
+	this.totalCount = 0;
 	this.Init();
 };
 quizController.prototype.Init = function()
 {
 	//Load header
+	this.subjectId = test2bsureController.getObj().QueryString(window.location.href, 'id');
 	test2bsureController.getObj().GetHeader(".quiz-header", function(){
 		this.LoadData();
 		this.LoadFilters();
@@ -36,7 +42,7 @@ quizController.prototype.BindEvents = function()
 	})
 	
 };
-quizController.prototype.LoadData = function(filterValues)
+quizController.prototype.LoadData = function()
 {
 	var userId = -1;
 	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' 
@@ -44,13 +50,13 @@ quizController.prototype.LoadData = function(filterValues)
 		&& typeof userController.getObj().userData.id != 'undefined'){
 		userId = userController.getObj().userData.id;
 	}
-	var url = remoteServer+'/test2bsure/quizzes?userId='+userId;
-	if(typeof filterValues != 'undefined' && filterValues.length > 0){
-		url += '&filters='+filterValues;
+	var url = remoteServer+'/test2bsure/quizzes?userId='+userId+'&subjectId='+this.subjectId+'&from='+this.from+'&count='+this.count+'&totalCount=1';
+	if(typeof this.filterValues != 'undefined' && this.filterValues.length > 0){
+		url += '&filters=' + this.filterValues;
 	}
 	fetch(url)
 	  .then(response => response.json())
-	  .then(data => this.SetState({ quizzes: data.quizzes }));
+	  .then(data => this.SetState({ quizzes: data.quizzes, totalCount: data.totalCount }));
 }
 quizController.prototype.SetState = function(obj)
 {
@@ -61,7 +67,7 @@ quizController.prototype.SetState = function(obj)
 };
 quizController.prototype.LoadFilters = function()
 {
-	fetch(remoteServer+'/test2bsure/item-filters?itemtype=1')
+	fetch(remoteServer+'/test2bsure/item-filters?itemtype=1&subjectId='+this.subjectId)
 	  .then(response => response.json())
 	  .then(data => this.SetFilterState({ filters: data.filters }));
 }
@@ -74,14 +80,23 @@ quizController.prototype.SetFilterState = function(obj)
 };
 quizController.prototype.PopulateQuizzes = function()
 {
-	var html = '<h4>Quizzes</h4>';
-	html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
+	var html = '';
+	if(this.needCount != -1){
+		html += '<h4>Quizzes</h4>';
+		html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
+	}
 	for(var quiz in this.quizzes){
 		html += "<li quiz-id='"+this.quizzes[quiz].id+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
 		html += test2bsureController.getObj().QuizCard(this.quizzes[quiz]);
 		html += "</li>";
 	}
-	$('.quiz-listing .right').html(html);
+	if(this.needCount != -1){
+		html += '</ul>';
+		$('.quiz-listing .right').html(html);
+	}
+	else{
+		$('.quiz-listing .right ul').append(html);
+	}
 	$('.quiz-listing .right').find('.btnQuizAction').unbind().bind('click', function(e){
 		var userId = -1;
 		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
@@ -98,6 +113,20 @@ quizController.prototype.PopulateQuizzes = function()
 	$('.quiz-listing').find('span.reward').unbind().bind('click', function(){
 		test2bsureController.getObj().ShowRewardInstructions();
 	});
+	if(this.totalCount > $('.quiz-listing .right ul li').length){
+		if($('.btnLoadMore').length == 0){
+			html = "<button class='button button-default btnLoadMore'>VIEW MORE</button>";
+			$('.quiz-listing .right').append(html);
+			$('.btnLoadMore').unbind().bind('click', function(){
+				this.from += this.count;
+				this.needCount = -1;
+				this.LoadData();
+			}.bind(this));
+		}
+	}
+	else if($('.btnLoadMore').length > 0){
+		$('.btnLoadMore').remove();
+	}
 };
 quizController.prototype.PopulateFilters = function()
 {
@@ -125,10 +154,14 @@ quizController.prototype.PopulateFilters = function()
 			}
 		});
 		filterValues = filterValues.substring(0, filterValues.length - 1);
-		this.LoadData(filterValues);
+		this.filterValues = filterValues;
+		this.from = 0;
+		this.needCount = 1;
+		this.LoadData();
 	}.bind(this));
 	$('.quiz-listing .left').find('.btnReset').unbind().bind('click', function(e){
 		$('.quiz-listing .left .quiz-filters').find('li[filter-id]').find('span').removeClass('selected');
+		this.filterValues = "";
 		this.LoadData();
 		$('.quiz-listing').find('.left').removeClass('mobile');
 		$('.quizOverlay').css('height', '0px');

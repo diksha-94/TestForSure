@@ -160,13 +160,16 @@ html body.nobodyscroll {
 	cursor: pointer;
 	/*border-bottom: solid 1px #E4E4E4;*/
 }
-.desktopView.overlayD{
+.desktopView.overlayD, .desktopView.overlayDMenu{
 	height: 0px;
 	position: fixed;
 	width: 100%;
 	background-color: rgba(0,0,0,.35);
 	z-index: 100;
 	left: 0;
+}
+.desktopView.overlayDMenu{
+	top: 60px;
 }
 /* Profile Menu CSS ends */
 .exam-menu-li{
@@ -263,9 +266,12 @@ html body.nobodyscroll {
 	padding: 0;
 }
 .quiz-menu-div .quiz-menu li a{
+	color: #a4a4a4;
+	font-weight: bold;
+	font-size: 0.9em;
+}
+.quiz-menu-div .quiz-menu li a:hover{
 	color: #000;
-	font-weight: normal;
-	font-size: 0.95em;
 }
 .quiz-menu-div .quiz-menu li {
     min-height: 50px;
