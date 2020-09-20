@@ -1,4 +1,5 @@
 var leaderboardController = function(){
+	this.testInfo = {};
 	this.data = null;
 	this.type = "test";
 	this.id = 0;
@@ -17,34 +18,49 @@ leaderboardController.prototype.Init = function()
 };
 leaderboardController.prototype.LoadData = function()
 {
-	fetch(remoteServer+'/test2bsure/leaderboard?type='+this.type+'&id='+this.id)
+	var self = this;
+	fetch(remoteServer+'/test2bsure/test?id='+this.id)
 	  .then(response => response.json())
-	  .then(data => this.SetState({ data: data }));
+	  .then(data => this.SetState({ testInfo: data }, false, function(){
+		  fetch(remoteServer+'/test2bsure/leaderboard?type='+self.type+'&id='+self.id)
+		  .then(response => response.json())
+		  .then(data => self.SetState({ data: data }, true));
+	  }));
 }
-leaderboardController.prototype.SetState = function(obj)
+leaderboardController.prototype.SetState = function(obj, populateData, callback)
 {
+	populateData = typeof populateData != 'undefined' ? populateData : false;
 	for(var key in obj){
 		this[key] = obj[key];
 	}
-	this.PopulateLeaderboard();
+	if(populateData){
+		this.PopulateLeaderboard();
+	}
+	if(typeof callback == 'function'){
+		callback();
+	}
 };
 leaderboardController.prototype.PopulateLeaderboard = function()
 {
-	$('.leaderboard-outer').find('.leaderboard-heading').find('h4').html("Leaderboard for "+this.data.title);
+	$('.leaderboard-outer').find('.leaderboard-heading').find('h4').html("Leaderboard for "+this.testInfo.data[0].title);
 	$('.leaderboard-outer').find('.leaderboard-heading').append("<span>  ("+this.data.leaderboard.length+" ATTEMPTS)</span>");
-	$('.leaderboard-outer').find('.marks').append(" (OUT OF "+this.data.totalScore+")");
+	$('.leaderboard-outer').find('.marks').append(" (OUT OF "+this.testInfo.data[0].totalMarks+")");
 	if(this.type == "quiz"){
 		$('.leaderboard-outer').find('.time').remove();
 	}
 	var html = "";
 	for(var leader in this.data.leaderboard){
 		var data = this.data.leaderboard[leader];
+		var timeTaken = data.timeTaken;
+		if(timeTaken > this.testInfo.data[0].totalTime * 60){
+			timeTaken = this.testInfo.data[0].totalTime * 60;
+		}
 		html += "<tr>"+
 					"<td>"+data.rank+"</td>"+
 					"<td class='name'>"+data.username+"</td>"+
 					"<td>"+data.marksScored+"</td>";
 		if(this.type != "quiz"){
-			html += "<td>"+Math.round(data.timeTaken/60, 2)+"</td>"+
+			html += "<td>"+Math.round(timeTaken/60, 2)+"</td>"+
 				"</tr>";
 		}
 	}

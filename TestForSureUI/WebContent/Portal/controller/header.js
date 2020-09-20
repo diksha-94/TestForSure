@@ -278,7 +278,7 @@ headerController.prototype.Init = function()
 headerController.prototype.LoadExams = function(){
 	fetch(remoteServer+'/test2bsure/header')
 		  .then(response => response.json())
-		  .then(data => this.SetState({ category: data.category, exam: data.exam }));
+		  .then(data => this.SetState({ category: data.category, exam: data.exam, quizSubject: data.quizSubject }));
 };
 headerController.prototype.SetState = function(obj)
 {
@@ -354,6 +354,26 @@ headerController.prototype.PopulateData = function(){
 		$(e.currentTarget).addClass('active');
 		$('.exam-content').find('.tab-pane').removeClass('active in');
 		$('.exam-content').find(href).addClass('active in');
+	});
+	
+	//Populate Quiz Subject
+	html = "";
+	for(var qs in this.quizSubject){
+		var sub = this.quizSubject[qs];
+		var subName = sub.name.replace(/[^a-zA-Z0-9]/g,'_');
+		html += '<li class="quiz-value-item" subject-id="'+sub.id+'">';
+		html += '<a href="#'+subName+'">'+sub.name+'</a>'+
+				'</li>';
+	}
+	$('.quizzes.mobileView').find('.quiz-menu').html(html);
+	$('.quiz-menu-div').find('.quiz-menu').html(html);
+	$('.quiz-value-item').unbind().bind('click', function(e){
+		var userId = -1;
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+			userId = userController.getObj().userData.id;
+		}
+		var subjectId = $(e.currentTarget).attr('subject-id');
+		window.location.href = 'quiz.html?id=' + subjectId;
 	});
 };
 $(document).ready(function(){

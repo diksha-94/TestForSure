@@ -84,6 +84,7 @@ html body.nobodyscroll {
     overflow-y: auto;
     position: absolute;
     top: 60px;
+    z-index: 101;
 }
 .exam-menu-div .tab-content {
 	padding: 0px 10px;
@@ -100,11 +101,11 @@ html body.nobodyscroll {
 	min-height: 50px;
 	color: #000;
 	margin-left: 0px !important;
-	padding: 13px 0px !important;
+	padding: 13px 0px 13px 6px !important;
 	cursor: pointer;
 }
 .header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item a{
-	color: #000;
+	color: #103B6D;
 	font-weight: normal;
 	font-size: 0.95em;
 	cursor: pointer;
@@ -159,13 +160,16 @@ html body.nobodyscroll {
 	cursor: pointer;
 	/*border-bottom: solid 1px #E4E4E4;*/
 }
-.desktopView.overlayD{
+.desktopView.overlayD, .desktopView.overlayDMenu{
 	height: 0px;
 	position: fixed;
 	width: 100%;
 	background-color: rgba(0,0,0,.35);
 	z-index: 100;
 	left: 0;
+}
+.desktopView.overlayDMenu{
+	top: 60px;
 }
 /* Profile Menu CSS ends */
 .exam-menu-li{
@@ -177,7 +181,7 @@ html body.nobodyscroll {
 	background-color: #E4F1F8;
 	height: 100%;
 }
-.exam-menu-div{
+.exam-menu-div, .quiz-menu-div{
 	display:none;
 }
 .exam-menu-item:hover{
@@ -198,7 +202,7 @@ html body.nobodyscroll {
 	list-style-type: none;
 	margin-top: 12px;
 	font-size: 0.9em;
-	color: #a4a4a4;
+	color: #103B6D;
 	font-weight: bold;
 	padding-left: 20px;
 }
@@ -248,6 +252,31 @@ html body.nobodyscroll {
     transition: 0.4s;
 }
 
+.quiz-menu-div {
+    width: 200px;
+    background-color: #FFF;
+    height: 400px;
+    overflow-y: auto;
+    position: absolute;
+    top: 60px;
+    z-index: 101;
+}
+.quiz-menu-div .quiz-menu{
+	list-style-type: none;
+	padding: 0;
+}
+.quiz-menu-div .quiz-menu li a{
+	color: #103B6D;
+	font-weight: bold;
+	font-size: 0.9em;
+}
+.quiz-menu-div .quiz-menu li {
+    min-height: 50px;
+    color: #000;
+    margin-left: 0px !important;
+    padding: 13px 10px !important;
+    cursor: pointer;
+}
 @media only screen and (max-width: 767px) {
 	.header .brand-logo{
 		margin-top: 10px;
@@ -262,7 +291,7 @@ html body.nobodyscroll {
 	.mobileView{
 		display: block;
 	}
-	.menu-items, .exams.mobileView{
+	.menu-items, .exams.mobileView, .quizzes.mobileView{
 		height: calc(100% - 60px);
 		background-color: #103B6D;
 		position: fixed;
@@ -338,7 +367,8 @@ html body.nobodyscroll {
 		margin-top: -6px;
 		font-size: 33px;
 	}
-	.exams.mobileView span.exam-head{
+	.exams.mobileView span.exam-head,
+	.quizzes.mobileView span.quiz-head{
 		color: white;
 		font-size: 1.2em;
 		padding: 7px 0px;
@@ -348,16 +378,19 @@ html body.nobodyscroll {
 		margin-left: 8%;
 		cursor: pointer;
 	}
-	.exams.mobileView span.exam-head img{
+	.exams.mobileView span.exam-head img,
+	.quizzes.mobileView span.quiz-head img{
 		transform: rotate(90deg);
 		width: 15px;
 		height: 10px;
 		margin-right: 14px;
 	}
-	.exams.mobileView div.outer span{
+	.exams.mobileView div.outer span,
+	.quizzes.mobileView div.outer span{
 		color: #fff;
 	}
-	.exams.mobileView div.outer .outer-1{
+	.exams.mobileView div.outer .outer-1,
+	.quizzes.mobileView div.outer .outer-1{
 		display: flex;
 		padding: 15px 20px;
 		justify-content: space-between;
@@ -375,5 +408,15 @@ html body.nobodyscroll {
 	}
 	a:focus, a:hover {
  	   text-decoration: underline;
-	}	
+	}
+	.quizzes.mobileView .quiz-menu{
+		list-style-type: none;
+		padding: 0;
+	}
+	.quizzes.mobileView .quiz-menu li {
+	    padding: 15px 20px;
+	}
+	.quizzes.mobileView .quiz-menu li a{
+	    font-weight: normal;
+	}
 }

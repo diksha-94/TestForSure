@@ -32,6 +32,9 @@ function RefreshData(viewId){
 		$('#'+viewId).find('#txtTestIndex').val(0);
 		$('#'+viewId).find('#txtRewardPoints').val(0);
 	}
+	if(viewId == 'quizsubjectModal'){
+		$('#'+viewId).find('#txtQuizSubjectIndex').val(0);
+	}
 }
 function setCookie(cname, cvalue, exdays){
     var d = new Date();
