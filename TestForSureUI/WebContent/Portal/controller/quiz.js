@@ -162,6 +162,8 @@ quizController.prototype.PopulateFilters = function()
 	$('.quiz-listing .left').find('.btnReset').unbind().bind('click', function(e){
 		$('.quiz-listing .left .quiz-filters').find('li[filter-id]').find('span').removeClass('selected');
 		this.filterValues = "";
+		this.from = 0;
+		this.needCount = 1;
 		this.LoadData();
 		$('.quiz-listing').find('.left').removeClass('mobile');
 		$('.quizOverlay').css('height', '0px');
