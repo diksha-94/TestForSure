@@ -228,7 +228,7 @@
 		text-align: right;
 		cursor: pointer;
 		padding: 10px 20px;
-		z-index: 100;
+		z-index: 99;
 		background-color: #e4e4e4;
 	}
 	.mobileFilter .filter-quiz{

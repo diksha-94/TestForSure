@@ -101,11 +101,11 @@ html body.nobodyscroll {
 	min-height: 50px;
 	color: #000;
 	margin-left: 0px !important;
-	padding: 13px 0px !important;
+	padding: 13px 0px 13px 6px !important;
 	cursor: pointer;
 }
 .header .menu-items ul.test2bsure-menu .exam-menu .exam-menu-item a{
-	color: #000;
+	color: #103B6D;
 	font-weight: normal;
 	font-size: 0.95em;
 	cursor: pointer;
@@ -202,7 +202,7 @@ html body.nobodyscroll {
 	list-style-type: none;
 	margin-top: 12px;
 	font-size: 0.9em;
-	color: #a4a4a4;
+	color: #103B6D;
 	font-weight: bold;
 	padding-left: 20px;
 }
@@ -266,12 +266,9 @@ html body.nobodyscroll {
 	padding: 0;
 }
 .quiz-menu-div .quiz-menu li a{
-	color: #a4a4a4;
+	color: #103B6D;
 	font-weight: bold;
 	font-size: 0.9em;
-}
-.quiz-menu-div .quiz-menu li a:hover{
-	color: #000;
 }
 .quiz-menu-div .quiz-menu li {
     min-height: 50px;

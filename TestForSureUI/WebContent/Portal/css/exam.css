@@ -135,7 +135,7 @@
 	height: 40px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-size: 1.2em;
+	font-size: 15px;
 	margin-left: 0;
 	margin-right: 0;
 }
@@ -231,6 +231,8 @@
 	padding: 0px;
 	color: #fff;
 	background-image: url('../images/final/carousal-1.png');
+	background-repeat: no-repeat;
+    background-size: cover;
 }
 .exam-banner h4{
     top: 46%;
