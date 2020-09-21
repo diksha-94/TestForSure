@@ -212,7 +212,7 @@
 .test .test-questions .question .options .option .option-value{
 	display: inline-block;
 	/*margin-left: 15px;*/
-	min-height: 39px;
+	/*min-height: 39px;*/
 }
 .test .test-questions .question .solution{
 	padding: 20px 40px;

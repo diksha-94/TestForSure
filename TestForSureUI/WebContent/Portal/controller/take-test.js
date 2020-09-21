@@ -291,7 +291,7 @@ testController.prototype.DisplayQuestion = function()
 						"<div class='col-xs-2 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
 							"<span class='option-count' style='background-color: rgb(46, 109, 164); border-color: rgb(46, 109, 164); color: rgb(255, 255, 255);'>"+optionValues[key]+"</span>"+
 						"</div>"+
-						"<div class='col-xs-10 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
+						"<div class='col-xs-10 col-sm-11 col-md-11 col-lg-11' style='padding:0px; margin-top: 8px;'>"+
 							"<span class='option-value'>"+$(value).html()+"</span>"+
 						"</div>"+
 						"<span class='answer-status'></span>"+
@@ -302,7 +302,7 @@ testController.prototype.DisplayQuestion = function()
 						"<div class='col-xs-2 col-sm-1 col-md-1 col-lg-1' style='padding:0px;'>"+
 							"<span class='option-count'>"+optionValues[key]+"</span>"+
 						"</div>"+
-						"<div class='col-xs-10 col-sm-11 col-md-11 col-lg-11' style='padding:0px;'>"+
+						"<div class='col-xs-10 col-sm-11 col-md-11 col-lg-11' style='padding:0px; margin-top: 8px;'>"+
 							"<span class='option-value'>"+$(value).html()+"</span>"+
 						"</div>"+
 						"<span class='answer-status'></span>"+
