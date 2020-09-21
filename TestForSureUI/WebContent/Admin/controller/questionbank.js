@@ -139,9 +139,19 @@ questionbankController.prototype.SaveData = function(addNext)
 					//Save and Add next Question
 					$('#questionModal').find('input[type="text"]').val('');
 					$('#questionModal').find('input[type="number"]').val('');
+					//Handle Para as per the previous state
+					var paraSelected = false;
+					if($('#chkParagraph').prop('checked')){
+						paraSelected = true;
+					}
+					else{
+						$('#txtParagraphText').parents('div.para').removeClass('show').addClass('hide');
+					}
 					$('#questionModal').find('input[type="checkbox"]').prop('checked', false);
 					$('#questionModal').find('.note-editor').find('.note-editable').html('');
-					$('#txtParagraphText').parents('div.para').removeClass('show').addClass('hide');
+					if(paraSelected){
+						$('#chkParagraph').prop('checked', true);
+					}
 					self.id = -1;
 				}
 				else{
