@@ -107,6 +107,11 @@ testController.prototype.SetState = function(obj)
 	}
 	if(typeof this.attemptInfo != 'undefined' && this.attemptInfo != null){
 		this.currentQues = parseInt(this.attemptInfo.lastQues) + 1;
+		//In case if the last question was saved and the test is resumed, it should start from last question
+		//not from lastQues+1
+		if(this.currentQues > this.testInfo.totalQues){
+			this.currentQues = this.testInfo.totalQues;
+		}
 	}
 	this.totalSecs = (parseInt(this.testInfo.totalTime) * 60) + 1;
 	this.DisplayQuestion();
