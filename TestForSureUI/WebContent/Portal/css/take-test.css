@@ -287,6 +287,10 @@
 		overflow: hidden;
 		margin-top: 10px;
 	}
+	.test .test-questions .attempt-controls .clearDiv,
+	.test .test-questions .attempt-controls .markDiv{
+		padding: 0;
+	}
 	.test-ques-status {
 		display: none; height : 121%;
 		position: absolute;
@@ -313,7 +317,7 @@
 	.divPrevious, .divNext {
 		margin-top: 10px;
 	}
-	.divMark, .divUnmark {
+	.divUnmark {
 		margin-top: 5px;
 	}
 	.divTImer {

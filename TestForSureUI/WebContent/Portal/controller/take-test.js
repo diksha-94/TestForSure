@@ -349,20 +349,26 @@ testController.prototype.DisplayQuestion = function()
 };
 testController.prototype.PopulateAttemptControls = function()
 {
-	var html = "<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2'>"+
-					"<a href='#' class='linkClearSelection'>Clear Selection</a>"+
-			   "</div>"+
-			   "<div class='divMark col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<a href='#' class='linkMark'>Mark for Review</a>"+
+	var html =  "<div class='clearDiv col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
+					"<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"<a href='#' class='linkClearSelection'>Clear Selection</a>"+
+					"</div>"+
 				"</div>"+
-				"<div class='divUnmark col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-					"<a href='#' class='linkUnmark'>Unmark for Review</a>"+
+				"<div class='markDiv col-xs-6 col-sm-6 col-md-4 col-lg-4'>"+
+					"<div class='divMark col-xs-12 col-sm-12 col-md-6 col-lg-6'>"+
+						"<a href='#' class='linkMark'>Mark for Review</a>"+
+					"</div>"+
+					"<div class='divUnmark col-xs-12 col-sm-12 col-md-6 col-lg-6'>"+
+						"<a href='#' class='linkUnmark'>Unmark for Review</a>"+
+					"</div>"+
 				"</div>"+
-				"<div class='divPrevious col-xs-6 col-sm-6 col-md-2 col-lg-2 col-md-offset-1 col-lg-offset-1'>"+
-					"<button class='button button-primary btnPrevious'>Previous</button>"+
-			    "</div>"+
-			    "<div class='divNext col-xs-6 col-sm-6 col-md-2 col-lg-2'>"+
-			    	"<button class='button button-primary btnNext'>Next</button>"+
+				"<div class='buttonsDiv col-xs-12 col-sm-12 col-md-5 col-lg-5'>"+
+					"<div class='divPrevious col-xs-6 col-sm-6 col-md-5 col-lg-5 col-md-offset-2 col-lg-offset-2'>"+
+						"<button class='button button-primary btnPrevious'>Previous</button>"+
+				    "</div>"+
+				    "<div class='divNext col-xs-6 col-sm-6 col-md-5 col-lg-5'>"+
+				    	"<button class='button button-primary btnNext'>Next</button>"+
+					"</div>"+
 				"</div>";
 	$('.test').find('.test-questions').find('.attempt-controls').html(html);
 	this.ManageControls();
