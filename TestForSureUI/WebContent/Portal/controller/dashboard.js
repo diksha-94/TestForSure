@@ -241,7 +241,7 @@ dashboardController.prototype.PopulateUserExams = function()
 		this.DBExamCard(this.userExams[exam]);
 		
 	}
-	if(typeof this.userExams[0] != 'undefined'){
+	if(typeof this.userExams[0] != 'undefined' && (this.userExams[0].attemptedTestCount > 0 || this.userExams[0].attemptedQuizCount > 0)){
 		var otherData = this.userExams[0];
 		this.DBExamCard(otherData);
 	}
