@@ -165,8 +165,7 @@
 }
 .test .test-questions .question .question-text, .test .test-questions .question .para-text{
 	margin-left: 20px;
-}
-.test .test-questions .question .question-text{
+	margin-top: 10px;
 	display: block;
 }
 .test .test-questions .question .para-text{
@@ -195,6 +194,8 @@
 }
 .test .test-questions .question .question-desc{
 	border-bottom: solid 1px #E4E4E4;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .test .test-questions .question .options .option.correct{

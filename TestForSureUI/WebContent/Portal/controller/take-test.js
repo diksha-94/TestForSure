@@ -137,7 +137,7 @@ testController.prototype.PopulateTestInfo = function()
 			   		"<h4>"+this.testInfo.title+"</h4></div>"+
 			   "<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 quesMark-info removeInMobile'>"+
 			   		"<div class='info'>"+
-			   			"<h5>"+this.testInfo.totalQues+" Questions / "+this.testInfo.totalMarks+" Marks</h5>"+
+			   			"<h5>"+this.testInfo.totalQues+" Ques / "+this.testInfo.totalMarks+" Marks</h5>"+
 			   		"</div>"+
 			   		"<div class='detail'>"+
 			   			"<span class='correct'>+"+(this.testInfo.totalMarks/this.testInfo.totalQues)+" Mark</span>";
@@ -263,10 +263,15 @@ testController.prototype.DisplayQuestion = function()
 					"<div class='question-desc'>"+
 						"<span class='question-number'>"+(this.currentQues)+"</span>";
 	if(question.paragraph == "true" || question.paragraph == "1"){
-		html += "<span class='para-text'>"+question.paragraphText+"</span>";
+		html += "<div class='ques-detail'>"+
+					"<span class='para-text'>"+question.paragraphText+"</span>"+
+					"<span class='question-text'>"+question.questionText+"</span>"+
+				"</div>";
 	}
-	html += "<br/><br/><span class='question-text'>"+question.questionText+"</span>"+
-			"</div>"+
+	else{
+		html += "<span class='question-text'>"+question.questionText+"</span>";
+	}
+	html += "</div>"+
 			"<div class='options'>";
 	var markedAnswer = -1;
 	if(question.markedOption != 'null' && question.markedOption != null && question.markedOption != '[]'){
