@@ -78,13 +78,15 @@ from this Site is expressly prohibited.</font>
 		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
+		<script type='text/javascript' src='../ReusableFunctions/framework.js'></script>
 		<script type='text/javascript'>
 			LoadCSS('../ReusableFunctions/common');
 			LoadCSS('../css/privacy');
-			LoadJS('../controller/privacy', function(){
-				LoadJS('../ReusableFunctions/modal-struct', function(){
-					new privacyController();
+			LoadJS('../ReusableFunctions/test2bsure', function(){
+				LoadJS('../controller/privacy', function(){
+					LoadJS('../ReusableFunctions/modal-struct', function(){
+						new privacyController();
+					});
 				});
 			});
 		</script>

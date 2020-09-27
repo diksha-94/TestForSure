@@ -225,6 +225,12 @@ html body.nobodyscroll {
 #loginModal .modal-footer {
 	margin-top: 35px;
 }
+#loginModal #linkRegister,
+#loginModal #linkForgot,
+#loginModal #linkVerification,
+#registerModal #linkToLogin{
+	cursor: pointer;
+}
 
 /* Header in mobile View */
 .mobileView{

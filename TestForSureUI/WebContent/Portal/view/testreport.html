@@ -81,13 +81,15 @@
 		<script type='text/javascript' src='../../helperJS/highcharts-8.0.0.js'></script>
 		<!-- <script src = "https://code.highcharts.com/highcharts.js"></script>  
 		<script src = "https://code.highcharts.com/highcharts-3d.js"></script>-->
-		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
+		<script type='text/javascript' src='../ReusableFunctions/framework.js'></script>
 		<script type='text/javascript'>
 			LoadCSS('../ReusableFunctions/common');
 			LoadCSS('../css/testreport');
-			LoadJS('../controller/testreport', function(){
-				LoadJS('../ReusableFunctions/modal-struct', function(){
-					new testReportController();
+			LoadJS('../ReusableFunctions/test2bsure', function(){
+				LoadJS('../controller/testreport', function(){
+					LoadJS('../ReusableFunctions/modal-struct', function(){
+						new testReportController();
+					});
 				});
 			});
 		</script>

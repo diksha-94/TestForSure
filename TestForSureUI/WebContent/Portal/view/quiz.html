@@ -30,13 +30,15 @@
 		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
+		<script type='text/javascript' src='../ReusableFunctions/framework.js'></script>
 		<script type='text/javascript'>
 			LoadCSS('../ReusableFunctions/common');
 			LoadCSS('../css/quiz');
-			LoadJS('../controller/quiz', function(){
-				LoadJS('../controller/user', function(){
-					new quizController();
+			LoadJS('../ReusableFunctions/test2bsure', function(){
+				LoadJS('../controller/quiz', function(){
+					LoadJS('../controller/user', function(){
+						new quizController();
+					});
 				});
 			});
 		</script>

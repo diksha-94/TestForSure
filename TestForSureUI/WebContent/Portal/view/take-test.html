@@ -100,13 +100,15 @@
 		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
-		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
+		<script type='text/javascript' src='../ReusableFunctions/framework.js'></script>
 		<script type='text/javascript'>
 			LoadCSS('../ReusableFunctions/common');
 			LoadCSS('../css/take-test');
-			LoadJS('../controller/take-test', function(){
-				LoadJS('../ReusableFunctions/modal-struct', function(){
-					new testController();
+			LoadJS('../ReusableFunctions/test2bsure', function(){
+				LoadJS('../controller/take-test', function(){
+					LoadJS('../ReusableFunctions/modal-struct', function(){
+						new testController();
+					});
 				});
 			});
 		</script>

@@ -8,7 +8,7 @@
 		<link rel="icon" href="../images/final/favicon.png" type="image/png" sizes="16x16">
 		<link rel="stylesheet" href="../../helperCSS/bootstrap.min.css">
 		<link rel="stylesheet" href="../../helperCSS/font-awesome.min.css">
-		<script type='text/javascript' src='../ReusableFunctions/test2bsure.js'></script>
+		<script type='text/javascript' src='../ReusableFunctions/framework.js'></script>
 		<script type='text/javascript'>
 			LoadCSS('../ReusableFunctions/common');
 			LoadCSS('../css/dashboard');
@@ -39,8 +39,10 @@
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
 		<script type='text/javascript'>
-			LoadJS('../controller/dashboard', function(){
-				new dashboardController();			
+			LoadJS('../ReusableFunctions/test2bsure', function(){
+				LoadJS('../controller/dashboard', function(){
+					new dashboardController();			
+				});
 			});
 		</script>
 	</body>
