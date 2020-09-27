@@ -1,3 +1,6 @@
+body{
+	padding: 0px !important;
+}
 .button{
 	height: 30px;
 	width: 100%;
