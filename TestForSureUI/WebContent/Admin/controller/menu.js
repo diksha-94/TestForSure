@@ -9,22 +9,37 @@ menuController.prototype.Init = function()
 menuController.prototype.BindMenuEvents = function()
 {
 	$(this.view).find('ul').find('li').unbind().bind('click', function(e){
-		var action = $(e.currentTarget).attr('data-action');
-		var title = $(e.currentTarget).attr('data-title');
-		var controller = $(e.currentTarget).attr('data-controller');
-		var content = $(e.currentTarget).attr('data-content');
-		$('.menu-tabs').find('li').removeClass('active');
-		if($('.menu-tabs').find('li').find('a[href="#'+action+'"]').length == 0){
-			var tab = '<li class="active"><a data-toggle="pill" href="#'+action+'" data-controller="' +controller + '" data-content="' +content+ '">'+title+'</li>';
-			$('.menu-tabs').append(tab);
+		var listing = true;
+		if(typeof $(e.currentTarget).attr('listing') != 'undefined'){
+			listing = $(e.currentTarget).attr('listing');
 		}
+		if(listing == true){
+			var action = $(e.currentTarget).attr('data-action');
+			var title = $(e.currentTarget).attr('data-title');
+			var controller = $(e.currentTarget).attr('data-controller');
+			var content = $(e.currentTarget).attr('data-content');
+			$('.menu-tabs').find('li').removeClass('active');
+			if($('.menu-tabs').find('li').find('a[href="#'+action+'"]').length == 0){
+				var tab = '<li class="active"><a data-toggle="pill" href="#'+action+'" data-controller="' +controller + '" data-content="' +content+ '">'+title+'</li>';
+				$('.menu-tabs').append(tab);
+			}
 		
-		//nav-tabs event binding
-		$('.menu-tabs').find('li').find('a').unbind().bind('click', function(e){
-			this.HandleEvents(e);
-		}.bind(this));
-		$('.menu-tabs').find('li').find('a[href="#'+action+'"]').click();
-		window.location.hash = $(e.currentTarget).attr('id');
+			//nav-tabs event binding
+			$('.menu-tabs').find('li').find('a').unbind().bind('click', function(e){
+				this.HandleEvents(e);
+			}.bind(this));
+			$('.menu-tabs').find('li').find('a[href="#'+action+'"]').click();
+			window.location.hash = $(e.currentTarget).attr('id');
+		}
+		else{
+			//No listing required, directly open modal for edit
+			var controller = $(e.currentTarget).attr('data-controller');
+			LoadCSS(controller);
+			LoadJS(controller, function(){
+				controller = controller + "Controller";
+				eval("new " + controller + "()");
+			});
+		}
 	}.bind(this));
 	//Click Dashboard on page load
 	var hash = window.location.hash;

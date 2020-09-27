@@ -60,6 +60,9 @@ dashboardController.prototype.LoadMenu = function()
 					"<li id='menuFilter' data-action='menu_filter' data-title='Filter' data-controller='contentlisting' data-content='filter'>"+
 						"<span>Filter</span>"+
 					"</li>"+
+					"<li id='menuFooterLinks' data-action='menu_footer' data-title='Footer Links' data-controller='footerlinks' listing='false'>"+
+						"<span>Footer Links</span>"+
+					"</li>"+
 					"<li id='menuUser' data-action='menu_user' data-title='User Tracking' data-controller='contentlisting' data-content='usertracking'>"+
 						"<span>User Tracking</span>"+
 					"</li>"+
