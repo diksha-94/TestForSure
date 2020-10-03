@@ -40,6 +40,9 @@ AutoComplete.prototype.Search = function()
 		case 'quiz':
 			url = remoteServer+'/test2bsure/quiz?search='+search;
 			break;
+		case 'quizsubject':
+			url = remoteServer+'/test2bsure/quizsubject?search='+search;
+			break;
 	}
 	this.SearchData(search, url, function(){
 		if(Object.keys(this.result).length > 0){
@@ -54,7 +57,14 @@ AutoComplete.prototype.Search = function()
 			var html = '';
 			for(var item in this.result){
 				if(this.selectedItems.indexOf(item) == -1){
-					html += '<div><span data-id="'+item+'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">'+this.result[item]["title"]+'</span></div>';
+					var title = "";
+					if(typeof this.result[item]["title"] != 'undefined'){
+						title = this.result[item]["title"];
+					}
+					else if(typeof this.result[item]["name"] != 'undefined'){
+						title = this.result[item]["name"];
+					}
+					html += '<div><span data-id="'+item+'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">'+title+'</span></div>';
 				}
 			}
 			$(this.typeId).siblings('.autocomplete-div').html(html);
@@ -111,7 +121,14 @@ AutoComplete.prototype.SetSelectedValues = function(element, data)
 {
 	var html = "";
 	for(var value in data){
-		html += "<span class='outerSpan' title='"+data[value].title+"'><span data-id='"+data[value].id+"'>"+
+		var title = "";
+		if(typeof data[value].title != 'undefined'){
+			title = data[value].title;
+		}
+		else if(typeof data[value].name != 'undefined'){
+			title = data[value].name;
+		}
+		html += "<span class='outerSpan' title='"+title+"'><span data-id='"+data[value].id+"'>"+
 		data[value].title+"</span>"+
 		"<span class='btnRemove'>x</span></span>";
 	}
@@ -127,7 +144,7 @@ AutoComplete.prototype.SearchData = function(search, url, callback)
 		success: function(response){
 			this.result = {};
 			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
+				if(response.data != null && ((Array.isArray(response.data) && response.data.length > 0) || (Object.keys(response.data).length > 0))){
 					var results = response.data;
 					for(var result in results){
 						this.result[results[result]["id"]] = results[result];

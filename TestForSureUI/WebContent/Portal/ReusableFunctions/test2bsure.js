@@ -160,15 +160,7 @@ test2bsureController.prototype.GetFooter = function(dom){
 	var html = "<div class='footer'>"+
 					"<div class='left col-xs-12 col-sm-12 col-md-7 col-lg-7'>"+
 						"<img src='../images/final/logo_white.png' class='logo-image-footer' alt='TEST-2B-SURE' />"+
-						"<p class='about-us-footer'>Test2BSure.com is an online portal for "+
-						"all types of competitive exams (Technical and Non-Technical) to "+
-						"check performance/capability of a candidate before the actual exam. "+
-						"This portal is especially focussed on those competitive exams which "+
-						"are not easily available online. Using this portal, a candidate can "+
-						"take a test free of cost and analyze his/her weak and strong points "+
-						"with the help of statistics in the form of graphs provided in the "+
-						"report section after end of the test and able to improve his/her "+
-						"weak points.</p>"+
+						
 					"</div>"+
 					"<div class='right col-xs-12 col-sm-12 col-md-5 col-lg-5'>"+
 						"<h3>Follow Us</h3>"+
@@ -194,7 +186,9 @@ test2bsureController.prototype.GetFooter = function(dom){
 				"</div>";
 	$(dom).append(html);
 	LoadCSS('../css/footer');
-	LoadJS('../controller/footer');
+	LoadJS('../controller/footer', function(){
+		new footerController();
+	});
 }
 test2bsureController.prototype.QueryString = function(url, key){
 	var queryString = url.split('?')[1];
