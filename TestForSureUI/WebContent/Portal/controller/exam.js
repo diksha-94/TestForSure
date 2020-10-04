@@ -3,8 +3,17 @@ var examController = function(){
 	this.exam = {};
 	this.tests = {};
 	this.quizzes = {};
+	this.LoadPage();
 	this.Init();
 };
+examController.prototype.LoadPage = function()
+{
+	var html = '<div class="exam-header common-header">'+
+	'<h1>Exam Page</h1>'+
+	
+	'</div>';
+	$('body').html(html);
+}
 examController.prototype.Init = function()
 {
 	//Load header

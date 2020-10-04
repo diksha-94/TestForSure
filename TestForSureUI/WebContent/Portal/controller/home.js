@@ -3,8 +3,64 @@ var homeController = function(){
 	this.exam = {};
 	this.testCount = {};
 	this.quizCount = {};
+	this.LoadPage();
 	this.Init();
 };
+homeController.prototype.LoadPage = function()
+{
+	var html = '<div class="home-header common-header">'+
+	
+	'</div>'+
+	'<div class="common-content home-content col-xs-12 col-sm-12 col-md-12 col-lg-12">'+
+		'<div class="banner col-xs-12 col-sm-12 col-md-12 col-lg-12 container" style="z-index: -1;">'+
+			'<div id="myCarousel" class="carousel slide" data-ride="carousel">'+
+		    
+		    '<ol class="carousel-indicators">'+
+		      '<li data-target="#myCarousel" data-slide-to="0" class="active"></li>'+
+		      '<li data-target="#myCarousel" data-slide-to="1"></li>'+
+		      '<li data-target="#myCarousel" data-slide-to="2"></li>'+
+		      '<li data-target="#myCarousel" data-slide-to="3"></li>'+
+		    '</ol>'+
+		
+		    '<div class="carousel-inner">'+
+		      '<div class="item active">'+
+		        '<img src="WebContent/Portal/images/final/carousal-1.png" alt="Test" style="width:100%;height:300px;">'+
+		      '</div>'+
+		     '<div class="item">'+
+		        '<img src="WebContent/Portal/images/final/carousal-2.png" alt="Test" style="width:100%;height:300px;">'+
+		      '</div>'+
+		      '<div class="item">'+
+		        '<img src="WebContent/Portal/images/final/carousal-3.png" alt="Test" style="width:100%;height:300px;">'+
+		      '</div>'+
+		      '<div class="item">'+
+		        '<img src="WebContent/Portal/images/final/carousal-4.png" alt="Test" style="width:100%;height:300px;">'+
+		      '</div>'+
+		    '</div>'+
+		
+		    '<a class="left carousel-control" href="#myCarousel" data-slide="prev">'+
+		      '<span class="glyphicon glyphicon-chevron-left"></span>'+
+		      '<span class="sr-only">Previous</span>'+
+		    '</a>'+
+		    '<a class="right carousel-control" href="#myCarousel" data-slide="next">'+
+		      '<span class="glyphicon glyphicon-chevron-right"></span>'+
+		      '<span class="sr-only">Next</span>'+
+		    '</a>'+
+		  '</div>'+
+		'</div>'+
+		'<div class="category-exam-listing col-xs-12 col-sm-12 col-md-12 col-lg-12 container">'+
+			'<div class="category-listing col-xs-12 col-sm-12 col-md-3 col-lg-3 hide">'+
+				
+			'</div>'+
+			'<div class="exam-listing col-xs-12 col-sm-12 col-md-12 col-lg-12">'+
+				
+			'</div>'+
+		'</div>'+
+	'</div>'+
+	'<div class="home-footer common-footer col-xs-12 col-sm-12 col-md-12 col-lg-12">'+
+		
+	'</div>';
+	$('body').html(html);
+}
 homeController.prototype.Init = function()
 {
 	//Load header
