@@ -160,7 +160,7 @@
 	transform: translate(-50%);
 }
 .test-listing ul li .controls {
-	padding:20px 0px;
+	padding: 12px 0px 5px 0px;
 }
 .test-listing ul li .controls .button[disabled="disabled"]:hover {
     transform: scale(1);
@@ -182,6 +182,8 @@
 	background-color: #e4e4e4;
 	border-radius: 30px;
 	font-weight: bold;
+	font-size: 0.95em;
+	padding: 3px;
 }
 .controls button {
     margin-top: 8px;
@@ -256,7 +258,14 @@
 	margin-top: 30px;
 	padding: 0px;
 }
-
+.test-listing ul li .attemptInfo{
+	text-align: center;
+}
+.test-listing ul li .attemptInfo span{
+	font-size: 0.85em;
+	color: #5CB85C;
+	font-weight: bold;
+}
 @media only screen and (max-width: 767px) {
 	.test-listing ul li{
 		width: 100%;	

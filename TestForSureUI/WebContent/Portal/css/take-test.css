@@ -76,18 +76,31 @@
 	flex-wrap: wrap;
 	justify-content: center;
 }
+.test-ques-status .ques-status-info .main-status{
+	margin-bottom: 5px;
+}
 .test-ques-status .ques-status-info{
 	padding: 12px 8px;
 }
 .test-ques-status .ques-status-info .status-info{
-	width: 10px;
-	height: 10px;
+	width: 25px;
+	height: 25px;
 	display: inline-block;
 	margin-right: 10px;
+	padding: 2px 0px;
+	text-align: center;
+	color: #FFF;
+}
+.test-ques-status .ques-status-info .status-info span{
+	text-align: center;
+}
+.test-ques-status .ques-status-info .status-span{
+	display: inline-block;
 }
 .test-ques-status .ques-status-info .status-info.not-visited{
 	background-color: #E4E4E4;
 	border: solid 1px #E4E4E4;
+	color: #000;
 }
 .test-ques-status .ques-status-info .status-info.answered{
 	background-color: #5CB85C;
@@ -103,7 +116,8 @@
 }
 .test-ques-status .ques-status-info .status-info.marked-answered{
 	background-color: #5CB85C;
-	border:solid 2px #9B59B6;
+	border:solid 3px #9B59B6;
+	padding: 0;
 }
 .test-ques-status .ques-status div[ques-no]{
 	float: left;

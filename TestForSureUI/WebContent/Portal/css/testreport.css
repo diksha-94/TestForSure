@@ -99,14 +99,26 @@
 	flex-wrap: wrap;
 	justify-content: center;
 }
+.solution-ques-status .ques-status-info .main-status{
+	margin-bottom: 5px;
+}
 .solution-ques-status .ques-status-info{
 	padding: 12px 8px;
 }
 .solution-ques-status .ques-status-info .status-info{
-	width: 10px;
-	height: 10px;
+	width: 25px;
+	height: 25px;
 	display: inline-block;
 	margin-right: 10px;
+	padding: 2px 0px;
+	text-align: center;
+	color: #FFF
+}
+.solution-ques-status .ques-status-info .status-info span{
+	text-align: center;
+}
+.solution-ques-status .ques-status-info .status-span{
+	display: inline-block;
 }
 .solution-ques-status .ques-status-info .status-info.skipped{
 	background-color: grey;
@@ -127,6 +139,7 @@
 .solution-ques-status .ques-status-info .status-info.missed{
 	background-color: #E4E4E4;
 	border:solid 2px #E4E4E4;
+	color: #000;
 }
 .solution-ques-status .ques-status div[ques-no]{
 	float: left;

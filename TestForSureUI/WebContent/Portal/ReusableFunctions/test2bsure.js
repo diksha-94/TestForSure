@@ -268,7 +268,7 @@ test2bsureController.prototype.TestCard = function(test)
 			}
 		}
 	}
-	html += "<div class='controls'>";
+	html += "<div class='controls col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	if(attemptFlag == true){
 		//means the test is already attempted atleast once, show the report button
 		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnReportTest button button-default'>Report</button>";
@@ -287,6 +287,28 @@ test2bsureController.prototype.TestCard = function(test)
 	else{
 		html += "<button class='col-xs-6 col-sm-6 col-md-6 col-lg-6 btnStartTest button button-primary' disabled='disabled' title='No. of Attempts finished'>Start Test</button>";
 	}
+	html += "</div>";
+	//Attempt info
+	html += "<div class='attemptInfo'>";
+	var attemptMsg = "";
+	var userId = -1;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+	}
+	if(test.noOfAttempts == -1){
+		attemptMsg = "Unlimited Attempts available";
+	}
+	else{
+		if(userId == -1){
+			//User not logged in
+			attemptMsg = test.noOfAttempts+" Attempts available";
+		}
+		else{
+			//User logged in
+			attemptMsg = (parseInt(test.noOfAttempts) - parseInt(attemptCount)) + " / " + test.noOfAttempts+" Attempts available";
+		}
+	}
+	html += "<span>" + attemptMsg + "</span>";
 	html += "</div>";
 	return html;
 };

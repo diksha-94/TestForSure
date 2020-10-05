@@ -57,6 +57,7 @@ testReportController.prototype.SetState = function(obj)
 		$('.solution-section').show();
 		$('.btnSolution').text('Analytics');
 		this.PopulateSolution();
+		this.UpdateQuestionStatusCount();
 	}
 };
 testReportController.prototype.BindEvents = function()
@@ -506,4 +507,33 @@ testReportController.prototype.CurrentQuesStatusHighlight = function()
 {
 	$('.solution-ques-status').find('.ques-status').find('div').removeClass('selected');
 	$('.solution-ques-status').find('.ques-status').find('div[ques-no='+this.currentQues+']').addClass('selected');
+};
+testReportController.prototype.UpdateQuestionStatusCount = function(){
+	var correct = 0;
+	var wrong = 0;
+	var missed = 0;
+	var skipped = 0;
+	var marked = 0;
+	$('.solution-ques-status').find('.ques-status').find('div[ques-no]').each(function(key, value){
+		if($(value).hasClass('correct')){
+			correct++;
+		}
+		else if($(value).hasClass('wrong')){
+			wrong++;
+		}
+		else if($(value).hasClass('missed')){
+			missed++;
+		}
+		else if($(value).hasClass('skipped')){
+			skipped++;
+		}
+		else if($(value).hasClass('marked')){
+			marked++;
+		}
+	}.bind(this));
+	$('.ques-status-info').find('.status-info.correct').find('span').text(correct);
+	$('.ques-status-info').find('.status-info.wrong').find('span').text(wrong);
+	$('.ques-status-info').find('.status-info.missed').find('span').text(missed);
+	$('.ques-status-info').find('.status-info.skipped').find('span').text(skipped);
+	$('.ques-status-info').find('.status-info.marked').find('span').text(marked);
 };
