@@ -384,7 +384,8 @@ testReportController.prototype.DisplayQuestion = function()
 	var totalTestTime = this.testInfo.totalTime * 60;
 	question.timeSpent = question.timeSpent > totalTestTime ? totalTestTime : question.timeSpent;
 	html +=	"<span class='ques-status'>"+quesStatus+"</span>"+
-				"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
+			"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
+			"<span class='ques-marks'>0 mark(s)</span>"
 			"</div>"+
 			"<div class='ques-detail'>";
 	if(question.paragraph == "true" || question.paragraph == "1"){
@@ -446,6 +447,17 @@ testReportController.prototype.DisplayQuestion = function()
 	html += "</div>";
 	html += "<div class='ques-solution'><h5>Solution: </h5><p>"+question.solution+"</p></div>";
 	$('.solution-section').find('.solution-questions').find('.questions').html(html);
+	if(markedAnswer == -1){
+		$('.ques-marks').text("0 mark(s)");
+	}
+	else if(markedAnswer == correctAnswer){
+		$('.ques-marks').text("+ "+parseInt(this.testInfo.totalQues)/parseInt(this.testInfo.totalMarks) + " mark(s)");
+		$('.ques-marks').addClass('correct');
+	}
+	else{
+		$('.ques-marks').text("- "+this.testInfo.negativeMarks + " mark(s)");
+		$('.ques-marks').addClass('wrong');
+	}
 	$('.question').find('.question-desc').find('.ques-status').css('background-color', bgColor);
 	$('.question').find('.question-desc').find('.ques-status').css('color', color);
 };

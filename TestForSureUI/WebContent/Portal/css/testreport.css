@@ -252,6 +252,16 @@
 	font-size: 0.85em;
 	font-weight: bold;
 }
+.solution-section .solution-questions .question .question-desc .ques-marks{
+	float: right;
+	padding: 5px;
+}
+.solution-section .solution-questions .question .question-desc .ques-marks.wrong{
+	color: #D9534F;
+}
+.solution-section .solution-questions .question .question-desc .ques-marks.correct{
+	color: #5CB85C;
+}
 .solution-section .solution-questions .question .question-desc .ques-time span{
 	margin-left: 8px;
 }
