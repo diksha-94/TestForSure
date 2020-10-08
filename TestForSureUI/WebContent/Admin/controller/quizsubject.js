@@ -11,8 +11,12 @@ quizsubjectController.prototype.AddEdit = function()
 	RefreshData('quizsubjectModal');
 	if(this.id > 0){
 		this.Edit();
+		$('#txtQuizSubjectName').unbind('keyup');
 	}
 	else{
+		$('#txtQuizSubjectName').unbind().bind('keyup', function(e){
+			populateUrlKey($(e.currentTarget).val(), $('#txtQuizSubjectUrlKey'));
+		});
 		new AutoComplete('ddSubjectQuiz', 'quiz');
 	}
 	$('#quizsubjectModal').find('#btnSubjectSave').unbind().bind('click', function(){
@@ -31,16 +35,18 @@ quizsubjectController.prototype.SaveData = function()
 {
 	console.log('Saving (Add/Update) Quiz Subject');
 	var name = $('#txtQuizSubjectName').val();
+	var urlKey = $('#txtQuizSubjectUrlKey').val();
 	var displayIndex = $('#txtQuizSubjectIndex').val();
 	var quizzes = GetSelectedValues('ddSubjectQuiz');
-	if(name.length == 0){
-		alert('Please enter name');
+	if(name.length == 0 || urlKey.length == 0){
+		alert('Please enter all the mandatory fields.');
 		return;
 	}
 	var url = remoteServer+'/test2bsure/quizsubject';
 	var type = 'POST';
 	var requestData = {
 			'name': name,
+			'urlKey': urlKey,
 			'displayIndex': displayIndex,
 			'quizIds': quizzes
 	};

@@ -15,8 +15,12 @@ testController.prototype.AddEdit = function()
 	RefreshData('testDetailsModal');
 	if(this.id > 0){
 		this.Edit();
+		$('#txtTestTitle').unbind('keyup');
 	}
 	else{
+		$('#txtTestTitle').unbind().bind('keyup', function(e){
+			populateUrlKey($(e.currentTarget).val(), $('#txtTestUrlKey'));
+		});
 		new AutoComplete('ddTestExam', 'exams');
 		new AutoComplete('ddRelatedTests', 'tests');
 	}
@@ -51,6 +55,7 @@ testController.prototype.SaveData = function(openNext, callback)
 	console.log('Saving (Add/Update) Test');
 	var name = $('#txtTestName').val();
 	var title = $('#txtTestTitle').val();
+	var urlKey = $('#txtTestUrlKey').val();
 	var displayIndex = $('#txtTestIndex').val();
 	var questions = $('#txtTestQuestions').val();
 	var time = $('#txtTestTime').val();
@@ -77,7 +82,7 @@ testController.prototype.SaveData = function(openNext, callback)
 	
 	var instructions = summernoteController.getObj().getValue('#txtTestInstructions');
 	
-	if(name.length == 0 || title.length == 0 || questions.lenght == 0 || time.length == 0 || marks.length == 0 ||
+	if(name.length == 0 || title.length == 0 || urlKey.length == 0 || questions.lenght == 0 || time.length == 0 || marks.length == 0 ||
 			allowedAttempts.length == 0 || negativeMarks.length == 0 || passPercent.length == 0){
 		alert('Please enter all the mandatory fields');
 		return;
@@ -114,6 +119,7 @@ testController.prototype.SaveData = function(openNext, callback)
 	var requestData = {
 			'name': name,
 			'title': title,
+			'urlKey': urlKey,
 			'displayIndex': displayIndex,
 			'noOfSections': sectionDetails.length,
 			'sectionDetails': JSON.stringify(sectionDetails),

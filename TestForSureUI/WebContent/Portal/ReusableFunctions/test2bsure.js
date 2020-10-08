@@ -577,4 +577,4 @@ test2bsureController.prototype.ShowRewardInstructions = function()
 		$('body').append(modal);
 	}
 	$('#rewardInstructionModal').modal('show');
-}
+};

@@ -20,25 +20,4 @@ indexController.prototype.Init = function()
 			eval("new " + controller + "()");
 		});
 	});
-}
-
-function readSingleFile() {
-	$('body').load("WebContent/Portal/view/home.html");R
-    //Retrieve the first (and only!) File from the FileList object
-    /*var f = "WebContent/Portal/view/home.html";
-
-    if (f) {
-        var r = new FileReader();
-        r.onload = function (e) {
-            var contents = e.target.result;
-            console.log(contents);
-        }
-        r.readAsText(f);
-    } else {
-        alert("Failed to load file");
-    }*/
-}
-
-function load_home() {
-    document.getElementById("content").innerHTML='<object type="text/html" data="WebContent/Portal/view/home.html" ></object>';
-}
+};

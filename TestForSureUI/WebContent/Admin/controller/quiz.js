@@ -15,8 +15,12 @@ quizController.prototype.AddEdit = function()
 	this.LoadQuizSubjects(function(){
 		if(this.id > 0){
 			this.Edit();
+			$('#txtQuizTitle').unbind('keyup');
 		}
 		else{
+			$('#txtQuizTitle').unbind().bind('keyup', function(e){
+				populateUrlKey($(e.currentTarget).val(), $('#txtQuizUrlKey'));
+			});
 			new AutoComplete('ddQuizExam', 'exams');
 			new AutoComplete('ddQuizFilter', 'filters');
 		}
@@ -53,6 +57,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 	console.log('Saving (Add/Update) Quiz');
 	var name = $('#txtQuizName').val();
 	var title = $('#txtQuizTitle').val();
+	var urlKey = $('#txtQuizUrlKey').val();
 	var displayIndex = $('#txtQuizIndex').val();
 	var questions = $('#txtQuizQuestions').val();
 	var marks = $('#txtQuizMarks').val();
@@ -76,7 +81,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 	if($('#ddQuizSubject').val() != ''){
 		subject = $('#ddQuizSubject').val();
 	}
-	if(name.length == 0 || title.length == 0 || questions.length == 0 || marks.length == 0 ||
+	if(name.length == 0 || title.length == 0 || urlKey.length == 0 || questions.length == 0 || marks.length == 0 ||
 			attempts.length == 0){
 		alert('Please enter all the mandatory fields');
 		return;
@@ -86,6 +91,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 	var requestData = {
 		'name': name,
 		'title': title,
+		'urlKey': urlKey,
 		'displayIndex': displayIndex,
 		'noOfQues': questions,
 		'marksPerQues': marks,
