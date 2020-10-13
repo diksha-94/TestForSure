@@ -265,7 +265,6 @@ function getQuestion(id, callback){
 
 function populateUrlKey(value, dom){
 	//Remove special characters and replace space with hyphen
-	value =  value.replace(/[^a-zA-Z 0-9]+/g,'');
-	value =  value.replace(/ /g,'-');
+	value =  value.replace(/[^a-zA-Z0-9- ]+/g,'').replace(/ /g,'-').toLowerCase();
 	$(dom).val(value);
 }
