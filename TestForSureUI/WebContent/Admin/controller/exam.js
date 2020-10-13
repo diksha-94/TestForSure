@@ -87,6 +87,10 @@ examController.prototype.SaveData = function()
 				alert(response.message);
 				$('.menu-tabs').find('li[class="active"]').find('a').click();
 			}
+			else{
+				alert(response.message);
+				return;
+			}
 		},
 		error: function(e){
 			console.log(e);
@@ -121,6 +125,7 @@ examController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#examModal').find('#txtExamName').val(item.name);
 					$('#examModal').find('#txtExamTitle').val(item.title);
+					$('#examModal').find('#txtExamUrlKey').val(item.urlKey);
 					$('#examModal').find('#txtExamIndex').val(item.displayIndex);
 					$('#examModal').find('#txtExamImageUrl').val(item.imageUrl);
 					$('#examModal').find('#ddCategory').val(item.category);

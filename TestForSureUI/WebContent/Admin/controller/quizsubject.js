@@ -105,6 +105,7 @@ quizsubjectController.prototype.Edit = function(e)
 				if(response.data != null && Object.keys(response.data).length > 0){
 					var item = response.data[this.id];
 					$('#quizsubjectModal').find('#txtQuizSubjectName').val(item.name);
+					$('#quizsubjectModal').find('#txtQuizSubjectUrlKey').val(item.urlKey);
 					$('#quizsubjectModal').find('#txtQuizSubjectIndex').val(item.displayIndex);
 					$('#quizsubjectModal').find('#ddSubjectQuiz').val('');
 					if(item.quizzes != null && item.quizzes.length > 0){

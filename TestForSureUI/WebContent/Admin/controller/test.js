@@ -228,6 +228,7 @@ testController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#testDetailsModal').find('#txtTestName').val(item.name);
 					$('#testDetailsModal').find('#txtTestTitle').val(item.title);
+					$('#testDetailsModal').find('#txtTestUrlKey').val(item.urlKey);
 					$('#testDetailsModal').find('#txtTestIndex').val(item.displayIndex);
 					$('#testDetailsModal').find('#txtTestQuestions').val(item.totalQues);
 					$('#testDetailsModal').find('#txtTestTime').val(item.totalTime);

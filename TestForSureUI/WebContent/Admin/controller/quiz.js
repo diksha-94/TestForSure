@@ -195,6 +195,7 @@ quizController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#quizModal').find('#txtQuizName').val(item.name);
 					$('#quizModal').find('#txtQuizTitle').val(item.title);
+					$('#quizModal').find('#txtQuizUrlKey').val(item.urlKey);
 					$('#quizModal').find('#txtQuizIndex').val(item.displayIndex);
 					$('#quizModal').find('#txtQuizQuestions').val(item.noOfQues);
 					$('#quizModal').find('#txtQuizMarks').val(item.marksPerQues);
