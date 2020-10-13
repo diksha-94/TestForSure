@@ -19,6 +19,9 @@ quizsubjectController.prototype.AddEdit = function()
 		});
 		new AutoComplete('ddSubjectQuiz', 'quiz');
 	}
+	$('#txtQuizSubjectUrlKey').unbind().bind('keyup', function(e){
+		populateUrlKey($(e.currentTarget).val(), $(e.currentTarget));
+	});
 	$('#quizsubjectModal').find('#btnSubjectSave').unbind().bind('click', function(){
 		this.SaveData();
 	}.bind(this));

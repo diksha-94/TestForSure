@@ -26,6 +26,9 @@ examController.prototype.AddEdit = function()
 				populateUrlKey($(e.currentTarget).val(), $('#txtExamUrlKey'));
 			});
 		}
+		$('#txtExamUrlKey').unbind().bind('keyup', function(e){
+			populateUrlKey($(e.currentTarget).val(), $(e.currentTarget));
+		});
 	}.bind(this));
 	
 	$('#examModal').find('#btnExamSave').unbind().bind('click', function(){

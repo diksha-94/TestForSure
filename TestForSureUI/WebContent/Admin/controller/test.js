@@ -24,6 +24,9 @@ testController.prototype.AddEdit = function()
 		new AutoComplete('ddTestExam', 'exams');
 		new AutoComplete('ddRelatedTests', 'tests');
 	}
+	$('#txtTestUrlKey').unbind().bind('keyup', function(e){
+		populateUrlKey($(e.currentTarget).val(), $(e.currentTarget));
+	});
 	$('#testDetailsModal').find('#btnTestDetailsSave').unbind().bind('click', function(){
 		this.SaveData();
 	}.bind(this));

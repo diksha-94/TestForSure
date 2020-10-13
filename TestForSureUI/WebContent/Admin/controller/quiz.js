@@ -24,6 +24,9 @@ quizController.prototype.AddEdit = function()
 			new AutoComplete('ddQuizExam', 'exams');
 			new AutoComplete('ddQuizFilter', 'filters');
 		}
+		$('#txtQuizUrlKey').unbind().bind('keyup', function(e){
+			populateUrlKey($(e.currentTarget).val(), $(e.currentTarget));
+		});
 	}.bind(this));
 	
 	$('#quizModal').find('#btnQuizSave').unbind().bind('click', function(){
