@@ -1,30 +1,35 @@
-var examController = function(){
-	this.id = 0;
+var examController = function(id){
+	this.id = id;
 	this.exam = {};
 	this.tests = {};
 	this.quizzes = {};
-	this.LoadPage();
 	this.Init();
+};
+examController.prototype.Init = function()
+{
+	this.LoadPage();
+	this.LoadData();
 };
 examController.prototype.LoadPage = function()
 {
-	var html = '<div class="exam-header common-header">'+
-	'<h1>Exam Page</h1>'+
-	
-	'</div>';
-	$('body').html(html);
+	var html = "<div class='exam-banner col-xs-12 col-sm-12 col-md-12 col-lg-12 container' style='z-index: -1;'>"+
+					"<h4 class='col-xs-12 col-sm-12 col-md-5 col-lg-5'></h4>"+
+					"<div class='col-xs-12 col-sm-12 col-md-7 col-lg-7'></div>"+
+			   "</div>"+
+			   "<div class='exam-outer col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='exam-page col-xs-12 col-sm-12 col-md-12 col-lg-12 container'>"+
+						"<div class='exam-items col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1'>"+
+							"<div id='test-listing' class='test-listing col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+							"</div>"+
+							"<div id='quiz-listing' class='quiz-listing col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+							"</div>"+
+						"</div>"+
+					"</div>"+
+					"<div class='exam-info-detail col-xs-12 col-sm-12 col-md-12 col-lg-12'></div>"+
+			   "</div>";
+						
+	$('body .common-content').html(html);
 }
-examController.prototype.Init = function()
-{
-	//Load header
-	test2bsureController.getObj().GetHeader(".exam-header", function(){
-		//Read id from query string
-		this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
-		this.LoadData();
-		//Load footer
-		test2bsureController.getObj().GetFooter(".exam-footer");
-	}.bind(this));
-};
 examController.prototype.LoadData = function()
 {
 	var id = this.id;

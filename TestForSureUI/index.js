@@ -1,23 +1,46 @@
 var indexController = function(){
+	this.pageType = ""; //controller
+	this.pageId = -1;   //id
 	this.Init();
 };
 indexController.prototype.Init = function()
 {
 	console.log("Initialized !!");
-	var path = window.location.pathname;
-	var controller = "home";
-	if(path == "/"){
-		controller = "home";
+	var urlKey = window.location.pathname;
+	fetch(remoteServer+'/test2bsure/getpagedetails?urlkey='+urlKey)
+	  .then(response => response.json())
+	  .then(data => this.SetState({ pageType: data.pageType, pageId: data.pageId }));
+};
+indexController.prototype.SetState = function(obj)
+{
+	for(var key in obj){
+		this[key] = obj[key];
 	}
-	else if(path == "dsssb"){
-		controller = "exam";
-	}
+	LoadJS('WebContent/Portal/ReusableFunctions/Constants', function(){
+		this.DisplayPage();
+	}.bind(this));
+};
+indexController.prototype.DisplayPage = function()
+{
+	this.pageType = "test";
+	this.pageId = 99317;
+	var self = this;
 	LoadCSS('WebContent/Portal/ReusableFunctions/common');
-	LoadCSS('WebContent/Portal/css/'+controller);
 	LoadJS('WebContent/Portal/ReusableFunctions/test2bsure', function(){
-		LoadJS('WebContent/Portal/controller/'+controller, function(){
-			controller = controller + "Controller";
-			eval("new " + controller + "()");
+		if(headermenu.indexOf(self.pageType) > -1){
+			//Load header
+			test2bsureController.getObj().GetHeader(".common-header");
+		}
+		self.pageType = pageMapping[self.pageType] == "default" ? self.pageType : pageMapping[self.pageType];
+		
+		LoadCSS('WebContent/Portal/css/'+self.pageType);
+		
+		LoadJS('WebContent/Portal/controller/'+self.pageType, function(){
+				eval("new " + self.pageType + "Controller("+self.pageId+")");
 		});
+		if(footercontent.indexOf(self.pageType) > -1){
+			//Load footer
+			test2bsureController.getObj().GetFooter(".common-footer");
+		}
 	});
 };

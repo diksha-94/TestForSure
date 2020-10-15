@@ -1,4 +1,5 @@
-var quizController = function(){
+var quizController = function(id){
+	this.id = id;
 	this.exam = {};
 	this.quizzes = {};
 	this.filters = {};
@@ -11,15 +12,24 @@ var quizController = function(){
 };
 quizController.prototype.Init = function()
 {
-	//Load header
-	this.subjectId = test2bsureController.getObj().QueryString(window.location.href, 'id');
-	test2bsureController.getObj().GetHeader(".quiz-header", function(){
-		this.LoadData();
-		this.LoadFilters();
-		this.BindEvents();
-		//Load footer
-		test2bsureController.getObj().GetFooter(".quiz-footer");
-	}.bind(this));
+	this.LoadPage();
+	this.LoadData();
+	this.LoadFilters();
+	this.BindEvents();
+};
+quizController.prototype.LoadPage = function()
+{
+	var html = "<div class='mobileFilter hide col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<img class='filter-quiz' src='WebContent/Portal/images/filter.svg' alt='Filter Quizzes'/>"+	
+			   "</div>"+
+			   "<div class='quiz-listing col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='left col-xs-12 col-sm-12 col-md-3 col-lg-3'>"+
+					"</div>"+
+					"<div class='right col-xs-12 col-sm-12 col-md-9 col-lg-9'>"+
+					"</div>"+
+				"</div>"+
+				"<div class='mobileViewQuiz quizOverlay'></div>";
+	$('body .common-content').html(html);
 };
 quizController.prototype.BindEvents = function()
 {
@@ -50,7 +60,7 @@ quizController.prototype.LoadData = function()
 		&& typeof userController.getObj().userData.id != 'undefined'){
 		userId = userController.getObj().userData.id;
 	}
-	var url = remoteServer+'/test2bsure/quizzes?userId='+userId+'&subjectId='+this.subjectId+'&from='+this.from+'&count='+this.count+'&totalCount=1';
+	var url = remoteServer+'/test2bsure/quizzes?userId='+userId+'&subjectId='+this.id+'&from='+this.from+'&count='+this.count+'&totalCount=1';
 	if(typeof this.filterValues != 'undefined' && this.filterValues.length > 0){
 		url += '&filters=' + this.filterValues;
 	}
@@ -67,7 +77,7 @@ quizController.prototype.SetState = function(obj)
 };
 quizController.prototype.LoadFilters = function()
 {
-	fetch(remoteServer+'/test2bsure/item-filters?itemtype=1&subjectId='+this.subjectId)
+	fetch(remoteServer+'/test2bsure/item-filters?itemtype=1&subjectId='+this.id)
 	  .then(response => response.json())
 	  .then(data => this.SetFilterState({ filters: data.filters }));
 }
