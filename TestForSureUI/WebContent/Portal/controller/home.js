@@ -110,7 +110,7 @@ homeController.prototype.PopulateAllExams = function(id)
 						"<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 			for(var exam in this.exam){
 				if(this.exam[exam].category == this.category[category].id){
-					html += "<li class='col-xs-12 col-sm-12 col-md-3 col-lg-3' exam-id='"+this.exam[exam].id+"'>";
+					html += "<li class='col-xs-12 col-sm-12 col-md-3 col-lg-3' exam-id='"+this.exam[exam].id+"' data-action='"+this.exam[exam].urlKey+"'>";
 					html += test2bsureController.getObj().ExamCard(this.exam[exam], this.testCount, this.quizCount);
 					html +=	"</li>";
 				}
@@ -121,20 +121,8 @@ homeController.prototype.PopulateAllExams = function(id)
 		}
 	}
 	$('.exam-listing').html(html);
-	$('.exam-listing').find('.exam-data').find('.test-count').unbind().bind('click', function(e){
-		var examId = $(e.currentTarget).parents('li[exam-id]').attr('exam-id');
-		window.location.href = 'exam.html?id='+examId+'#test-listing';
-	});
-	$('.exam-listing').find('.exam-data').find('.quiz-count').unbind().bind('click', function(e){
-		var examId = $(e.currentTarget).parents('li[exam-id]').attr('exam-id');
-		window.location.href = 'exam.html?id='+examId+'#quiz-listing';
-	});
-	$('.exam-listing').find('.btnExplore').unbind().bind('click', function(e){
-		var examId = $(e.currentTarget).parents('li[exam-id]').attr('exam-id');
-		window.location.href = 'exam.html?id='+examId;
-	});
-	$('.exam-listing').find('li[exam-id]').unbind().bind('click', function(e){
-		var examId = $(e.currentTarget).attr('exam-id');
-		window.location.href = 'exam.html?id='+examId;
+	$('.exam-listing').find('li[data-action]').unbind().bind('click', function(e){
+		var action = $(e.currentTarget).attr('data-action');
+		window.open(action, "_self");
 	});
 };
