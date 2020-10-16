@@ -22,12 +22,13 @@ indexController.prototype.SetState = function(obj)
 };
 indexController.prototype.DisplayPage = function()
 {
-	this.pageType = "home";
-	this.pageId = 99317;
+	this.pageType = "exam";
+	this.pageId = 41;
+	this.originalPageType = this.pageType;
 	var self = this;
 	LoadCSS('WebContent/Portal/ReusableFunctions/common');
 	LoadJS('WebContent/Portal/ReusableFunctions/test2bsure', function(){
-		if(headermenu.indexOf(self.pageType) > -1){
+		if(headermenu.indexOf(self.originalPageType) > -1){
 			//Load header
 			test2bsureController.getObj().GetHeader(".common-header");
 		}
@@ -38,7 +39,7 @@ indexController.prototype.DisplayPage = function()
 		LoadJS('WebContent/Portal/controller/'+self.pageType, function(){
 				eval("new " + self.pageType + "Controller("+self.pageId+")");
 		});
-		if(footercontent.indexOf(self.pageType) > -1){
+		if(footercontent.indexOf(self.originalPageType) > -1){
 			//Load footer
 			test2bsureController.getObj().GetFooter(".common-footer");
 		}

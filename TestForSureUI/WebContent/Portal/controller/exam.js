@@ -71,7 +71,7 @@ examController.prototype.PopulateTests = function()
 	}
 	html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	for(var test in this.tests){
-		html += "<li test-id='"+this.tests[test].id+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
+		html += "<li test-id='"+this.tests[test].id+"' data-action='"+this.tests[test].urlKey+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
 		html += test2bsureController.getObj().TestCard(this.tests[test]);
 		html += "</li>";
 	}
@@ -86,8 +86,8 @@ examController.prototype.PopulateTests = function()
 			$('#btnLogin').click();
 			return false;
 		}
-		var testId = $(e.currentTarget).parents('li[test-id]').attr('test-id');
-		window.open('take-test.html?id='+testId, '_blank');
+		var action = $(e.currentTarget).parents('li[test-id]').attr('data-action');
+		window.open(action, '_blank');
 	});
 	$('.test-listing').find('.btnReportTest').unbind().bind('click', function(e){
 		var userId = -1;
@@ -110,7 +110,8 @@ examController.prototype.PopulateTests = function()
 			context: this,
 			success: function(response){
 				console.log(response);
-				window.location.href = 'testreport.html?sessionId='+response+'&report=1';
+				var action = $(e.currentTarget).parents('li[test-id]').attr('data-action');
+				window.open(action + '?sessionId='+response+'&report=1', "_self");
 			},
 			error: function(e){
 				console.log(e);
@@ -132,7 +133,7 @@ examController.prototype.PopulateQuizzes = function(exam)
 	}
 	html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	for(var quiz in this.quizzes){
-		html += "<li quiz-id='"+this.quizzes[quiz].id+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
+		html += "<li quiz-id='"+this.quizzes[quiz].id+"' data-action='"+this.quizzes[quiz].urlKey+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
 		html += test2bsureController.getObj().QuizCard(this.quizzes[quiz]);
 		html += "</li>";
 	}
@@ -147,8 +148,8 @@ examController.prototype.PopulateQuizzes = function(exam)
 			$('#btnLogin').click();
 			return false;
 		}
-		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
-		window.location.href = 'take-quiz.html?id='+quizId;
+		var action = $(e.currentTarget).parents('li[quiz-id]').attr('data-action');
+		window.open(action, "_self");
 	});
 	$('.quiz-listing').find('span.reward').unbind().bind('click', function(){
 		test2bsureController.getObj().ShowRewardInstructions();
