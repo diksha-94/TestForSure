@@ -178,19 +178,21 @@ test2bsureController.prototype.GetFooter = function(dom){
 						"</div>"+
 						"<div class='website-links'>"+
 							"<ul class='list-inline'>"+
-								"<li><a href='aboutus.html' target='_blank'>About Us</a></li>"+
-								"<li><a href='contactus.html' target='_blank'>Contact Us</a></li>"+
+								"<li><a data-action='about'>About Us</a></li>"+
+								"<li><a data-action='contact'>Contact Us</a></li>"+
 							"</ul>"+
 							"<ul class='list-inline'>"+
-								"<li><a href='disclaimer.html' target='_blank'>Disclaimer</a></li>"+
-								"<li><a href='privacy.html' target='_blank'>Privacy Policy</a></li>"+
+								"<li><a data-action='disclaimer'>Disclaimer</a></li>"+
+								"<li><a data-action='privacy-policy'>Privacy Policy</a></li>"+
 							"</ul>"+
 						"</div>"+
 					"</div>"+
 				"</div>";
 	$(dom).append(html);
 	LoadCSS('WebContent/Portal/css/footer');
-	LoadJS('WebContent/Portal/controller/footer');
+	LoadJS('WebContent/Portal/controller/footer', function(){
+		new footerController();
+	});
 }
 test2bsureController.prototype.QueryString = function(url, key){
 	var queryString = url.split('?')[1];

@@ -22,7 +22,7 @@ indexController.prototype.SetState = function(obj)
 };
 indexController.prototype.DisplayPage = function()
 {
-	this.pageType = "test";
+	this.pageType = "home";
 	this.pageId = 99317;
 	var self = this;
 	LoadCSS('WebContent/Portal/ReusableFunctions/common');
