@@ -57,6 +57,7 @@ testReportController.prototype.SetState = function(obj)
 		$('.solution-section').show();
 		$('.btnSolution').text('Analytics');
 		this.PopulateSolution();
+		this.UpdateQuestionStatusCount();
 	}
 };
 testReportController.prototype.BindEvents = function()
@@ -383,7 +384,8 @@ testReportController.prototype.DisplayQuestion = function()
 	var totalTestTime = this.testInfo.totalTime * 60;
 	question.timeSpent = question.timeSpent > totalTestTime ? totalTestTime : question.timeSpent;
 	html +=	"<span class='ques-status'>"+quesStatus+"</span>"+
-				"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
+			"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
+			"<span class='ques-marks'>0 mark(s)</span>"
 			"</div>"+
 			"<div class='ques-detail'>";
 	if(question.paragraph == "true" || question.paragraph == "1"){
@@ -445,6 +447,17 @@ testReportController.prototype.DisplayQuestion = function()
 	html += "</div>";
 	html += "<div class='ques-solution'><h5>Solution: </h5><p>"+question.solution+"</p></div>";
 	$('.solution-section').find('.solution-questions').find('.questions').html(html);
+	if(markedAnswer == -1){
+		$('.ques-marks').text("0 mark(s)");
+	}
+	else if(markedAnswer == correctAnswer){
+		$('.ques-marks').text("+ "+parseInt(this.testInfo.totalQues)/parseInt(this.testInfo.totalMarks) + " mark(s)");
+		$('.ques-marks').addClass('correct');
+	}
+	else{
+		$('.ques-marks').text("- "+this.testInfo.negativeMarks + " mark(s)");
+		$('.ques-marks').addClass('wrong');
+	}
 	$('.question').find('.question-desc').find('.ques-status').css('background-color', bgColor);
 	$('.question').find('.question-desc').find('.ques-status').css('color', color);
 };
@@ -506,4 +519,33 @@ testReportController.prototype.CurrentQuesStatusHighlight = function()
 {
 	$('.solution-ques-status').find('.ques-status').find('div').removeClass('selected');
 	$('.solution-ques-status').find('.ques-status').find('div[ques-no='+this.currentQues+']').addClass('selected');
+};
+testReportController.prototype.UpdateQuestionStatusCount = function(){
+	var correct = 0;
+	var wrong = 0;
+	var missed = 0;
+	var skipped = 0;
+	var marked = 0;
+	$('.solution-ques-status').find('.ques-status').find('div[ques-no]').each(function(key, value){
+		if($(value).hasClass('correct')){
+			correct++;
+		}
+		else if($(value).hasClass('wrong')){
+			wrong++;
+		}
+		else if($(value).hasClass('missed')){
+			missed++;
+		}
+		else if($(value).hasClass('skipped')){
+			skipped++;
+		}
+		else if($(value).hasClass('marked')){
+			marked++;
+		}
+	}.bind(this));
+	$('.ques-status-info').find('.status-info.correct').find('span').text(correct);
+	$('.ques-status-info').find('.status-info.wrong').find('span').text(wrong);
+	$('.ques-status-info').find('.status-info.missed').find('span').text(missed);
+	$('.ques-status-info').find('.status-info.skipped').find('span').text(skipped);
+	$('.ques-status-info').find('.status-info.marked').find('span').text(marked);
 };
