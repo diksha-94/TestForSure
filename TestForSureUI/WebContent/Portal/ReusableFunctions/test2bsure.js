@@ -594,3 +594,27 @@ test2bsureController.prototype.ShowRewardInstructions = function()
 	}
 	$('#rewardInstructionModal').modal('show');
 }
+//Show Quiz timer instructions
+test2bsureController.prototype.ShowQuizTimerInstructions = function()
+{
+	var modal = '<div class="modal" id="quizTimerInstructionModal">'+
+					'<div class="modal-dialog col-xs-11 col-sm-11 col-md-4 col-lg-4">'+
+						'<div class="modal-content">'+
+							'<div class="modal-header">'+
+								'<h4 class="modal-title">Time Based Quiz</h4>'+
+								'<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+							'</div>'+
+							'<div class="modal-body">'+
+								'<p>This is a time-based quiz, where time is given per question.</p>'+
+							'</div>'+
+							'<div class="modal-footer">'+
+								'<button type="button" class="btn btn-primary" data-dismiss="modal">Continue</button>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+	if($('#quizTimerInstructionModal').length == 0){
+		$('body').append(modal);
+	}
+	$('#quizTimerInstructionModal').modal('show');
+}
