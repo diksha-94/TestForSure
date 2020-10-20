@@ -87,7 +87,7 @@ examController.prototype.PopulateTests = function()
 			return false;
 		}
 		var action = $(e.currentTarget).parents('li[test-id]').attr('data-action');
-		window.open(action, '_blank');
+		window.open(action+'?start=0', '_blank');
 	});
 	$('.test-listing').find('.btnReportTest').unbind().bind('click', function(e){
 		var userId = -1;

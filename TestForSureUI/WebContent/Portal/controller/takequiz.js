@@ -105,7 +105,7 @@ takequizController.prototype.ManageQuizState = function()
 takequizController.prototype.PopulateQuizDetails = function()
 {
 	var html = "<div class='brand-logo-quiz col-xs-2 col-sm-2 col-md-3 col-lg-3'>"+
-					"<a class='brand' href='home.html'>"+
+					"<a class='brand' href='/'>"+
 						"<img src='WebContent/Portal/images/final/logo_white.png' alt='TEST-2B-SURE'>"+
 						"<i class='fa fa-home'></i>"+
 					"</a>"+

@@ -79,7 +79,7 @@ taketestController.prototype.LoadPage = function()
 							 "I have read all the instructions carefully and have understood them. I agree not to cheat or use unfair means while attempting the test."+
 						"</div>"+
 						"<div class='instruction-footer'>"+
-							"<span class='#FF0000'>Please read the instructions & accept the declaration to start the test.</span>"+
+							"<span class='red'>Please read the instructions & accept the declaration to start the test.</span>"+
 							"<button type='button' class='button button-default btnStartTestIns' disabled='disabled'>Start ></button>"+
 						"</div>"+
 					"</div>"+
@@ -171,7 +171,7 @@ taketestController.prototype.BindInstructionEvents = function()
 		}
 	});
 	$('.btnStartTestIns').unbind().bind('click', function(){
-		window.location.href = 'take-test.html?id='+this.id+'&start=1';
+		window.location.href = window.location.pathname+'?id='+this.id+'&start=1';
 	}.bind(this));
 };
 taketestController.prototype.LoadData = function()
@@ -220,13 +220,13 @@ taketestController.prototype.BindEvents = function()
 		if($('.test-ques-status').css('display') == 'none'){
 			//means question pallete is not visible
 			$('.test-ques-status').css('display', 'block');
-			$('.link-pallete').find('img').attr('src', '../images/right-arrow.png');
+			$('.link-pallete').find('img').attr('src', 'WebContent/Portal/images/right-arrow.png');
 			$('.link-pallete').css('right', $('.test-ques-status').width()+34+'px');
 		}
 		else{
 			//means question pallete is visible
 			$('.test-ques-status').css('display', 'none');
-			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').find('img').attr('src', 'WebContent/Portal/images/left-arrow.png');
 			$('.link-pallete').css('right', '0px');
 		}
 	});
@@ -251,7 +251,7 @@ taketestController.prototype.PopulateTestInfo = function()
 			   		"<h5>Time Limit: "+this.testInfo.totalTime+" mins</h5>"+
 			   "</div>"+
 			   "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divTimer'>"+
-			   		"<img src='../images/circular-clock.png' alt='Test Time' class='test-timer-img'>"+
+			   		"<img src='WebContent/Portal/images/circular-clock.png' alt='Test Time' class='test-timer-img'>"+
 			   		"<h4 class='time-left'>00 : 00 : 00</h4>"+
 			   	"</div>"+
 			   	"<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 divButton'>"+
@@ -348,7 +348,7 @@ taketestController.prototype.PopulateTestQuestionStatus = function()
 		
 		if($('.link-pallete').css('display') == 'block'){
 			$('.test-ques-status').css('display', 'none');
-			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').find('img').attr('src', 'WebContent/Portal/images/left-arrow.png');
 			$('.link-pallete').css('right', '0px');
 		}
 		this.DisplayQuestion();
@@ -771,6 +771,9 @@ taketestController.prototype.Timer = function()
 taketestController.prototype.SubmitTest = function(timeover = 0)
 {
 	//Save the last question
+	if(this.currentQues > this.testInfo.totalQues){
+		this.currentQues = this.testInfo.totalQues;
+	}
 	this.SaveLastQues(this.sessionId, this.currentQues);
 	var questionId = this.questionsData[this.currentQues-1].id;
 	var questionFlag = this.questionsData[this.currentQues-1].marked;
@@ -898,7 +901,7 @@ taketestController.prototype.OpenTestReport = function()
 	//report=1 means show report, report=0 means show solution
 	//Calculate reward points here
 	test2bsureController.getObj().CalculateRewardPointsEarned(0, this.sessionId, this.id, parseInt(this.testInfo.totalMarks), function(response){
-		window.location.href = 'testreport.html?sessionId='+this.sessionId+'&report=1&reward='+response.earnedRewardPoints;
+		window.location.href = window.location.pathname+'?sessionId='+this.sessionId+'&report=1&reward='+response.earnedRewardPoints;
 	}.bind(this));
 	
 }
@@ -927,7 +930,7 @@ taketestController.prototype.ShowSubmitTestModal = function()
 					"</div>"+
 				"</div>";
 	if($('body').find('#submitTestModal').length == 0){
-		$('#submitTestModal').appendTo('body');
+		$('body').append(html);
 	}
 	$('#submitTestModal').modal('show');
 };

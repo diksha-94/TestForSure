@@ -7,28 +7,42 @@ var dashboardController = function(){
 };
 dashboardController.prototype.Init = function()
 {
-	//Load header
-	test2bsureController.getObj().GetHeader(".dashboard-header", function(){
-		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
-			this.userId = userController.getObj().userData.id;
-		}
-		if(this.userId == -1){
-			//Show not logged in msg
-			$('.dashboard-content').html($('<h4>You are not logged in !!</h4>'));
-			//Load footer
-			test2bsureController.getObj().GetFooter(".dashboard-footer");
-		}
-		else{
-			this.LoadUserProfile();
-			this.LoadUserRewards();
-			this.LoadUserExams();
-			$('.dashboard-content').find('.btnLogout').unbind().bind('click', function(){
-				userController.getObj().Logout(function(){
-					window.location.href = "home.html";
-				});
+	this.LoadPage();
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		this.userId = userController.getObj().userData.id;
+	}
+	if(this.userId == -1){
+		//Show not logged in msg
+		$('.dashboard-content').html($('<h4>You are not logged in !!</h4>'));
+	}
+	else{
+		this.LoadUserProfile();
+		this.LoadUserRewards();
+		this.LoadUserExams();
+		$('.dashboard-content').find('.btnLogout').unbind().bind('click', function(){
+			userController.getObj().Logout(function(){
+				window.location.href = "/";
 			});
-		}
-	}.bind(this));
+		});
+	}
+};
+dashboardController.prototype.LoadPage = function()
+{
+	var html = "<div class='outerDiv col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='top col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='profile col-xs-12 col-sm-12 col-md-8 col-lg-8'>"+
+					"</div>"+
+					"<div class='rewards col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
+					"</div>"+
+				"</div>"+
+				"<div class='exams col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+				"</div>"+
+				"<div class='logout col-xs-12 col-sm-12 col-md-12 col-lg-12 hide'>"+
+					"<button class='button button-primary btnLogout'>Logout</button>"+
+				"</div>"+
+				"</div>";
+	$('body .common-content').append(html);
+	$('body .common-content').addClass('dashboard-content');
 };
 dashboardController.prototype.LoadUserProfile = function()
 {
@@ -62,7 +76,6 @@ dashboardController.prototype.SetState = function(obj, callFunc)
 			break;
 		case "attempts":
 			this.PopulateUserExams();
-			test2bsureController.getObj().GetFooter(".dashboard-footer");
 			break;
 	}
 };
@@ -200,7 +213,7 @@ dashboardController.prototype.PopulateUserRewards = function()
 {
 	console.log(this.userRewards);
 	var html = "<div class='earned-points'>"+
-					"<img src='../images/final/coin.png'>"+
+					"<img src='WebContent/Portal/images/final/coin.png'>"+
 					"<span>"+this.userRewards+"</span>"+
 			   "</div>"+
 			   "<div class='history'>"+
@@ -268,7 +281,7 @@ dashboardController.prototype.DBExamCard = function(data)
 				'</div>';
 	}
 	html += '<div class="collapseImage">'+
-				'<img src="../images/final/left_arrow.png">'+
+				'<img src="WebContent/Portal/images/final/left_arrow.png">'+
 			'</div>';
 	html += '</div>';
 	html += '<div id="exam_collapse_'+data.id+'" class="collapse exam-data col-xs-12 col-sm-12 col-md-12 col-lg-12" aria-expanded="false">'+
@@ -284,7 +297,7 @@ dashboardController.prototype.DBExamCard = function(data)
 	$('.exam-head').unbind().bind('click', function(e){
 		if($(e.currentTarget).hasClass('collapsed')){
 			//alert("Expanded");
-			$(e.currentTarget).find('.collapseImage img').attr('src', '../images/final/down_arrow.png');
+			$(e.currentTarget).find('.collapseImage img').attr('src', 'WebContent/Portal/images/final/down_arrow.png');
 			$(e.currentTarget).find('.collapseImage img').css('transform', 'rotate(180deg)');
 			if($(e.currentTarget).siblings('.exam-data').find('div.details').length > 0){
 				//Data already populated, just open it
@@ -299,7 +312,7 @@ dashboardController.prototype.DBExamCard = function(data)
 		}
 		else{
 			//alert("Collapsed");
-			$(e.currentTarget).find('.collapseImage img').attr('src', '../images/final/left_arrow.png');
+			$(e.currentTarget).find('.collapseImage img').attr('src', 'WebContent/Portal/images/final/left_arrow.png');
 			$(e.currentTarget).find('.collapseImage img').css('transform', 'rotate(270deg)');
 		}
 	});

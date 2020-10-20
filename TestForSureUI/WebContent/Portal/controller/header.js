@@ -181,7 +181,7 @@ headerController.prototype.Init = function()
 	$('#userProfile').unbind().bind('click', function(e){
 		if ($(window).width() < 767){
 			//Mobile View
-			window.location.href = "dashboard.html";
+			window.location.href = "dashboard";
 		}
 		else{
 			if($(e.currentTarget).hasClass('open')){
@@ -207,7 +207,7 @@ headerController.prototype.Init = function()
 		$('#userProfile').click();
 	});
 	$('.profile-menu').find('#myDashboard').unbind().bind('click', function(){
-		window.location.href = "dashboard.html";
+		window.location.href = "dashboard";
 	});
 	$('.profile-menu').find('#changePassword').unbind().bind('click', function(){
 		$('#userProfile').click();
@@ -270,7 +270,7 @@ headerController.prototype.Init = function()
 	});
 	$('.profile-menu').find('#btnLogout').unbind().bind('click', function(){
 		userController.getObj().Logout(function(){
-			window.location.href = "home.html";
+			window.location.href = "/";
 		});
 	});
 	

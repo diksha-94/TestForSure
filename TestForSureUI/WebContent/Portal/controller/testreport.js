@@ -11,7 +11,8 @@ var testreportController = function(id){
 testreportController.prototype.Init = function()
 {
 	this.LoadPage();
-	
+	LoadJS('WebContent/helperJS/highcharts-8.0.0');
+	this.id = test2bsureController.getObj().QueryString(window.location.href, 'sessionId');
 	this.report = test2bsureController.getObj().QueryString(window.location.href, 'report');
 	this.reward = test2bsureController.getObj().QueryString(window.location.href, 'reward');
 	if(this.report == undefined){
@@ -27,8 +28,8 @@ testreportController.prototype.Init = function()
 			if(parseInt(this.reward) > 0){
 				test2bsureController.getObj().ShowRewardPointsEarned(0, this.reward);
 			}
-			var newUrl = window.location.pathname + "?sessionId="+this.id+"&report="+this.report;
-			window.history.replaceState({}, document.title, newUrl);
+			//var newUrl = window.location.pathname + "?sessionId="+this.id+"&report="+this.report;
+			//window.history.replaceState({}, document.title, newUrl);
 		}
 	}.bind(this), 1000);
 };
@@ -265,7 +266,7 @@ testreportController.prototype.PopulateSuggestedTests = function()
 	if(this.testInfo.suggestedTests != null && this.testInfo.suggestedTests.length > 0){
 		for(var i in this.testInfo.suggestedTests){
 			var test = this.testInfo.suggestedTests[i];
-			html += "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' test-id='" + test["id"] + "'>"+
+			html += "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' test-id='" + test["id"] + "' data-action='"+test["urlKey"]+"'>"+
 						"<span class='col-xs-9 col-sm-9 col-md-9 col-lg-9'>"+test["title"]+"</span>"+
 						"<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3 testBtn'><a>Take Test</a></span>"+
 					"</div>";
@@ -285,8 +286,8 @@ testreportController.prototype.PopulateSuggestedTests = function()
 				$('#loginModal').modal('show');
 				return false;
 			}
-			var testId = $(e.currentTarget).parents('div[test-id]').attr('test-id');
-			window.location.href = 'take-test.html?id='+testId;
+			var action = $(e.currentTarget).parents('div[test-id]').attr('data-action');
+			window.open(action+'?start=0');
 		});
 	}
 	else{
@@ -299,7 +300,7 @@ testreportController.prototype.PopulateLeaderboard = function()
 	html += "<div class='btnHolder'><button class='button button-primary' id='btnShowLeaderboard'>View Full Leaderboard</button>";
 	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
 	$('#btnShowLeaderboard').unbind().bind('click', function(){
-		window.location.href = 'leaderboard.html?type=test&id='+this.testInfo.id;
+		window.location.href = window.location.pathname+'?leaderboard=1&type=test&id='+this.testInfo.id;
 	}.bind(this));
 };
 testreportController.prototype.DisplayCharts = function()

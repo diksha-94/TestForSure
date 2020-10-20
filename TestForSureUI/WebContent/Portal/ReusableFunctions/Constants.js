@@ -5,13 +5,17 @@ var pageMapping = {
 		"exam"				: "default",
 		"quizsubject"		: "quiz",
 		"test"				: "taketest",
+		"testreport"		: "default",
+		"leaderboard"		: "default",
 		"quiz"				: "takequiz",
 		"aboutus"			: "default",
 		"contactus"			: "default",
 		"disclaimer"		: "disclaimer",
 		"emailverification"	: "EmailVerification",
 		"passwordreset"		: "password-reset",
-		"privacy"			: "default"
+		"privacy"			: "default",
+		"notfound"			: "default",
+		"dashboard"			: "dashboard"
 }
 var headermenu = [
                   "home", 
@@ -22,7 +26,10 @@ var headermenu = [
                   "disclaimer",
                   "emailVerification",
                   "passwordreset",
-                  "privacy"
+                  "privacy",
+                  "leaderboard",
+                  "notfound",
+                  "dashboard"
                   ];
 
 var footercontent = [
@@ -34,5 +41,8 @@ var footercontent = [
                      "disclaimer",
                      "emailVerification",
                      "passwordreset",
-                     "privacy"
+                     "privacy",
+                     "leaderboard",
+                     "notfound",
+                     "dashboard"
                      ];
