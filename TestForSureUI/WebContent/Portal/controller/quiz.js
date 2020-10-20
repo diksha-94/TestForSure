@@ -30,6 +30,7 @@ quizController.prototype.LoadPage = function()
 				"</div>"+
 				"<div class='mobileViewQuiz quizOverlay'></div>";
 	$('body .common-content').html(html);
+	$('.common-content').addClass('quiz-page');
 };
 quizController.prototype.BindEvents = function()
 {

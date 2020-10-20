@@ -37,6 +37,7 @@ contactusController.prototype.LoadPage = function()
 					"</div>"+
 		       "</form>";
 	$('body .common-content').html(html);
+	$('.common-content').addClass('outerContact');
 };
 contactusController.prototype.BindEvents = function()
 {

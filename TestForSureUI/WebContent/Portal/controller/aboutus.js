@@ -21,4 +21,6 @@ aboutusController.prototype.LoadPage = function()
 					"</div>"+
 				"</div>";
 	$('body .common-content').html(html);
+	$('.common-content').addClass('about-us');
+	$('.common-footer').addClass('aboutus-footer');
 };
