@@ -263,7 +263,7 @@ dashboardController.prototype.DBExamCard = function(data)
 {
 	var html = "";
 	html += '<div class="collapse-outer col-xs-12 col-sm-12 col-md-12 col-lg-12">';
-	html += '<div class="collapsed exam-head col-xs-12 col-sm-12 col-md-12 col-lg-12" data-toggle="collapse" data-examid="'+data.id+'" data-target="#exam_collapse_'+data.id+'" aria-expanded="false">'+
+	html += '<div class="collapsed exam-head col-xs-12 col-sm-12 col-md-12 col-lg-12" data-toggle="collapse" data-examid="'+data.id+'" data-action="'+data.urlKey+'" data-target="#exam_collapse_'+data.id+'" aria-expanded="false">'+
 				'<div class="heading col-xs-12 col-sm-12 col-md-4 col-lg-4"><span>'+data.title+'</span></div>';
 	if(data.id != 0){
 		html += '<div class="count col-xs-12 col-sm-12 col-md-6 col-lg-6">'+
@@ -290,8 +290,8 @@ dashboardController.prototype.DBExamCard = function(data)
 	$('.dashboard-content').find('.outerDiv .exams').append(html);
 	$('.btnExplore').unbind().bind('click', function(e){
 		e.stopPropagation();
-		var examId = $(e.currentTarget).parents('.exam-head').attr('data-examid');
-		window.location.href = "exam.html?id="+examId;
+		var action = $(e.currentTarget).parents('.exam-head').attr('data-action');
+		window.location.href = action;
 	});
 	var self = this;
 	$('.exam-head').unbind().bind('click', function(e){
@@ -346,7 +346,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				}
 			}
 			else{
-				html = "<div class='test-card' data-itemid='"+testData.itemId+"'>"+
+				html = "<div class='test-card' data-itemid='"+testData.itemId+"' data-action='"+testData.urlKey+"'>"+
 							"<span>"+testData.title+"</span>"+
 							"<div class='actions'>";
 				if(testData.state == 1){
@@ -371,8 +371,8 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				$('#btnLogin').click();
 				return false;
 			}
-			var testId = $(e.currentTarget).parents('.test-card').attr('data-itemid');
-			window.open('take-test.html?id='+testId, '_blank');
+			var action = $(e.currentTarget).parents('.test-card').attr('data-action');
+			window.open(action+'?start=0', '_blank');
 		});
 		$('.btnTestReport').unbind().bind('click', function(e){
 			var userId = -1;
@@ -385,6 +385,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				return false;
 			}
 			var testId = $(e.currentTarget).parents('.test-card').attr('data-itemid');
+			var action = $(e.currentTarget).parents('.test-card').attr('data-action');
 			//Get the last session Id
 			var url = remoteServer+'/test2bsure/testsessionid?testId='+testId+'&userId='+userId;
 			var type = 'GET';
@@ -395,7 +396,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				context: this,
 				success: function(response){
 					console.log(response);
-					window.open('testreport.html?sessionId='+response+'&report=1', '_blank');
+					window.open(action+'?sessionId='+response+'&report=1', '_blank');
 				},
 				error: function(e){
 					console.log(e);
@@ -410,7 +411,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 		$(e.currentTarget).siblings('.exam-data').find('.details').append(html);
 		for(var quiz in data.userAttempts[examId].quizzes){
 			var quizData = data.userAttempts[examId].quizzes[quiz];
-			html = "<div class='quiz-card' data-itemid='"+quizData.itemId+"'>"+
+			html = "<div class='quiz-card' data-itemid='"+quizData.itemId+"' data-action='"+quizData.urlKey+"'>"+
 						"<span>"+quizData.title+"</span>"+
 						"<div class='actions'>";
 			if(quizData.state == 1){
@@ -434,8 +435,8 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				$('#btnLogin').click();
 				return false;
 			}
-			var quizId = $(e.currentTarget).parents('.quiz-card').attr('data-itemid');
-			window.open('take-quiz.html?id='+quizId, '_blank');
+			var action = $(e.currentTarget).parents('.quiz-card').attr('data-action');
+			window.open(action);
 		});
 	}
 };
