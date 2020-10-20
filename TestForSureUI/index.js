@@ -7,7 +7,8 @@ indexController.prototype.Init = function()
 {
 	console.log("Initialized !!");
 	var urlKey = window.location.pathname;
-	fetch(remoteServer+'/test2bsure/getpagedetails?urlkey='+urlKey)
+	urlKey = urlKey != '/' ? urlKey.substring(1, urlKey.length) : urlKey;
+	fetch(remoteServer+'/test2bsure/getpagedetails?urlKey='+urlKey)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ pageType: data.pageType, pageId: data.pageId }));
 };
@@ -22,8 +23,6 @@ indexController.prototype.SetState = function(obj)
 };
 indexController.prototype.DisplayPage = function()
 {
-	this.pageType = "exam";
-	this.pageId = 41;
 	this.originalPageType = this.pageType;
 	var self = this;
 	LoadCSS('WebContent/Portal/ReusableFunctions/common');

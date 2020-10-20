@@ -18,11 +18,11 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 					 	'<div class="third"></div>'+
 					 '</div>'+
 					'<div class="brand-logo col-xs-5 col-sm-5 col-md-2 col-lg-2">'+
-						'<a class="brand" href="home.html"><img src="WebContent/Portal/images/final/logo_white.png" alt="TEST-2B-SURE"></a>'+
+						'<a class="brand" href="/"><img src="WebContent/Portal/images/final/logo_white.png" alt="TEST-2B-SURE"></a>'+
 					'</div>'+
 					'<div class="menu-items col-xs-8 col-md-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
 						'<ul class="test2bsure-menu">'+
-							'<li class="menu-item active"><a href="home.html" class="link">Home</a></li>'+
+							'<li class="menu-item active"><a href="/" class="link">Home</a></li>'+
 							'<li class="menu-item exam-menu-li"><a class="link">Exams&nbsp;<img src="WebContent/Portal/images/final/down_arrow.png" style="height: 8px;">'+
 								'</a>'+
 								'<div class="exam-menu-div">'+
@@ -41,8 +41,8 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 									'</ul>'+
 								'</div>'+
 							'</li>'+
-							'<li class="menu-item"><a href="aboutus.html" class="link">About Us</a></li>'+
-							'<li class="menu-item"><a href="contactus.html" class="link">Contact Us</a></li>'+
+							'<li class="menu-item"><a href="about" class="link">About Us</a></li>'+
+							'<li class="menu-item"><a href="contact" class="link">Contact Us</a></li>'+
 							'<button type="button" class="btnLogin mobileView button button-default" id="btnLogin1">Login/Register</button>'+
 						'</ul>'+
 					'</div>'+
