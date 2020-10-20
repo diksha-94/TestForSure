@@ -9,7 +9,7 @@ privacyController.prototype.LoadPage = function()
 {
 	var html = "<font face='Arial, Helvetica, Garmond' style='font-size:14px;'>"+
 					"<center>"+
-						"<b style='font-size:16px;'>TEST2BSURE.COM</b><br/><b><h2 style='margin-bottom:30px;'> PRIVACY POLICY</h2></b>"+
+						"<b style='font-size:16px;'>TEST2BSURE.COM</b><br/><b><h2 style='margin-bottom:30px;'><b> PRIVACY POLICY </b></h2></b>"+
 					"</center>"+
 					'Welcome to test2bsure.com (the "Site").<br/> <br/>We understand that privacy online is important to users of our Site, especially when conducting business. <br/> This statement governs our privacy policies with respect to those users of the Site ("Visitors")'+
 					'who visit without <br/>transacting business and Visitors who register to transact business on the Site and make use of the various services offered by test2bsure.com (collectively, "Services") ("Authorized Customers").<br/>'+
@@ -60,4 +60,6 @@ privacyController.prototype.LoadPage = function()
 					"<br/><br/><br/>"+
 				"</font>";
 	$('body .common-content').html(html);
+	$('.common-content').removeClass('col-xs-12 col-sm-12 col-md-12 col-lg-12')
+						.addClass('privacy-content common-content col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1');
 };

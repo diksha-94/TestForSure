@@ -39,4 +39,6 @@ disclaimerController.prototype.LoadPage = function()
 					"</br></br>Any rights not expressly granted herein are reserved."+
 				"</font>";
 	$('body .common-content').html(html);
+	$('.common-content').removeClass('col-xs-12 col-sm-12 col-md-12 col-lg-12')
+						.addClass('disclaimer-content common-content col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1');
 };
