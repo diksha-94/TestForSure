@@ -66,7 +66,7 @@ examController.prototype.PopulateTests = function()
 	if(this.tests.length > 0){
 		html += '<div class="testlisting-head">'+
 					'<h4>Mock Tests</h4>'+
-					'<span><img src="../images/down-arrow.png" alt="Arrow"></span>'+
+					'<span><img src="WebContent/Portal/images/down-arrow.png" alt="Arrow"></span>'+
 				'</div>';
 	}
 	html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
@@ -128,7 +128,7 @@ examController.prototype.PopulateQuizzes = function(exam)
 	if(this.quizzes.length > 0){
 		html += '<div class="quizlisting-head">'+
 					'<h4>Quizzes</h4>'+
-					'<span><img src="../images/down-arrow.png" alt="Arrow"></span>'+
+					'<span><img src="WebContent/Portal/images/down-arrow.png" alt="Arrow"></span>'+
 				'</div>';
 	}
 	html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";

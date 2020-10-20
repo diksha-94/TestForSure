@@ -96,7 +96,7 @@ quizController.prototype.PopulateQuizzes = function()
 		html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	}
 	for(var quiz in this.quizzes){
-		html += "<li quiz-id='"+this.quizzes[quiz].id+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
+		html += "<li quiz-id='"+this.quizzes[quiz].id+"' data-action='"+this.quizzes[quiz].urlKey+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
 		html += test2bsureController.getObj().QuizCard(this.quizzes[quiz]);
 		html += "</li>";
 	}
@@ -117,8 +117,8 @@ quizController.prototype.PopulateQuizzes = function()
 			$('#btnLogin').click();
 			return false;
 		}
-		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
-		window.location.href = 'take-quiz.html?id='+quizId;
+		var action = $(e.currentTarget).parents('li[quiz-id]').attr('data-action');
+		window.open(action, "_self");
 	});
 	$('.quiz-listing').find('span.reward').unbind().bind('click', function(){
 		test2bsureController.getObj().ShowRewardInstructions();
