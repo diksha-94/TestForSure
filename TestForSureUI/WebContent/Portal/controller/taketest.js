@@ -915,7 +915,7 @@ taketestController.prototype.OpenTestReport = function()
 	}.bind(this));
 	
 }
-testController.prototype.UpdateQuestionStatusCount = function(){
+taketestController.prototype.UpdateQuestionStatusCount = function(){
 	var answered = 0;
 	var unanswered = 0;
 	var notvisited = 0;

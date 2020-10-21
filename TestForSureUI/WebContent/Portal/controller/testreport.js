@@ -594,7 +594,7 @@ testreportController.prototype.CurrentQuesStatusHighlight = function()
 	$('.solution-ques-status').find('.ques-status').find('div').removeClass('selected');
 	$('.solution-ques-status').find('.ques-status').find('div[ques-no='+this.currentQues+']').addClass('selected');
 };
-testReportController.prototype.UpdateQuestionStatusCount = function(){
+testreportController.prototype.UpdateQuestionStatusCount = function(){
 	var correct = 0;
 	var wrong = 0;
 	var missed = 0;
