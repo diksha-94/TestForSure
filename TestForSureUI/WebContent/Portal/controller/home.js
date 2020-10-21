@@ -3,9 +3,8 @@ var homeController = function(){
 	this.exam = {};
 	this.testCount = {};
 	this.quizCount = {};
-	this.Init();
 };
-homeController.prototype.Init = function()
+homeController.prototype.Init = function(callback)
 {
 	this.LoadPage();
 	this.LoadCategoriesExams();
@@ -15,6 +14,7 @@ homeController.prototype.Init = function()
 			localStorage.setItem("test2bsure_rp", "true");
 		}
 	}, 2000);
+	callback();
 };
 homeController.prototype.LoadPage = function()
 {

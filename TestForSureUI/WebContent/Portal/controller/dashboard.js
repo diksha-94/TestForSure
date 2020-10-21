@@ -3,9 +3,8 @@ var dashboardController = function(){
 	this.userRewards = {};
 	this.userExams = {};
 	this.userId = -1;
-	this.Init();
 };
-dashboardController.prototype.Init = function()
+dashboardController.prototype.Init = function(callback)
 {
 	this.LoadPage();
 	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
@@ -25,6 +24,7 @@ dashboardController.prototype.Init = function()
 			});
 		});
 	}
+	callback();
 };
 dashboardController.prototype.LoadPage = function()
 {

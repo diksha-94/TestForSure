@@ -1,7 +1,6 @@
 var passwordResetController = function(){
-	this.Init();
 };
-passwordResetController.prototype.Init = function()
+passwordResetController.prototype.Init = function(callback)
 {
 	//Load header
 	test2bsureController.getObj().GetHeader(".password-header");
@@ -11,6 +10,7 @@ passwordResetController.prototype.Init = function()
 	test2bsureController.getObj().GetFooter(".password-footer");
 	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 	userController.getObj().SelfAuth();
+	callback();
 };
 passwordResetController.prototype.BindEvents = function()
 {

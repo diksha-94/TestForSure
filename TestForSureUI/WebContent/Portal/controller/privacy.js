@@ -1,9 +1,9 @@
 var privacyController = function(){
-	this.Init();
 };
-privacyController.prototype.Init = function()
+privacyController.prototype.Init = function(callback)
 {
 	this.LoadPage();
+	callback();
 };
 privacyController.prototype.LoadPage = function()
 {

@@ -1,9 +1,9 @@
 var notfoundController = function(){
-	this.Init();
 };
-notfoundController.prototype.Init = function()
+notfoundController.prototype.Init = function(callback)
 {
 	this.LoadPage();
+	callback();
 };
 notfoundController.prototype.LoadPage = function()
 {

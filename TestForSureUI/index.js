@@ -31,6 +31,7 @@ indexController.prototype.DisplayPage = function()
 	LoadCSS('WebContent/Portal/ReusableFunctions/common');
 	LoadJS('WebContent/Portal/ReusableFunctions/test2bsure', function(){
 		if(self.pageType == "test"){
+			//For test url, define the pageType based on the query params
 			var reportQuery = test2bsureController.getObj().QueryString(window.location.href, 'report');
 			var solutionQuery = test2bsureController.getObj().QueryString(window.location.href, 'solution');
 			var leaderboardQuery = test2bsureController.getObj().QueryString(window.location.href, 'leaderboard');
@@ -42,30 +43,38 @@ indexController.prototype.DisplayPage = function()
 			}
 		}
 		self.originalPageType = self.pageType;
+		self.pageType = pageMapping[self.pageType] == "default" ? self.pageType : pageMapping[self.pageType];
+		
 		if(headermenu.indexOf(self.originalPageType) > -1){
 			//Load header
 			test2bsureController.getObj().GetHeader(".common-header", function(){
-				self.pageType = pageMapping[self.pageType] == "default" ? self.pageType : pageMapping[self.pageType];
-				
 				LoadCSS('WebContent/Portal/css/'+self.pageType);
-				
 				LoadJS('WebContent/Portal/controller/'+self.pageType, function(){
-					eval("new " + self.pageType + "Controller("+self.pageId+")");
+					var obj = eval("new " + self.pageType + "Controller("+self.pageId+")");
+					if(typeof obj.Init == 'function'){
+						obj.Init(function(){
+							if(footercontent.indexOf(self.originalPageType) > -1){
+								//Load footer
+								test2bsureController.getObj().GetFooter(".common-footer");
+							}
+						});
+					}
 				});
 			});
 		}
 		else{
-			self.pageType = pageMapping[self.pageType] == "default" ? self.pageType : pageMapping[self.pageType];
-			
 			LoadCSS('WebContent/Portal/css/'+self.pageType);
-			
 			LoadJS('WebContent/Portal/controller/'+self.pageType, function(){
-				eval("new " + self.pageType + "Controller("+self.pageId+")");
+				var obj = eval("new " + self.pageType + "Controller("+self.pageId+")");
+				if(typeof obj.Init == 'function'){
+					obj.Init(function(){
+						if(footercontent.indexOf(self.originalPageType) > -1){
+							//Load footer
+							test2bsureController.getObj().GetFooter(".common-footer");
+						}
+					});
+				}
 			});
-		}
-		if(footercontent.indexOf(self.originalPageType) > -1){
-			//Load footer
-			test2bsureController.getObj().GetFooter(".common-footer");
 		}
 	});
 };

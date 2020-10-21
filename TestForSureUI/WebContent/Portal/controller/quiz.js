@@ -8,14 +8,14 @@ var quizController = function(id){
 	this.count = 8;
 	this.needCount = 1;
 	this.totalCount = 0;
-	this.Init();
 };
-quizController.prototype.Init = function()
+quizController.prototype.Init = function(callback)
 {
 	this.LoadPage();
 	this.LoadData();
 	this.LoadFilters();
 	this.BindEvents();
+	callback();
 };
 quizController.prototype.LoadPage = function()
 {

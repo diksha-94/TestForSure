@@ -3,12 +3,12 @@ var examController = function(id){
 	this.exam = {};
 	this.tests = {};
 	this.quizzes = {};
-	this.Init();
 };
-examController.prototype.Init = function()
+examController.prototype.Init = function(callback)
 {
 	this.LoadPage();
 	this.LoadData();
+	callback();
 };
 examController.prototype.LoadPage = function()
 {

@@ -1,9 +1,9 @@
 var disclaimerController = function(){
-	this.Init();
 };
-disclaimerController.prototype.Init = function()
+disclaimerController.prototype.Init = function(callback)
 {
 	this.LoadPage();
+	callback();
 };
 disclaimerController.prototype.LoadPage = function()
 {

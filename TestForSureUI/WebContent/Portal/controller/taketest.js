@@ -8,9 +8,8 @@ var taketestController = function(id){
 	this.totalSecs = 0;
 	this.startSecs = 0;
 	this.start = -1; //start=1 means start the test, else show the instructions
-	this.Init();
 };
-taketestController.prototype.Init = function()
+taketestController.prototype.Init = function(callback)
 {
 	this.LoadPage();
 	document.addEventListener('contextmenu', event => event.preventDefault());
@@ -21,10 +20,12 @@ taketestController.prototype.Init = function()
 		if(this.start == 1){
 			$('.testStart').removeClass('hide');
 			this.LoadData();
+			callback();
 		}
 		else{
 			$('.testInstruction').removeClass('hide');
 			this.LoadInstructions();
+			callback();
 		}
 	}.bind(this));
 };

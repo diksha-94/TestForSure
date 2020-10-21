@@ -1,9 +1,9 @@
 var contactusController = function(){
-	this.Init();
 };
-contactusController.prototype.Init = function()
+contactusController.prototype.Init = function(callback)
 {
 	this.LoadPage();
+	callback();
 };
 contactusController.prototype.LoadPage = function()
 {

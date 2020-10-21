@@ -5,13 +5,13 @@ var takequizController = function(id){
 	this.sessionId = 0;
 	this.currentQues = 0;
 	this.reportData = {};
-	this.Init();
 };
-takequizController.prototype.Init = function()
+takequizController.prototype.Init = function(callback)
 {
 	test2bsureController.getObj().SelfAuth(function(){
 		this.LoadPage();
 		this.LoadData();
+		callback();
 	}.bind(this));
 };
 takequizController.prototype.LoadPage = function()

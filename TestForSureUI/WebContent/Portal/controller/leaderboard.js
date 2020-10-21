@@ -3,15 +3,15 @@ var leaderboardController = function(){
 	this.data = null;
 	this.type = "test";
 	this.id = 0;
-	this.Init();
 };
-leaderboardController.prototype.Init = function()
+leaderboardController.prototype.Init = function(callback)
 {
 	this.LoadPage();
 	//Read id from query string
 	this.type = test2bsureController.getObj().QueryString(window.location.href, 'type');
 	this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
 	this.LoadData();
+	callback();
 };
 leaderboardController.prototype.LoadPage = function()
 {

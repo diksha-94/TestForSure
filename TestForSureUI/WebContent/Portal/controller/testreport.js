@@ -6,9 +6,8 @@ var testreportController = function(id){
 	this.solutionData = {};
 	this.testInfo = {};
 	this.currentQues = 1;
-	this.Init();
 };
-testreportController.prototype.Init = function()
+testreportController.prototype.Init = function(callback)
 {
 	this.LoadPage();
 	LoadJS('WebContent/helperJS/highcharts-8.0.0');
@@ -20,6 +19,7 @@ testreportController.prototype.Init = function()
 	}
 	test2bsureController.getObj().SelfAuth(function(){
 		this.LoadData();
+		callback();
 	}.bind(this));
 	
 	//Show reward points after 1 second on submission, if earned
