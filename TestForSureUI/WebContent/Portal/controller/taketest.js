@@ -298,6 +298,7 @@ taketestController.prototype.PopulateTestQuestionStatus = function()
 		html += "<div class='" + questionStatus + "' ques-no='"+(i+1)+"' ques-id='"+(this.questionsData[i].id)+"'>"+(i+1)+"</div>";
 	}
 	$('.test-ques-status').find('.ques-status').html(html);
+	this.UpdateQuestionStatusCount();
 	$('.test-ques-status').find('.ques-status').find('div[ques-id]').unbind().bind('click', function(e){
 		this.SaveLastQues(this.sessionId, this.currentQues);
 		var questionId = this.questionsData[this.currentQues-1].id;
@@ -354,6 +355,7 @@ taketestController.prototype.PopulateTestQuestionStatus = function()
 		}
 		this.DisplayQuestion();
 		this.ManageControls();
+		this.UpdateQuestionStatusCount();
 	}.bind(this));
 };
 taketestController.prototype.DisplayQuestion = function()
@@ -452,6 +454,7 @@ taketestController.prototype.DisplayQuestion = function()
 		else{
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited unanswered marked marked-answered').addClass('answered');
 		}
+		this.UpdateQuestionStatusCount();
 	}.bind(this));
 };
 taketestController.prototype.PopulateAttemptControls = function()
@@ -530,6 +533,7 @@ taketestController.prototype.PopulateAttemptControls = function()
 		
 		this.DisplayQuestion();
 		this.ManageControls();
+		this.UpdateQuestionStatusCount();
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.btnPrevious').unbind().bind('click', function(e){
 		this.SaveLastQues(this.sessionId, this.currentQues);
@@ -582,6 +586,7 @@ taketestController.prototype.PopulateAttemptControls = function()
 		
 		this.DisplayQuestion();
 		this.ManageControls();
+		this.UpdateQuestionStatusCount();
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.linkClearSelection').unbind().bind('click', function(e){
 		e.preventDefault();
@@ -604,6 +609,7 @@ taketestController.prototype.PopulateAttemptControls = function()
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked marked-answered').addClass('unanswered');
 		}
 		this.UnselectAllOptions();
+		this.UpdateQuestionStatusCount();
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.linkMark').unbind().bind('click', function(e){
 		e.preventDefault();
@@ -625,6 +631,7 @@ taketestController.prototype.PopulateAttemptControls = function()
 		else{
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked-answered').addClass('marked');
 		}
+		this.UpdateQuestionStatusCount();
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.linkUnmark').unbind().bind('click', function(e){
 		e.preventDefault();
@@ -646,6 +653,7 @@ taketestController.prototype.PopulateAttemptControls = function()
 		else{
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered marked-answered marked').addClass('unanswered');
 		}
+		this.UpdateQuestionStatusCount();
 	}.bind(this));
 };
 taketestController.prototype.ManageControls = function()
@@ -828,7 +836,7 @@ taketestController.prototype.SubmitTest = function(timeover = 0)
 		this.SaveReportData();
 		return;
 	}
-	
+	this.UpdateQuestionStatusCount();
 	this.ShowSubmitTestModal();
 	var answered = 0;
 	var unanswered = 0;
@@ -845,7 +853,8 @@ taketestController.prototype.SubmitTest = function(timeover = 0)
 			unanswered++;
 		}
 		else if($(value).hasClass('marked')){
-			marked++
+			marked++;
+			unanswered++;
 		}
 		else if($(value).hasClass('marked-answered')){
 			marked++;
@@ -906,6 +915,38 @@ taketestController.prototype.OpenTestReport = function()
 	}.bind(this));
 	
 }
+testController.prototype.UpdateQuestionStatusCount = function(){
+	var answered = 0;
+	var unanswered = 0;
+	var notvisited = 0;
+	var marked = 0;
+	var markedAns = 0;
+	$('.test-ques-status').find('.ques-status').find('div[ques-no]').each(function(key, value){
+		if($(value).hasClass('not-visited')){
+			notvisited++;
+		}
+		else if($(value).hasClass('answered')){
+			answered++;
+		}
+		else if($(value).hasClass('unanswered')){
+			unanswered++;
+		}
+		else if($(value).hasClass('marked')){
+			marked++;
+			unanswered++;
+		}
+		else if($(value).hasClass('marked-answered')){
+			marked++;
+			answered++;
+			markedAns++;
+		}
+	}.bind(this));
+	$('.ques-status-info').find('.status-info.not-visited').find('span').text(notvisited);
+	$('.ques-status-info').find('.status-info.answered').find('span').text(answered);
+	$('.ques-status-info').find('.status-info.unanswered').find('span').text(unanswered);
+	$('.ques-status-info').find('.status-info.marked').find('span').text(marked);
+	$('.ques-status-info').find('.status-info.marked-answered').find('span').text(markedAns);
+};
 taketestController.prototype.ShowSubmitTestModal = function()
 {
 	var html = "<div class='modal' id='submitTestModal'>"+

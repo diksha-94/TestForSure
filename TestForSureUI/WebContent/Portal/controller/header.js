@@ -2,7 +2,7 @@ var headerController = function(){
 	this.category = {};
 	this.exam = {};
 	this.Init();
-	this.LoadExams();
+	this.LoadHeader();
 };
 headerController.prototype.Init = function()
 {
@@ -275,7 +275,7 @@ headerController.prototype.Init = function()
 	});
 	
 };
-headerController.prototype.LoadExams = function(){
+headerController.prototype.LoadHeader = function(){
 	fetch(remoteServer+'/test2bsure/header')
 		  .then(response => response.json())
 		  .then(data => this.SetState({ category: data.category, exam: data.exam, quizSubject: data.quizSubject }));
