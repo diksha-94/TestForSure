@@ -3,32 +3,46 @@ var dashboardController = function(){
 	this.userRewards = {};
 	this.userExams = {};
 	this.userId = -1;
-	this.Init();
 };
-dashboardController.prototype.Init = function()
+dashboardController.prototype.Init = function(callback)
 {
-	//Load header
-	test2bsureController.getObj().GetHeader(".dashboard-header", function(){
-		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
-			this.userId = userController.getObj().userData.id;
-		}
-		if(this.userId == -1){
-			//Show not logged in msg
-			$('.dashboard-content').html($('<h4>You are not logged in !!</h4>'));
-			//Load footer
-			test2bsureController.getObj().GetFooter(".dashboard-footer");
-		}
-		else{
-			this.LoadUserProfile();
-			this.LoadUserRewards();
-			this.LoadUserExams();
-			$('.dashboard-content').find('.btnLogout').unbind().bind('click', function(){
-				userController.getObj().Logout(function(){
-					window.location.href = "home.html";
-				});
+	this.LoadPage();
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		this.userId = userController.getObj().userData.id;
+	}
+	if(this.userId == -1){
+		//Show not logged in msg
+		$('.dashboard-content').html($('<h4>You are not logged in !!</h4>'));
+	}
+	else{
+		this.LoadUserProfile();
+		this.LoadUserRewards();
+		this.LoadUserExams();
+		$('.dashboard-content').find('.btnLogout').unbind().bind('click', function(){
+			userController.getObj().Logout(function(){
+				window.location.href = "/";
 			});
-		}
-	}.bind(this));
+		});
+	}
+	callback();
+};
+dashboardController.prototype.LoadPage = function()
+{
+	var html = "<div class='outerDiv col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='top col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='profile col-xs-12 col-sm-12 col-md-8 col-lg-8'>"+
+					"</div>"+
+					"<div class='rewards col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
+					"</div>"+
+				"</div>"+
+				"<div class='exams col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+				"</div>"+
+				"<div class='logout col-xs-12 col-sm-12 col-md-12 col-lg-12 hide'>"+
+					"<button class='button button-primary btnLogout'>Logout</button>"+
+				"</div>"+
+				"</div>";
+	$('body .common-content').append(html);
+	$('body .common-content').addClass('dashboard-content');
 };
 dashboardController.prototype.LoadUserProfile = function()
 {
@@ -62,7 +76,6 @@ dashboardController.prototype.SetState = function(obj, callFunc)
 			break;
 		case "attempts":
 			this.PopulateUserExams();
-			test2bsureController.getObj().GetFooter(".dashboard-footer");
 			break;
 	}
 };
@@ -200,7 +213,7 @@ dashboardController.prototype.PopulateUserRewards = function()
 {
 	console.log(this.userRewards);
 	var html = "<div class='earned-points'>"+
-					"<img src='../images/final/coin.png'>"+
+					"<img src='WebContent/Portal/images/final/coin.png'>"+
 					"<span>"+this.userRewards+"</span>"+
 			   "</div>"+
 			   "<div class='history'>"+
@@ -250,7 +263,7 @@ dashboardController.prototype.DBExamCard = function(data)
 {
 	var html = "";
 	html += '<div class="collapse-outer col-xs-12 col-sm-12 col-md-12 col-lg-12">';
-	html += '<div class="collapsed exam-head col-xs-12 col-sm-12 col-md-12 col-lg-12" data-toggle="collapse" data-examid="'+data.id+'" data-target="#exam_collapse_'+data.id+'" aria-expanded="false">'+
+	html += '<div class="collapsed exam-head col-xs-12 col-sm-12 col-md-12 col-lg-12" data-toggle="collapse" data-examid="'+data.id+'" data-action="'+data.urlKey+'" data-target="#exam_collapse_'+data.id+'" aria-expanded="false">'+
 				'<div class="heading col-xs-12 col-sm-12 col-md-4 col-lg-4"><span>'+data.title+'</span></div>';
 	if(data.id != 0){
 		html += '<div class="count col-xs-12 col-sm-12 col-md-6 col-lg-6">'+
@@ -268,7 +281,7 @@ dashboardController.prototype.DBExamCard = function(data)
 				'</div>';
 	}
 	html += '<div class="collapseImage">'+
-				'<img src="../images/final/left_arrow.png">'+
+				'<img src="WebContent/Portal/images/final/left_arrow.png">'+
 			'</div>';
 	html += '</div>';
 	html += '<div id="exam_collapse_'+data.id+'" class="collapse exam-data col-xs-12 col-sm-12 col-md-12 col-lg-12" aria-expanded="false">'+
@@ -277,14 +290,14 @@ dashboardController.prototype.DBExamCard = function(data)
 	$('.dashboard-content').find('.outerDiv .exams').append(html);
 	$('.btnExplore').unbind().bind('click', function(e){
 		e.stopPropagation();
-		var examId = $(e.currentTarget).parents('.exam-head').attr('data-examid');
-		window.location.href = "exam.html?id="+examId;
+		var action = $(e.currentTarget).parents('.exam-head').attr('data-action');
+		window.location.href = action;
 	});
 	var self = this;
 	$('.exam-head').unbind().bind('click', function(e){
 		if($(e.currentTarget).hasClass('collapsed')){
 			//alert("Expanded");
-			$(e.currentTarget).find('.collapseImage img').attr('src', '../images/final/down_arrow.png');
+			$(e.currentTarget).find('.collapseImage img').attr('src', 'WebContent/Portal/images/final/down_arrow.png');
 			$(e.currentTarget).find('.collapseImage img').css('transform', 'rotate(180deg)');
 			if($(e.currentTarget).siblings('.exam-data').find('div.details').length > 0){
 				//Data already populated, just open it
@@ -299,7 +312,7 @@ dashboardController.prototype.DBExamCard = function(data)
 		}
 		else{
 			//alert("Collapsed");
-			$(e.currentTarget).find('.collapseImage img').attr('src', '../images/final/left_arrow.png');
+			$(e.currentTarget).find('.collapseImage img').attr('src', 'WebContent/Portal/images/final/left_arrow.png');
 			$(e.currentTarget).find('.collapseImage img').css('transform', 'rotate(270deg)');
 		}
 	});
@@ -333,7 +346,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				}
 			}
 			else{
-				html = "<div class='test-card' data-itemid='"+testData.itemId+"'>"+
+				html = "<div class='test-card' data-itemid='"+testData.itemId+"' data-action='"+testData.urlKey+"'>"+
 							"<span>"+testData.title+"</span>"+
 							"<div class='actions'>";
 				if(testData.state == 1){
@@ -358,8 +371,8 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				$('#btnLogin').click();
 				return false;
 			}
-			var testId = $(e.currentTarget).parents('.test-card').attr('data-itemid');
-			window.open('take-test.html?id='+testId, '_blank');
+			var action = $(e.currentTarget).parents('.test-card').attr('data-action');
+			window.open(action+'?start=0', '_blank');
 		});
 		$('.btnTestReport').unbind().bind('click', function(e){
 			var userId = -1;
@@ -372,6 +385,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				return false;
 			}
 			var testId = $(e.currentTarget).parents('.test-card').attr('data-itemid');
+			var action = $(e.currentTarget).parents('.test-card').attr('data-action');
 			//Get the last session Id
 			var url = remoteServer+'/test2bsure/testsessionid?testId='+testId+'&userId='+userId;
 			var type = 'GET';
@@ -382,7 +396,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				context: this,
 				success: function(response){
 					console.log(response);
-					window.open('testreport.html?sessionId='+response+'&report=1', '_blank');
+					window.open(action+'?sessionId='+response+'&report=1', '_blank');
 				},
 				error: function(e){
 					console.log(e);
@@ -397,7 +411,7 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 		$(e.currentTarget).siblings('.exam-data').find('.details').append(html);
 		for(var quiz in data.userAttempts[examId].quizzes){
 			var quizData = data.userAttempts[examId].quizzes[quiz];
-			html = "<div class='quiz-card' data-itemid='"+quizData.itemId+"'>"+
+			html = "<div class='quiz-card' data-itemid='"+quizData.itemId+"' data-action='"+quizData.urlKey+"'>"+
 						"<span>"+quizData.title+"</span>"+
 						"<div class='actions'>";
 			if(quizData.state == 1){
@@ -421,8 +435,8 @@ dashboardController.prototype.PopulateExamItemData = function(data, e, examId){
 				$('#btnLogin').click();
 				return false;
 			}
-			var quizId = $(e.currentTarget).parents('.quiz-card').attr('data-itemid');
-			window.open('take-quiz.html?id='+quizId, '_blank');
+			var action = $(e.currentTarget).parents('.quiz-card').attr('data-action');
+			window.open(action);
 		});
 	}
 };

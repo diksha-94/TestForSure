@@ -1,21 +1,35 @@
-var examController = function(){
-	this.id = 0;
+var examController = function(id){
+	this.id = id;
 	this.exam = {};
 	this.tests = {};
 	this.quizzes = {};
-	this.Init();
 };
-examController.prototype.Init = function()
+examController.prototype.Init = function(callback)
 {
-	//Load header
-	test2bsureController.getObj().GetHeader(".exam-header", function(){
-		//Read id from query string
-		this.id = test2bsureController.getObj().QueryString(window.location.href, 'id');
-		this.LoadData();
-		//Load footer
-		test2bsureController.getObj().GetFooter(".exam-footer");
-	}.bind(this));
+	this.LoadPage();
+	this.LoadData();
+	callback();
 };
+examController.prototype.LoadPage = function()
+{
+	var html = "<div class='exam-banner col-xs-12 col-sm-12 col-md-12 col-lg-12 container' style='z-index: -1;'>"+
+					"<h4 class='col-xs-12 col-sm-12 col-md-5 col-lg-5'></h4>"+
+					"<div class='col-xs-12 col-sm-12 col-md-7 col-lg-7'></div>"+
+			   "</div>"+
+			   "<div class='exam-outer col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='exam-page col-xs-12 col-sm-12 col-md-12 col-lg-12 container'>"+
+						"<div class='exam-items col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1'>"+
+							"<div id='test-listing' class='test-listing col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+							"</div>"+
+							"<div id='quiz-listing' class='quiz-listing col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+							"</div>"+
+						"</div>"+
+					"</div>"+
+					"<div class='exam-info-detail col-xs-12 col-sm-12 col-md-12 col-lg-12'></div>"+
+			   "</div>";
+						
+	$('body .common-content').html(html);
+}
 examController.prototype.LoadData = function()
 {
 	var id = this.id;
@@ -52,12 +66,12 @@ examController.prototype.PopulateTests = function()
 	if(this.tests.length > 0){
 		html += '<div class="testlisting-head">'+
 					'<h4>Mock Tests</h4>'+
-					'<span><img src="../images/down-arrow.png" alt="Arrow"></span>'+
+					'<span><img src="WebContent/Portal/images/down-arrow.png" alt="Arrow"></span>'+
 				'</div>';
 	}
 	html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	for(var test in this.tests){
-		html += "<li test-id='"+this.tests[test].id+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
+		html += "<li test-id='"+this.tests[test].id+"' data-action='"+this.tests[test].urlKey+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
 		html += test2bsureController.getObj().TestCard(this.tests[test]);
 		html += "</li>";
 	}
@@ -72,8 +86,8 @@ examController.prototype.PopulateTests = function()
 			$('#btnLogin').click();
 			return false;
 		}
-		var testId = $(e.currentTarget).parents('li[test-id]').attr('test-id');
-		window.open('take-test.html?id='+testId, '_blank');
+		var action = $(e.currentTarget).parents('li[test-id]').attr('data-action');
+		window.open(action+'?start=0', '_blank');
 	});
 	$('.test-listing').find('.btnReportTest').unbind().bind('click', function(e){
 		var userId = -1;
@@ -96,7 +110,8 @@ examController.prototype.PopulateTests = function()
 			context: this,
 			success: function(response){
 				console.log(response);
-				window.location.href = 'testreport.html?sessionId='+response+'&report=1';
+				var action = $(e.currentTarget).parents('li[test-id]').attr('data-action');
+				window.open(action + '?sessionId='+response+'&report=1', "_self");
 			},
 			error: function(e){
 				console.log(e);
@@ -113,12 +128,12 @@ examController.prototype.PopulateQuizzes = function(exam)
 	if(this.quizzes.length > 0){
 		html += '<div class="quizlisting-head">'+
 					'<h4>Quizzes</h4>'+
-					'<span><img src="../images/down-arrow.png" alt="Arrow"></span>'+
+					'<span><img src="WebContent/Portal/images/down-arrow.png" alt="Arrow"></span>'+
 				'</div>';
 	}
 	html += "<ul class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
 	for(var quiz in this.quizzes){
-		html += "<li quiz-id='"+this.quizzes[quiz].id+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
+		html += "<li quiz-id='"+this.quizzes[quiz].id+"' data-action='"+this.quizzes[quiz].urlKey+"' class='col-xs-12 col-sm-12 col-md-3 col-lg-3'>";
 		html += test2bsureController.getObj().QuizCard(this.quizzes[quiz]);
 		html += "</li>";
 	}
@@ -133,8 +148,8 @@ examController.prototype.PopulateQuizzes = function(exam)
 			$('#btnLogin').click();
 			return false;
 		}
-		var quizId = $(e.currentTarget).parents('li[quiz-id]').attr('quiz-id');
-		window.location.href = 'take-quiz.html?id='+quizId;
+		var action = $(e.currentTarget).parents('li[quiz-id]').attr('data-action');
+		window.open(action, "_self");
 	});
 	$('.quiz-listing').find('span.reward').unbind().bind('click', function(){
 		test2bsureController.getObj().ShowRewardInstructions();

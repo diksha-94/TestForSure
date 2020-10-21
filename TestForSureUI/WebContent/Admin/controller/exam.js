@@ -19,7 +19,16 @@ examController.prototype.AddEdit = function()
 		}
 		if(this.id > 0){
 			this.Edit();
+			$('#txtExamTitle').unbind('keyup');
 		}
+		else{
+			$('#txtExamTitle').unbind().bind('keyup', function(e){
+				populateUrlKey($(e.currentTarget).val(), $('#txtExamUrlKey'));
+			});
+		}
+		$('#txtExamUrlKey').unbind().bind('keyup', function(e){
+			populateUrlKey($(e.currentTarget).val(), $(e.currentTarget));
+		});
 	}.bind(this));
 	
 	$('#examModal').find('#btnExamSave').unbind().bind('click', function(){
@@ -43,11 +52,12 @@ examController.prototype.SaveData = function()
 	console.log('Saving (Add/Update) Exam');
 	var name = $('#txtExamName').val();
 	var title = $('#txtExamTitle').val();
+	var urlKey = $('#txtExamUrlKey').val();
 	var displayIndex = $('#txtExamIndex').val();
 	var imageUrl = $('#txtExamImageUrl').val();
 	var categoryId = $('#ddCategory').val();
 	var description = summernoteController.getObj().getValue('#txtExamDescription');
-	if(name.length == 0 || title.length == 0 || imageUrl.length == 0 || categoryId.length == 0){
+	if(name.length == 0 || title.length == 0 || urlKey.length == 0 || imageUrl.length == 0 || categoryId.length == 0){
 		alert('Please enter all the mandatory fields');
 		return;
 	}
@@ -56,6 +66,7 @@ examController.prototype.SaveData = function()
 	var requestData = {
 			'name': name,
 			'title': title,
+			'urlKey': urlKey,
 			'displayIndex': displayIndex,
 			'imageUrl': imageUrl,
 			'category': categoryId,
@@ -78,6 +89,10 @@ examController.prototype.SaveData = function()
 				$('#examModal').modal('hide');
 				alert(response.message);
 				$('.menu-tabs').find('li[class="active"]').find('a').click();
+			}
+			else{
+				alert(response.message);
+				return;
 			}
 		},
 		error: function(e){
@@ -113,6 +128,7 @@ examController.prototype.Edit = function(e)
 					var item = response.data[0];
 					$('#examModal').find('#txtExamName').val(item.name);
 					$('#examModal').find('#txtExamTitle').val(item.title);
+					$('#examModal').find('#txtExamUrlKey').val(item.urlKey);
 					$('#examModal').find('#txtExamIndex').val(item.displayIndex);
 					$('#examModal').find('#txtExamImageUrl').val(item.imageUrl);
 					$('#examModal').find('#ddCategory').val(item.category);

@@ -181,7 +181,7 @@ headerController.prototype.Init = function()
 	$('#userProfile').unbind().bind('click', function(e){
 		if ($(window).width() < 767){
 			//Mobile View
-			window.location.href = "dashboard.html";
+			window.location.href = "dashboard";
 		}
 		else{
 			if($(e.currentTarget).hasClass('open')){
@@ -207,7 +207,7 @@ headerController.prototype.Init = function()
 		$('#userProfile').click();
 	});
 	$('.profile-menu').find('#myDashboard').unbind().bind('click', function(){
-		window.location.href = "dashboard.html";
+		window.location.href = "dashboard";
 	});
 	$('.profile-menu').find('#changePassword').unbind().bind('click', function(){
 		$('#userProfile').click();
@@ -270,7 +270,7 @@ headerController.prototype.Init = function()
 	});
 	$('.profile-menu').find('#btnLogout').unbind().bind('click', function(){
 		userController.getObj().Logout(function(){
-			window.location.href = "home.html";
+			window.location.href = "/";
 		});
 	});
 	
@@ -317,10 +317,10 @@ headerController.prototype.PopulateData = function(){
 		}
 	  	for(var exam in this.exam){
 			if(this.exam[exam].category == this.category[cat].id){
-				htmlContent += "<li class='exam-value-item' exam-id='"+this.exam[exam].id+"'>"+this.exam[exam].title+"";
+				htmlContent += "<li class='exam-value-item' exam-id='"+this.exam[exam].id+"' data-action='"+this.exam[exam].urlKey+"'>"+this.exam[exam].title+"";
 				htmlContent +=	"</li>";
 				
-				mobileHtml += "<li class='exam-value-item' exam-id='"+this.exam[exam].id+"'>"+this.exam[exam].title+"";
+				mobileHtml += "<li class='exam-value-item' exam-id='"+this.exam[exam].id+"' data-action='"+this.exam[exam].urlKey+"'>"+this.exam[exam].title+"";
 				mobileHtml +=	"</li>";
 			}
 		}
@@ -345,8 +345,8 @@ headerController.prototype.PopulateData = function(){
 		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 			userId = userController.getObj().userData.id;
 		}
-		var examId = $(e.currentTarget).attr('exam-id');
-		window.location.href = 'exam.html?id=' + examId;
+		var action = $(e.currentTarget).attr('data-action');
+		window.open(action, "_self");
 	});
 	$('.exam-menu-item').unbind().bind('mouseover', function(e){
 		var href = $(e.currentTarget).find('a').attr('href');
@@ -361,8 +361,8 @@ headerController.prototype.PopulateData = function(){
 	for(var qs in this.quizSubject){
 		var sub = this.quizSubject[qs];
 		var subName = sub.name.replace(/[^a-zA-Z0-9]/g,'_');
-		html += '<li class="quiz-value-item" subject-id="'+sub.id+'">';
-		html += '<a href="#'+subName+'">'+sub.name+'</a>'+
+		html += '<li class="quiz-value-item" subject-id="'+sub.id+'" data-action="'+sub.urlKey+'">';
+		html += '<a>'+sub.name+'</a>'+
 				'</li>';
 	}
 	$('.quizzes.mobileView').find('.quiz-menu').html(html);
@@ -372,8 +372,8 @@ headerController.prototype.PopulateData = function(){
 		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 			userId = userController.getObj().userData.id;
 		}
-		var subjectId = $(e.currentTarget).attr('subject-id');
-		window.location.href = 'quiz.html?id=' + subjectId;
+		var action = $(e.currentTarget).attr('data-action');
+		window.open(action, "_self");
 	});
 };
 $(document).ready(function(){

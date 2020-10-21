@@ -5,6 +5,7 @@ var footerController = function(){
 footerController.prototype.Init = function()
 {
 	this.LoadFooter();
+	this.BindEvents();
 };
 footerController.prototype.LoadFooter = function(){
 	fetch(remoteServer+'/test2bsure/footerlinks')
@@ -54,4 +55,11 @@ footerController.prototype.PopulateData = function(){
 			window.location.href = $(e.currentTarget).attr('data-type')+".html?id="+$(e.currentTarget).attr('data-id');
 		});
 	}
+};
+footerController.prototype.BindEvents = function()
+{
+	$('.footer').find('.website-links').find('li a[data-action]').unbind().bind('click', function(e){
+		var action = $(e.currentTarget).attr('data-action');
+		window.open(action);
+	});
 };
