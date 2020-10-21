@@ -1,18 +1,44 @@
-var passwordResetController = function(){
+var passwordresetController = function(){
 };
-passwordResetController.prototype.Init = function(callback)
+passwordresetController.prototype.Init = function(callback)
 {
-	//Load header
-	test2bsureController.getObj().GetHeader(".password-header");
+	this.LoadPage();
 	this.CheckLinkValidity();
 	this.BindEvents();
-	//Load footer
-	test2bsureController.getObj().GetFooter(".password-footer");
-	$('.common-footer').css('top',$('.common-header').height() + $('.common-content').height()+'px');
 	userController.getObj().SelfAuth();
 	callback();
 };
-passwordResetController.prototype.BindEvents = function()
+passwordresetController.prototype.LoadPage = function()
+{
+	var html = "<div class='resetPasswordDiv show col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<h3>Reset Password</h3>"+
+					"<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"<label class='col-md-4'>New Password</label>"+
+						"<div class='col-md-8'>"+
+							"<input type='password' id='txtPasswordReg' name='txtPasswordNameReg' class='form-control' placeholder='Password'/>"+
+						"</div>"+
+					"</div>"+
+					"<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"<label class='col-md-4'>Confirm Password</label>"+
+						"<div class='col-md-8'>"+
+							"<input type='password' id='txtConfirmPassword' name='txtConfirmNameReg' class='form-control' placeholder='Confirm Password'/>"+
+						"</div>"+
+					"</div>"+
+					"<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"<div class='col-md-8 col-md-offset-4'>"+
+							"<button id='btnUpdatePassword' class='button button-primary'>Change Password</button>"+
+						"</div>"+
+					"</div>"+
+				"</div>"+
+				"<div class='linkExpiredDiv hide col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3'>"+
+					"<div class='errorExpired'>"+
+						"<div class='alert alert-danger'>This link is invalid/or has been expired.</div>"+
+					"</div>"+
+				"</div>";
+	$('body .common-content').html(html);
+	$('body .common-content').addClass('reset-content');
+};
+passwordresetController.prototype.BindEvents = function()
 {
 	var userId = "";
 	var password = "";
@@ -43,7 +69,7 @@ passwordResetController.prototype.BindEvents = function()
 			success: function(result){
 				if (result.status) {
 					alert("Password changed successfully !!");
-					window.location.href = "home.html";
+					window.location.href = "/";
 				}
                 else if (!result.status) {
                     alert(result.message);
@@ -58,7 +84,7 @@ passwordResetController.prototype.BindEvents = function()
         });
 	}.bind(this));
 };
-passwordResetController.prototype.CheckLinkValidity = function()
+passwordresetController.prototype.CheckLinkValidity = function()
 {
 	var userId = this.GetQueryParameterByName('userId');
 	var password = this.GetQueryParameterByName('pass');
@@ -90,7 +116,7 @@ passwordResetController.prototype.CheckLinkValidity = function()
         }
     });
 };
-passwordResetController.prototype.GetQueryParameterByName = function(name, url)
+passwordresetController.prototype.GetQueryParameterByName = function(name, url)
 {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");

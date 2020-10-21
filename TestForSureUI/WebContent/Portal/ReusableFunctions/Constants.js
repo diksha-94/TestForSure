@@ -12,7 +12,7 @@ var pageMapping = {
 		"contactus"			: "default",
 		"disclaimer"		: "disclaimer",
 		"emailverification"	: "EmailVerification",
-		"passwordreset"		: "password-reset",
+		"passwordreset"		: "default",
 		"privacy"			: "default",
 		"notfound"			: "default",
 		"dashboard"			: "dashboard"
