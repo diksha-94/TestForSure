@@ -1,5 +1,5 @@
-var jsVersion = new Date().getMilliseconds();
-var cssVersion = new Date().getMilliseconds();
+var jsVersion = 100;
+var cssVersion = 100;
 //var remoteServer = "http://3.6.58.203:8083";
 var remoteServer = "http://localhost:8083";
 

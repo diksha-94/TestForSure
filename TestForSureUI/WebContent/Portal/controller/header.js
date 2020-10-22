@@ -303,10 +303,10 @@ headerController.prototype.PopulateData = function(){
 			onceTab = true;
 		}
 		html += '<a href="#'+catName+'">'+this.category[cat].title+'</a>'+
-				'<span><img src="../images/final/left_arrow.png" class="expand-exams"/></span>'+
+				'<span><img src="WebContent/Portal/images/final/left_arrow.png" class="expand-exams"/></span>'+
 				'</li>';
 		mobileHtml += '<div class="outer"><div class="outer-1" data-toggle="collapse" href="#cat'+cat+'"><span>'+this.category[cat].title+'</span>'+
-					  '<img src="../images/final/down_arrow.png" class="closed"/></div>'+
+					  '<img src="WebContent/Portal/images/final/down_arrow.png" class="closed"/></div>'+
 					  '<div id="cat'+cat+'" class="collapse"><ul>';
 		if(onceContent == true){
 			htmlContent += '<div id="'+catName+'" class="tab-pane fade in"><ul class="exams-list">';
