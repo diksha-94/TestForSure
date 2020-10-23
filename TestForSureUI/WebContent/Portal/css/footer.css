@@ -53,6 +53,7 @@ ul > li > a{
 	color:white;
 	font-weight:bold;
 	text-decoration:none;
+	cursor: pointer;
 }
 ul > li > a:hover{
 	color:white;

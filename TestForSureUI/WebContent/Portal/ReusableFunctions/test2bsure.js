@@ -18,12 +18,12 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 					 	'<div class="third"></div>'+
 					 '</div>'+
 					'<div class="brand-logo col-xs-5 col-sm-5 col-md-2 col-lg-2">'+
-						'<a class="brand" href="home.html"><img src="../images/final/logo_white.png" alt="TEST-2B-SURE"></a>'+
+						'<a class="brand" href="/"><img src="WebContent/Portal/images/final/logo_white.png" alt="TEST-2B-SURE"></a>'+
 					'</div>'+
 					'<div class="menu-items col-xs-8 col-md-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
 						'<ul class="test2bsure-menu">'+
-							'<li class="menu-item active"><a href="home.html" class="link">Home</a></li>'+
-							'<li class="menu-item exam-menu-li"><a class="link">Exams&nbsp;<img src="../images/final/down_arrow.png" style="height: 8px;">'+
+							'<li class="menu-item active"><a href="/" class="link">Home</a></li>'+
+							'<li class="menu-item exam-menu-li"><a class="link">Exams&nbsp;<img src="WebContent/Portal/images/final/down_arrow.png" style="height: 8px;">'+
 								'</a>'+
 								'<div class="exam-menu-div">'+
 									'<div class="col-md-4 col-lg-4 exam-tabs">'+
@@ -34,23 +34,23 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 									'</div>'+
 								'</div>'+
 							'</li>'+
-							'<li class="menu-item quiz-menu-li"><a class="link">Quizzes&nbsp;<img src="../images/final/down_arrow.png" style="height: 8px;">'+
+							'<li class="menu-item quiz-menu-li"><a class="link">Quizzes&nbsp;<img src="WebContent/Portal/images/final/down_arrow.png" style="height: 8px;">'+
 								'</a>'+
 								'<div class="quiz-menu-div">'+
 									'<ul class="quiz-menu">'+
 									'</ul>'+
 								'</div>'+
 							'</li>'+
-							'<li class="menu-item"><a href="aboutus.html" class="link">About Us</a></li>'+
-							'<li class="menu-item"><a href="contactus.html" class="link">Contact Us</a></li>'+
+							'<li class="menu-item"><a href="about" class="link">About Us</a></li>'+
+							'<li class="menu-item"><a href="contact" class="link">Contact Us</a></li>'+
 							'<button type="button" class="btnLogin mobileView button button-default" id="btnLogin1">Login/Register</button>'+
 						'</ul>'+
 					'</div>'+
 					'<div class="exams mobileView col-xs-8 col-sm-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
-						'<span class="exam-head"><img src="../images/final/down_arrow.png" class="closed"/>Exams</span>'+
+						'<span class="exam-head"><img src="WebContent/Portal/images/final/down_arrow.png" class="closed"/>Exams</span>'+
 					'</div>'+
 					'<div class="quizzes mobileView col-xs-8 col-sm-8 col-md-7 col-lg-7 col-md-offset-1 col-lg-offset-1">'+
-						'<span class="quiz-head"><img src="../images/final/down_arrow.png" class="closed"/>Quizzes</span>'+
+						'<span class="quiz-head"><img src="WebContent/Portal/images/final/down_arrow.png" class="closed"/>Quizzes</span>'+
 						'<ul class="quiz-menu">'+
 						'</ul>'+
 					'</div>'+
@@ -63,7 +63,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 							'<li id="userProfile" class="hide">'+
 								'<i class="fa fa-user hide" aria-hidden="true"></i>'+
 								'<span class="greeting"><span id="loggedInUSer"></span></span>'+
-								'<img src="../images/final/down_arrow.png">'+
+								'<img src="WebContent/Portal/images/final/down_arrow.png">'+
 								//'<span class="logout"><a id="btnLogout">Logout</a></span>'+
 							'</li>'+
 						'</ul>'+
@@ -82,20 +82,16 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 	if ($(window).width() < 768) {
 		//mobile view
 		$('.exam-menu-li').unbind().bind('click', function(){
-			//$('.menu-items').css('display', 'none');
 			$('.exams.mobileView').css('display', 'block');
 		});
 		$('.exams.mobileView').find('span.exam-head').unbind().bind('click', function(){
 			$('.exams.mobileView').css('display', 'none');
-			//$('.menu-items').css('display', 'block');
 		});
 		$('.quiz-menu-li').unbind().bind('click', function(){
-			//$('.menu-items').css('display', 'none');
 			$('.quizzes.mobileView').css('display', 'block');
 		});
 		$('.quizzes.mobileView').find('span.quiz-head').unbind().bind('click', function(){
 			$('.quizzes.mobileView').css('display', 'none');
-			//$('.menu-items').css('display', 'block');
 		});
 	   
 	}
@@ -142,10 +138,10 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 		$('.sandwichbtn').click();
 	});
 	//Load CSS, JS
-	LoadCSS('../css/header');
-	LoadJS('../controller/user', function(){
-		LoadJS('../ReusableFunctions/modal-struct', function(){
-			LoadJS('../controller/header', function(){
+	LoadCSS('WebContent/Portal/css/header');
+	LoadJS('WebContent/Portal/controller/user', function(){
+		LoadJS('WebContent/Portal/ReusableFunctions/modal-struct', function(){
+			LoadJS('WebContent/Portal/controller/header', function(){
 				userController.getObj().SelfAuth(false, function(){
 					if(typeof callback == 'function'){
 						callback();
@@ -159,7 +155,7 @@ test2bsureController.prototype.GetFooter = function(dom){
 	//should make it custom , as per the need on different pages
 	var html = "<div class='footer'>"+
 					"<div class='left col-xs-12 col-sm-12 col-md-7 col-lg-7'>"+
-						"<img src='../images/final/logo_white.png' class='logo-image-footer' alt='TEST-2B-SURE' />"+
+						"<img src='WebContent/Portal/images/final/logo_white.png' class='logo-image-footer' alt='TEST-2B-SURE' />"+
 						
 					"</div>"+
 					"<div class='right col-xs-12 col-sm-12 col-md-5 col-lg-5'>"+
@@ -174,19 +170,19 @@ test2bsureController.prototype.GetFooter = function(dom){
 						"</div>"+
 						"<div class='website-links'>"+
 							"<ul class='list-inline'>"+
-								"<li><a href='aboutus.html' target='_blank'>About Us</a></li>"+
-								"<li><a href='contactus.html' target='_blank'>Contact Us</a></li>"+
+								"<li><a data-action='about'>About Us</a></li>"+
+								"<li><a data-action='contact'>Contact Us</a></li>"+
 							"</ul>"+
 							"<ul class='list-inline'>"+
-								"<li><a href='disclaimer.html' target='_blank'>Disclaimer</a></li>"+
-								"<li><a href='privacy.html' target='_blank'>Privacy Policy</a></li>"+
+								"<li><a data-action='disclaimer'>Disclaimer</a></li>"+
+								"<li><a data-action='privacy-policy'>Privacy Policy</a></li>"+
 							"</ul>"+
 						"</div>"+
 					"</div>"+
 				"</div>";
 	$(dom).append(html);
-	LoadCSS('../css/footer');
-	LoadJS('../controller/footer', function(){
+	LoadCSS('WebContent/Portal/css/footer');
+	LoadJS('WebContent/Portal/controller/footer', function(){
 		new footerController();
 	});
 }
@@ -213,10 +209,10 @@ test2bsureController.prototype.QuizCard = function(quiz)
 			   "<div class='quiz-border'></div>"+
 			   "<div class='quiz-image'>";
 	if(quiz.maxRewardPoints > 0){
-		html += "<span class='reward' title='Click Here'><img src='../images/final/coin.png'/><span>+"+quiz.maxRewardPoints+"</span></span>";
+		html += "<span class='reward' title='Click Here'><img src='WebContent/Portal/images/final/coin.png'/><span>+"+quiz.maxRewardPoints+"</span></span>";
 	}
 	else{
-		html += "<img src='../images/quiz-icon.png' alt='Quiz'/>";
+		html += "<img src='WebContent/Portal/images/quiz-icon.png' alt='Quiz'/>";
 	}
 	html +=    "</div>"+
 			   "<div class='quiz-ques'>No. of Questions: "+quiz.noOfQues+"</div>"+
@@ -245,7 +241,7 @@ test2bsureController.prototype.TestCard = function(test)
 	var html = "<div class='test-head'>"+
 			   		"<h4>"+test.title+"</h4>";
 	if(test.maxRewardPoints > 0){
-		html += "<span class='reward' title='Click Here'><img src='../images/final/coin.png'/><span>+"+test.maxRewardPoints+"</span></span>";
+		html += "<span class='reward' title='Click Here'><img src='WebContent/Portal/images/final/coin.png'/><span>+"+test.maxRewardPoints+"</span></span>";
 	}
 	html += "</div>"+
 			"<div class='test-detail'>"+
@@ -314,7 +310,7 @@ test2bsureController.prototype.TestCard = function(test)
 };
 test2bsureController.prototype.ExamCard = function(exam, testCount, quizCount)
 {
-	var imageUrl = "../images/final/default_exam2.png";
+	var imageUrl = "WebContent/Portal/images/final/default_exam2.png";
 	if(exam.imageUrl.length > 5){
 		imageUrl = exam.imageUrl;
 	}
@@ -420,7 +416,7 @@ test2bsureController.prototype.getCookie = function(cname)
 };
 test2bsureController.prototype.SelfAuth = function(callback)
 {
-	LoadJS('../controller/user', function(){
+	LoadJS('WebContent/Portal/controller/user', function(){
 		userController.getObj().SelfAuth(false, function(){
 			if(typeof callback == 'function'){
 				callback();
@@ -563,7 +559,7 @@ test2bsureController.prototype.ShowRewardPointsEarned = function(itemType, earne
 	}
 	var type = itemType == 0 ? "Test" : "Quiz";
 	var html = "<h5>You have earned <span class='rewards'> "+earnedPoints+" reward points </span> based on your performance in the "+type+"</h5>"+
-			   "<img src='../images/final/smile.png'/>"+
+			   "<img src='WebContent/Portal/images/final/smile.png'/>"+
 			   "<h4>Attempt More Tests/Quizzes and Earn More Points !!</h4>";
 	$('#rewardPointModal .modal-body').html(html);
 	$('#rewardPointModal').modal('show');
@@ -593,7 +589,7 @@ test2bsureController.prototype.ShowRewardInstructions = function()
 		$('body').append(modal);
 	}
 	$('#rewardInstructionModal').modal('show');
-}
+};
 //Show Quiz timer instructions
 test2bsureController.prototype.ShowQuizTimerInstructions = function()
 {

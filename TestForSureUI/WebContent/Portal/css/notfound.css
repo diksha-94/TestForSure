@@ -1,0 +1,17 @@
+.outerDiv{
+	width: 30%;
+    margin: 50px 35%;
+    text-align: center;
+    padding: 75px;
+    color: #FF0000;	
+}
+.outerDiv h1{
+	font-size: 48px;
+}
+@media only screen and (max-width: 767px) {
+	.outerDiv{
+		width: 50%;
+    	margin: 50px 25%;
+    	padding: 0px;
+	}
+}

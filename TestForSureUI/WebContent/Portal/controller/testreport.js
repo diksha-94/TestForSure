@@ -1,16 +1,16 @@
-var testReportController = function(){
-	this.id = 0;
+var testreportController = function(id){
+	this.id = id;
 	//report=1 means show report, report=0 means show solution
 	this.report = 1;
 	this.reportData = {};
 	this.solutionData = {};
 	this.testInfo = {};
 	this.currentQues = 1;
-	this.Init();
 };
-testReportController.prototype.Init = function()
+testreportController.prototype.Init = function(callback)
 {
-	//Read id from query string
+	this.LoadPage();
+	LoadJS('WebContent/helperJS/highcharts-8.0.0');
 	this.id = test2bsureController.getObj().QueryString(window.location.href, 'sessionId');
 	this.report = test2bsureController.getObj().QueryString(window.location.href, 'report');
 	this.reward = test2bsureController.getObj().QueryString(window.location.href, 'reward');
@@ -19,6 +19,7 @@ testReportController.prototype.Init = function()
 	}
 	test2bsureController.getObj().SelfAuth(function(){
 		this.LoadData();
+		callback();
 	}.bind(this));
 	
 	//Show reward points after 1 second on submission, if earned
@@ -27,19 +28,92 @@ testReportController.prototype.Init = function()
 			if(parseInt(this.reward) > 0){
 				test2bsureController.getObj().ShowRewardPointsEarned(0, this.reward);
 			}
-			var newUrl = window.location.pathname + "?sessionId="+this.id+"&report="+this.report;
-			window.history.replaceState({}, document.title, newUrl);
+			//var newUrl = window.location.pathname + "?sessionId="+this.id+"&report="+this.report;
+			//window.history.replaceState({}, document.title, newUrl);
 		}
 	}.bind(this), 1000);
 };
-testReportController.prototype.LoadData = function()
+testreportController.prototype.LoadPage = function()
+{
+	var html = "<div class='report-header col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+				"</div>"+
+				"<div class='report-section col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"<div class='report-basic col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+					"</div>"+
+					"<div class='report-advanced col-xs-12 col-sm-12 col-md-12 col-lg-12 container'>"+
+						"<div class='left-side col-xs-12 col-sm-12 col-md-3 col-lg-3'>"+
+							"<div class='topper-average col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+							"</div>"+
+							"<div class='suggested-tests col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+								"<h5>Suggested Tests</h5>"+
+							"</div>"+
+						"</div>"+
+						"<div class='charts col-xs-12 col-sm-12 col-md-9 col-lg-9'>"+
+							"<div id='questionsChart' class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>"+
+								"<div id='questionsPieChart'></div>"+
+							"</div>"+
+							"<div id='timeChart' class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>"+
+								"<div id='timePieChart'></div>"+
+							"</div>"+
+							"<div class='col-xs-12 col-sm-12 col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 chartsSummary'>"+
+								"<div class='correct'>"+
+									"<span class='info'>CORRECT</span>"+
+									"<span class='value'></span>"+
+								"</div>"+
+								"<div class='incorrect'>"+
+									"<span class='info'>INCORRECT</span>"+
+									"<span class='value'></span>"+
+								"</div>"+
+								"<div class='unattempted'>"+
+									"<span class='info'>UNATTEMPTED</span>"+
+									"<span class='value'></span>"+
+								"</div>"+
+								"<div class='unvisited'>"+
+									"<span class='info'>UNVISITED</span>"+
+									"<span class='value'></span>"+
+								"</div>"+
+							"</div>"+
+						"</div>"+
+						"<div id='test2bsure_summary'></div>"+
+					"</div>"+
+				"</div>"+
+				"<div class='solution-section col-xs-12 col-sm-12 col-md-12 col-lg-12 container'>"+
+					"<div class='link-pallete'>"+
+						"<img src='WebContent/Portal/images/left-arrow.png' alt='Open'/>"+
+					"</div>"+
+					"<div class='solution-questions col-xs-12 col-sm-12 col-md-9 col-lg-9'>"+
+						"<div class='questions col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"</div>"+
+						"<div class='attempt-controls col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"</div>"+
+					"</div>"+
+					"<div class='solution-ques-status xs-12 col-sm-12 col-md-3 col-lg-3'>"+
+						"<h4>Question Status</h4>"+
+						"<div class='ques-status'>"+
+						"</div>"+
+						"<div class='ques-status-info'>"+
+							"<div class='main-status'><div class='status-info correct'><span>0</span></div><span class='status-span'>Correct Attempt</span></div>"+
+							"<div class='main-status'><div class='status-info wrong'><span>0</span></div><span class='status-span'>Wrong Attempt</span></div>"+
+							"<div class='main-status'><div class='status-info missed'><span>0</span></div><span class='status-span'>Missed(Unvisited) Question</span></div>"+
+							"<div class='main-status'><div class='status-info skipped'><span>0</span></div><span class='status-span'>Skipped(Unattempted) Question</span></div>"+
+							"<div class='main-status'><div class='status-info marked'><span>0</span></div><span class='status-span'>Marked For Review</span></div>"+
+						"</div>"+
+					"</div>"+
+				"</div>";
+	$('body').find('.common-header').remove();
+	$('body').find('.common-content').remove();
+	$('body').find('.common-footer').remove();
+	$('body').append(html);
+	$('body').addClass('test-report-page');
+};
+testreportController.prototype.LoadData = function()
 {
 	var id = this.id;
 	fetch(remoteServer+'/test2bsure/testreportdata?sessionId='+id)
 	  .then(response => response.json())
 	  .then(data => this.SetState({ testInfo: data.testInfo, reportData: data.reportData, solutionData: data.solutionData }));
 }
-testReportController.prototype.SetState = function(obj)
+testreportController.prototype.SetState = function(obj)
 {
 	for(var key in obj){
 		this[key] = obj[key];
@@ -60,24 +134,24 @@ testReportController.prototype.SetState = function(obj)
 		this.UpdateQuestionStatusCount();
 	}
 };
-testReportController.prototype.BindEvents = function()
+testreportController.prototype.BindEvents = function()
 {
 	$('.link-pallete').unbind().bind('click', function(){
 		if($('.solution-ques-status').css('display') == 'none'){
 			//means question pallete is not visible
 			$('.solution-ques-status').css('display', 'block');
-			$('.link-pallete').find('img').attr('src', '../images/right-arrow.png');
+			$('.link-pallete').find('img').attr('src', 'WebContent/Portal/images/right-arrow.png');
 			$('.link-pallete').css('right', $('.solution-ques-status').width()+34+'px');
 		}
 		else{
 			//means question pallete is visible
 			$('.solution-ques-status').css('display', 'none');
-			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').find('img').attr('src', 'WebContent/Portal/images/left-arrow.png');
 			$('.link-pallete').css('right', '0px');
 		}
 	});
 };
-testReportController.prototype.PopulateReportHeader = function()
+testreportController.prototype.PopulateReportHeader = function()
 {
 	var html = "<div class='col-xs-12 col-sm-12 col-md-8 col-lg-8'><h4>"+this.testInfo.title+"</h4></div>"+
 		       "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 divButton'>"+
@@ -91,7 +165,7 @@ testReportController.prototype.PopulateReportHeader = function()
 		this.SwitchReportSolution();
 	}.bind(this));
 };
-testReportController.prototype.SwitchReportSolution = function()
+testreportController.prototype.SwitchReportSolution = function()
 {
 	var newUrl = window.location.pathname + "?sessionId="+this.id+"&report=";
 	if(this.report == 1){
@@ -104,7 +178,7 @@ testReportController.prototype.SwitchReportSolution = function()
 	}
 	window.location.href = newUrl;
 };
-testReportController.prototype.PopulateReport = function()
+testreportController.prototype.PopulateReport = function()
 {
 	this.PopulateBasicReport();
 	this.PopulateTopperAverage();
@@ -112,7 +186,7 @@ testReportController.prototype.PopulateReport = function()
 	this.PopulateLeaderboard();
 	this.DisplayCharts();
 }
-testReportController.prototype.PopulateBasicReport = function()
+testreportController.prototype.PopulateBasicReport = function()
 {
 	var html = "";
 	var accuracy = 0;
@@ -127,39 +201,39 @@ testReportController.prototype.PopulateBasicReport = function()
 	var totalTestTime = this.testInfo.totalTime * 60;
 	this.reportData.timeTaken = this.reportData.timeTaken > totalTestTime ? totalTestTime : this.reportData.timeTaken;
 	html += "<div class='greeting'>"+
-				"<img src='../images/trophy.png' alt='Trophy' class='trophy'/>"+
+				"<img src='WebContent/Portal/images/trophy.png' alt='Trophy' class='trophy'/>"+
 				"<h4>Congrats "+ userController.getObj().userData.name + " !!</h4>"+
 			"</div>"+
 			"<div class='report-detail col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
 				"<div class='item rank col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
-					"<img src='../images/rank.png' alt='Rank'/><div class='values'><span>Rank</span><span class='detail'>"+
+					"<img src='WebContent/Portal/images/rank.png' alt='Rank'/><div class='values'><span>Rank</span><span class='detail'>"+
 					this.reportData.rank+" / "+this.reportData.totalCandidate+"</span></div>"+
 				"</div>"+
 				"<div class='item score col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
-					"<img src='../images/score.png' alt='Score'/><div class='values'><span>Score</span><span class='detail'>"+
+					"<img src='WebContent/Portal/images/score.png' alt='Score'/><div class='values'><span>Score</span><span class='detail'>"+
 					this.reportData.markesScored+" / "+this.testInfo.totalMarks+"</span></div>"+
 				"</div>"+
 				"<div class='item ques col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
-					"<img src='../images/attempts.png' alt='Attempts'/><div class='values'><span>Qs Attempt</span><span class='detail'>"+
+					"<img src='WebContent/Portal/images/attempts.png' alt='Attempts'/><div class='values'><span>Qs Attempt</span><span class='detail'>"+
 					this.reportData.quesAttempted+" / "+this.testInfo.totalQues+"</span></div>"+
 				"</div>"+
 				"<div class='item time col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
-					"<img src='../images/time.png' alt='Time'/><div class='values'><span>Time Taken</span><span class='detail'>"+
+					"<img src='WebContent/Portal/images/time.png' alt='Time'/><div class='values'><span>Time Taken</span><span class='detail'>"+
 					test2bsureController.getObj().getTimeFormat(this.reportData.timeTaken)+"</span></div>"+
 				"</div>"+
 				"<div class='item accuracy col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
-					"<img src='../images/accuracy.png' alt='Accuracy'/><div class='values'><span>Accuracy</span><span class='detail'>"+
+					"<img src='WebContent/Portal/images/accuracy.png' alt='Accuracy'/><div class='values'><span>Accuracy</span><span class='detail'>"+
 					accuracy+"%</span></div>"+
 				"</div>"+
 				"<div class='item percentile col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
-					"<img src='../images/percentile.png' alt='Percentile'/><div class='values'><span>Percentile</span><span class='detail'>"+
+					"<img src='WebContent/Portal/images/percentile.png' alt='Percentile'/><div class='values'><span>Percentile</span><span class='detail'>"+
 					percentile+"</span></div>"+
 				"</div>"+
 			"</div>";
 	$('.report-section').find('.report-basic').html(html);
 			
 };
-testReportController.prototype.PopulateTopperAverage = function()
+testreportController.prototype.PopulateTopperAverage = function()
 {
 	$('.report-section').find('.report-advanced').find('.topper-average').empty();
 	var topperScore = this.reportData.leaderboard[0].marksScored;
@@ -187,13 +261,13 @@ testReportController.prototype.PopulateTopperAverage = function()
 			   "</div>";
 	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
 };
-testReportController.prototype.PopulateSuggestedTests = function()
+testreportController.prototype.PopulateSuggestedTests = function()
 {
 	var html = "";
 	if(this.testInfo.suggestedTests != null && this.testInfo.suggestedTests.length > 0){
 		for(var i in this.testInfo.suggestedTests){
 			var test = this.testInfo.suggestedTests[i];
-			html += "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' test-id='" + test["id"] + "'>"+
+			html += "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' test-id='" + test["id"] + "' data-action='"+test["urlKey"]+"'>"+
 						"<span class='col-xs-9 col-sm-9 col-md-9 col-lg-9'>"+test["title"]+"</span>"+
 						"<span class='col-xs-3 col-sm-3 col-md-3 col-lg-3 testBtn'><a>Take Test</a></span>"+
 					"</div>";
@@ -213,24 +287,24 @@ testReportController.prototype.PopulateSuggestedTests = function()
 				$('#loginModal').modal('show');
 				return false;
 			}
-			var testId = $(e.currentTarget).parents('div[test-id]').attr('test-id');
-			window.location.href = 'take-test.html?id='+testId;
+			var action = $(e.currentTarget).parents('div[test-id]').attr('data-action');
+			window.open(action+'?start=0');
 		});
 	}
 	else{
 		$('.left-side').find('.suggested-tests').hide();
 	}
 };
-testReportController.prototype.PopulateLeaderboard = function()
+testreportController.prototype.PopulateLeaderboard = function()
 {
 	var html = "";
 	html += "<div class='btnHolder'><button class='button button-primary' id='btnShowLeaderboard'>View Full Leaderboard</button>";
 	$('.report-section').find('.report-advanced').find('.topper-average').append(html);
 	$('#btnShowLeaderboard').unbind().bind('click', function(){
-		window.location.href = 'leaderboard.html?type=test&id='+this.testInfo.id;
+		window.location.href = window.location.pathname+'?leaderboard=1&type=test&id='+this.testInfo.id;
 	}.bind(this));
 };
-testReportController.prototype.DisplayCharts = function()
+testreportController.prototype.DisplayCharts = function()
 {
 	//Question attempt chart
 	var quesObject = {
@@ -314,13 +388,13 @@ testReportController.prototype.DisplayCharts = function()
 };
 
 
-testReportController.prototype.PopulateSolution = function()
+testreportController.prototype.PopulateSolution = function()
 {
 	this.PopulateQuestionStatus();
 	this.DisplayQuestion();
 	this.PopulateAttemptControls();
 };
-testReportController.prototype.PopulateQuestionStatus = function()
+testreportController.prototype.PopulateQuestionStatus = function()
 {
 	var html = "";
 	for(var i = 0; i < this.testInfo.totalQues; i++){
@@ -363,14 +437,14 @@ testReportController.prototype.PopulateQuestionStatus = function()
 		this.currentQues = parseInt($(e.currentTarget).attr('ques-no'));
 		if($('.link-pallete').css('display') == 'block'){
 			$('.solution-ques-status').css('display', 'none');
-			$('.link-pallete').find('img').attr('src', '../images/left-arrow.png');
+			$('.link-pallete').find('img').attr('src', 'WebContent/Portal/images/left-arrow.png');
 			$('.link-pallete').css('right', '0px');
 		}
 		this.DisplayQuestion();
 		this.ManageControls();
 	}.bind(this));
 };
-testReportController.prototype.DisplayQuestion = function()
+testreportController.prototype.DisplayQuestion = function()
 {
 	this.CurrentQuesStatusHighlight();
 	var optionValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -384,7 +458,7 @@ testReportController.prototype.DisplayQuestion = function()
 	var totalTestTime = this.testInfo.totalTime * 60;
 	question.timeSpent = question.timeSpent > totalTestTime ? totalTestTime : question.timeSpent;
 	html +=	"<span class='ques-status'>"+quesStatus+"</span>"+
-			"<span class='ques-time'><img src='../images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
+			"<span class='ques-time'><img src='WebContent/Portal/images/time.png' alt='Time Spent'><span>"+test2bsureController.getObj().getTimeFormat(question.timeSpent)+"</span></span>"+
 			"<span class='ques-marks'>0 mark(s)</span>"
 			"</div>"+
 			"<div class='ques-detail'>";
@@ -461,7 +535,7 @@ testReportController.prototype.DisplayQuestion = function()
 	$('.question').find('.question-desc').find('.ques-status').css('background-color', bgColor);
 	$('.question').find('.question-desc').find('.ques-status').css('color', color);
 };
-testReportController.prototype.PopulateAttemptControls = function()
+testreportController.prototype.PopulateAttemptControls = function()
 {
 	var html = "<div class='col-xs-4 col-sm-4 col-md-3 col-lg-3'>"+
 					"<button class='col-xs-12 col-sm-12 col-md-2 col-lg-2 button button-primary btnShowSolution'>Show Solution</button>"+
@@ -490,7 +564,7 @@ testReportController.prototype.PopulateAttemptControls = function()
 		$(".question").animate({ scrollTop: position.top }, 1000);
 	}.bind(this));
 };
-testReportController.prototype.ManageControls = function()
+testreportController.prototype.ManageControls = function()
 {
 	if(this.currentQues == 1){
 		//means displaying first question
@@ -515,12 +589,12 @@ testReportController.prototype.ManageControls = function()
 		$('.btnShowSolution').show();
 	}
 }
-testReportController.prototype.CurrentQuesStatusHighlight = function()
+testreportController.prototype.CurrentQuesStatusHighlight = function()
 {
 	$('.solution-ques-status').find('.ques-status').find('div').removeClass('selected');
 	$('.solution-ques-status').find('.ques-status').find('div[ques-no='+this.currentQues+']').addClass('selected');
 };
-testReportController.prototype.UpdateQuestionStatusCount = function(){
+testreportController.prototype.UpdateQuestionStatusCount = function(){
 	var correct = 0;
 	var wrong = 0;
 	var missed = 0;
