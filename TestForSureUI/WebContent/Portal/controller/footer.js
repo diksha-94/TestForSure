@@ -38,21 +38,21 @@ footerController.prototype.PopulateData = function(){
 		if(this.data.exams.length > 0){
 			html += "<div><h5>Exams</h5>";
 			for(var exam in this.data.exams){
-				html += "<a data-id = '"+this.data.exams[exam].id+"' data-type='exam'>"+this.data.exams[exam].title+"</a>"; 
+				html += "<a data-id = '"+this.data.exams[exam].id+"' data-type='exam' data-action='"+this.data.exams[exam].urlKey+"'>"+this.data.exams[exam].title+"</a>"; 
 			}
 			html += "</div>";
 		}
 		if(this.data.quizzes.length > 0){
 			html += "<div><h5>Quizzes</h5>";
 			for(var quiz in this.data.quizzes){
-				html += "<a data-id = '"+this.data.quizzes[quiz].id+"' data-type='quiz'>"+this.data.quizzes[quiz].title+"</a>"; 
+				html += "<a data-id = '"+this.data.quizzes[quiz].id+"' data-type='quiz' data-action='"+this.data.quizzes[quiz].urlKey+"'>"+this.data.quizzes[quiz].title+"</a>"; 
 			}
 			html += "</div>";
 		}
 		html += "</div>"
 		$('.footer').find('.left').append(html);
 		$('.footer').find('.left').find('a[data-id]').unbind().bind('click', function(e){
-			window.location.href = $(e.currentTarget).attr('data-type')+".html?id="+$(e.currentTarget).attr('data-id');
+			window.location.href = $(e.currentTarget).attr('data-action');
 		});
 	}
 };
