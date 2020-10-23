@@ -21,6 +21,7 @@ takequizController.prototype.LoadPage = function()
 {
 	var html = "<div class='quiz-header col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
 			   "</div>"+
+			   "<div class='quizTimer hide'></div>"+
 			   "<div class='quiz-content col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
 					"<div class='quiz-report col-xs-12 col-sm-12 col-md-12 col-lg-12' style='display:none;'>"+
 					"</div>"+
@@ -31,6 +32,7 @@ takequizController.prototype.LoadPage = function()
 							"<img src='WebContent/Portal/images/circular-clock.png' alt='Quiz Time' class='takeonly quiz-timer'/>"+
 							"<div class='line takeonly'></div>"+
 							"<h3 class='quiz-title-value takeonly'></h3>"+
+							"<span class='quiz-time-spent'></span>"+
 						"</div>"+
 						"<div class='quiz-questions col-xs-12 col-sm-12 col-md-11 col-lg-11'>"+
 							"<div class='quiz-question col-xs-12 col-sm-12 col-md-6 col-lg-6'>"+
@@ -429,7 +431,7 @@ takequizController.prototype.HandleReviewControls = function()
 		$('.btnReviewQuiz').show();
 	}.bind(this));
 };
-quizController.prototype.StartTimer = function()
+takequizController.prototype.StartTimer = function()
 {
 	if(this.interval != null){
 		clearInterval(this.interval);
