@@ -5,6 +5,9 @@ var takequizController = function(id){
 	this.sessionId = 0;
 	this.currentQues = 0;
 	this.reportData = {};
+	this.interval = null;
+	this.timeTaken = 0;
+	this.review = false;
 };
 takequizController.prototype.Init = function(callback)
 {
@@ -93,26 +96,39 @@ takequizController.prototype.ManageQuizState = function()
 	if(this.quizInfo.attemptInfo != null && this.quizInfo.attemptInfo.state == 2){
 		//Means quiz already attempted, show the report
 		this.currentQues = 0;
+		this.review = true;
 		$('.quiz-content').css('background-color', '#FFF');
+		$('.quizTimer').remove();
+		$('.quiz-time-spent').removeClass('hide').addClass('show');
+		$('.quiz-info-value').addClass('solution');
 		this.DisplayReport();
 	}
 	else{
 		//Display the question wherever left
+		$('.quiz-info-value').addClass('attempt');
+		$('.quiz-time-spent').removeClass('show').addClass('hide');
 		this.PopulateQuestion();
 	}
 	this.PopulateQuestionStatus();
 };
 takequizController.prototype.PopulateQuizDetails = function()
 {
-	var html = "<div class='brand-logo-quiz col-xs-2 col-sm-2 col-md-3 col-lg-3'>"+
+	var html = "<div class='brand-logo-quiz col-xs-1 col-sm-1 col-md-3 col-lg-3'>"+
 					"<a class='brand' href='/'>"+
 						"<img src='WebContent/Portal/images/final/logo_white.png' alt='TEST-2B-SURE'>"+
 						"<i class='fa fa-home'></i>"+
 					"</a>"+
 				"</div>"+
-				"<div class='quiz-details col-xs-8 col-sm-8 col-md-9 col-lg-9'>"+
+				"<div class='quiz-details col-xs-10 col-sm-10 col-md-9 col-lg-9'>"+
 					"<div class='quiz-title col-xs-12 col-sm-12 col-md-8 col-lg-8'><h4>"+this.quizInfo.title+"</h4></div>"+
-					"<div class='quiz-info col-xs-12 col-sm-12 col-md-4 col-lg-4'><span>"+this.quizInfo.noOfQues+" QUES / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" MARKS</span></div>"+
+					"<div class='quiz-info col-xs-12 col-sm-12 col-md-4 col-lg-4'>"+
+						"<span>"+this.quizInfo.noOfQues+" QUES / "+(this.quizInfo.noOfQues * this.quizInfo.marksPerQues)+" MARKS";
+	if(parseInt(this.quizInfo.timePerQues) > 0){
+		html += " / "+this.quizInfo.timePerQues + "SECS PER QUES";
+		$('.quizTimer').removeClass('hide').addClass('show');
+	}
+	html += 	"</span>"+
+					"</div>"+
 				"</div>";
 	$('.quiz-header').html(html);
 };
@@ -182,9 +198,17 @@ takequizController.prototype.PopulateQuestion = function(solution)
 		$('.quiz-questions').find('.questions').find('.question').find('.solution').show();
 		$('.quiz-questions').find('.questions').find('.question').find('.solution').html(html);
 	}
+	//Populate Time Spent
+	if(parseInt(this.quizInfo.timePerQues) > 0){
+		$('.quiz-time-spent').html("Time Spent: "+question.timeSpent + " secs");
+	}
 	$('.quiz-main').find('.quiz-questions').find('.quiz-options').find('.option').unbind().bind('click', function(e){
-		this.CheckAnswer(e.currentTarget);	
-	}.bind(this));				
+		clearInterval(this.interval);
+		this.CheckAnswer(e.currentTarget);
+	}.bind(this));
+	if(!this.review && parseInt(this.quizInfo.timePerQues) > 0){
+		this.StartTimer();
+	}
 };
 takequizController.prototype.PopulateQuestionStatus = function()
 {
@@ -196,7 +220,10 @@ takequizController.prototype.PopulateQuestionStatus = function()
 			//means already attempted
 			var correctOption = JSON.parse(this.questionsData[question].correctOption);
 			var markedOption = JSON.parse(this.questionsData[question].markedOption);
-			if(correctOption.indexOf(true) == markedOption.indexOf(true)){
+			if(markedOption.length == 0){
+				status = 'notvisited';
+			}
+			else if(correctOption.indexOf(true) == markedOption.indexOf(true)){
 				status = 'correct';
 			}
 			else{
@@ -210,15 +237,21 @@ takequizController.prototype.PopulateQuestionStatus = function()
 };
 takequizController.prototype.CheckAnswer = function(node)
 {
-	var option = $(node).attr('data-option');
 	var answer = '[';
-	option = parseInt(option);
-	for(var i=0;i<=option;i++){
-		if(i == option){
-			answer += 'true]';
-		}
-		else{
-			answer += 'false,';
+	var option = -1;
+	if(typeof node == 'undefined'){
+		answer = '[]';
+	}
+	else{
+		option = $(node).attr('data-option');
+		option = parseInt(option);
+		for(var i=0;i<=option;i++){
+			if(i == option){
+				answer += 'true]';
+			}
+			else{
+				answer += 'false,';
+			}
 		}
 	}
 	//Check answer
@@ -230,7 +263,8 @@ takequizController.prototype.CheckAnswer = function(node)
 		submit = 1;
 	}
 	var obj = this;
-	var url = remoteServer+'/test2bsure/checkanswer?quesid='+quesId+'&quesindex='+quesIndex+'&sessionid='+sessionId+'&answer='+answer+'&submit='+submit;
+	this.timeTaken = this.timeTaken > parseInt(this.quizInfo.timePerQues) ? parseInt(this.quizInfo.timePerQues) : this.timeTaken;
+	var url = remoteServer+'/test2bsure/checkanswer?quesid='+quesId+'&quesindex='+quesIndex+'&sessionid='+sessionId+'&answer='+answer+'&submit='+submit+'&timeSpent='+this.timeTaken;
 	fetch(url)
 	.then(response => response.json())
 	.then(function(data){
@@ -249,13 +283,14 @@ takequizController.prototype.CheckAnswer = function(node)
 		else{
 			$(node).addClass('incorrect');
 			$(node).find('span.option-count').addClass('incorrect');
-			$('.question-status').find('span[qid='+quesId+']').removeClass('notvisited').addClass('incorrect');
+			if(option != -1)
+				$('.question-status').find('span[qid='+quesId+']').removeClass('notvisited').addClass('incorrect');
 			var correctIndex = correctAnswer.indexOf(true);
 			$('.quiz-options').find('.option[data-option='+correctIndex+']').addClass('correct');
 			$('.quiz-options').find('.option[data-option='+correctIndex+']').find('span.option-count').addClass('correct');
 		}
-		$(node).parents('.options').find('.option').addClass('block-events');
-		$(node).parents('.options').find('.option').addClass('no-hover');
+		$('.quiz-options').find('.option').addClass('block-events');
+		$('.quiz-options').find('.option').addClass('no-hover');
 		$('.quiz-main .quiz-questions .quiz-options .options .option.correct').find('.answer-status').find('img').attr('src', 'WebContent/Portal/images/correct.png');
 		$('.quiz-main .quiz-questions .quiz-options .options .option.incorrect').find('.answer-status').find('img').attr('src', 'WebContent/Portal/images/wrong.png');
 		
@@ -322,6 +357,7 @@ takequizController.prototype.DisplayReport = function()
 	$('.accuracy-per').attr('stroke-dasharray', ''+correctPer+', 100');
 	$('.quiz-content').find('.quiz-report').find('.btnReviewQuiz').unbind().bind('click', function(e){
 		$(e.currentTarget).hide();
+		$('.quiz-info-value').removeClass('attempt').addClass('solution');
 		$('.quiz-info-head').html('Quiz Solution');
 		$('.takeonly').hide();
 		//$('.quiz-content').find('.quiz-report').hide();
@@ -392,4 +428,25 @@ takequizController.prototype.HandleReviewControls = function()
 		$('.quiz-content').find('.quiz-report').show();
 		$('.btnReviewQuiz').show();
 	}.bind(this));
+};
+quizController.prototype.StartTimer = function()
+{
+	if(this.interval != null){
+		clearInterval(this.interval);
+	}
+	this.timeTaken = 0;
+	$('.quizTimer').width('100%');
+	var fullWidth = $('.quizTimer').width();
+	var perSecWidth = fullWidth / parseInt(this.quizInfo.timePerQues);
+	this.interval = setInterval(function(){
+		if($('.quizTimer').width() <= 0){
+			clearInterval(this.interval);
+			this.CheckAnswer();
+			alert("Time is Over !!");
+		}
+		else{
+			this.timeTaken += 1;
+			$('.quizTimer').width($('.quizTimer').width() - perSecWidth);
+		}
+	}.bind(this), 1000);
 };

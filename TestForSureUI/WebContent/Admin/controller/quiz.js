@@ -12,6 +12,14 @@ quizController.prototype.AddEdit = function()
 	$('#quizModal').find('.ddQuizExam').remove();
 	$('#quizModal').find('.ddQuizFilter').remove();
 	RefreshData('quizModal');
+	$('#chkQuizTime').unbind().on('change', function(e){
+		if($(e.currentTarget).prop('checked')){
+			$('#txtQuizTime').parents('div.quizTime').removeClass('hide').addClass('show');
+		}
+		else{
+			$('#txtQuizTime').parents('div.quizTime').removeClass('show').addClass('hide');
+		}
+	});
 	this.LoadQuizSubjects(function(){
 		if(this.id > 0){
 			this.Edit();
@@ -89,6 +97,14 @@ quizController.prototype.SaveData = function(openNext, callback)
 		alert('Please enter all the mandatory fields');
 		return;
 	}
+	var time = 0;
+	if($('#chkQuizTime').prop('checked')){
+		time = $('#txtQuizTime').val();
+		if(time.length == 0 || time == 0){
+			alert("Please enter time per ques >0 secs");
+			return;
+		}
+	}
 	var url = remoteServer+'/test2bsure/quiz';
 	var type = 'POST';
 	var requestData = {
@@ -98,6 +114,7 @@ quizController.prototype.SaveData = function(openNext, callback)
 		'displayIndex': displayIndex,
 		'noOfQues': questions,
 		'marksPerQues': marks,
+		'timePerQues': time,
 		'noOfAttempts': attempts,
 		'exams': exams,
 		'active': 1,
@@ -202,6 +219,15 @@ quizController.prototype.Edit = function(e)
 					$('#quizModal').find('#txtQuizIndex').val(item.displayIndex);
 					$('#quizModal').find('#txtQuizQuestions').val(item.noOfQues);
 					$('#quizModal').find('#txtQuizMarks').val(item.marksPerQues);
+					if(parseInt(item.timePerQues) > 0){
+						$('#chkQuizTime').prop('checked', true);
+						$('#txtQuizTime').parents('div.quizTime').removeClass('hide').addClass('show');
+						$('#quizModal').find('#txtQuizTime').val(item.timePerQues);
+					}
+					else{
+						$('#chkQuizTime').prop('checked', false);
+						$('#txtQuizTime').parents('div.quizTime').removeClass('show').addClass('hide');
+					}
 					$('#quizModal').find('#txtQuizAttempts').val(item.noOfAttempts);
 					var quizStatus = false;
 					if(item.publish == 1){
