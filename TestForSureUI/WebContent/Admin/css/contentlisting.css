@@ -93,25 +93,6 @@
 }
 /* Pagination CSS ends */
 
-/* Modal CSS starts*/
-.modal-dialog .modal-content .modal-header{
-	padding:20px;
-	text-align: center;
-}
-.modal-dialog .modal-content .modal-header h4{
-	display:inline;
-}
-.modal-dialog .modal-content .modal-body{
-	height: auto;
-	margin-top:20px;
-	padding:0px;
-	padding-bottom: 65px;
-}
-#imgCategoryImagePreview{
-	width: 80px;
-}
-/* Modal CSS ends */
-
 /* User View Modal CSS starts */
 #userModal .modal-dialog .modal-content .modal-header{
 	padding:10px;
