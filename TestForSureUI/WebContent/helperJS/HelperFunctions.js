@@ -1,3 +1,4 @@
+var version = 1;
 //var remoteServer = "http://3.6.58.203:8083";
 var remoteServer = "http://localhost:8083";
 var perPage = 15;
@@ -93,7 +94,7 @@ function LoadCSS(filename) {
 		link.id = id;
 		link.type = 'text/css';
 		link.rel = 'stylesheet';
-		link.href = "../css/" + filename + ".css";
+		link.href = "../css/" + filename + ".css?v="+version;
 		document.head.appendChild(link);
 	}
 };
@@ -103,7 +104,7 @@ function LoadJS(src, callback) {
 	if (!document.getElementById(id)) {
 		var s = document.createElement('script');
 		s.id = id;
-		s.src = "../controller/" + src + ".js";
+		s.src = "../controller/" + src + ".js?v="+version;
 		s.async = true;
 		s.onreadystatechange = s.onload = function() {
 			if ( typeof this.callback != 'undefined') {
