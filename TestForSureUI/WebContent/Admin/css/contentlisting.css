@@ -248,4 +248,24 @@ button.testStatus[data-action='0'], button.quizStatus[data-action='0'] {
     margin: 5px;
     width: 66%;
 }
+#sectionSettingsModal{
+	z-index: 1060;
+}
+#sectionSettingsModal .modal-dialog.test2bsure-dialog{
+	width: 52% !important;
+    height: 350px;
+    top: 100px;
+    left: 24%;
+    overflow: hidden;
+    border: solid 1px #000;
+}
+#sectionSettingsModal .modal-dialog .modal-content .modal-header{
+	padding: 5px 20px;
+}
+#sectionSettingsModal .modal-dialog .modal-content .modal-body{
+	padding-bottom: 0;
+}
+#sectionSettingsModal .modal-content.test2bsure-content{
+	border: none;
+}
 /* Test Ques Modal CSS ends */

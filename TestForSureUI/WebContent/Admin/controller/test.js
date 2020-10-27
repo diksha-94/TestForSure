@@ -114,6 +114,7 @@ testController.prototype.SaveData = function(openNext, callback)
 				if(openNext == true){
 					$('#testQuesModal').modal('show');
 					this.BindQuestionCategoryEvents();
+					this.BindSectionEvents();
 					$('#testQuesModal').find('#btnTestFinish').unbind().bind('click', function(){
 						$('#testQuesModal').modal('hide');
 						$('#testDetailsModal').modal('hide');
@@ -516,4 +517,74 @@ testController.prototype.HandlePagination = function(len){
 			this.PopulateQuestions();
 		}.bind(this));
 	}
+};
+
+testController.prototype.BindSectionEvents = function()
+{
+	$('#testQuesModal').find('.sectionSettings').unbind().bind('click', function(){
+		var self = this;
+		$('#sectionSettingsModal').modal('show');
+		$.ajax({
+			url: remoteServer+'/test2bsure/sectionSettings?testId='+self.id,
+			type: 'GET',
+			success: function(response){
+				if(response.result.status == true){
+					if(response.data != null && response.data.length > 0){
+						var sectionSettings = JSON.parse(response.data[0].sectionSettings);
+						if(sectionSettings.sectionalBound){
+							$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', true);
+						}
+						else{
+							$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', false);
+						}
+						$('#sectionSettingsModal').find('#chkSectionalTimeBound').change();
+						if(sectionSettings.sectionalTime){
+							$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', true);
+						}
+						else{
+							$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', false);
+						}
+					}
+				}
+			}.bind(this),
+			error: function(e){
+				console.log(e);
+			}
+		});
+		$('#sectionSettingsModal').find('#chkSectionalTimeBound').unbind().bind('change', function(e){
+			if($(e.currentTarget).prop('checked')){
+				$('#sectionSettingsModal').find('#chkSectionalTime').parents('div.sectionalTime').removeClass('hide').addClass('show');
+			}
+			else{
+				$('#sectionSettingsModal').find('#chkSectionalTime').parents('div.sectionalTime').removeClass('show').addClass('hide');
+			}
+		});
+		//Save Section Settings
+		$('#sectionSettingsModal').find('#btnSectionSettingsSave').unbind().bind('click', function(){
+			var requestData = {
+					"id": this.id,
+					"sectionSettings": JSON.stringify({
+								"sectionalBound": $('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked'),
+								"sectionalTime": $('#sectionSettingsModal').find('#chkSectionalTime').prop('checked')
+							})
+			};
+			$.ajax({
+				url: remoteServer+'/test2bsure/sectionSettings',
+				type: 'PUT',
+				data: JSON.stringify(requestData),
+				contentType: "application/json",
+				success: function(response){
+					if(response.status == true){
+						alert("Section Settings saved successfully !!");
+					}
+					else{
+						alert(response.message);
+					}
+				}.bind(this),
+				error: function(e){
+					console.log(e);
+				}
+			});
+		}.bind(this));
+	}.bind(this));
 };
