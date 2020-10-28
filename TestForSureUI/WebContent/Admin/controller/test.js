@@ -102,7 +102,6 @@ testController.prototype.SaveData = function(openNext, callback)
 		requestData.id = this.id;
 		type = 'PUT';
 	}
-	console.log('Call to save test');
 	$.ajax({
 		url: url,
 		type: type,
@@ -114,13 +113,14 @@ testController.prototype.SaveData = function(openNext, callback)
 				if(openNext == true){
 					$('#testQuesModal').modal('show');
 					this.BindQuestionCategoryEvents();
-					this.BindSectionEvents();
 					$('#testQuesModal').find('#btnTestFinish').unbind().bind('click', function(){
 						$('#testQuesModal').modal('hide');
 						$('#testDetailsModal').modal('hide');
 						$('.menu-tabs').find('li[class="active"]').find('a').click();
 					}.bind(this));
-					this.HandleTestQuestions();
+					this.BindSectionEvents(function(){
+						this.HandleTestQuestions();
+					}.bind(this));
 				}
 				else{
 					if(typeof callback != 'undefined'){
@@ -271,18 +271,21 @@ testController.prototype.HandleTestQuestions = function()
 	$('#testQuesModal').find('.added-questions').find('tbody').html('');
 	this.PopulateQuestions();
 	this.PopulateTestQuestions();
+	this.PopulateTotalQuestionsAndMarks();
 };
 
-testController.prototype.PopulateTestQuestions = function(callback)
+testController.prototype.PopulateTestQuestions = function(sectionId, callback)
 {
-	$('.divCountQuesTest').find('.noOfQues').text(0);
+	if(typeof sectionId == 'undefined'){
+		var sectionId = $('.section .left').find('.accessSection.btn-primary').parents('div[data-section]').attr('data-section');
+	}
 	$.ajax({
-		url: remoteServer+'/test2bsure/testquestion?testid='+this.id,
+		url: remoteServer+'/test2bsure/testquestion?testid='+this.id+'&sectionId='+sectionId,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
 				if(response.data != null && response.data.length > 0){
-					$('.divCountQuesTest').find('.noOfQues').text(response.data.length);
+					$('.info .left').find('.noOfQuesSection').text(response.data.length);
 					var items = response.data;
 					var html = "";
 					for(var item in items){
@@ -300,6 +303,12 @@ testController.prototype.PopulateTestQuestions = function(callback)
 						this.ViewQuestion($(e.currentTarget).parents('tr').find('.addedQuesId').text());
 					}.bind(this));
 				}
+				else{
+					$('#testQuesModal').find('.added-questions').find('tbody').html('');
+				}
+			}
+			else{
+				$('#testQuesModal').find('.added-questions').find('tbody').html('');
 			}
 			if(typeof callback != 'undefined')
 				callback();
@@ -313,13 +322,15 @@ testController.prototype.PopulateTestQuestions = function(callback)
 };
 testController.prototype.AddTestQuestion = function(quesId)
 {
+	var sectionId = $('.section .left').find('.accessSection.btn-primary').parents('div[data-section]').attr('data-section');
 	$.ajax({
 		url: remoteServer+'/test2bsure/testquestion',
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({
 			"questionId": quesId,
-			"testId": this.id
+			"testId": this.id,
+			"sectionId": sectionId
 		}),
 		success: function(response){
 			if(response.status == true){
@@ -382,13 +393,15 @@ testController.prototype.ViewQuestion = function(quesId)
 };
 testController.prototype.DeleteTestQuestion = function(quesId)
 {
+	var sectionId = $('.section .left').find('.accessSection.btn-primary').parents('div[data-section]').attr('data-section');
 	$.ajax({
 		url: remoteServer+'/test2bsure/testquestion',
 		type: 'DELETE',
 		contentType: 'application/json',
 		data: JSON.stringify({
 			"questionId": quesId,
-			"testId": this.id
+			"testId": this.id,
+			"sectionId": sectionId
 		}),
 		success: function(response){
 			if(response.status == true){
@@ -519,7 +532,7 @@ testController.prototype.HandlePagination = function(len){
 	}
 };
 
-testController.prototype.BindSectionEvents = function()
+testController.prototype.BindSectionEvents = function(callback)
 {
 	$('#testQuesModal').find('.sectionSettings').unbind().bind('click', function(){
 		var self = this;
@@ -530,19 +543,21 @@ testController.prototype.BindSectionEvents = function()
 			success: function(response){
 				if(response.result.status == true){
 					if(response.data != null && response.data.length > 0){
-						var sectionSettings = JSON.parse(response.data[0].sectionSettings);
-						if(sectionSettings.sectionalBound){
-							$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', true);
-						}
-						else{
-							$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', false);
-						}
-						$('#sectionSettingsModal').find('#chkSectionalTimeBound').change();
-						if(sectionSettings.sectionalTime){
-							$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', true);
-						}
-						else{
-							$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', false);
+						if(response.data[0].sectionSettings != null){
+							var sectionSettings = JSON.parse(response.data[0].sectionSettings);
+							if(sectionSettings.sectionalBound){
+								$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', true);
+							}
+							else{
+								$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', false);
+							}
+							$('#sectionSettingsModal').find('#chkSectionalTimeBound').change();
+							if(sectionSettings.sectionalTime){
+								$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', true);
+							}
+							else{
+								$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', false);
+							}
 						}
 					}
 				}
@@ -587,4 +602,236 @@ testController.prototype.BindSectionEvents = function()
 			});
 		}.bind(this));
 	}.bind(this));
+	$('#testQuesModal').find('.addNewSection').unbind().bind('click', function(){
+		this.AddEditSection(-1);
+	}.bind(this));
+	this.PopulateSections(function(){
+		if(typeof callback == 'function'){
+			callback();
+		}
+	});
+};
+
+testController.prototype.PopulateSections = function(callback)
+{
+	var self = this;
+	//Get Sections of test
+	$.ajax({
+		url: remoteServer+'/test2bsure/test-section?testId='+self.id,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true && response.data.length > 0){
+				//Section exists, populate in UI
+				var html = "";
+				for(var i = 0; i < response.data.length; i++){
+					var sectionData = response.data[i];
+					console.log(sectionData);
+					var assignClass = 'btn-default';
+					if(i == 0){
+						assignClass = 'btn-primary';
+					}
+					html += "<div data-section='"+sectionData["id"]+"'>"+
+								"<button class='btn "+assignClass+" accessSection'>"+sectionData["name"]+"</button>"+
+								"<button class='btn btn-default small editSection'><img src='../../Images/Edit.svg' alt='Edit'></button>"+
+								"<button class='btn btn-default small deleteSection'><img src='../../Images/Delete.svg' alt='Delete'></button>"+
+							"</div>";
+				}
+				$("#testQuesModal").find('.section .left').html(html);
+				self.BindSectionClickEvents();
+			}
+			else{
+				//Section doesn't exist, create one section by default
+				var sectionDetails = {
+						"name": "Section 1",
+						"marksPerQues": $('#txtTestMarks').val(),
+						"negativeMarks": $('#txtTestNegative').val(),
+						"time": 0,
+						"displaySequence": 0
+				};
+				self.SaveSection(-1, sectionDetails, function(){
+					self.PopulateSections();
+				});
+			}
+			if(typeof callback == 'function'){
+				callback();
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
+};
+//Add/Update Section
+testController.prototype.SaveSection = function(sectionId, sectionDetails, callback)
+{
+	if(typeof sectionDetails == 'undefined'){
+		//Get from modal, and assign to sectionDetails
+		var name = $('#sectionDetailsModal').find('#txtSectionName').val();
+		var marksPerQues = $('#sectionDetailsModal').find('#txtSectionMarks').val();
+		var negativeMarks = $('#sectionDetailsModal').find('#txtSectionNegative').val();
+		var time = $('#sectionDetailsModal').find('#txtSectionTime').val();
+		var displaySequence = $('#sectionDetailsModal').find('#txtSectionSequence').val();
+		if(name.length == 0 || marksPerQues.length == 0 || marksPerQues == 0 || negativeMarks.length == 0 ||
+				($('.sectionTime').hasClass('show') && (time.length == 0 || time == 0)) || displaySequence.length == 0){
+			alert("Please fill all the mandatory fields.");
+			return;
+		}
+		sectionDetails = {
+				"name": name,
+				"marksPerQues": marksPerQues,
+				"negativeMarks": negativeMarks,
+				"time": time.length == 0 ? 0 : time,
+				"displaySequence": displaySequence
+		};
+	}
+	var url = remoteServer+'/test2bsure/test-section';
+	var type = 'POST';
+	var requestData = {
+			'testId': this.id,
+			'id': sectionId,
+			'name': sectionDetails.name,
+			'marksPerQues': sectionDetails.marksPerQues,
+			'negativeMarks' : sectionDetails.negativeMarks,
+			'time': sectionDetails.time,
+			'displaySequence': sectionDetails.displaySequence
+		};
+	
+	$.ajax({
+		url: url,
+		type: type,
+		data: JSON.stringify(requestData),
+		contentType: "application/json",
+		success: function(response){
+			if(response.status == true){
+				if(typeof callback == 'function'){
+					callback();
+				}
+			}
+			else{
+				alert(response.message);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
+};
+
+//Remove Section
+testController.prototype.RemoveSection = function(sectionId)
+{
+	var self = this;
+	$.ajax({
+		url: remoteServer+'/test2bsure/test-section?testId='+self.id+'&sectionId='+sectionId,
+		type: 'DELETE',
+		success: function(response){
+			if(response.status == true){
+				alert("Section Deleted successfully !!");
+				this.PopulateSections();
+			}
+			else{
+				alert(response.message);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
+};
+
+testController.prototype.BindSectionClickEvents = function()
+{
+	$('#testQuesModal').find('.section .left').find('.accessSection').unbind().bind('click', function(e){
+		var sectionId = $(e.currentTarget).parents('div[data-section]').attr('data-section');
+		$('div[data-section]').find('.accessSection').removeClass('btn-primary').addClass('btn-default');
+		$(e.currentTarget).removeClass('btn-default').addClass('btn-primary');
+		this.PopulateTestQuestions(sectionId);
+	}.bind(this));
+	
+	$('#testQuesModal').find('.section .left').find('.editSection').unbind().bind('click', function(e){
+		var sectionId = $(e.currentTarget).parents('div[data-section]').attr('data-section');
+		this.AddEditSection(sectionId);
+	}.bind(this));
+	
+	$('#testQuesModal').find('.section .left').find('.deleteSection').unbind().bind('click', function(e){
+		var sectionId = $(e.currentTarget).parents('div[data-section]').attr('data-section');
+		this.RemoveSection(sectionId);
+	}.bind(this));
+	
+};
+
+testController.prototype.AddEditSection = function(sectionId)
+{
+	var self = this;
+	$('#sectionDetailsModal').modal('show');
+	if(sectionId == -1){
+		//Add
+		$('#sectionDetailsModal').find('#txtSectionName').val('');
+		$('#sectionDetailsModal').find('#txtSectionMarks').val($('#txtTestMarks').val());
+		$('#sectionDetailsModal').find('#txtSectionNegative').val($('#txtTestNegative').val());
+		$('#sectionDetailsModal').find('#txtSectionTime').val('');
+		$('#sectionDetailsModal').find('#txtSectionSequence').val('');
+	}
+	else{
+		$.ajax({
+			url: remoteServer+'/test2bsure/test-section?testId='+this.id+'&sectionId='+sectionId,
+			type: 'GET',
+			success: function(response){
+				if(response.result.status == true && response.data.length > 0){
+					var sectionDetails = response.data[0];
+					$('#sectionDetailsModal').find('#txtSectionName').val(sectionDetails.name);
+					$('#sectionDetailsModal').find('#txtSectionMarks').val(sectionDetails.marksPerQues);
+					$('#sectionDetailsModal').find('#txtSectionNegative').val(sectionDetails.negativeMarks);
+					$('#sectionDetailsModal').find('#txtSectionTime').val(sectionDetails.time);
+					$('#sectionDetailsModal').find('#txtSectionSequence').val(sectionDetails.displaySequence);
+				}
+			}.bind(this),
+			error: function(e){
+				console.log(e);
+			}
+		});
+	}
+	$.ajax({
+		url: remoteServer+'/test2bsure/sectionSettings?testId='+self.id,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					if(response.data[0].sectionSettings != null){
+						var sectionSettings = JSON.parse(response.data[0].sectionSettings);
+						if(sectionSettings.sectionalTime){
+							$('#sectionDetailsModal').find('.sectionTime').removeClass('hide').addClass('show');
+						}
+						else{
+							$('#sectionDetailsModal').find('.sectionTime').removeClass('show').addClass('hide');
+						}
+					}
+				}
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
+	$('#sectionDetailsModal').find('#btnSectionSave').unbind().bind('click', function(){
+		this.SaveSection(sectionId, undefined, function(){
+			this.PopulateSections();
+		}.bind(this));
+	}.bind(this));
+};
+
+testController.prototype.PopulateTotalQuestionsAndMarks = function()
+{
+	var self = this;
+	$.ajax({
+		url: remoteServer+'/test2bsure/testquestion-count?testId='+self.id,
+		type: 'GET',
+		success: function(response){
+			$('.info .left').find('.noOfQuesTest').text(response);
+			$('.info .left').find('.marksTest').text(parseInt(response)*parseFloat($('#txtTestMarks').val()));
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
 };

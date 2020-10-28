@@ -248,7 +248,7 @@ button.testStatus[data-action='0'], button.quizStatus[data-action='0'] {
     margin: 5px;
     width: 66%;
 }
-#sectionSettingsModal{
+#sectionSettingsModal, #sectionDetailsModal{
 	z-index: 1060;
 }
 #sectionSettingsModal .modal-dialog.test2bsure-dialog{
@@ -259,13 +259,38 @@ button.testStatus[data-action='0'], button.quizStatus[data-action='0'] {
     overflow: hidden;
     border: solid 1px #000;
 }
-#sectionSettingsModal .modal-dialog .modal-content .modal-header{
+#sectionSettingsModal .modal-dialog .modal-content .modal-header,
+#sectionDetailsModal .modal-dialog .modal-content .modal-header{
 	padding: 5px 20px;
 }
-#sectionSettingsModal .modal-dialog .modal-content .modal-body{
+#sectionSettingsModal .modal-dialog .modal-content .modal-body,
+#sectionDetailsModal .modal-dialog .modal-content .modal-body{
 	padding-bottom: 0;
 }
-#sectionSettingsModal .modal-content.test2bsure-content{
+#sectionSettingsModal .modal-content.test2bsure-content,
+#sectionDetailsModal .modal-content.test2bsure-content{
 	border: none;
+}
+#sectionDetailsModal .modal-dialog.test2bsure-dialog{
+	width: 52% !important;
+    height: 420px;
+    top: 100px;
+    left: 24%;
+    overflow: hidden;
+    border: solid 1px #000;
+}
+#testQuesModal .section .left button.small{
+	padding: 5px;
+}
+#testQuesModal .section .left button.small img{
+	width: 20px;
+	margin-bottom: 0;
+}
+#testQuesModal .section .left{
+	display: flex;
+    flex-wrap: wrap;
+}
+#testQuesModal .section .left div[data-section]{
+	margin-right: 10px;
 }
 /* Test Ques Modal CSS ends */
