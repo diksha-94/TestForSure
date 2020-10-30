@@ -305,10 +305,12 @@ testController.prototype.PopulateTestQuestions = function(sectionId, callback)
 				}
 				else{
 					$('#testQuesModal').find('.added-questions').find('tbody').html('');
+					$('.info .left').find('.noOfQuesSection').text(0);
 				}
 			}
 			else{
 				$('#testQuesModal').find('.added-questions').find('tbody').html('');
+				$('.info .left').find('.noOfQuesSection').text(0);
 			}
 			if(typeof callback != 'undefined')
 				callback();
@@ -442,7 +444,14 @@ testController.prototype.BindQuestionCategoryEvents = function()
 				$('#testQuesModal').find('#ddQuestionSubCategory').html(html);
 			}.bind(this));
 		}
-	}.bind(this))
+		this.fromSearch = true;
+		this.PopulateQuestions();
+	}.bind(this));
+	
+	$('#testQuesModal').find('#ddQuestionSubCategory').unbind().bind('click', function(e){
+		this.fromSearch = true;
+		this.PopulateQuestions();
+	}.bind(this));
 	$('#testQuesModal').find("#btnSearchQues").unbind().bind('click', function(e){
 		this.fromSearch = true;
 		this.PopulateQuestions();
@@ -500,12 +509,20 @@ testController.prototype.PopulateQuestions = function(start = 1, repopulate = tr
 					$('#testQuesModal').find('.all-questions').find('.viewQues').unbind().bind('click', function(e){
 						this.ViewQuestion($(e.currentTarget).parents('tr').find('.addQuesId').text());
 					}.bind(this));
+					$('#testQuesModal').find('.questionCount').html("("+response.result.length+")");
 					this.HandlePagination(response.result.length);
 					removeLoader();
 				}
+				else{
+					$('#testQuesModal').find('.all-questions').find('tbody').html('');
+					this.HandlePagination(0);
+					$('#testQuesModal').find('.questionCount').html("(0)");
+				}
 			}
 			else{
+				$('#testQuesModal').find('.all-questions').find('tbody').html('');
 				this.HandlePagination(0);
+				$('#testQuesModal').find('.questionCount').html("(0)");
 			}
 			if(typeof callback == 'function'){
 				callback(response.result.length);
@@ -638,6 +655,9 @@ testController.prototype.PopulateSections = function(callback)
 				}
 				$("#testQuesModal").find('.section .left').html(html);
 				self.BindSectionClickEvents();
+				if(typeof callback == 'function'){
+					callback();
+				}
 			}
 			else{
 				//Section doesn't exist, create one section by default
@@ -649,11 +669,12 @@ testController.prototype.PopulateSections = function(callback)
 						"displaySequence": 0
 				};
 				self.SaveSection(-1, sectionDetails, function(){
-					self.PopulateSections();
+					self.PopulateSections(function(){
+						if(typeof callback == 'function'){
+							callback();
+						}
+					});
 				});
-			}
-			if(typeof callback == 'function'){
-				callback();
 			}
 		}.bind(this),
 		error: function(e){
@@ -755,7 +776,10 @@ testController.prototype.BindSectionClickEvents = function()
 	
 	$('#testQuesModal').find('.section .left').find('.deleteSection').unbind().bind('click', function(e){
 		var sectionId = $(e.currentTarget).parents('div[data-section]').attr('data-section');
-		this.RemoveSection(sectionId);
+		var r = confirm("Are you sure you want to remove this section from test?");
+		if (r == true) {
+			this.RemoveSection(sectionId);
+		}
 	}.bind(this));
 	
 };

@@ -293,4 +293,9 @@ button.testStatus[data-action='0'], button.quizStatus[data-action='0'] {
 #testQuesModal .section .left div[data-section]{
 	margin-right: 10px;
 }
+#testQuesModal .questionCount{
+	font-size: 1.2em;
+    font-weight: bold;
+    padding: 2px;
+}
 /* Test Ques Modal CSS ends */
