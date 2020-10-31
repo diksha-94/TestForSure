@@ -114,6 +114,46 @@ testController.prototype.SaveData = function(openNext, callback)
 					$('#testQuesModal').modal('show');
 					this.BindQuestionCategoryEvents();
 					$('#testQuesModal').find('#btnTestFinish').unbind().bind('click', function(){
+						var self = this;
+						this.GetSectionSettings(function(data){
+							if(data != null && data.length > 0){
+								if(data[0].sectionSettings != null){
+									var sectionSettings = JSON.parse(data[0].sectionSettings);
+									if(sectionSettings.sectionalTime){
+										//Check time restriction
+										$.ajax({
+											url: remoteServer+'/test2bsure/test-section?testId='+self.id,
+											type: 'GET',
+											success: function(response){
+												if(response.result.status == true && response.data.length > 0){
+													var sectionTotalTime = 0;
+													for(var i = 0; i < response.data.length; i++){
+														sectionTotalTime += response.data.time;
+													}
+													if(sectionTotalTime != $('#txtTestTime').val()){
+														alert("Total time should be equal to the time for all the sections.");
+														//return false;
+													}
+													else{
+														$('#testQuesModal').modal('hide');
+														$('#testDetailsModal').modal('hide');
+														$('.menu-tabs').find('li[class="active"]').find('a').click();
+													}
+												}
+											},
+											error: function(e){
+												console.log(e);
+											}
+										});
+									}
+									else{
+										$('#testQuesModal').modal('hide');
+										$('#testDetailsModal').modal('hide');
+										$('.menu-tabs').find('li[class="active"]').find('a').click();
+									}
+								}
+							}
+						});
 						$('#testQuesModal').modal('hide');
 						$('#testDetailsModal').modal('hide');
 						$('.menu-tabs').find('li[class="active"]').find('a').click();
@@ -554,33 +594,24 @@ testController.prototype.BindSectionEvents = function(callback)
 	$('#testQuesModal').find('.sectionSettings').unbind().bind('click', function(){
 		var self = this;
 		$('#sectionSettingsModal').modal('show');
-		$.ajax({
-			url: remoteServer+'/test2bsure/sectionSettings?testId='+self.id,
-			type: 'GET',
-			success: function(response){
-				if(response.result.status == true){
-					if(response.data != null && response.data.length > 0){
-						if(response.data[0].sectionSettings != null){
-							var sectionSettings = JSON.parse(response.data[0].sectionSettings);
-							if(sectionSettings.sectionalBound){
-								$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', true);
-							}
-							else{
-								$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', false);
-							}
-							$('#sectionSettingsModal').find('#chkSectionalTimeBound').change();
-							if(sectionSettings.sectionalTime){
-								$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', true);
-							}
-							else{
-								$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', false);
-							}
-						}
+		this.GetSectionSettings(function(data){
+			if(data != null && data.length > 0){
+				if(data[0].sectionSettings != null){
+					var sectionSettings = JSON.parse(data[0].sectionSettings);
+					if(sectionSettings.sectionalBound){
+						$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', true);
+					}
+					else{
+						$('#sectionSettingsModal').find('#chkSectionalTimeBound').prop('checked', false);
+					}
+					$('#sectionSettingsModal').find('#chkSectionalTimeBound').change();
+					if(sectionSettings.sectionalTime){
+						$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', true);
+					}
+					else{
+						$('#sectionSettingsModal').find('#chkSectionalTime').prop('checked', false);
 					}
 				}
-			}.bind(this),
-			error: function(e){
-				console.log(e);
 			}
 		});
 		$('#sectionSettingsModal').find('#chkSectionalTimeBound').unbind().bind('change', function(e){
@@ -815,26 +846,17 @@ testController.prototype.AddEditSection = function(sectionId)
 			}
 		});
 	}
-	$.ajax({
-		url: remoteServer+'/test2bsure/sectionSettings?testId='+self.id,
-		type: 'GET',
-		success: function(response){
-			if(response.result.status == true){
-				if(response.data != null && response.data.length > 0){
-					if(response.data[0].sectionSettings != null){
-						var sectionSettings = JSON.parse(response.data[0].sectionSettings);
-						if(sectionSettings.sectionalTime){
-							$('#sectionDetailsModal').find('.sectionTime').removeClass('hide').addClass('show');
-						}
-						else{
-							$('#sectionDetailsModal').find('.sectionTime').removeClass('show').addClass('hide');
-						}
-					}
+	this.GetSectionSettings(function(data){
+		if(data != null && data.length > 0){
+			if(data[0].sectionSettings != null){
+				var sectionSettings = JSON.parse(data[0].sectionSettings);
+				if(sectionSettings.sectionalTime){
+					$('#sectionDetailsModal').find('.sectionTime').removeClass('hide').addClass('show');
+				}
+				else{
+					$('#sectionDetailsModal').find('.sectionTime').removeClass('show').addClass('hide');
 				}
 			}
-		}.bind(this),
-		error: function(e){
-			console.log(e);
 		}
 	});
 	$('#sectionDetailsModal').find('#btnSectionSave').unbind().bind('click', function(){
@@ -853,6 +875,26 @@ testController.prototype.PopulateTotalQuestionsAndMarks = function()
 		success: function(response){
 			$('.info .left').find('.noOfQuesTest').text(response);
 			$('.info .left').find('.marksTest').text(parseInt(response)*parseFloat($('#txtTestMarks').val()));
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+		}
+	});
+};
+testController.prototype.GetSectionSettings = function(callback)
+{
+	$.ajax({
+		url: remoteServer+'/test2bsure/sectionSettings?testId='+this.id,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(typeof callback == 'function'){
+					callback(response.data);
+				}
+			}
+			else{
+				callback(null);
+			}
 		}.bind(this),
 		error: function(e){
 			console.log(e);
