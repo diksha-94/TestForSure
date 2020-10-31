@@ -140,14 +140,6 @@ var contentlistingDef = {
 								"backend": "title"
 							},
 							{
-								"frontend": "Questions",
-								"backend": "totalQues"
-							},
-							{
-								"frontend": "Marks",
-								"backend": "totalMarks"
-							},
-							{
 								"frontend": "Time",
 								"backend": "totalTime"
 							},
