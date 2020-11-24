@@ -266,9 +266,10 @@ taketestController.prototype.PopulateTestInfo = function()
 taketestController.prototype.PopulateTestQuestionStatus = function()
 {
 	var html = "";
-	for(var i=0; i<this.testInfo.totalQues; i++){
+	var i = 0;
+	for(var ques in this.questionsData){
 		var questionStatus = "not-visited";
-		var question = this.questionsData[i];
+		var question = this.questionsData[ques];
 		if(question.markedOption == "null"){
 			//unanswered
 			if(question.marked == "true"){
@@ -295,14 +296,16 @@ taketestController.prototype.PopulateTestQuestionStatus = function()
 				questionStatus = "answered";
 			}
 		}
-		html += "<div class='" + questionStatus + "' ques-no='"+(i+1)+"' ques-id='"+(this.questionsData[i].id)+"'>"+(i+1)+"</div>";
+		html += "<div class='" + questionStatus + "' ques-no='"+(i+1)+"' ques-id='"+(question.id)+"'>"+(i+1)+"</div>";
+		i++;
 	}
 	$('.test-ques-status').find('.ques-status').html(html);
 	this.UpdateQuestionStatusCount();
 	$('.test-ques-status').find('.ques-status').find('div[ques-id]').unbind().bind('click', function(e){
 		this.SaveLastQues(this.sessionId, this.currentQues);
-		var questionId = this.questionsData[this.currentQues-1].id;
-		var questionFlag = this.questionsData[this.currentQues-1].marked;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		var questionId = this.questionsData[quesKey].id;
+		var questionFlag = this.questionsData[quesKey].marked;
 		//Save question
 		var flag = false;
 		var selectedOption = -1;
@@ -336,7 +339,8 @@ taketestController.prototype.PopulateTestQuestionStatus = function()
 				}
 			}
 		}
-		this.questionsData[this.currentQues-1].markedOption = answer;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		this.questionsData[quesKey].markedOption = answer;
 		var requestData = {
 				'sessionId': this.sessionId,
 				'quesId': questionId,
@@ -362,7 +366,8 @@ taketestController.prototype.DisplayQuestion = function()
 {
 	this.startSecs = this.totalSecs;
 	var optionValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-	var question = this.questionsData[this.currentQues-1];
+	var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+	var question = this.questionsData[quesKey];
 	var html = "<div class='question' question-id='"+question.id+"' question-index='"+this.currentQues+"'>"+
 					"<div class='question-desc'>"+
 						"<span class='question-number'>"+(this.currentQues)+"</span>";
@@ -435,7 +440,8 @@ taketestController.prototype.DisplayQuestion = function()
 				answer += 'false,';
 			}
 		}
-		this.questionsData[this.currentQues-1].markedOption = answer;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		this.questionsData[quesKey].markedOption = answer;
 		var questionId = $(e.currentTarget).parents('.options').parents('.question').attr('question-id');
 		var requestData = {
 				'sessionId': this.sessionId,
@@ -447,7 +453,7 @@ taketestController.prototype.DisplayQuestion = function()
 		};
 		this.SaveLastQues(this.sessionId, this.currentQues);
 		this.UpdateTestSessionData(requestData);
-		if(this.questionsData[this.currentQues-1].marked == 'true'){
+		if(this.questionsData[quesKey].marked == 'true'){
 			//Marked for review and answered
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
 		}
@@ -484,8 +490,9 @@ taketestController.prototype.PopulateAttemptControls = function()
 	this.ManageControls();
 	$('.test').find('.test-questions').find('.attempt-controls').find('.btnNext').unbind().bind('click', function(e){
 		this.SaveLastQues(this.sessionId, this.currentQues);
-		var questionId = this.questionsData[this.currentQues-1].id;
-		var questionFlag = this.questionsData[this.currentQues-1].marked;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		var questionId = this.questionsData[quesKey].id;
+		var questionFlag = this.questionsData[quesKey].marked;
 		//Save question
 		var flag = false;
 		var selectedOption = -1;
@@ -519,7 +526,8 @@ taketestController.prototype.PopulateAttemptControls = function()
 				}
 			}
 		}
-		this.questionsData[this.currentQues-1].markedOption = answer;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		this.questionsData[quesKey].markedOption = answer;
 		this.currentQues = this.currentQues + 1;
 		var requestData = {
 				'sessionId': this.sessionId,
@@ -537,8 +545,9 @@ taketestController.prototype.PopulateAttemptControls = function()
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.btnPrevious').unbind().bind('click', function(e){
 		this.SaveLastQues(this.sessionId, this.currentQues);
-		var questionId = this.questionsData[this.currentQues-1].id;
-		var questionFlag = this.questionsData[this.currentQues-1].marked;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		var questionId = this.questionsData[quesKey].id;
+		var questionFlag = this.questionsData[quesKey].marked;
 		//Save question
 		var flag = false;
 		var selectedOption = -1;
@@ -572,7 +581,8 @@ taketestController.prototype.PopulateAttemptControls = function()
 				}
 			}
 		}
-		this.questionsData[this.currentQues-1].markedOption = answer;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		this.questionsData[quesKey].markedOption = answer;
 		this.currentQues = this.currentQues - 1;
 		var requestData = {
 				'sessionId': this.sessionId,
@@ -590,8 +600,9 @@ taketestController.prototype.PopulateAttemptControls = function()
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.linkClearSelection').unbind().bind('click', function(e){
 		e.preventDefault();
-		this.questionsData[this.currentQues-1].markedOption = "null";
-		var questionId = this.questionsData[this.currentQues-1].id;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		this.questionsData[quesKey].markedOption = "null";
+		var questionId = this.questionsData[quesKey].id;
 		var requestData = {
 				'sessionId': this.sessionId,
 				'quesId': questionId,
@@ -601,7 +612,8 @@ taketestController.prototype.PopulateAttemptControls = function()
 				'markedForReview': 'false'
 		};
 		this.UpdateTestSessionData(requestData);
-		if(this.questionsData[this.currentQues-1].marked == 'true'){
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		if(this.questionsData[quesKey].marked == 'true'){
 			//marked for review
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('answered unanswered not-visited marked-answered').addClass('marked');
 		}
@@ -613,18 +625,20 @@ taketestController.prototype.PopulateAttemptControls = function()
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.linkMark').unbind().bind('click', function(e){
 		e.preventDefault();
-		this.questionsData[this.currentQues-1].marked = 'true';
-		var questionId = this.questionsData[this.currentQues-1].id;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		this.questionsData[quesKey].marked = 'true';
+		var questionId = this.questionsData[quesKey].id;
 		var requestData = {
 				'sessionId': this.sessionId,
 				'quesId': questionId,
-				'answer': this.questionsData[this.currentQues-1].markedOption,
+				'answer': this.questionsData[quesKey].markedOption,
 				'corectAnswer': null,
 				'timeSpent': (this.startSecs - this.totalSecs),
 				'markedForReview': 'true'
 		};
 		this.UpdateTestSessionData(requestData);
-		if(this.questionsData[this.currentQues-1].markedOption != 'null' && this.questionsData[this.currentQues-1].markedOption != '[]'){
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		if(this.questionsData[quesKey].markedOption != 'null' && this.questionsData[quesKey].markedOption != '[]'){
 			//means answered and marked
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited answered unanswered marked').addClass('marked-answered');
 		}
@@ -635,18 +649,20 @@ taketestController.prototype.PopulateAttemptControls = function()
 	}.bind(this));
 	$('.test').find('.test-questions').find('.attempt-controls').find('.linkUnmark').unbind().bind('click', function(e){
 		e.preventDefault();
-		this.questionsData[this.currentQues-1].marked = 'false';
-		var questionId = this.questionsData[this.currentQues-1].id;
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		this.questionsData[quesKey].marked = 'false';
+		var questionId = this.questionsData[quesKey].id;
 		var requestData = {
 				'sessionId': this.sessionId,
 				'quesId': questionId,
-				'answer': this.questionsData[this.currentQues-1].markedOption,
+				'answer': this.questionsData[quesKey].markedOption,
 				'corectAnswer': null,
 				'timeSpent': (this.startSecs - this.totalSecs),
 				'markedForReview': 'false'
 		};
 		this.UpdateTestSessionData(requestData);
-		if(this.questionsData[this.currentQues-1].markedOption != 'null' && this.questionsData[this.currentQues-1].markedOption != '[]'){
+		var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+		if(this.questionsData[quesKey].markedOption != 'null' && this.questionsData[quesKey].markedOption != '[]'){
 			//means answered and unmarked
 			$('.ques-status').find('div[ques-id='+questionId+']').removeClass('not-visited marked-answered unanswered marked').addClass('answered');
 		}
@@ -784,8 +800,9 @@ taketestController.prototype.SubmitTest = function(timeover = 0)
 		this.currentQues = this.testInfo.totalQues;
 	}
 	this.SaveLastQues(this.sessionId, this.currentQues);
-	var questionId = this.questionsData[this.currentQues-1].id;
-	var questionFlag = this.questionsData[this.currentQues-1].marked;
+	var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+	var questionId = this.questionsData[quesKey].id;
+	var questionFlag = this.questionsData[quesKey].marked;
 	//Save question
 	var flag = false;
 	var selectedOption = -1;
@@ -819,7 +836,8 @@ taketestController.prototype.SubmitTest = function(timeover = 0)
 			}
 		}
 	}
-	this.questionsData[this.currentQues-1].markedOption = answer;
+	var quesKey = Object.keys(this.questionsData)[this.currentQues-1];
+	this.questionsData[quesKey].markedOption = answer;
 	this.currentQues = this.currentQues + 1;
 	var requestData = {
 			'sessionId': this.sessionId,

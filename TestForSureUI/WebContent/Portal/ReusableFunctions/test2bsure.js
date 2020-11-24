@@ -246,7 +246,7 @@ test2bsureController.prototype.TestCard = function(test)
 	html += "</div>"+
 			"<div class='test-detail'>"+
 				"<div class='ques'>"+test.totalQues+" Questions</div>"+
-				"<div class='marks'>"+test.totalMarks+" Marks</div>"+
+				"<div class='marks'>"+test.marksPerQues+" Marks</div>"+
 				"<div class='time'>"+test.totalTime+" minutes</div>"+
 				"<div class='attempts'>Attempted "+(test.candidateCount)+" times</div>"+
 			"</div>";
