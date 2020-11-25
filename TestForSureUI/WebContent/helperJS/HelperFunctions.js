@@ -35,6 +35,12 @@ function RefreshData(viewId){
 	if(viewId == 'quizsubjectModal'){
 		$('#'+viewId).find('#txtQuizSubjectIndex').val(0);
 	}
+	if(viewId == 'videoModal'){
+		$('#'+viewId).find('#txtVideoIndex').val(0);
+	}
+	if(viewId == 'notesModal'){
+		$('#'+viewId).find('#txtNotesIndex').val(0);
+	}
 }
 function setCookie(cname, cvalue, exdays){
     var d = new Date();
