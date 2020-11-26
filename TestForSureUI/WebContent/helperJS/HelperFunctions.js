@@ -41,6 +41,12 @@ function RefreshData(viewId){
 	if(viewId == 'notesModal'){
 		$('#'+viewId).find('#txtNotesIndex').val(0);
 	}
+	if(viewId == 'chapterModal'){
+		$('#'+viewId).find('#txtChapterIndex').val(0);
+	}
+	if(viewId == 'courseModal'){
+		$('#'+viewId).find('#txtCourseIndex').val(0);
+	}
 }
 function setCookie(cname, cvalue, exdays){
     var d = new Date();
@@ -224,6 +230,98 @@ function getTestTitle(testIds, callback){
 function getFilterTitle(filterIds, callback){
 	$.ajax({
 		url: remoteServer+'/test2bsure/filtertitle?filters='+filterIds,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				else{
+					callback([]);
+				}
+			}
+			else{
+				callback([]);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}
+function getQuizTitle(ids, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/quiztitle?ids='+ids,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				else{
+					callback([]);
+				}
+			}
+			else{
+				callback([]);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}
+function getVideoTitle(ids, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/videotitle?ids='+ids,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				else{
+					callback([]);
+				}
+			}
+			else{
+				callback([]);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}
+function getNotesTitle(ids, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/notestitle?ids='+ids,
+		type: 'GET',
+		success: function(response){
+			if(response.result.status == true){
+				if(response.data != null && response.data.length > 0){
+					callback(response.data);
+				}
+				else{
+					callback([]);
+				}
+			}
+			else{
+				callback([]);
+			}
+		}.bind(this),
+		error: function(e){
+			console.log(e);
+			callback([]);
+		}
+	});
+}
+function getChapterTitle(ids, callback){
+	$.ajax({
+		url: remoteServer+'/test2bsure/chaptertitle?ids='+ids,
 		type: 'GET',
 		success: function(response){
 			if(response.result.status == true){
