@@ -341,3 +341,9 @@ select{
 	width: 80px;
 }
 /* Modal CSS ends */
+
+
+/*Chapter Modal CSS */
+#chapterModal .modal-body{
+	padding-bottom: 373px;
+}

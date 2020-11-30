@@ -53,6 +53,13 @@ courseController.prototype.SaveData = function()
 	}
 	var demoVideoId = GetSelectedValues('ddCourseDemoVideo')[0];
 	var content = GetSelectedValues('ddCourseChapters');
+	var courseContent = [];
+	for (var c in content){
+		var obj = {
+				"chapterId": content[c]
+		};
+		courseContent.push(obj);
+	}
 	var published = $('#chkCoursePublish').prop('checked') == true ? 1 : 0;
 	
 	var url = remoteServer+'/test2bsure/course';
@@ -65,7 +72,7 @@ courseController.prototype.SaveData = function()
 			'description': desc,
 			'displayIndex': displayIndex,
 			'demoVideoId': demoVideoId,
-			'content': content,
+			'content': courseContent,
 			'published': published
 	};
 	console.log(requestData);
@@ -128,12 +135,9 @@ courseController.prototype.Edit = function(e)
 					summernoteController.getObj().setValue('#txtCourseShortDesc', item.shortDescription);
 					summernoteController.getObj().setValue('#txtCourseDesc', item.description);
 					$('#courseModal').find('#txtCourseIndex').val(item.displayIndex);
-					if(item.demoVideoId != null && item.demoVideoId.length > 0){
+					if(item.demoVideoId != null && item.demoVideoId != ""){
 						var data = {};
-						for(var video in item.demoVideoId){
-							data[item.demoVideoId[video]] = item.demoVideoId[video];
-						}
-						getVideoTitle(Object.keys(data), function(response){
+						getVideoTitle([item.demoVideoId], function(response){
 							for(var r in response){
 								data[response[r]["id"]] = {
 										"id": response[r]["id"],
@@ -147,19 +151,19 @@ courseController.prototype.Edit = function(e)
 						new AutoComplete('ddCourseDemoVideo', 'video');
 					}
 					
-					if(item.chapter != null && item.chapter.length > 0){
-						var data = {};
-						for(var chapter in item.chapter){
-							data[item.chapter[chapter]] = item.chapter[chapter];
+					if(item.content != null && item.content.length > 0){
+						var chapters = {};
+						for(var content in item.content){
+							chapters[item.content[content]["chapterId"]] = item.content[content];
 						}
-						getChapterTitle(Object.keys(data), function(response){
+						getChapterTitle(Object.keys(chapters), function(response){
 							for(var r in response){
-								data[response[r]["id"]] = {
+								chapters[response[r]["id"]] = {
 										"id": response[r]["id"],
 										"title": response[r]["name"]
 								};
 							}
-							new AutoComplete('ddCourseChapters', 'chapter').SetSelectedValues('ddCourseChapters', date);
+							new AutoComplete('ddCourseChapters', 'chapter').SetSelectedValues('ddCourseChapters', chapters);
 						});
 					}
 					else{

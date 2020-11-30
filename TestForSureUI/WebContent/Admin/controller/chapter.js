@@ -7,10 +7,10 @@ chapterController.prototype.Init = function()
 chapterController.prototype.AddEdit = function()
 {
 	$('#chapterModal').modal('show');
-	$('#testDetailsModal').find('.ddChapterVideos').remove();
-	$('#testDetailsModal').find('.ddChapterTests').remove();
-	$('#testDetailsModal').find('.ddChapterQuizzes').remove();
-	$('#testDetailsModal').find('.ddChapterNotes').remove();
+	$('#chapterModal').find('.ddChapterVideos').remove();
+	$('#chapterModal').find('.ddChapterTests').remove();
+	$('#chapterModal').find('.ddChapterQuizzes').remove();
+	$('#chapterModal').find('.ddChapterNotes').remove();
 	summernoteController.getObj().addEditor('#txtChapterDesc');
 	RefreshData('chapterModal');
 	if(this.id > 0){
@@ -62,33 +62,33 @@ chapterController.prototype.SaveData = function()
 	for(var value in videos){
 		var obj = {
 				"contentType": ItemType.VIDEO,
-				"contentId": value
+				"contentId": videos[value]
 		};
 		content.push(obj);
 	}
 	for(var value in tests){
 		var obj = {
 				"contentType": ItemType.TEST,
-				"contentId": value
+				"contentId": tests[value]
 		};
 		content.push(obj);
 	}
 	for(var value in quizzes){
 		var obj = {
 				"contentType": ItemType.QUIZ,
-				"contentId": value
+				"contentId": quizzes[value]
 		};
 		content.push(obj);
 	}
 	for(var value in notes){
 		var obj = {
 				"contentType": ItemType.NOTES,
-				"contentId": value
+				"contentId": notes[value]
 		};
 		content.push(obj);
 	}
 	
-	var url = remoteServer+'/test2bsure/chapetr';
+	var url = remoteServer+'/test2bsure/chapter';
 	var type = 'POST';
 	var requestData = {
 			'name': name,
@@ -171,20 +171,24 @@ chapterController.prototype.Edit = function(e)
 						switch(content[value].contentType){
 							case ItemType.TEST:
 								tests[content[value].contentId] = content[value].contentId;
+								break;
 							case ItemType.QUIZ:
 								quizzes[content[value].contentId] = content[value].contentId;
+								break;
 							case ItemType.VIDEO:
 								videos[content[value].contentId] = content[value].contentId;
+								break;
 							case ItemType.NOTES:
 								notes[content[value].contentId] = content[value].contentId;
+								break;
 						}
 					}
-					if(tests != null && tests.length > 0){
+					if(tests != null && Object.keys(tests).length > 0){
 						getTestTitle(Object.keys(tests), function(response){
 							for(var r in response){
 								tests[response[r]["id"]] = {
 										"id": response[r]["id"],
-										"title": response[r]["name"]
+										"title": response[r]["title"]
 								};
 							}
 							new AutoComplete('ddChapterTests', 'tests').SetSelectedValues('ddChapterTests', tests);
@@ -194,7 +198,7 @@ chapterController.prototype.Edit = function(e)
 						new AutoComplete('ddChapterTests', 'tests');
 					}
 					
-					if(videos != null && videos.length > 0){
+					if(videos != null && Object.keys(videos).length > 0){
 						getVideoTitle(Object.keys(videos), function(response){
 							for(var r in response){
 								videos[response[r]["id"]] = {
@@ -202,29 +206,29 @@ chapterController.prototype.Edit = function(e)
 										"title": response[r]["name"]
 								};
 							}
-							new AutoComplete('ddChapterVideos', 'videos').SetSelectedValues('ddChapterVideos', videos);
+							new AutoComplete('ddChapterVideos', 'video').SetSelectedValues('ddChapterVideos', videos);
 						});
 					}
 					else{
-						new AutoComplete('ddChapterVideos', 'videos');
+						new AutoComplete('ddChapterVideos', 'video');
 					}
 					
-					if(quizzes != null && quizzes.length > 0){
+					if(quizzes != null && Object.keys(quizzes).length > 0){
 						getQuizTitle(Object.keys(quizzes), function(response){
 							for(var r in response){
 								quizzes[response[r]["id"]] = {
 										"id": response[r]["id"],
-										"title": response[r]["name"]
+										"title": response[r]["title"]
 								};
 							}
-							new AutoComplete('ddChapterQuizzes', 'quizzes').SetSelectedValues('ddChapterQuizzes', quizzes);
+							new AutoComplete('ddChapterQuizzes', 'quiz').SetSelectedValues('ddChapterQuizzes', quizzes);
 						});
 					}
 					else{
-						new AutoComplete('ddChapterQuizzes', 'quizzes');
+						new AutoComplete('ddChapterQuizzes', 'quiz');
 					}
 					
-					if(notes != null && notes.length > 0){
+					if(notes != null && Object.keys(notes).length > 0){
 						getNotesTitle(Object.keys(notes), function(response){
 							for(var r in response){
 								notes[response[r]["id"]] = {
