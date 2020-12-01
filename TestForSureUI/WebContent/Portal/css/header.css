@@ -181,7 +181,7 @@ html body.nobodyscroll {
 	background-color: #E4F1F8;
 	height: 100%;
 }
-.exam-menu-div, .quiz-menu-div{
+.exam-menu-div, .quiz-menu-div, .course-menu-div{
 	display:none;
 }
 .exam-menu-item:hover{
@@ -258,7 +258,7 @@ html body.nobodyscroll {
     transition: 0.4s;
 }
 
-.quiz-menu-div {
+.quiz-menu-div, .course-menu-div {
     width: 200px;
     background-color: #FFF;
     height: 400px;
@@ -267,16 +267,16 @@ html body.nobodyscroll {
     top: 60px;
     z-index: 101;
 }
-.quiz-menu-div .quiz-menu{
+.quiz-menu-div .quiz-menu, .course-menu-div .course-menu{
 	list-style-type: none;
 	padding: 0;
 }
-.quiz-menu-div .quiz-menu li a{
+.quiz-menu-div .quiz-menu li a, .course-menu-div .course-menu li a{
 	color: #103B6D;
 	font-weight: bold;
 	font-size: 0.9em;
 }
-.quiz-menu-div .quiz-menu li {
+.quiz-menu-div .quiz-menu li, .course-menu-div .course-menu li {
     min-height: 50px;
     color: #000;
     margin-left: 0px !important;
@@ -297,7 +297,7 @@ html body.nobodyscroll {
 	.mobileView{
 		display: block;
 	}
-	.menu-items, .exams.mobileView, .quizzes.mobileView{
+	.menu-items, .exams.mobileView, .quizzes.mobileView, .courses.mobileView{
 		height: calc(100% - 60px);
 		background-color: #103B6D;
 		position: fixed;
@@ -374,7 +374,8 @@ html body.nobodyscroll {
 		font-size: 33px;
 	}
 	.exams.mobileView span.exam-head,
-	.quizzes.mobileView span.quiz-head{
+	.quizzes.mobileView span.quiz-head,
+	.courses.mobileView span.course-head{
 		color: white;
 		font-size: 1.2em;
 		padding: 7px 0px;
@@ -385,18 +386,21 @@ html body.nobodyscroll {
 		cursor: pointer;
 	}
 	.exams.mobileView span.exam-head img,
-	.quizzes.mobileView span.quiz-head img{
+	.quizzes.mobileView span.quiz-head img,
+	.courses.mobileView span.course-head img{
 		transform: rotate(90deg);
 		width: 15px;
 		height: 10px;
 		margin-right: 14px;
 	}
 	.exams.mobileView div.outer span,
-	.quizzes.mobileView div.outer span{
+	.quizzes.mobileView div.outer span,
+	.courses.mobileView div.outer span{
 		color: #fff;
 	}
 	.exams.mobileView div.outer .outer-1,
-	.quizzes.mobileView div.outer .outer-1{
+	.quizzes.mobileView div.outer .outer-1,
+	.courses.mobileView div.outer .outer-1{
 		display: flex;
 		padding: 15px 20px;
 		justify-content: space-between;
@@ -415,14 +419,17 @@ html body.nobodyscroll {
 	a:focus, a:hover {
  	   text-decoration: underline;
 	}
-	.quizzes.mobileView .quiz-menu{
+	.quizzes.mobileView .quiz-menu,
+	.courses.mobileView .course-menu{
 		list-style-type: none;
 		padding: 0;
 	}
-	.quizzes.mobileView .quiz-menu li {
+	.quizzes.mobileView .quiz-menu li,
+	.courses.mobileView .course-menu li {
 	    padding: 15px 20px;
 	}
-	.quizzes.mobileView .quiz-menu li a{
+	.quizzes.mobileView .quiz-menu li a,
+	.courses.mobileView .course-menu li a{
 	    font-weight: normal;
 	}
 }
