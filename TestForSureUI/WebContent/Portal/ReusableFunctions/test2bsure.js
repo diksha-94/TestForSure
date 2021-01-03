@@ -642,3 +642,12 @@ test2bsureController.prototype.ShowQuizTimerInstructions = function()
 	}
 	$('#quizTimerInstructionModal').modal('show');
 }
+
+test2bsureController.prototype.ChapterCard = function(content)
+{
+	var html = "<div class='content lock col-xs-12 col-sm-12 col-md-12 col-lg-12' data-id='"+content.chapterId+"' data-action='"+content.urlKey+"'>"+
+			   		"<h4>"+content.chapterName+"</h4>"+
+					"<span>-></span>"+
+			   "</div>";
+	return html;
+}
