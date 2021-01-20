@@ -15,7 +15,11 @@ var pageMapping = {
 		"passwordreset"		: "default",
 		"privacy"			: "default",
 		"notfound"			: "default",
-		"dashboard"			: "dashboard"
+		"dashboard"			: "dashboard",
+		"video"				: "video",
+		"notes"				: "notes",
+		"chapter"			: "chapter",
+		"course"			: "course"
 }
 var headermenu = [
                   "home", 
@@ -29,7 +33,9 @@ var headermenu = [
                   "privacy",
                   "leaderboard",
                   "notfound",
-                  "dashboard"
+                  "dashboard",
+                  "chapter",
+                  "course"
                   ];
 
 var footercontent = [
@@ -44,5 +50,15 @@ var footercontent = [
                      "privacy",
                      "leaderboard",
                      "notfound",
-                     "dashboard"
+                     "dashboard",
+                     "course"
                      ];
+
+var ItemType = {
+		'TEST': 0,
+		'QUIZ': 1,
+		'VIDEO': 2,
+		'NOTES': 3,
+		'CHAPTER': 4,
+		'COURSE': 5
+	};

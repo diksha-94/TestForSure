@@ -278,7 +278,7 @@ headerController.prototype.Init = function()
 headerController.prototype.LoadHeader = function(){
 	fetch(remoteServer+'/test2bsure/header')
 		  .then(response => response.json())
-		  .then(data => this.SetState({ category: data.category, exam: data.exam, quizSubject: data.quizSubject }));
+		  .then(data => this.SetState({ category: data.category, exam: data.exam, quizSubject: data.quizSubject, course: data.course }));
 };
 headerController.prototype.SetState = function(obj)
 {
@@ -368,6 +368,26 @@ headerController.prototype.PopulateData = function(){
 	$('.quizzes.mobileView').find('.quiz-menu').html(html);
 	$('.quiz-menu-div').find('.quiz-menu').html(html);
 	$('.quiz-value-item').unbind().bind('click', function(e){
+		var userId = -1;
+		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+			userId = userController.getObj().userData.id;
+		}
+		var action = $(e.currentTarget).attr('data-action');
+		window.open(action, "_self");
+	});
+	
+	//Populate Course
+	html = "";
+	for(var c in this.course){
+		var sub = this.course[c];
+		var subName = sub.name.replace(/[^a-zA-Z0-9]/g,'_');
+		html += '<li class="course-value-item" course-id="'+sub.id+'" data-action="'+sub.urlKey+'">';
+		html += '<a>'+sub.name+'</a>'+
+				'</li>';
+	}
+	$('.courses.mobileView').find('.course-menu').html(html);
+	$('.course-menu-div').find('.course-menu').html(html);
+	$('.course-value-item').unbind().bind('click', function(e){
 		var userId = -1;
 		if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
 			userId = userController.getObj().userData.id;

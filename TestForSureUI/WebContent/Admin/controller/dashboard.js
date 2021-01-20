@@ -60,6 +60,18 @@ dashboardController.prototype.LoadMenu = function()
 					"<li id='menuFilter' data-action='menu_filter' data-title='Filter' data-controller='contentlisting' data-content='filter'>"+
 						"<span>Filter</span>"+
 					"</li>"+
+					"<li id='menuVideo' data-action='menu_video' data-title='Video' data-controller='contentlisting' data-content='video'>"+
+						"<span>Video</span>"+
+					"</li>"+
+					"<li id='menuNotes' data-action='menu_notes' data-title='Notes' data-controller='contentlisting' data-content='notes'>"+
+						"<span>Notes</span>"+
+					"</li>"+
+					"<li id='menuChapter' data-action='menu_chapter' data-title='Chapter' data-controller='contentlisting' data-content='chapter'>"+
+						"<span>Chapter</span>"+
+					"</li>"+
+					"<li id='menuCourse' data-action='menu_course' data-title='Course' data-controller='contentlisting' data-content='course'>"+
+						"<span>Course</span>"+
+					"</li>"+
 					"<li id='menuFooterLinks' data-action='menu_footer' data-title='Footer Links' data-controller='footerlinks' listing='false'>"+
 						"<span>Footer Links</span>"+
 					"</li>"+

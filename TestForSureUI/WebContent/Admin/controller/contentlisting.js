@@ -364,6 +364,142 @@ var contentlistingDef = {
 			"backend": {
 				"loadData": "category"
 			}
+		},
+		"video":{
+			"title": "Video",
+			"searchByName": true,
+			"addNewBtn": true,
+			"totalCount": true,
+			"pagination": true,
+			"tableFields": [{
+								"frontend": "Id",
+								"backend": "id"
+							},
+							{
+								"frontend": "Name",
+								"backend": "name"
+							},
+							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
+							},
+							{
+								"frontend": "Action",
+								"backend": undefined
+							}],
+			"listActions": [{
+								"type": "Edit",
+								"class": "btnEdit"
+							},
+							{
+								"type": "Delete",
+								"class": "btnDelete"
+							}],
+			"backend": {
+				"loadData": "video"
+			}
+		},
+		"notes":{
+			"title": "Notes",
+			"searchByName": true,
+			"addNewBtn": true,
+			"totalCount": true,
+			"pagination": true,
+			"tableFields": [{
+								"frontend": "Id",
+								"backend": "id"
+							},
+							{
+								"frontend": "Name",
+								"backend": "name"
+							},
+							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
+							},
+							{
+								"frontend": "Action",
+								"backend": undefined
+							}],
+			"listActions": [{
+								"type": "Edit",
+								"class": "btnEdit"
+							},
+							{
+								"type": "Delete",
+								"class": "btnDelete"
+							}],
+			"backend": {
+				"loadData": "notes"
+			}
+		},
+		"chapter":{
+			"title": "Chapter",
+			"searchByName": true,
+			"addNewBtn": true,
+			"totalCount": true,
+			"pagination": true,
+			"tableFields": [{
+								"frontend": "Id",
+								"backend": "id"
+							},
+							{
+								"frontend": "Name",
+								"backend": "name"
+							},
+							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
+							},
+							{
+								"frontend": "Action",
+								"backend": undefined
+							}],
+			"listActions": [{
+								"type": "Edit",
+								"class": "btnEdit"
+							},
+							{
+								"type": "Delete",
+								"class": "btnDelete"
+							}],
+			"backend": {
+				"loadData": "chapter"
+			}
+		},
+		"course":{
+			"title": "Course",
+			"searchByName": true,
+			"addNewBtn": true,
+			"totalCount": true,
+			"pagination": true,
+			"tableFields": [{
+								"frontend": "Id",
+								"backend": "id"
+							},
+							{
+								"frontend": "Name",
+								"backend": "name"
+							},
+							{
+								"frontend": "Display Index",
+								"backend": "displayIndex"
+							},
+							{
+								"frontend": "Action",
+								"backend": undefined
+							}],
+			"listActions": [{
+								"type": "Edit",
+								"class": "btnEdit"
+							},
+							{
+								"type": "Delete",
+								"class": "btnDelete"
+							}],
+			"backend": {
+				"loadData": "course"
+			}
 		}
 };
 

@@ -1198,6 +1198,405 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Add/Update Video Modal -->
+		<div class="modal" id="videoModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Video</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtVideoName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Url Key <span class='red'>*</span></span> <input
+								id='txtVideoUrlKey' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Youtube Video Id
+								<span class='red'>*</span></span> <input id='txtVideoYoutubeId' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Display Index in Frontend <span class='red'>*</span></span> <input
+								id='txtVideoIndex' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnVideoSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnVideoCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Delete Video Modal -->
+		<div class="modal deleteModal" id="deleteVideoModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Video</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete video with id <span></span></p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+			        	 col-lg-offset-4 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Notes Modal -->
+		<div class="modal" id="notesModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Notes</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtNotesName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Url Key <span class='red'>*</span></span> <input
+								id='txtNotesUrlKey' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Notes Link
+								<span class='red'>*</span></span> <input id='txtNotesLink' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Display Index in Frontend <span class='red'>*</span></span> <input
+								id='txtNotesIndex' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnNotesSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnNotesCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Delete Notes Modal -->
+		<div class="modal deleteModal" id="deleteNotesModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Notes</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete notes with id <span></span></p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+			        	 col-lg-offset-4 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Chapter Modal -->
+		<div class="modal" id="chapterModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Chapter</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtChapterName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Url Key <span class='red'>*</span></span> <input
+								id='txtChapterUrlKey' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Description
+								</span> <div id='txtChapterDesc' 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' ></div>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Display Index in Frontend <span class='red'>*</span></span> <input
+								id='txtChapterIndex' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Is Demo?
+								</span> <input id='chkChapterDemo' type='checkbox'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div class='chapterContent col-xs-12 col-sm-12 col-md-12 col-lg-12' style='background-color: #F2F2F2;'>
+							<h4 class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3'>Chapter Content</h4>
+							<div>
+								<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+								col-xs-2 col-sm-2 col-md-2 col-lg-2'>Videos
+									</span>
+								<input type='text' id='ddChapterVideos' placeholder='Search Videos here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+							</div></br></br>
+							<div>
+								<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+								col-xs-2 col-sm-2 col-md-2 col-lg-2'>Tests
+									</span>
+								<input type='text' id='ddChapterTests' placeholder='Search Tests here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+							</div></br></br>
+							<div>
+								<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+								col-xs-2 col-sm-2 col-md-2 col-lg-2'>Quizzes
+									</span>
+								<input type='text' id='ddChapterQuizzes' placeholder='Search Quizzes here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+							</div></br></br>
+							<div>
+								<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+								col-xs-2 col-sm-2 col-md-2 col-lg-2'>Notes
+									</span>
+								<input type='text' id='ddChapterNotes' placeholder='Search Notes here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+							</div></br></br>
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnChapterSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnChapterCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Delete Chapter Modal -->
+		<div class="modal deleteModal" id="deleteChapterModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Chapter</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete chapter with id <span></span></p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+			        	 col-lg-offset-4 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Add/Update Course Modal -->
+		<div class="modal" id="courseModal">
+			<div class="modal-dialog test2bsure-dialog">
+				<div class="modal-content test2bsure-content">
+		
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Add/Update Course</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body test2bsure-body">
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Name <span class='red'>*</span></span> <input
+								id='txtCourseName' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Url Key <span class='red'>*</span></span> <input
+								id='txtCourseUrlKey' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Image Url
+								<span class='red'>*</span></span> <input id='txtCourseImageUrl' type='text'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Short Description</span>
+								<div id='txtCourseShortDesc' 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' ></div>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Description</span>
+								<div id='txtCourseDesc' 
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' ></div>
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Display Index in Frontend <span class='red'>*</span></span> <input
+								id='txtCourseIndex' type='number'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Course Demo Video
+								</span>
+							<input type='text' id='ddCourseDemoVideo' placeholder='Search Videos here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div></br></br>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Chapters
+								</span>
+							<input type='text' id='ddCourseChapters' placeholder='Search Chapters here' class='col-xs-4 col-sm-4 col-md-4 col-lg-4'/>
+						</div></br></br>
+						<div>
+							<span class='col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3
+							col-xs-2 col-sm-2 col-md-2 col-lg-2'>Publish
+								</span> <input id='chkCoursePublish' type='checkbox'
+								class='col-xs-4 col-sm-4 col-md-4 col-lg-4' />
+						</div>
+					</div>
+					<div class="modal-footer test2bsure-footer">
+						<div>
+							<button id='btnCourseSave' type='button'
+								class='col-xs-offset-5 col-sm-offset-5 col-md-offset-5
+			        	 col-lg-offset-5 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-primary'>Save</button>
+							<button id='btnCourseCancel' type="button"
+								class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1
+			        	 col-lg-offset-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 btn btn-default"
+								data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Delete Course Modal -->
+		<div class="modal deleteModal" id="deleteCourseModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Course</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+		
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div>
+							<p>Are you sure to delete course with id <span></span></p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div>
+							<button id='btnDeleteYes' type='button'
+								class='col-xs-offset-4 col-sm-offset-4 col-md-offset-4
+			        	 col-lg-offset-4 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-primary'>Yes</button>
+							<button id='btnDeleteNo' type="button"
+								class="col-xs-offset-2 col-sm-offset-2 col-md-offset-2
+			        	 col-lg-offset-2 col-xs-2 col-sm-2 col-md-2 col-lg-2 btn btn-default"
+								data-dismiss="modal">No</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script type='text/javascript' src='../../helperJS/jquery-2.2.2.min.js'></script>
 		<script type='text/javascript' src='../../helperJS/bootstrap.min.js'></script>
 		<script src="../../Summernote/summernote-defined.js"></script>

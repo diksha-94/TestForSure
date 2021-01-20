@@ -33,7 +33,7 @@ body{
 }
 
 .admin-menu ul li {
-	padding: 10px 0;
+	padding: 6px 0;
 	border-bottom: solid 1px #103B6D;
 	cursor: pointer;
 }
@@ -341,3 +341,9 @@ select{
 	width: 80px;
 }
 /* Modal CSS ends */
+
+
+/*Chapter Modal CSS */
+#chapterModal .modal-body{
+	padding-bottom: 373px;
+}

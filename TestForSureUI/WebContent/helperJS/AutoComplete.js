@@ -43,6 +43,15 @@ AutoComplete.prototype.Search = function()
 		case 'quizsubject':
 			url = remoteServer+'/test2bsure/quizsubject?search='+search;
 			break;
+		case 'video':
+			url = remoteServer+'/test2bsure/video?search='+search;
+			break;
+		case 'notes':
+			url = remoteServer+'/test2bsure/notes?search='+search;
+			break;
+		case 'chapter':
+			url = remoteServer+'/test2bsure/chapter?search='+search;
+			break;
 	}
 	this.SearchData(search, url, function(){
 		if(Object.keys(this.result).length > 0){
