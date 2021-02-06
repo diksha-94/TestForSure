@@ -7,6 +7,7 @@ examController.prototype.Init = function()
 examController.prototype.AddEdit = function()
 {
 	$('#examModal').modal('show');
+	summernoteController.getObj().addEditor('#txtExamShortDescription');
 	summernoteController.getObj().addEditor('#txtExamDescription');
 	RefreshData('examModal');
 	getCategories(function(data){
@@ -56,6 +57,7 @@ examController.prototype.SaveData = function()
 	var displayIndex = $('#txtExamIndex').val();
 	var imageUrl = $('#txtExamImageUrl').val();
 	var categoryId = $('#ddCategory').val();
+	var shortDescription = summernoteController.getObj().getValue('#txtExamShortDescription');
 	var description = summernoteController.getObj().getValue('#txtExamDescription');
 	if(name.length == 0 || title.length == 0 || urlKey.length == 0 || imageUrl.length == 0 || categoryId.length == 0){
 		alert('Please enter all the mandatory fields');
@@ -70,6 +72,7 @@ examController.prototype.SaveData = function()
 			'displayIndex': displayIndex,
 			'imageUrl': imageUrl,
 			'category': categoryId,
+			'shortDescription': shortDescription,
 			'description': description,
 			'active': 1
 	};
@@ -132,6 +135,7 @@ examController.prototype.Edit = function(e)
 					$('#examModal').find('#txtExamIndex').val(item.displayIndex);
 					$('#examModal').find('#txtExamImageUrl').val(item.imageUrl);
 					$('#examModal').find('#ddCategory').val(item.category);
+					summernoteController.getObj().setValue('#txtExamShortDescription', item.shortDescription);
 					summernoteController.getObj().setValue('#txtExamDescription', item.description);
 					$('#examModal').find('#imgExamImagePreview').attr('src', item.imageUrl);
 				}
