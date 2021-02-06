@@ -212,6 +212,7 @@
     padding: 10px 20px;
     background-color: #F2F2F2;
     text-align: center;
+    overflow: auto;
 }
 .testlisting-head, .quizlisting-head{
 	margin-bottom: 22px;
