@@ -1,22 +1,62 @@
 var asknanswerController = function(){
-	this.connect = "http://3.6.58.203:8086/asknanswer/post/";
-	this.posts = {};
-	this.state = 0;
-	this.exams = [];
-	this.getPostUrl = this.connect+'get';
-	this.Init();
+	this.data = {};
 };
-asknanswerController.prototype.Init = function()
+asknanswerController.prototype.Init = function(callback)
 {
-	//Load header
-	test2bsureController.getObj().GetHeader(".asknanswer-header");
-	this.BindPageEvents();
-	this.GetExams();
-	
-	
-	//Load footer
-	test2bsureController.getObj().GetFooter(".asknanswer-footer");
+	this.LoadPage();
+	LoadJS('WebContent/Portal/ReusableFunctions/asknanswercommon', function(){
+		this.CreatePost();
+		this.LoadPosts();
+	}.bind(this));
+	callback();
 };
+asknanswerController.prototype.LoadPage = function()
+{
+	var html = 	"<div class='left filters col-xs-12 col-sm-12 col-md-3 col-lg-3'>"+
+					"<div class='userFilter col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"<div class='postFilter allPosts active'>All Posts</div>"+
+						"<div class='postFilter myPosts'>My Posts</div>"+
+					"</div>"+
+					"<div class='examFilter col-xs-12 col-sm-12 col-md-12 col-lg-12'>"+
+						"<div class='head'><h4>Find By Exams</h4></div>"+
+						"<div class='exams'></div>"+
+						"<div class='buttons'>"+
+							"<button class='button button-primary' id='btnApply'>Apply</button>"+
+							"<button class='button button-default' id='btnReset'>Reset</button>"+
+						"</div>"+
+					"</div>"+
+				"</div>"+
+				"<div class='right discussion col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1'>"+
+					"<div class='ask-post'>"+
+					"</div>"+
+					"<div class='all-posts'>"+
+						"<div class='head'><h4>All Posts</h4></div>"+
+						"<div class='posts'></div>"+
+					"</div>"+
+				"</div>";
+	$('body .common-content').html(html);
+};
+asknanswerController.prototype.CreatePost = function()
+{
+	var req = {
+			"dom": $('body').find('.right').find('.ask-post'),
+			"examSelection": true
+	};
+	asknanswercommonController.getObj().CreatePost(req);
+};
+asknanswerController.prototype.LoadPosts = function(url)
+{
+	var userId = -1;
+	var isAdmin = 0;
+	if(typeof userController != 'undefined' && typeof userController.getObj() != 'undefined' && (typeof userController.getObj().userData != 'undefined' && userController.getObj().userData != null) && typeof userController.getObj().userData.id != 'undefined'){
+		userId = userController.getObj().userData.id;
+		isAdmin = userController.getObj().userData.isAdmin;
+	}
+	var url = remoteServer+'/test2bsure/post?contentType='+ContentType.EXAM+'&contentIds=&userId='+userId+'&myPost=0&isAdmin='+isAdmin;
+	fetch(url)
+	  .then(response => response.json())
+	  .then(data => asknanswercommonController.getObj().PopulatePosts(data, $('body').find('.right').find('.all-posts').find('.posts')));
+}
 asknanswerController.prototype.BindPageEvents = function()
 {
 	$('.postFilter').unbind().bind('click', function(e){
@@ -56,104 +96,6 @@ asknanswerController.prototype.BindPageEvents = function()
 			}
 		}
 	}.bind(this));
-};
-asknanswerController.prototype.BindAskPostEvents = function()
-{
-	var html = "";
-	for(var exam in this.exams){
-		html += "<option value='"+this.exams[exam]["id"]+"'>"+this.exams[exam]["title"]+"</option>";
-	}
-	$('.ask-post').find('.ddExam').append(html);
-	$('.ask-post').find('textarea').unbind().bind('keydown', this, function (e) {
-		e.data.autoSize($(this))
-	});
-	$('.ask-post').find('.btnSubmitPost').unbind().bind('click', function(){
-		if(userController.getObj().userData == null){
-			//User not logged in, show login modal
-			return;
-		}
-		this.SubmitPost();
-	}.bind(this));
-};
-
-asknanswerController.prototype.autoSize = function (dom) 
-{
-	var el = dom;
-	setTimeout(function () {
-		el.css('height', 'auto');
-		var scrollHeight = Math.max(38, el.prop('scrollHeight'));
-		el.css('height', scrollHeight + 'px')
-	}, 0)
-};
-asknanswerController.prototype.SubmitPost = function()
-{
-	var postId = -1;
-	var postType = 0;
-	var examId = $('.ask-post').find('.ddExam').val();
-	if(examId <= 0){
-		alert("Please select exam");
-		return;
-	}
-	var postTitle = $('.ask-post').find('.txtPostTitle').val();
-	var postDesc = $('.ask-post').find('.txtPostDesc').val();
-	if(postTitle.length == 0){
-		alert("Post title can't be empty");
-		return;
-	}
-	if(postDesc.length == 0){
-		alert("Post description can't be empty");
-		return;
-	}
-	var content = {
-			"title": postTitle,
-			"desc": postDesc
-	};
-	var outputContent = "";
-	var userId  = "diksha-45";
-	
-	var postData = {
-			"postId": postId,
-			"postType": postType,
-			"examId": examId,
-			"userId": userId,
-			"content": JSON.stringify(content),
-			"outputContent": outputContent
-	};
-	$.ajax({
-		url: this.connect+'add',
-		type: 'POST',
-		contentType: "application/json",
-		data: JSON.stringify(postData),
-		success: function(response){
-			console.log(response);
-		}.bind(this),
-		error: function(e){
-			console.log(e);
-		}
-	});
-};
-asknanswerController.prototype.AddAPostCard = function()
-{
-	var html = "";
-	html += "<div class='head'><h3>Ask your Query</h3></div>"+
-			"<div class='exam-dd'><select class='ddExam'><option value=-1>Select Exam</option></select></div>"+
-			"<div class='post-title'><textarea class='txtPostTitle' placeholder='Enter Post Title'></textarea></div>"+
-			"<div class='post-desc'><textarea class='txtPostDesc' placeholder='Enter Post Description'></textarea></div>"+
-			"<div class='post-submit'><button class='button button-primary btnSubmitPost'>Submit Post</button></div>";
-	return html;
-};
-asknanswerController.prototype.LoadPosts = function(url)
-{
-	fetch(url)
-	  .then(response => response.json())
-	  .then(data => this.SetState({ posts: data.result, state: data.state }));
-}
-asknanswerController.prototype.SetState = function(obj)
-{
-	for(var key in obj){
-		this[key] = obj[key];
-	}
-	this.PopulatePosts();
 };
 asknanswerController.prototype.PopulatePosts = function()
 {

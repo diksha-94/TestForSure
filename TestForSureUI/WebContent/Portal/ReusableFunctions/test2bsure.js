@@ -48,6 +48,7 @@ test2bsureController.prototype.GetHeader = function(dom, callback){
 									'</ul>'+
 								'</div>'+
 							'</li>'+
+							'<li class="menu-item"><a href="ask-and-answer" class="link">Ask & Answer</a></li>'+
 							'<li class="menu-item"><a href="about" class="link">About Us</a></li>'+
 							'<li class="menu-item"><a href="contact" class="link">Contact Us</a></li>'+
 							'<button type="button" class="btnLogin mobileView button button-default" id="btnLogin1">Login/Register</button>'+

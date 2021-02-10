@@ -19,7 +19,8 @@ var pageMapping = {
 		"video"				: "video",
 		"notes"				: "notes",
 		"chapter"			: "chapter",
-		"course"			: "course"
+		"course"			: "course",
+		"asknanswer"		: "default"
 }
 var headermenu = [
                   "home", 
@@ -35,7 +36,8 @@ var headermenu = [
                   "notfound",
                   "dashboard",
                   "chapter",
-                  "course"
+                  "course",
+                  "asknanswer"
                   ];
 
 var footercontent = [
@@ -51,7 +53,8 @@ var footercontent = [
                      "leaderboard",
                      "notfound",
                      "dashboard",
-                     "course"
+                     "course",
+                     "asknanswer"
                      ];
 
 var ItemType = {
@@ -62,3 +65,12 @@ var ItemType = {
 		'CHAPTER': 4,
 		'COURSE': 5
 	};
+
+var ContentType = {
+		'EXAM': 0,
+		'COURSE': 1
+};
+
+var PostType = {
+		'QUERY': 0
+}
